@@ -9,11 +9,6 @@ from pathlib import Path
 import sys
 
 import fitz  # PyMuPDF
-import numpy as np
-import cv2
-
-import pytesseract
-from pytesseract import Output
 
 
 def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4, 
@@ -176,52 +171,40 @@ def transform_canvas_coordinates(layout_json, canvas_name):
 
 def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, 
                       layout_dir=None, parent_id=None, canvas_name="items"):
-    """
-    Extract bounding boxes for each line of text inside a specified region.
-    Handles smart quotes and periods appropriately for JSON output.
-
+    """Extract text lines from a PDF region using PyMuPDF text extraction.
+    
     Args:
-        pdf_path (str): Path to the PDF file to process
-        region_pct (list, optional): Region as [x0, y0, x1, y1] in percent coordinates
-        zoom (int, optional): Zoom factor for PDF rendering. Defaults to 6.
-        debug_dir (str, optional): Directory for debug output images
-        layout_dir (str, optional): Base layouts directory (e.g. 'layouts')
-        parent_id (str, optional): Parent layout ID (e.g. 'pfs2.season5')
-        canvas_name (str, optional): Name of the canvas to extract text from. Defaults to "items"
-
+        pdf_path: Path to the PDF file
+        region_pct: Optional [x0, y0, x1, y1] in percent to extract from
+        zoom: Not used, kept for API compatibility
+        debug_dir: Optional debug output directory
+        layout_dir: Base layouts directory
+        parent_id: Parent layout ID for finding canvas
+        canvas_name: Name of the canvas to extract from
+        
     Returns:
-        list: List of dicts {text, top_left_pct, bottom_right_pct} where percentages
-             are relative to the cropped sub-canvas.
+        List of dicts with 'text', 'top_left_pct', 'bottom_right_pct'
     """
-    # Track seen text positions to avoid duplicates
-    seen_positions = set()
     doc = fitz.open(pdf_path)
     if doc.page_count < 1:
         return []
     page = doc.load_page(0)
-    mat = fitz.Matrix(zoom, zoom)
-    pix = page.get_pixmap(matrix=mat, alpha=False)
-    img = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
-    if img.ndim == 3 and img.shape[2] == 3:
-        rgb = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-    else:
-        rgb = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-    h, w = rgb.shape[:2]
+    
+    # Get page dimensions
+    page_rect = page.rect
+    page_width = page_rect.width
+    page_height = page_rect.height
 
     # If no region_pct provided, try to load from layout file
     if region_pct is None:
         try:
-            # Use provided layout_dir and parent_id to find the layout file
             if layout_dir and parent_id:
                 base_layout_path = find_layout_file(layout_dir, parent_id)
-                
                 with open(base_layout_path) as f:
                     base_layout = json.load(f)
-                    # Get absolute coordinates for the specified canvas
                     region_pct = transform_canvas_coordinates(base_layout, canvas_name)
             else:
                 print("Warning: No layout_dir/parent_id provided for canvas lookup", file=sys.stderr)
-
         except Exception as e:
             print(f"Warning: Failed to load layout file: {e}", file=sys.stderr)
 
@@ -229,116 +212,66 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
         if region_pct is None:
             region_pct = [0.5, 50.8, 40.0, 83.0]
 
-    # convert percent region to full-image pixels and crop
-    try:
-        rx0, ry0, rx1, ry1 = region_pct
-        cx0 = int((rx0 / 100.0) * w)
-        cy0 = int((ry0 / 100.0) * h)
-        cx1 = int((rx1 / 100.0) * w)
-        cy1 = int((ry1 / 100.0) * h)
-        # clamp
-        cx0 = max(0, min(w - 1, cx0))
-        cy0 = max(0, min(h - 1, cy0))
-        cx1 = max(0, min(w - 1, cx1))
-        cy1 = max(0, min(h - 1, cy1))
-        if cx1 <= cx0 or cy1 <= cy0:
-            return []
-    except Exception:
-        return []
-
-    # Draw the crop region on the debug image
-    if debug_dir:
-        debug_img = rgb.copy()
-        cv2.rectangle(debug_img, (cx0, cy0), (cx1, cy1), (0, 255, 0), 2)
-        debug_path = Path(debug_dir) / 'ocr_region.png'
-        debug_path.parent.mkdir(parents=True, exist_ok=True)
-        cv2.imwrite(str(debug_path), debug_img)
-        # Also save just the cropped region
-        cv2.imwrite(str(Path(debug_dir) / 'ocr_crop.png'), rgb[cy0:cy1, cx0:cx1])
-
-    crop = rgb[cy0:cy1, cx0:cx1]
-    ch, cw = crop.shape[:2]
-
-    # OCR with block mode for better line detection
-    data = pytesseract.image_to_data(crop, output_type=Output.DICT, config='--psm 6')
+    # Convert percent region to PDF coordinates (points)
+    rx0, ry0, rx1, ry1 = region_pct
+    region_x0 = (rx0 / 100.0) * page_width
+    region_y0 = (ry0 / 100.0) * page_height
+    region_x2 = (rx1 / 100.0) * page_width
+    region_y2 = (ry1 / 100.0) * page_height
+    region_width = region_x2 - region_x0
+    region_height = region_y2 - region_y0
     
-    words = []
-    heights = []
-    seen_positions = set()
+    # Extract all text with word-level positions
+    words_on_page = page.get_text("words")
     
-    # Collect all words with their coordinates
-    for i in range(len(data['text'])):
-        text = data['text'][i].strip()
-        if not text:
-            continue
-            
-        x = data['left'][i]
-        y = data['top'][i]
-        w = data['width'][i]
-        h = data['height'][i]
+    # Filter words to region and group by line
+    lines_dict = {}  # line_no -> list of words
+    for word_data in words_on_page:
+        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
         
-        # Create a position key for deduplication
-        pos_key = f"{x//2}:{y//2}"  # Group very close positions
-        if pos_key in seen_positions:
-            continue
-        seen_positions.add(pos_key)
-        
-        words.append({'text': text, 'left': x, 'top': y, 'width': w, 'height': h})
-        heights.append(h)
-    
-    if not words:
-        return []
-        
-    # Sort words by vertical position first, then horizontal position
-    words.sort(key=lambda w: (w['top'], w['left']))
-    
-    # Group into lines using improved line detection
-    lines = []
-    current_line = []
-    last_y = None
-    median_h = int(np.median(heights))
-    
-    for word in words:
-        if last_y is None:
-            current_line.append(word)
-            last_y = word['top']
-            continue
+        # Check if word is in our region
+        if (x0 >= region_x0 and x1 <= region_x2 and 
+            y0 >= region_y0 and y1 <= region_y2):
             
-        # If this word is within the vertical threshold of any word in the current line
-        if any(abs(word['top'] - w['top']) <= median_h * 0.75 for w in current_line):
-            current_line.append(word)
-            # Update last_y to be the average of the line
-            last_y = sum(w['top'] for w in current_line) / len(current_line)
-        else:
-            # Start a new line
-            if current_line:
-                # Sort by horizontal position
-                current_line.sort(key=lambda w: w['left'])
-                lines.append(current_line)
-            current_line = [word]
-            last_y = word['top']
+            if line_no not in lines_dict:
+                lines_dict[line_no] = []
             
-    if current_line:
-        current_line.sort(key=lambda w: w['left'])
-        lines.append(current_line)
+            lines_dict[line_no].append({
+                'text': text,
+                'x0': x0,
+                'y0': y0,
+                'x1': x1,
+                'y1': y1
+            })
     
+    # Convert grouped lines to the expected format
     results = []
-    for line in lines:
-        text = ' '.join(w['text'] for w in line)
-        if 'items' in text.lower():
+    for line_no in sorted(lines_dict.keys()):
+        words = lines_dict[line_no]
+        if not words:
             continue
             
-        # Get line bounds
-        x0 = min(w['left'] for w in line)
-        y0 = min(w['top'] for w in line)
-        x1 = max(w['left'] + w['width'] for w in line)
-        y1 = max(w['top'] + w['height'] for w in line)
+        # Sort words by x position
+        words.sort(key=lambda w: w['x0'])
         
-        # Convert to percentages
-        x0_pct = x0 / cw * 100.0
-        y0_pct = y0 / ch * 100.0
-        x1_pct = x1 / cw * 100.0
-        y1_pct = y1 / ch * 100.0
+        # Join text
+        text = ' '.join(w['text'] for w in words)
+        
+        # Skip lines that are just "Items:" or similar headers
+        if text.lower().strip() in ['items', 'items:']:
+            continue
+        
+        # Get line bounds
+        x0 = min(w['x0'] for w in words)
+        y0 = min(w['y0'] for w in words)
+        x1 = max(w['x1'] for w in words)
+        y1 = max(w['y1'] for w in words)
+        
+        # Convert to percentages relative to the region
+        x0_pct = ((x0 - region_x0) / region_width) * 100.0
+        y0_pct = ((y0 - region_y0) / region_height) * 100.0
+        x1_pct = ((x1 - region_x0) / region_width) * 100.0
+        y1_pct = ((y1 - region_y0) / region_height) * 100.0
         
         results.append({
             'text': text,
@@ -492,59 +425,66 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
     lines = extract_text_lines(pdf_path, region_pct=region_pct, debug_dir=debug_dir,
                         layout_dir=layout_dir, parent_id=parent_id, canvas_name=item_canvas_name)
     
-    # Join lines that belong to the same item by looking for Item X pattern
-    items = []
-    item_lines = []
-    
     def clean_text(text):
         # Remove any trailing quotes, dots, or periods while preserving smart quotes in the middle
         text = text.strip()
+        
+        # Fix artifact: remove uppercase U unless preceded by uppercase letter
+        import re
+        text = re.sub(r'([^A-Z])U\b', r'\1', text)
+        
+        # Remove hair space character (\u200a)
+        text = text.replace('\u200a', '')
+        
         return text
 
-    def is_item_start(text):
-        return "Item" in text and any(str(i) in text for i in range(1, 21))
+    def has_unmatched_parens(text):
+        """Check if text has an opening parenthesis without a closing one."""
+        open_count = text.count('(')
+        close_count = text.count(')')
+        return open_count > close_count
+    
+    # Merge lines based on unmatched parentheses
+    items = []
+    item_lines = []
     
     for line in lines:
         if "items" in line["text"].lower() and ":" not in line["text"]:
             continue
             
         text = clean_text(line["text"])
+        if not text.strip():
+            continue
         
-        # If this is an item start and we have collected lines, save the previous item
-        if is_item_start(text) and item_lines:
+        # Add this line to current item
+        item_lines.append({
+            "text": text,
+            "y": line["top_left_pct"][1],
+            "y2": line["bottom_right_pct"][1],
+            "top_left_pct": line["top_left_pct"],
+            "bottom_right_pct": line["bottom_right_pct"]
+        })
+        
+        # Check if we should continue to the next line or finish this item
+        combined_text = " ".join(l["text"] for l in item_lines)
+        
+        # If parentheses are balanced, this item is complete
+        if not has_unmatched_parens(combined_text):
             # Use the first line's y (top) and the last line's y2 (bottom)
-            y_start = min(l["top_left_pct"][1] for l in item_lines)
-            y_end = max(l["bottom_right_pct"][1] for l in item_lines)
-            # Join the lines with proper text cleaning and deduplicate any repeated parts
-            cleaned_text = " ".join(clean_text(l["text"]) for l in item_lines)
-            # Remove any duplicated text that might occur from OCR issues
-            text_parts = cleaned_text.split(" ")
-            unique_parts = []
-            for part in text_parts:
-                if not unique_parts or part != unique_parts[-1]:
-                    unique_parts.append(part)
+            y_start = min(l["y"] for l in item_lines)
+            y_end = max(l["y2"] for l in item_lines)
+            
             items.append({
-                "text": " ".join(unique_parts),
+                "text": combined_text,
                 "y": y_start,
                 "y2": y_end
             })
             item_lines = []
-            
-        # Only track non-empty lines
-        if text.strip():
-            item_lines.append({
-                "text": text,
-                "y": line["top_left_pct"][1],
-                "y2": line["bottom_right_pct"][1],
-                "top_left_pct": line["top_left_pct"],
-                "bottom_right_pct": line["bottom_right_pct"]
-            })
     
-    # Don't forget to add the last item
+    # If there are remaining lines (unmatched parentheses at the end), add them as final item
     if item_lines:
-        # For multi-line items, find the topmost y and bottommost y2
-        y_start = min(l["top_left_pct"][1] for l in item_lines)
-        y_end = max(l["bottom_right_pct"][1] for l in item_lines)
+        y_start = min(l["y"] for l in item_lines)
+        y_end = max(l["y2"] for l in item_lines)
         items.append({
             "text": " ".join(l["text"] for l in item_lines),
             "y": y_start,

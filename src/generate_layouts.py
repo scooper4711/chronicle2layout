@@ -42,19 +42,17 @@ SEASON_CONFIGS = {
     }
 }
 
-def title_to_description(scenario_num: str, title: str) -> str:
+def title_to_description(season_num: int, scenario_num: str, title: str) -> str:
     """Convert a filename title to a proper description."""
-    # Remove any file extension
-    title = os.path.splitext(title)[0]
     # Split on camelCase
     words = re.findall('[A-Z][^A-Z]*', title)
     if not words:
         # If no camelCase, split on spaces or underscores
         words = title.replace('_', ' ').split()
     
-    # Join words and capitalize first letter of each
-    formatted_title = ' '.join(word.capitalize() for word in words)
-    return f"PFS2 Chronicle Sheet for {scenario_num}: {formatted_title}"
+    # Join words with spaces
+    formatted_title = ' '.join(words)
+    return f"{season_num}-{scenario_num} {formatted_title}"
 
 def process_season(season_num: int):
     """Process all chronicles for a given season."""
@@ -89,32 +87,25 @@ def process_season(season_num: int):
         
         print(f"\nProcessing {pdf_file.name}...")
         
+        # Generate description
+        description = title_to_description(season_num, scenario_num, title)
+        
+        # Use the virtual environment Python
+        python_exe = "/Users/stephen/git/HelloFoundry/.venv/bin/python"
+        
         # Run chronicle2layout.py
         cmd = [
-            "python3", "chronicle2layout.py",
+            python_exe, "chronicle2layout.py",
             str(pdf_file),
-            "--layout-dir", str(layouts_path),
-            "--layout-id", config["layout_id"],
-            "-o", str(layout_file),
-            "--debug-dir", str(debug_dir)
+            "--output", str(layout_file),
+            "--parent", config["parent_id"],
+            "--id", f"pfs2.s{season_num}-{scenario_num}",
+            "--description", description,
+            "--layout-dir", str(BASE_DIR / "layouts")
         ]
         
         try:
-            subprocess.run(cmd, check=True)
-            
-            # Read generated JSON
-            with open(layout_file) as f:
-                layout_data = json.load(f)
-            
-            # Add required metadata
-            layout_data["id"] = f"pfs2.s{season_num}-{scenario_num}"
-            layout_data["description"] = f"{season_num}-{scenario_num} {title}"
-            layout_data["parent"] = config["parent_id"]
-            
-            # Write back updated JSON
-            with open(layout_file, 'w') as f:
-                json.dump(layout_data, f, indent=2)
-                
+            subprocess.run(cmd, check=True, cwd=BASE_DIR / "chronicle2layout" / "src")
             print(f"Successfully generated {layout_file.name}")
             
         except subprocess.CalledProcessError as e:
@@ -123,10 +114,9 @@ def process_season(season_num: int):
             print(f"Unexpected error processing {pdf_file.name}: {e}")
 
 def main():
-    """Process chronicles from seasons 5, 6, and 7."""
-    for season in [5, 6, 7]:
-        print(f"\nProcessing Season {season}...")
-        process_season(season)
+    """Process chronicles from season 5."""
+    print(f"\nProcessing Season 5...")
+    process_season(5)
 
 if __name__ == "__main__":
     main()
