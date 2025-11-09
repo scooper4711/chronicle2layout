@@ -18,10 +18,17 @@ from pytesseract import Output
 
 def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4, 
                     max_box_size_pct: float = 1.2, debug_dir: str = None, 
-                    max_fill_ratio: float = 0.95, min_mean_inner: float = 140.0):
+                    max_fill_ratio: float = 0.96, min_mean_inner: float = 140.0,
+                    region_pct: list = None, min_box_size_px: int = 10, max_box_size_px: int = 50):
     """Detect hollow square checkboxes in a rendered PDF page using OpenCV.
     
-    Returns coordinates as percentages of page dimensions.
+    Args:
+        region_pct: Optional [x0, y0, x1, y1] in percent to crop before detection.
+                   Coordinates will be returned relative to this cropped region.
+        min_box_size_px: Minimum checkbox size in pixels (used when region_pct is set)
+        max_box_size_px: Maximum checkbox size in pixels (used when region_pct is set)
+    
+    Returns coordinates as percentages of canvas dimensions (or page if no region).
     """
     # Load and render PDF page
     doc = fitz.open(pdf_path)
@@ -36,6 +43,39 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
     else:
         gray = img
 
+    full_h, full_w = gray.shape
+    
+    # Save full page for reference if debug enabled
+    if debug_dir and region_pct:
+        outp = Path(debug_dir)
+        outp.mkdir(parents=True, exist_ok=True)
+        # Save full grayscale image
+        cv2.imwrite(str(outp / 'checkbox_full_page.png'), gray)
+    
+    # Crop to region if specified
+    if region_pct:
+        x0_pix = int(region_pct[0] * full_w / 100.0)
+        y0_pix = int(region_pct[1] * full_h / 100.0)
+        x1_pix = int(region_pct[2] * full_w / 100.0)
+        y1_pix = int(region_pct[3] * full_h / 100.0)
+        
+        if debug_dir:
+            print(f"DEBUG: Full image size: {full_w}x{full_h}", file=sys.stderr)
+            print(f"DEBUG: Region percent: {region_pct}", file=sys.stderr)
+            print(f"DEBUG: Crop pixels: x={x0_pix}:{x1_pix}, y={y0_pix}:{y1_pix}", file=sys.stderr)
+            
+            # Draw rectangle on full page to show crop region
+            full_with_rect = cv2.cvtColor(gray.copy(), cv2.COLOR_GRAY2BGR)
+            cv2.rectangle(full_with_rect, (x0_pix, y0_pix), (x1_pix, y1_pix), (0, 255, 0), 3)
+            cv2.imwrite(str(outp / 'checkbox_crop_region.png'), full_with_rect)
+        
+        gray = gray[y0_pix:y1_pix, x0_pix:x1_pix]
+        
+        if debug_dir:
+            print(f"DEBUG: Cropped image size: {gray.shape[1]}x{gray.shape[0]}", file=sys.stderr)
+            # Save the cropped region
+            cv2.imwrite(str(outp / 'checkbox_cropped.png'), gray)
+    
     h, w = gray.shape
 
     # Preprocess image
@@ -48,37 +88,67 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
     # Find contours
     contours, _ = cv2.findContours(closed, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
     results = []
+    
+    if debug_dir:
+        print(f"DEBUG: Found {len(contours)} total contours", file=sys.stderr)
 
     # Process each contour
     seen_positions = set()  # Track positions we've seen to deduplicate
+    contour_count = 0
+    quad_count = 0
     for cnt in contours:
-        if cv2.contourArea(cnt) < 10:
+        area = cv2.contourArea(cnt)
+        if area < 10:
             continue
+        
+        contour_count += 1
             
         # Approximate the contour to a polygon
         peri = cv2.arcLength(cnt, True)
         approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
         
+        if debug_dir and contour_count <= 20:
+            print(f"DEBUG: Contour {contour_count}: area={area:.1f}, perimeter={peri:.1f}, approx_sides={len(approx)}", file=sys.stderr)
+        
         # Look for quadrilateral shapes
         if len(approx) == 4:
+            quad_count += 1
             x, y, bw, bh = cv2.boundingRect(approx)
             
             # Calculate size as percentage of page dimensions
             bw_pct = bw / w * 100.0
             bh_pct = bh / h * 100.0
-            if not (min_box_size_pct <= bw_pct <= max_box_size_pct and 
-                   min_box_size_pct <= bh_pct <= max_box_size_pct):
+            
+            # Use pixel-based size check if we're working with a cropped region, otherwise use percentages
+            if region_pct:
+                size_ok = (min_box_size_px <= bw <= max_box_size_px and 
+                          min_box_size_px <= bh <= max_box_size_px)
+                if debug_dir and quad_count <= 20:
+                    print(f"DEBUG: Quad {quad_count}: size={bw}x{bh}px ({bw_pct:.2f}%x{bh_pct:.2f}%), at ({x},{y}), size_ok={size_ok}", file=sys.stderr)
+            else:
+                size_ok = (min_box_size_pct <= bw_pct <= max_box_size_pct and 
+                          min_box_size_pct <= bh_pct <= max_box_size_pct)
+                if debug_dir and quad_count <= 20:
+                    print(f"DEBUG: Quad {quad_count}: size={bw_pct:.2f}%x{bh_pct:.2f}%, at ({x},{y}), size_ok={size_ok}", file=sys.stderr)
+            
+            if not size_ok:
+                if debug_dir and quad_count <= 20:
+                    print(f"  -> Filtered: size check failed", file=sys.stderr)
                 continue
                 
             # Check if we've seen this position before (with some tolerance)
             pos_key = f"{x//5},{y//5}"  # Group nearby positions
             if pos_key in seen_positions:
+                if debug_dir and quad_count <= 20:
+                    print(f"  -> Filtered: duplicate position", file=sys.stderr)
                 continue
             seen_positions.add(pos_key)
                 
             # Check if roughly square
             ar = float(bw) / float(bh) if bh > 0 else 0
             if ar < 0.6 or ar > 1.6:
+                if debug_dir and quad_count <= 20:
+                    print(f"  -> Filtered: aspect ratio {ar:.2f}", file=sys.stderr)
                 continue
 
             # Calculate fill ratio to find hollow boxes
@@ -87,7 +157,12 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
             filled_area = cv2.countNonZero(mask[y:y+bh, x:x+bw])
             fill_ratio = float(filled_area) / float(max(1, bw * bh))
             if fill_ratio > max_fill_ratio:
+                if debug_dir and quad_count <= 20:
+                    print(f"  -> Filtered: fill ratio {fill_ratio:.2f}", file=sys.stderr)
                 continue
+
+            if debug_dir and quad_count <= 20:
+                print(f"  -> PASSED all filters", file=sys.stderr)
 
             # Convert to percent coordinates (0% = top/left of page)
             x_pct = (x / w) * 100.0
@@ -109,20 +184,30 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
                   abs(d['y'] - r['y']) < 0.5 for d in deduped):
             deduped.append(r)
 
+    if debug_dir:
+        print(f"DEBUG: Found {len(results)} raw checkboxes, {len(deduped)} after dedup", file=sys.stderr)
+        for i, r in enumerate(deduped, 1):
+            print(f"DEBUG: Checkbox {i}: x={r['x']:.3f}, y={r['y']:.3f}, x2={r['x2']:.3f}, y2={r['y2']:.3f}", file=sys.stderr)
+
     # Save debug images if requested
     if debug_dir:
         try:
             outp = Path(debug_dir)
             outp.mkdir(parents=True, exist_ok=True)
             
-            # Save rendered page
-            if img.ndim == 3 and img.shape[2] == 3:
-                rendered_bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+            # Save the cropped image that was processed
+            if region_pct:
+                # We're working with the cropped gray image
+                cropped_bgr = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
             else:
-                rendered_bgr = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+                # Save rendered page
+                if img.ndim == 3 and img.shape[2] == 3:
+                    cropped_bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+                else:
+                    cropped_bgr = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 
-            # Create debug visualization
-            annotated = rendered_bgr.copy()
+            # Create debug visualization on the cropped image
+            annotated = cropped_bgr.copy()
             for r in deduped:
                 # Convert percentages back to image coordinates
                 x = int((r['x'] / 100.0) * w)
@@ -139,8 +224,9 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
                           (x, max(10, y-5)), cv2.FONT_HERSHEY_SIMPLEX, 0.4, 
                           (255, 0, 0), 1)
 
-            cv2.imwrite(str(outp / 'annotated.png'), annotated)
-            cv2.imwrite(str(outp / 'threshold.png'), th)
+            cv2.imwrite(str(outp / 'checkbox_annotated.png'), annotated)
+            cv2.imwrite(str(outp / 'checkbox_threshold.png'), th)
+            cv2.imwrite(str(outp / 'checkbox_closed.png'), closed)
 
         except Exception as e:
             print(f"Failed to save debug images: {e}", file=sys.stderr)
@@ -403,20 +489,23 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     return results
 
 
-def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True, debug_dir=None, 
-                    layout_dir=None, parent_id=None, scenario_id=None, description=None, parent=None):
+def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None, 
+                    layout_dir=None, parent_id=None, scenario_id=None, description=None, parent=None,
+                    checkbox_region_pct=None, item_canvas_name="items", checkbox_canvas_name="summary"):
     """Generate JSON in layout file format with text-based choices for strikeouts.
     
     Args:
         pdf_path (str): Path to the PDF file to process
-        region_pct (list, optional): Region as [x0, y0, x1, y1] in percent coordinates
-        include_checkboxes (bool, optional): Whether to detect checkboxes. Defaults to True.
+        region_pct (list, optional): Region as [x0, y0, x1, y1] in percent coordinates for items
         debug_dir (str, optional): Directory for debug output images
         layout_dir (str, optional): Base layouts directory (e.g. 'layouts')
         parent_id (str, optional): Parent layout ID for finding canvas (e.g. 'pfs2.season5')
         scenario_id (str, optional): ID for the layout (e.g. '5-07')
         description (str, optional): Description of the scenario
         parent (str, optional): Parent layout ID to write to output JSON (e.g. 'pfs2.season5')
+        checkbox_region_pct (list, optional): Region as [x0, y0, x1, y1] for checkbox detection
+        item_canvas_name (str, optional): Name of the canvas for items (default: "items")
+        checkbox_canvas_name (str, optional): Name of the canvas for checkboxes (default: "summary")
     
     Returns:
         dict: Layout JSON configuration with detected items and checkboxes
@@ -432,42 +521,69 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
     if parent:
         layout["parent"] = parent
 
+    # Detect checkboxes first
+    boxes = image_checkboxes(pdf_path, debug_dir=debug_dir, region_pct=checkbox_region_pct)
+    
     # Add required sections
-    layout.update({
-        "parameters": {
-            "Items": {
-                "strikeout_item_lines": {
-                    "type": "choice",
-                    "description": "Item line text to be struck out",
-                    "choices": [],  # Will fill with text choices
-                    "example": ""
-                }
-            }
-        },
-        "presets": {
-            "strikeout_item": {
-                "canvas": "items",
-                "color": "black",
-                "x": 0.5,
-                "x2": 95
-            }
-        },
-        "content": [
-            {
+    layout["parameters"] = {
+        "Items": {
+            "strikeout_item_lines": {
                 "type": "choice",
-                "choices": "param:strikeout_item_lines",
-                "content": {}
+                "description": "Item line text to be struck out",
+                "choices": [],  # Will fill with text choices
+                "example": ""
             }
-        ]
-    })
-
-    if include_checkboxes:
-        boxes = image_checkboxes(pdf_path, debug_dir=debug_dir)
-        layout["checkboxes"] = boxes
+        }
+    }
+    
+    # Add checkbox parameters if checkboxes were detected
+    if boxes:
+        layout["parameters"]["Checkboxes"] = {
+            "summary_checkbox": {
+                "type": "choice",
+                "description": "Checkboxes in the adventure summary that should be selected",
+                "choices": list(range(1, len(boxes) + 1)),
+                "example": ",".join(str(i) for i in range(1, len(boxes) + 1))
+            }
+        }
+    
+    # Initialize presets
+    layout["presets"] = {
+        "strikeout_item": {
+            "canvas": item_canvas_name,
+            "color": "black",
+            "x": 0.5,
+            "x2": 95
+        }
+    }
+    
+    # Add checkbox presets if checkboxes were detected
+    if boxes:
+        layout["presets"]["checkbox"] = {
+            "canvas": checkbox_canvas_name,
+            "color": "black",
+            "size": 1
+        }
+        for i, box in enumerate(boxes, 1):
+            layout["presets"][f"checkbox.{i}"] = {
+                "x": box["x"],
+                "y": box["y"],
+                "x2": box["x2"],
+                "y2": box["y2"]
+            }
+    
+    # Initialize content array
+    layout["content"] = [
+        {
+            "type": "choice",
+            "choices": "param:strikeout_item_lines",
+            "content": {}
+        }
+    ]
 
     # Extract text lines
     lines = extract_text_lines(pdf_path, region_pct=region_pct, debug_dir=debug_dir,
-                        layout_dir=layout_dir, parent_id=parent_id)
+                        layout_dir=layout_dir, parent_id=parent_id, canvas_name=item_canvas_name)
     
     # Join lines that belong to the same item by looking for Item X pattern
     items = []
@@ -558,6 +674,20 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
         first_text = layout["parameters"]["Items"]["strikeout_item_lines"]["choices"][0]
         layout["parameters"]["Items"]["strikeout_item_lines"]["example"] = first_text
 
+    # Add checkbox content if checkboxes were detected
+    if boxes:
+        checkbox_content = {
+            "type": "choice",
+            "choices": "param:summary_checkbox",
+            "content": {}
+        }
+        for i in range(1, len(boxes) + 1):
+            checkbox_content["content"][str(i)] = [{
+                "type": "checkbox",
+                "presets": ["checkbox", f"checkbox.{i}"]
+            }]
+        layout["content"].append(checkbox_content)
+
     return layout
 
 def main():
@@ -568,12 +698,12 @@ def main():
                   help="Directory to write debug images")
     p.add_argument("--region", type=str, default=None,
                   help="Region in percent as x0,y0,x1,y1 (e.g. 0.5,50.8,40,83). If omitted, will use canvas from layout.")
-    p.add_argument("--skip-checkboxes", action='store_true',
-                  help="If set, skip checkbox detection.")
     p.add_argument("--output", "-o", help="Output JSON file path. If not specified, prints to stdout.")
     p.add_argument("--layout-dir", type=str, help="Base layouts directory (e.g. 'layouts')")
-    p.add_argument("--canvas", type=str, default="items",
-                  help="Name of the canvas to extract text from (default: items)")
+    p.add_argument("--item-canvas", type=str, default="items",
+                  help="Name of the canvas to extract items from (default: items)")
+    p.add_argument("--checkbox-canvas", type=str, default="summary",
+                  help="Name of the canvas to detect checkboxes from (default: summary)")
     p.add_argument("--id", type=str, help="ID for the layout (e.g. 'pfs2.s5-07')")
     p.add_argument("--description", type=str, help="Description of the scenario")
     p.add_argument("--parent", type=str, help="Parent layout ID (e.g. 'pfs2.season5')")
@@ -593,13 +723,17 @@ def main():
                 return
 
         # Load the layout file first to get canvas coordinates if needed
-        if args.layout_dir and args.parent and region_pct is None:
+        checkbox_region_pct = None
+        if args.layout_dir and args.parent:
             try:
                 base_layout_path = find_layout_file(args.layout_dir, args.parent)
                 with open(base_layout_path) as f:
                     base_layout = json.load(f)
                     # Get absolute coordinates for the specified canvas
-                    region_pct = transform_canvas_coordinates(base_layout, args.canvas)
+                    if region_pct is None:
+                        region_pct = transform_canvas_coordinates(base_layout, args.item_canvas)
+                    # Get absolute coordinates for the checkbox canvas
+                    checkbox_region_pct = transform_canvas_coordinates(base_layout, args.checkbox_canvas)
             except Exception as e:
                 print(json.dumps({"error": f"Failed to process layout file for parent '{args.parent}': {e}"}))
                 return
@@ -611,13 +745,15 @@ def main():
         layout = generate_layout_json(
             args.pdf,
             region_pct=region_pct,
-            include_checkboxes=not args.skip_checkboxes,
             debug_dir=args.debug_dir,
             layout_dir=args.layout_dir,
             parent_id=args.parent,
             scenario_id=args.id,
             description=args.description,
-            parent=args.parent
+            parent=args.parent,
+            checkbox_region_pct=checkbox_region_pct,
+            item_canvas_name=args.item_canvas,
+            checkbox_canvas_name=args.checkbox_canvas
         )
         
         output = json.dumps(layout, indent=2)
