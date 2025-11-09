@@ -349,7 +349,7 @@ def extract_checkbox_labels(pdf_path: str, checkboxes: list, region_pct: list, z
             attached_text = cb_text[1:]  # Remove the □ character
             label_words.append(attached_text)
         
-        # Collect text from words after this checkbox until the next checkbox, comma, or period
+        # Collect text from words after this checkbox until the next checkbox, comma, period, or "or"
         for word_idx in range(cb_idx + 1, next_cb_idx):
             word_data = words_on_page[word_idx]
             x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
@@ -357,6 +357,15 @@ def extract_checkbox_labels(pdf_path: str, checkboxes: list, region_pct: list, z
             # Only include words in our region
             if (x0 >= region_x0 and x1 <= region_x2 and 
                 y0 >= region_y0 and y1 <= region_y2):
+                
+                # Stop if we encounter another checkbox character
+                if any(cb_char in text for cb_char in checkbox_chars):
+                    break
+                
+                # Stop if we hit the word "or"
+                if text.lower() == 'or':
+                    break
+                
                 # Stop if we hit a comma or period (but include the word if it ends with comma/period)
                 label_words.append(text)
                 if text.endswith(',') or text.endswith('.'):
