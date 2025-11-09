@@ -147,7 +147,89 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
 
     return deduped
 
-def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, layout_dir=None, layout_id=None):
+def find_layout_file(layout_dir, layout_id):
+    """Find the layout file for a given layout ID by searching the layout directory.
+    
+    The layout ID follows patterns like:
+    - pfs2 -> layouts/pfs2/pfs2.json
+    - pfs2.season5 -> layouts/pfs2/s5/Season 5.json
+    - pfs2.s5-07 -> layouts/pfs2/s5/5-07-SewerDragonCrisis.json
+    
+    Args:
+        layout_dir (str): Base layouts directory (e.g., 'layouts')
+        layout_id (str): Layout ID to find (e.g., 'pfs2.season5')
+        
+    Returns:
+        Path: Path to the layout file
+        
+    Raises:
+        ValueError: If the layout file cannot be found
+    """
+    base_path = Path(layout_dir)
+    
+    # Split the layout ID by dots
+    parts = layout_id.split('.')
+    
+    if len(parts) == 1:
+        # Simple case: pfs2 -> pfs2/pfs2.json
+        layout_file = base_path / parts[0] / f"{parts[0]}.json"
+    else:
+        # Complex case: need to search for the file
+        # Start with the first part (e.g., pfs2)
+        search_base = base_path / parts[0]
+        
+        # For patterns like pfs2.season5, look for Season 5.json in subdirectories
+        if parts[1].startswith('season'):
+            season_num = parts[1].replace('season', '')
+            # Look in s{N} subdirectory for Season {N}.json
+            layout_file = search_base / f"s{season_num}" / f"Season {season_num}.json"
+        elif parts[1].startswith('s') and '-' in parts[1]:
+            # For scenario IDs like s5-07
+            season_num = parts[1].split('-')[0][1:]  # Extract '5' from 's5'
+            # This would be a scenario file, but we're looking for parent layouts
+            layout_file = search_base / f"s{season_num}" / f"{parts[1]}.json"
+        else:
+            # Generic fallback
+            layout_file = search_base / parts[1] / f"{parts[1]}.json"
+    
+    if not layout_file.exists():
+        raise ValueError(f"Layout file not found: {layout_file}")
+    
+    return layout_file
+
+def transform_canvas_coordinates(layout_json, canvas_name):
+    """Transform canvas coordinates into absolute page coordinates by following the parent chain.
+    
+    Args:
+        layout_json (dict): The loaded layout JSON object
+        canvas_name (str): Name of the canvas to transform
+        
+    Returns:
+        list: [x, y, x2, y2] coordinates in absolute page percent
+    """
+    if "canvas" not in layout_json or canvas_name not in layout_json["canvas"]:
+        raise ValueError(f"Canvas {canvas_name} not found in layout")
+        
+    def transform_coordinates(canvas_name):
+        canvas = layout_json["canvas"][canvas_name]
+        x, y = canvas["x"], canvas["y"]
+        x2, y2 = canvas["x2"], canvas["y2"]
+        if "parent" in canvas:
+            parent_coords = transform_coordinates(canvas["parent"])
+            # Transform coordinates relative to parent
+            px, py, px2, py2 = parent_coords
+            pw = px2 - px
+            ph = py2 - py
+            x = px + (x / 100.0) * pw
+            y = py + (y / 100.0) * ph
+            x2 = px + (x2 / 100.0) * pw
+            y2 = py + (y2 / 100.0) * ph
+        return [x, y, x2, y2]
+        
+    return transform_coordinates(canvas_name)
+
+def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, 
+                      layout_dir=None, parent_id=None, canvas_name="items"):
     """
     Extract bounding boxes for each line of text inside a specified region.
     Handles smart quotes and periods appropriately for JSON output.
@@ -157,8 +239,9 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, l
         region_pct (list, optional): Region as [x0, y0, x1, y1] in percent coordinates
         zoom (int, optional): Zoom factor for PDF rendering. Defaults to 6.
         debug_dir (str, optional): Directory for debug output images
-        layout_dir (str, optional): Directory containing layout files (e.g. 'layouts/pfs2/s5')
-        layout_id (str, optional): Specific layout ID to use (e.g. 'Season 5')
+        layout_dir (str, optional): Base layouts directory (e.g. 'layouts')
+        parent_id (str, optional): Parent layout ID (e.g. 'pfs2.season5')
+        canvas_name (str, optional): Name of the canvas to extract text from. Defaults to "items"
 
     Returns:
         list: List of dicts {text, top_left_pct, bottom_right_pct} where percentages
@@ -182,39 +265,19 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, l
     # If no region_pct provided, try to load from layout file
     if region_pct is None:
         try:
-            # Use provided layout_dir/id or try to find a suitable default
-            if layout_dir and layout_id:
-                base_layout_path = Path(layout_dir) / f"{layout_id}.json"
-            else:
-                # Look for Season 5 layout first, then fall back to pfs2.json
-                base_layout_path = Path(pdf_path).parent.parent / "s5" / "Season 5.json"
-                if not base_layout_path.exists():
-                    base_layout_path = Path(pdf_path).parent.parent / "pfs2.json"
+            # Use provided layout_dir and parent_id to find the layout file
+            if layout_dir and parent_id:
+                base_layout_path = find_layout_file(layout_dir, parent_id)
                 
-            if base_layout_path.exists():
                 with open(base_layout_path) as f:
                     base_layout = json.load(f)
-                    if "canvas" in base_layout and "items" in base_layout["canvas"]:
-                        def transform_coordinates(canvas_name):
-                            canvas = base_layout["canvas"][canvas_name]
-                            x, y = canvas["x"], canvas["y"]
-                            x2, y2 = canvas["x2"], canvas["y2"]
-                            if "parent" in canvas:
-                                parent_coords = transform_coordinates(canvas["parent"])
-                                # Transform coordinates relative to parent
-                                px, py, px2, py2 = parent_coords
-                                pw = px2 - px
-                                ph = py2 - py
-                                x = px + (x / 100.0) * pw
-                                y = py + (y / 100.0) * ph
-                                x2 = px + (x2 / 100.0) * pw
-                                y2 = py + (y2 / 100.0) * ph
-                            return [x, y, x2, y2]
-                        
-                        # Get absolute coordinates for items canvas
-                        region_pct = transform_coordinates("items")
+                    # Get absolute coordinates for the specified canvas
+                    region_pct = transform_canvas_coordinates(base_layout, canvas_name)
+            else:
+                print("Warning: No layout_dir/parent_id provided for canvas lookup", file=sys.stderr)
+
         except Exception as e:
-            print(f"Warning: Failed to load items canvas from pfs2.json: {e}", file=sys.stderr)
+            print(f"Warning: Failed to load layout file: {e}", file=sys.stderr)
 
         # Fall back to default if we couldn't load from layout
         if region_pct is None:
@@ -341,7 +404,7 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, l
 
 
 def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True, debug_dir=None, 
-                    layout_dir=None, layout_id=None, scenario_id=None, description=None, parent=None):
+                    layout_dir=None, parent_id=None, scenario_id=None, description=None, parent=None):
     """Generate JSON in layout file format with text-based choices for strikeouts.
     
     Args:
@@ -349,11 +412,11 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
         region_pct (list, optional): Region as [x0, y0, x1, y1] in percent coordinates
         include_checkboxes (bool, optional): Whether to detect checkboxes. Defaults to True.
         debug_dir (str, optional): Directory for debug output images
-        layout_dir (str, optional): Directory containing layout files (e.g. 'layouts/pfs2/s5')
-        layout_id (str, optional): Specific layout ID to use (e.g. 'Season 5')
+        layout_dir (str, optional): Base layouts directory (e.g. 'layouts')
+        parent_id (str, optional): Parent layout ID for finding canvas (e.g. 'pfs2.season5')
         scenario_id (str, optional): ID for the layout (e.g. '5-07')
         description (str, optional): Description of the scenario
-        parent (str, optional): Parent layout file (e.g. 's5')
+        parent (str, optional): Parent layout ID to write to output JSON (e.g. 'pfs2.season5')
     
     Returns:
         dict: Layout JSON configuration with detected items and checkboxes
@@ -385,7 +448,6 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
             "strikeout_item": {
                 "canvas": "items",
                 "color": "black",
-                "linewidth": 11,
                 "x": 0.5,
                 "x2": 95
             }
@@ -405,7 +467,7 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
 
     # Extract text lines
     lines = extract_text_lines(pdf_path, region_pct=region_pct, debug_dir=debug_dir,
-                        layout_dir=layout_dir, layout_id=layout_id)
+                        layout_dir=layout_dir, parent_id=parent_id)
     
     # Join lines that belong to the same item by looking for Item X pattern
     items = []
@@ -427,8 +489,9 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
         
         # If this is an item start and we have collected lines, save the previous item
         if is_item_start(text) and item_lines:
-            y_start = item_lines[0]["top_left_pct"][1]
-            y_end = item_lines[-1]["bottom_right_pct"][1]
+            # Use the first line's y (top) and the last line's y2 (bottom)
+            y_start = min(l["top_left_pct"][1] for l in item_lines)
+            y_end = max(l["bottom_right_pct"][1] for l in item_lines)
             # Join the lines with proper text cleaning and deduplicate any repeated parts
             cleaned_text = " ".join(clean_text(l["text"]) for l in item_lines)
             # Remove any duplicated text that might occur from OCR issues
@@ -456,9 +519,9 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
     
     # Don't forget to add the last item
     if item_lines:
-        # For multi-line items, use first line's y and last line's y2
-        y_start = item_lines[0]["top_left_pct"][1]
-        y_end = item_lines[-1]["bottom_right_pct"][1]
+        # For multi-line items, find the topmost y and bottommost y2
+        y_start = min(l["top_left_pct"][1] for l in item_lines)
+        y_end = max(l["bottom_right_pct"][1] for l in item_lines)
         items.append({
             "text": " ".join(l["text"] for l in item_lines),
             "y": y_start,
@@ -484,9 +547,9 @@ def generate_layout_json(pdf_path: str, region_pct=None, include_checkboxes=True
             "y2": round(item["y2"], 1)
         }
         
-        # Add content entry for this line
+        # Add content entry for this line - use strikeout to fill the entire bounding box
         layout["content"][0]["content"][text] = [{
-            "type": "line",
+            "type": "strikeout",
             "presets": ["strikeout_item", preset_name]
         }]
 
@@ -504,15 +567,16 @@ def main():
     p.add_argument("--debug-dir", type=str, default=None,
                   help="Directory to write debug images")
     p.add_argument("--region", type=str, default=None,
-                  help="Region in percent as x0,y0,x1,y1 (e.g. 0.5,50.8,40,83). If omitted, a sensible default is used.")
+                  help="Region in percent as x0,y0,x1,y1 (e.g. 0.5,50.8,40,83). If omitted, will use canvas from layout.")
     p.add_argument("--skip-checkboxes", action='store_true',
                   help="If set, skip checkbox detection.")
     p.add_argument("--output", "-o", help="Output JSON file path. If not specified, prints to stdout.")
-    p.add_argument("--layout-dir", type=str, help="Directory containing layout files (e.g. layouts/pfs2/s5)")
-    p.add_argument("--layout-id", type=str, help="Specific layout ID to use (e.g. 'Season 5')")
-    p.add_argument("--id", type=str, help="ID for the layout (e.g. '5-07')")
+    p.add_argument("--layout-dir", type=str, help="Base layouts directory (e.g. 'layouts')")
+    p.add_argument("--canvas", type=str, default="items",
+                  help="Name of the canvas to extract text from (default: items)")
+    p.add_argument("--id", type=str, help="ID for the layout (e.g. 'pfs2.s5-07')")
     p.add_argument("--description", type=str, help="Description of the scenario")
-    p.add_argument("--parent", type=str, help="Parent layout file (e.g. 's5')")
+    p.add_argument("--parent", type=str, help="Parent layout ID (e.g. 'pfs2.season5')")
     args = p.parse_args()
 
     try:
@@ -528,13 +592,29 @@ def main():
                 print(json.dumps({"error": f"Invalid --region value: {e}"}))
                 return
 
+        # Load the layout file first to get canvas coordinates if needed
+        if args.layout_dir and args.parent and region_pct is None:
+            try:
+                base_layout_path = find_layout_file(args.layout_dir, args.parent)
+                with open(base_layout_path) as f:
+                    base_layout = json.load(f)
+                    # Get absolute coordinates for the specified canvas
+                    region_pct = transform_canvas_coordinates(base_layout, args.canvas)
+            except Exception as e:
+                print(json.dumps({"error": f"Failed to process layout file for parent '{args.parent}': {e}"}))
+                return
+
+        # If no region specified and no canvas found, use default
+        if region_pct is None:
+            region_pct = [0.5, 50.8, 40.0, 83.0]
+
         layout = generate_layout_json(
             args.pdf,
             region_pct=region_pct,
             include_checkboxes=not args.skip_checkboxes,
             debug_dir=args.debug_dir,
             layout_dir=args.layout_dir,
-            layout_id=args.layout_id,
+            parent_id=args.parent,
             scenario_id=args.id,
             description=args.description,
             parent=args.parent
