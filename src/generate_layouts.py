@@ -114,9 +114,9 @@ def process_season(season_num: int):
             print(f"Unexpected error processing {pdf_file.name}: {e}")
 
 def main():
-    """Process chronicles from season 5."""
-    print(f"\nProcessing Season 5...")
-    process_season(5)
+    """Process chronicles from season 7."""
+    print(f"\nProcessing Season 7...")
+    process_season(7)
 
 if __name__ == "__main__":
     main()
