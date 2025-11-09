@@ -488,67 +488,6 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
     if boxes and checkbox_region_pct:
         checkbox_labels = extract_checkbox_labels(pdf_path, boxes, checkbox_region_pct, debug_dir=debug_dir)
     
-    # Add required sections
-    layout["parameters"] = {
-        "Items": {
-            "strikeout_item_lines": {
-                "type": "choice",
-                "description": "Item line text to be struck out",
-                "choices": [],  # Will fill with text choices
-                "example": ""
-            }
-        }
-    }
-    
-    # Add checkbox parameters if checkboxes were detected
-    if checkbox_labels:
-        layout["parameters"]["Checkboxes"] = {
-            "summary_checkbox": {
-                "type": "choice",
-                "description": "Checkboxes in the adventure summary that should be selected",
-                "choices": [item['label'] for item in checkbox_labels if item['label']],
-                "example": checkbox_labels[0]['label'] if checkbox_labels and checkbox_labels[0]['label'] else ""
-            }
-        }
-    
-    # Initialize presets
-    layout["presets"] = {
-        "strikeout_item": {
-            "canvas": item_canvas_name,
-            "color": "black",
-            "x": 0.5,
-            "x2": 95
-        }
-    }
-    
-    # Add checkbox presets if checkboxes were detected
-    if checkbox_labels:
-        layout["presets"]["checkbox"] = {
-            "canvas": checkbox_canvas_name,
-            "color": "black",
-            "size": 1
-        }
-        for item in checkbox_labels:
-            if item['label']:
-                # Create a safe preset name from the label
-                safe_label = item['label'][:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
-                preset_name = f"checkbox.{safe_label}"
-                layout["presets"][preset_name] = {
-                    "x": item['checkbox']["x"],
-                    "y": item['checkbox']["y"],
-                    "x2": item['checkbox']["x2"],
-                    "y2": item['checkbox']["y2"]
-                }
-    
-    # Initialize content array
-    layout["content"] = [
-        {
-            "type": "choice",
-            "choices": "param:strikeout_item_lines",
-            "content": {}
-        }
-    ]
-
     # Extract text lines
     lines = extract_text_lines(pdf_path, region_pct=region_pct, debug_dir=debug_dir,
                         layout_dir=layout_dir, parent_id=parent_id, canvas_name=item_canvas_name)
@@ -612,52 +551,111 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
             "y2": y_end
         })
 
+    # Only add parameters, presets, and content if we have items or checkboxes
+    if items or checkbox_labels:
+        layout["parameters"] = {}
+        layout["presets"] = {}
+        layout["content"] = []
     
-    # Process joined items
-    for item in items:
-        text = item["text"]
-        # Clean up OCR artifacts
-        # Just use the text as-is, preserving smart quotes and other characters
-        text = text.strip()
-        # Add text as a choice if not already present
-        if text not in layout["parameters"]["Items"]["strikeout_item_lines"]["choices"]:
-            layout["parameters"]["Items"]["strikeout_item_lines"]["choices"].append(text)
-        
-        # Create preset for this line's position
-        safe_text = text[:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
-        preset_name = f"item.line.{safe_text}"
-        layout["presets"][preset_name] = {
-            "y": round(item["y"], 1),
-            "y2": round(item["y2"], 1)
+    # Add Items section only if we have items
+    if items:
+        layout["parameters"]["Items"] = {
+            "strikeout_item_lines": {
+                "type": "choice",
+                "description": "Item line text to be struck out",
+                "choices": [],
+                "example": ""
+            }
         }
         
-        # Add content entry for this line - use strikeout to fill the entire bounding box
-        layout["content"][0]["content"][text] = [{
-            "type": "strikeout",
-            "presets": ["strikeout_item", preset_name]
-        }]
-
-    # Set example using first detected text
-    if layout["parameters"]["Items"]["strikeout_item_lines"]["choices"]:
-        first_text = layout["parameters"]["Items"]["strikeout_item_lines"]["choices"][0]
-        layout["parameters"]["Items"]["strikeout_item_lines"]["example"] = first_text
-
-    # Add checkbox content if checkboxes were detected
+        layout["presets"]["strikeout_item"] = {
+            "canvas": item_canvas_name,
+            "color": "black",
+            "x": 0.5,
+            "x2": 95
+        }
+        
+        layout["content"].append({
+            "type": "choice",
+            "choices": "param:strikeout_item_lines",
+            "content": {}
+        })
+    
+    # Add checkbox parameters if checkboxes were detected
     if checkbox_labels:
+        if "parameters" not in layout:
+            layout["parameters"] = {}
+        if "presets" not in layout:
+            layout["presets"] = {}
+        if "content" not in layout:
+            layout["content"] = []
+            
+        layout["parameters"]["Checkboxes"] = {
+            "summary_checkbox": {
+                "type": "choice",
+                "description": "Checkboxes in the adventure summary that should be selected",
+                "choices": [item['label'] for item in checkbox_labels if item['label']],
+                "example": checkbox_labels[0]['label'] if checkbox_labels and checkbox_labels[0]['label'] else ""
+            }
+        }
+        
+        layout["presets"]["checkbox"] = {
+            "canvas": checkbox_canvas_name,
+            "color": "black",
+            "size": 1
+        }
+        
         checkbox_content = {
             "type": "choice",
             "choices": "param:summary_checkbox",
             "content": {}
         }
+        
         for item in checkbox_labels:
             if item['label']:
-                # Create safe preset name matching what we created earlier
+                # Create safe preset name
                 safe_label = item['label'][:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
+                preset_name = f"checkbox.{safe_label}"
+                layout["presets"][preset_name] = {
+                    "x": item['checkbox']["x"],
+                    "y": item['checkbox']["y"],
+                    "x2": item['checkbox']["x2"],
+                    "y2": item['checkbox']["y2"]
+                }
                 checkbox_content["content"][item['label']] = [{
                     "type": "checkbox",
-                    "presets": ["checkbox", f"checkbox.{safe_label}"]
+                    "presets": ["checkbox", preset_name]
                 }]
         layout["content"].append(checkbox_content)
+    
+    # Process joined items - only if we have items
+    if items:
+        for item in items:
+            text = item["text"]
+            # Clean up OCR artifacts
+            text = text.strip()
+            # Add text as a choice if not already present
+            if text not in layout["parameters"]["Items"]["strikeout_item_lines"]["choices"]:
+                layout["parameters"]["Items"]["strikeout_item_lines"]["choices"].append(text)
+            
+            # Create preset for this line's position
+            safe_text = text[:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
+            preset_name = f"item.line.{safe_text}"
+            layout["presets"][preset_name] = {
+                "y": round(item["y"], 1),
+                "y2": round(item["y2"], 1)
+            }
+            
+            # Add content entry for this line - use strikeout to fill the entire bounding box
+            layout["content"][0]["content"][text] = [{
+                "type": "strikeout",
+                "presets": ["strikeout_item", preset_name]
+            }]
+
+        # Set example using first detected text
+        if layout["parameters"]["Items"]["strikeout_item_lines"]["choices"]:
+            first_text = layout["parameters"]["Items"]["strikeout_item_lines"]["choices"][0]
+            layout["parameters"]["Items"]["strikeout_item_lines"]["example"] = first_text
 
     return layout
 
