@@ -20,218 +20,78 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
                     max_box_size_pct: float = 1.2, debug_dir: str = None, 
                     max_fill_ratio: float = 0.96, min_mean_inner: float = 140.0,
                     region_pct: list = None, min_box_size_px: int = 10, max_box_size_px: int = 50):
-    """Detect hollow square checkboxes in a rendered PDF page using OpenCV.
+    """Detect checkbox positions by finding □ characters in the PDF text.
     
     Args:
         region_pct: Optional [x0, y0, x1, y1] in percent to crop before detection.
                    Coordinates will be returned relative to this cropped region.
-        min_box_size_px: Minimum checkbox size in pixels (used when region_pct is set)
-        max_box_size_px: Maximum checkbox size in pixels (used when region_pct is set)
+        Other parameters kept for API compatibility but not used.
     
     Returns coordinates as percentages of canvas dimensions (or page if no region).
     """
-    # Load and render PDF page
+    # Load the PDF page
     doc = fitz.open(pdf_path)
     if doc.page_count < 1:
         return []
     page = doc.load_page(0)
-    mat = fitz.Matrix(zoom, zoom)
-    pix = page.get_pixmap(matrix=mat, alpha=False)
-    img = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
-    if img.ndim == 3 and img.shape[2] == 3:
-        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    else:
-        gray = img
-
-    full_h, full_w = gray.shape
     
-    # Save full page for reference if debug enabled
-    if debug_dir and region_pct:
-        outp = Path(debug_dir)
-        outp.mkdir(parents=True, exist_ok=True)
-        # Save full grayscale image
-        cv2.imwrite(str(outp / 'checkbox_full_page.png'), gray)
+    # Get page dimensions
+    page_rect = page.rect
+    page_width = page_rect.width
+    page_height = page_rect.height
     
-    # Crop to region if specified
+    # Calculate region bounds if specified
     if region_pct:
-        x0_pix = int(region_pct[0] * full_w / 100.0)
-        y0_pix = int(region_pct[1] * full_h / 100.0)
-        x1_pix = int(region_pct[2] * full_w / 100.0)
-        y1_pix = int(region_pct[3] * full_h / 100.0)
-        
-        if debug_dir:
-            print(f"DEBUG: Full image size: {full_w}x{full_h}", file=sys.stderr)
-            print(f"DEBUG: Region percent: {region_pct}", file=sys.stderr)
-            print(f"DEBUG: Crop pixels: x={x0_pix}:{x1_pix}, y={y0_pix}:{y1_pix}", file=sys.stderr)
-            
-            # Draw rectangle on full page to show crop region
-            full_with_rect = cv2.cvtColor(gray.copy(), cv2.COLOR_GRAY2BGR)
-            cv2.rectangle(full_with_rect, (x0_pix, y0_pix), (x1_pix, y1_pix), (0, 255, 0), 3)
-            cv2.imwrite(str(outp / 'checkbox_crop_region.png'), full_with_rect)
-        
-        gray = gray[y0_pix:y1_pix, x0_pix:x1_pix]
-        
-        if debug_dir:
-            print(f"DEBUG: Cropped image size: {gray.shape[1]}x{gray.shape[0]}", file=sys.stderr)
-            # Save the cropped region
-            cv2.imwrite(str(outp / 'checkbox_cropped.png'), gray)
+        rx0, ry0, rx1, ry1 = region_pct
+        region_x0 = (rx0 / 100.0) * page_width
+        region_y0 = (ry0 / 100.0) * page_height
+        region_x2 = (rx1 / 100.0) * page_width
+        region_y2 = (ry1 / 100.0) * page_height
+        region_width = region_x2 - region_x0
+        region_height = region_y2 - region_y0
+    else:
+        region_x0 = 0
+        region_y0 = 0
+        region_x2 = page_width
+        region_y2 = page_height
+        region_width = page_width
+        region_height = page_height
     
-    h, w = gray.shape
-
-    # Preprocess image
-    blur = cv2.GaussianBlur(gray, (5, 5), 0)
-    th = cv2.adaptiveThreshold(blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-                             cv2.THRESH_BINARY_INV, 11, 2)
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-    closed = cv2.morphologyEx(th, cv2.MORPH_CLOSE, kernel, iterations=2)
-
-    # Find contours
-    contours, _ = cv2.findContours(closed, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
-    results = []
+    # Extract all text with word-level positions
+    words_on_page = page.get_text("words")
+    
+    # Find all checkbox characters (□ and variants)
+    checkbox_chars = ['□', '☐', '☑', '☒']
+    checkboxes = []
+    
+    for word_data in words_on_page:
+        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
+        
+        # Check if this is a checkbox character
+        if text.strip() in checkbox_chars or text.startswith('□'):
+            # Check if checkbox is in our region
+            if (x0 >= region_x0 and x1 <= region_x2 and 
+                y0 >= region_y0 and y1 <= region_y2):
+                
+                # Convert to region-relative coordinates (as percentages)
+                rel_x = ((x0 - region_x0) / region_width) * 100.0
+                rel_y = ((y0 - region_y0) / region_height) * 100.0
+                rel_x2 = ((x1 - region_x0) / region_width) * 100.0
+                rel_y2 = ((y1 - region_y0) / region_height) * 100.0
+                
+                checkboxes.append({
+                    "x": round(rel_x, 3),
+                    "y": round(rel_y, 3),
+                    "x2": round(rel_x2, 3),
+                    "y2": round(rel_y2, 3)
+                })
     
     if debug_dir:
-        print(f"DEBUG: Found {len(contours)} total contours", file=sys.stderr)
-
-    # Process each contour
-    seen_positions = set()  # Track positions we've seen to deduplicate
-    contour_count = 0
-    quad_count = 0
-    for cnt in contours:
-        area = cv2.contourArea(cnt)
-        if area < 10:
-            continue
-        
-        contour_count += 1
-            
-        # Approximate the contour to a polygon
-        peri = cv2.arcLength(cnt, True)
-        approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
-        
-        if debug_dir and contour_count <= 20:
-            print(f"DEBUG: Contour {contour_count}: area={area:.1f}, perimeter={peri:.1f}, approx_sides={len(approx)}", file=sys.stderr)
-        
-        # Look for quadrilateral shapes
-        if len(approx) == 4:
-            quad_count += 1
-            x, y, bw, bh = cv2.boundingRect(approx)
-            
-            # Calculate size as percentage of page dimensions
-            bw_pct = bw / w * 100.0
-            bh_pct = bh / h * 100.0
-            
-            # Use pixel-based size check if we're working with a cropped region, otherwise use percentages
-            if region_pct:
-                size_ok = (min_box_size_px <= bw <= max_box_size_px and 
-                          min_box_size_px <= bh <= max_box_size_px)
-                if debug_dir and quad_count <= 20:
-                    print(f"DEBUG: Quad {quad_count}: size={bw}x{bh}px ({bw_pct:.2f}%x{bh_pct:.2f}%), at ({x},{y}), size_ok={size_ok}", file=sys.stderr)
-            else:
-                size_ok = (min_box_size_pct <= bw_pct <= max_box_size_pct and 
-                          min_box_size_pct <= bh_pct <= max_box_size_pct)
-                if debug_dir and quad_count <= 20:
-                    print(f"DEBUG: Quad {quad_count}: size={bw_pct:.2f}%x{bh_pct:.2f}%, at ({x},{y}), size_ok={size_ok}", file=sys.stderr)
-            
-            if not size_ok:
-                if debug_dir and quad_count <= 20:
-                    print(f"  -> Filtered: size check failed", file=sys.stderr)
-                continue
-                
-            # Check if we've seen this position before (with some tolerance)
-            pos_key = f"{x//5},{y//5}"  # Group nearby positions
-            if pos_key in seen_positions:
-                if debug_dir and quad_count <= 20:
-                    print(f"  -> Filtered: duplicate position", file=sys.stderr)
-                continue
-            seen_positions.add(pos_key)
-                
-            # Check if roughly square
-            ar = float(bw) / float(bh) if bh > 0 else 0
-            if ar < 0.6 or ar > 1.6:
-                if debug_dir and quad_count <= 20:
-                    print(f"  -> Filtered: aspect ratio {ar:.2f}", file=sys.stderr)
-                continue
-
-            # Calculate fill ratio to find hollow boxes
-            mask = np.zeros((h, w), dtype=np.uint8)
-            cv2.drawContours(mask, [approx], -1, 255, -1)
-            filled_area = cv2.countNonZero(mask[y:y+bh, x:x+bw])
-            fill_ratio = float(filled_area) / float(max(1, bw * bh))
-            if fill_ratio > max_fill_ratio:
-                if debug_dir and quad_count <= 20:
-                    print(f"  -> Filtered: fill ratio {fill_ratio:.2f}", file=sys.stderr)
-                continue
-
-            if debug_dir and quad_count <= 20:
-                print(f"  -> PASSED all filters", file=sys.stderr)
-
-            # Convert to percent coordinates (0% = top/left of page)
-            x_pct = (x / w) * 100.0
-            y_pct = (y / h) * 100.0
-            x2_pct = ((x + bw) / w) * 100.0
-            y2_pct = ((y + bh) / h) * 100.0
-            
-            results.append({
-                "x": round(x_pct, 3),
-                "y": round(y_pct, 3),
-                "x2": round(x2_pct, 3),
-                "y2": round(y2_pct, 3)
-            })
-
-    # Deduplicate results that are very close together
-    deduped = []
-    for r in sorted(results, key=lambda x: (x['x'], x['y'])):
-        if not any(abs(d['x'] - r['x']) < 0.5 and 
-                  abs(d['y'] - r['y']) < 0.5 for d in deduped):
-            deduped.append(r)
-
-    if debug_dir:
-        print(f"DEBUG: Found {len(results)} raw checkboxes, {len(deduped)} after dedup", file=sys.stderr)
-        for i, r in enumerate(deduped, 1):
-            print(f"DEBUG: Checkbox {i}: x={r['x']:.3f}, y={r['y']:.3f}, x2={r['x2']:.3f}, y2={r['y2']:.3f}", file=sys.stderr)
-
-    # Save debug images if requested
-    if debug_dir:
-        try:
-            outp = Path(debug_dir)
-            outp.mkdir(parents=True, exist_ok=True)
-            
-            # Save the cropped image that was processed
-            if region_pct:
-                # We're working with the cropped gray image
-                cropped_bgr = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-            else:
-                # Save rendered page
-                if img.ndim == 3 and img.shape[2] == 3:
-                    cropped_bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-                else:
-                    cropped_bgr = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-
-            # Create debug visualization on the cropped image
-            annotated = cropped_bgr.copy()
-            for r in deduped:
-                # Convert percentages back to image coordinates
-                x = int((r['x'] / 100.0) * w)
-                y = int((r['y'] / 100.0) * h)
-                x2 = int((r['x2'] / 100.0) * w)
-                y2 = int((r['y2'] / 100.0) * h)
-                
-                # Draw detection
-                cv2.rectangle(annotated, (x, y), (x2, y2), (0, 255, 0), 2)
-                cx = (x + x2) // 2
-                cy = (y + y2) // 2
-                cv2.circle(annotated, (cx, cy), 3, (0, 0, 255), -1)
-                cv2.putText(annotated, f"{r['x']:.1f},{r['y']:.1f}", 
-                          (x, max(10, y-5)), cv2.FONT_HERSHEY_SIMPLEX, 0.4, 
-                          (255, 0, 0), 1)
-
-            cv2.imwrite(str(outp / 'checkbox_annotated.png'), annotated)
-            cv2.imwrite(str(outp / 'checkbox_threshold.png'), th)
-            cv2.imwrite(str(outp / 'checkbox_closed.png'), closed)
-
-        except Exception as e:
-            print(f"Failed to save debug images: {e}", file=sys.stderr)
-
-    return deduped
+        print(f"DEBUG: Found {len(checkboxes)} checkbox characters", file=sys.stderr)
+        for i, cb in enumerate(checkboxes, 1):
+            print(f"DEBUG: Checkbox {i}: x={cb['x']:.3f}, y={cb['y']:.3f}, x2={cb['x2']:.3f}, y2={cb['y2']:.3f}", file=sys.stderr)
+    
+    return checkboxes
 
 def find_layout_file(layout_dir, layout_id):
     """Find the layout file for a given layout ID by searching the layout directory.
@@ -489,6 +349,105 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     return results
 
 
+def extract_checkbox_labels(pdf_path: str, checkboxes: list, region_pct: list, zoom: int = 6, debug_dir: str = None):
+    """Extract text labels for checkboxes by finding text following □ characters.
+    
+    Args:
+        pdf_path: Path to the PDF file
+        checkboxes: List of checkbox dicts with x, y, x2, y2 (percentages)
+        region_pct: Region as [x0, y0, x1, y1] in percent of page
+        zoom: Zoom factor (not used, kept for API compatibility)
+        debug_dir: Optional debug output directory
+        
+    Returns:
+        List of dicts with checkbox coordinates and associated text labels
+    """
+    if not checkboxes:
+        return []
+    
+    doc = fitz.open(pdf_path)
+    if doc.page_count < 1:
+        return []
+    page = doc.load_page(0)
+    
+    # Get page dimensions
+    page_rect = page.rect
+    page_width = page_rect.width
+    page_height = page_rect.height
+    
+    # Calculate region bounds if specified
+    rx0, ry0, rx1, ry1 = region_pct
+    region_x0 = (rx0 / 100.0) * page_width
+    region_y0 = (ry0 / 100.0) * page_height
+    region_x2 = (rx1 / 100.0) * page_width
+    region_y2 = (ry1 / 100.0) * page_height
+    
+    # Extract all text with word-level positions
+    words_on_page = page.get_text("words")
+    
+    # Find all checkbox characters and their positions in the word list
+    checkbox_chars = ['□', '☐', '☑', '☒']
+    checkbox_positions = []
+    
+    for idx, word_data in enumerate(words_on_page):
+        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
+        
+        # Check if this is a checkbox character in our region
+        # Sometimes text is attached to the checkbox like '□killed'
+        if (text.strip() in checkbox_chars or '□' in text):
+            if (x0 >= region_x0 and x1 <= region_x2 and 
+                y0 >= region_y0 and y1 <= region_y2):
+                checkbox_positions.append(idx)
+    
+    # Extract labels: text between each □ and the next □/comma/period
+    results = []
+    for i, cb_idx in enumerate(checkbox_positions):
+        # Find the next checkbox position (or use end of words)
+        next_cb_idx = checkbox_positions[i + 1] if i + 1 < len(checkbox_positions) else len(words_on_page)
+        
+        # Check if the checkbox has text attached to it (e.g., '□killed')
+        cb_word_data = words_on_page[cb_idx]
+        cb_text = cb_word_data[4]  # text is at index 4
+        label_words = []
+        
+        # If checkbox has text attached after the □, extract it
+        if cb_text.startswith('□') and len(cb_text) > 1:
+            # Extract the text after the □
+            attached_text = cb_text[1:]  # Remove the □ character
+            label_words.append(attached_text)
+        
+        # Collect text from words after this checkbox until the next checkbox, comma, or period
+        for word_idx in range(cb_idx + 1, next_cb_idx):
+            word_data = words_on_page[word_idx]
+            x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
+            
+            # Only include words in our region
+            if (x0 >= region_x0 and x1 <= region_x2 and 
+                y0 >= region_y0 and y1 <= region_y2):
+                # Stop if we hit a comma or period (but include the word if it ends with comma/period)
+                label_words.append(text)
+                if text.endswith(',') or text.endswith('.'):
+                    break
+        
+        # Join the words and clean up
+        label = ' '.join(label_words)
+        
+        # Clean up: remove trailing punctuation if it's just a period or comma at the end
+        label = label.strip()
+        if label.endswith('.') or label.endswith(','):
+            # Check if this is just trailing punctuation (not part of abbreviation)
+            if not (label.endswith('...') or (len(label) > 2 and label[-2:-1].isdigit())):
+                label = label[:-1].strip()
+        
+        # Return in the expected format (dict with 'checkbox' and 'label')
+        results.append({
+            'checkbox': checkboxes[i] if i < len(checkboxes) else None,
+            'label': label
+        })
+    
+    return results
+
+
 def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None, 
                     layout_dir=None, parent_id=None, scenario_id=None, description=None, parent=None,
                     checkbox_region_pct=None, item_canvas_name="items", checkbox_canvas_name="summary"):
@@ -524,6 +483,11 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
     # Detect checkboxes first
     boxes = image_checkboxes(pdf_path, debug_dir=debug_dir, region_pct=checkbox_region_pct)
     
+    # Extract checkbox labels if we have checkboxes and a region
+    checkbox_labels = []
+    if boxes and checkbox_region_pct:
+        checkbox_labels = extract_checkbox_labels(pdf_path, boxes, checkbox_region_pct, debug_dir=debug_dir)
+    
     # Add required sections
     layout["parameters"] = {
         "Items": {
@@ -537,13 +501,13 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
     }
     
     # Add checkbox parameters if checkboxes were detected
-    if boxes:
+    if checkbox_labels:
         layout["parameters"]["Checkboxes"] = {
             "summary_checkbox": {
                 "type": "choice",
                 "description": "Checkboxes in the adventure summary that should be selected",
-                "choices": list(range(1, len(boxes) + 1)),
-                "example": ",".join(str(i) for i in range(1, len(boxes) + 1))
+                "choices": [item['label'] for item in checkbox_labels if item['label']],
+                "example": checkbox_labels[0]['label'] if checkbox_labels and checkbox_labels[0]['label'] else ""
             }
         }
     
@@ -558,19 +522,23 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
     }
     
     # Add checkbox presets if checkboxes were detected
-    if boxes:
+    if checkbox_labels:
         layout["presets"]["checkbox"] = {
             "canvas": checkbox_canvas_name,
             "color": "black",
             "size": 1
         }
-        for i, box in enumerate(boxes, 1):
-            layout["presets"][f"checkbox.{i}"] = {
-                "x": box["x"],
-                "y": box["y"],
-                "x2": box["x2"],
-                "y2": box["y2"]
-            }
+        for item in checkbox_labels:
+            if item['label']:
+                # Create a safe preset name from the label
+                safe_label = item['label'][:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
+                preset_name = f"checkbox.{safe_label}"
+                layout["presets"][preset_name] = {
+                    "x": item['checkbox']["x"],
+                    "y": item['checkbox']["y"],
+                    "x2": item['checkbox']["x2"],
+                    "y2": item['checkbox']["y2"]
+                }
     
     # Initialize content array
     layout["content"] = [
@@ -675,17 +643,20 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
         layout["parameters"]["Items"]["strikeout_item_lines"]["example"] = first_text
 
     # Add checkbox content if checkboxes were detected
-    if boxes:
+    if checkbox_labels:
         checkbox_content = {
             "type": "choice",
             "choices": "param:summary_checkbox",
             "content": {}
         }
-        for i in range(1, len(boxes) + 1):
-            checkbox_content["content"][str(i)] = [{
-                "type": "checkbox",
-                "presets": ["checkbox", f"checkbox.{i}"]
-            }]
+        for item in checkbox_labels:
+            if item['label']:
+                # Create safe preset name matching what we created earlier
+                safe_label = item['label'][:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
+                checkbox_content["content"][item['label']] = [{
+                    "type": "checkbox",
+                    "presets": ["checkbox", f"checkbox.{safe_label}"]
+                }]
         layout["content"].append(checkbox_content)
 
     return layout
