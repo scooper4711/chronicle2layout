@@ -224,8 +224,11 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     # Extract all text with word-level positions
     words_on_page = page.get_text("words")
     
-    # Filter words to region and group by line
-    lines_dict = {}  # line_no -> list of words
+    # Filter words to region and group by y-coordinate (not line_no, which is unreliable)
+    # We'll group words that have similar y0 values (within a small tolerance)
+    y_tolerance = 2.0  # pixels
+    lines_dict = {}  # quantized_y -> list of words
+    
     for word_data in words_on_page:
         x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
         
@@ -233,10 +236,18 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
         if (x0 >= region_x0 and x1 <= region_x2 and 
             y0 >= region_y0 and y1 <= region_y2):
             
-            if line_no not in lines_dict:
-                lines_dict[line_no] = []
+            # Find existing line with similar y0, or create new one
+            quantized_y = None
+            for existing_y in lines_dict.keys():
+                if abs(y0 - existing_y) <= y_tolerance:
+                    quantized_y = existing_y
+                    break
             
-            lines_dict[line_no].append({
+            if quantized_y is None:
+                quantized_y = y0
+                lines_dict[quantized_y] = []
+            
+            lines_dict[quantized_y].append({
                 'text': text,
                 'x0': x0,
                 'y0': y0,
@@ -246,8 +257,8 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     
     # Convert grouped lines to the expected format
     results = []
-    for line_no in sorted(lines_dict.keys()):
-        words = lines_dict[line_no]
+    for y_coord in sorted(lines_dict.keys()):
+        words = lines_dict[y_coord]
         if not words:
             continue
             
@@ -392,7 +403,8 @@ def extract_checkbox_labels(pdf_path: str, checkboxes: list, region_pct: list, z
 
 def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None, 
                     layout_dir=None, parent_id=None, scenario_id=None, description=None, parent=None,
-                    checkbox_region_pct=None, item_canvas_name="items", checkbox_canvas_name="summary"):
+                    checkbox_region_pct=None, item_canvas_name="items", checkbox_canvas_name="summary",
+                    default_chronicle_location=None):
     """Generate JSON in layout file format with text-based choices for strikeouts.
     
     Args:
@@ -407,6 +419,7 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
         checkbox_region_pct (list, optional): Region as [x0, y0, x1, y1] for checkbox detection
         item_canvas_name (str, optional): Name of the canvas for items (default: "items")
         checkbox_canvas_name (str, optional): Name of the canvas for checkboxes (default: "summary")
+        default_chronicle_location (str, optional): Default path to the blank chronicle PDF
     
     Returns:
         dict: Layout JSON configuration with detected items and checkboxes
@@ -421,6 +434,8 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
         layout["description"] = description
     if parent:
         layout["parent"] = parent
+    if default_chronicle_location:
+        layout["defaultChronicleLocation"] = default_chronicle_location
 
     # Detect checkboxes first
     boxes = image_checkboxes(pdf_path, debug_dir=debug_dir, region_pct=checkbox_region_pct)
@@ -453,52 +468,79 @@ def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None,
         close_count = text.count(')')
         return open_count > close_count
     
-    # Merge lines based on unmatched parentheses
+    # Helper: split a long combined string into individual items using '(level ... )' groups as boundaries
+    # New simple heuristic segmentation based on user guidance:
+    # - Continue to next source line while there are unmatched parentheses.
+    # - A single item never has more than two parenthesis groups.
+    # - After the second complete parenthesis group, if more tokens follow on the same line,
+    #   start a new item.
+    # We implement this by token streaming across lines, finalizing an item when:
+    #   groups_completed == 2 and open_count == 0 and tokens remain; OR
+    #   end-of-line with open_count == 0.
+    def finalize_buffer(item_tokens, items_accum, y_start, y_end):
+        if not item_tokens:
+            return
+        text = ' '.join(item_tokens).strip()
+        if text:
+            items_accum.append({"text": text, "y": y_start, "y2": y_end})
+
+    # Stream tokens across lines applying the heuristic.
     items = []
-    item_lines = []
+    current_tokens = []
+    open_count = 0  # net '(' minus ')'
+    groups_completed = 0  # number of fully closed parenthesis groups in current item
+    current_y_start = None
+    current_y_end = None
     
     for line in lines:
-        if "items" in line["text"].lower() and ":" not in line["text"]:
+        raw_line_text = line["text"]
+        if "items" in raw_line_text.lower() and ":" not in raw_line_text:
             continue
-            
-        text = clean_text(line["text"])
-        if not text.strip():
+        text = clean_text(raw_line_text)
+        if not text:
             continue
-        
-        # Add this line to current item
-        item_lines.append({
-            "text": text,
-            "y": line["top_left_pct"][1],
-            "y2": line["bottom_right_pct"][1],
-            "top_left_pct": line["top_left_pct"],
-            "bottom_right_pct": line["bottom_right_pct"]
-        })
-        
-        # Check if we should continue to the next line or finish this item
-        combined_text = " ".join(l["text"] for l in item_lines)
-        
-        # If parentheses are balanced, this item is complete
-        if not has_unmatched_parens(combined_text):
-            # Use the first line's y (top) and the last line's y2 (bottom)
-            y_start = min(l["y"] for l in item_lines)
-            y_end = max(l["y2"] for l in item_lines)
-            
-            items.append({
-                "text": combined_text,
-                "y": y_start,
-                "y2": y_end
-            })
-            item_lines = []
+        tokens = text.split()
+        line_y_top = line["top_left_pct"][1]
+        line_y_bottom = line["bottom_right_pct"][1]
+        # Initialize current item vertical bounds
+        if current_y_start is None:
+            current_y_start = line_y_top
+        current_y_end = line_y_bottom
+        for idx, tok in enumerate(tokens):
+            # Track parentheses
+            # Count '(' occurrences
+            opens = tok.count('(')
+            closes = tok.count(')')
+            # Each '(' increases open_count
+            open_count += opens
+            # Each ')' closes one if available
+            for _ in range(closes):
+                if open_count > 0:
+                    open_count -= 1
+                    groups_completed += 1
+            current_tokens.append(tok)
+            # Heuristic split point: once two groups are completed and we're balanced, finalize immediately
+            if groups_completed >= 2 and open_count == 0:
+                finalize_buffer(current_tokens, items, current_y_start, current_y_end)
+                # Reset for next item starting immediately (same line or next)
+                current_tokens = []
+                open_count = 0
+                groups_completed = 0
+                current_y_start = line_y_top  # start new item at same line top (approximation)
+                current_y_end = line_y_bottom
+        # End-of-line: finalize item if balanced and we have tokens
+        if open_count == 0 and current_tokens:
+            finalize_buffer(current_tokens, items, current_y_start, current_y_end)
+            current_tokens = []
+            open_count = 0
+            groups_completed = 0
+            current_y_start = None
+            current_y_end = None
+        # Else continue to next line to complete parentheses
     
-    # If there are remaining lines (unmatched parentheses at the end), add them as final item
-    if item_lines:
-        y_start = min(l["y"] for l in item_lines)
-        y_end = max(l["y2"] for l in item_lines)
-        items.append({
-            "text": " ".join(l["text"] for l in item_lines),
-            "y": y_start,
-            "y2": y_end
-        })
+    # If unfinished item remains (unbalanced at EOF), flush as-is
+    if current_tokens:
+        finalize_buffer(current_tokens, items, current_y_start if current_y_start is not None else 0, current_y_end if current_y_end is not None else 0)
 
     # Only add parameters, presets, and content if we have items or checkboxes
     if items or checkbox_labels:
@@ -625,6 +667,7 @@ def main():
     p.add_argument("--id", type=str, help="ID for the layout (e.g. 'pfs2.s5-07')")
     p.add_argument("--description", type=str, help="Description of the scenario")
     p.add_argument("--parent", type=str, help="Parent layout ID (e.g. 'pfs2.season5')")
+    p.add_argument("--default-chronicle", type=str, help="Default path to the blank chronicle PDF (e.g. 'modules/pf2e-pfs06-year-of-immortal-influence/assets/chronicles-1/6-06-RottenApples.pdf')")
     args = p.parse_args()
 
     try:
@@ -671,7 +714,8 @@ def main():
             parent=args.parent,
             checkbox_region_pct=checkbox_region_pct,
             item_canvas_name=args.item_canvas,
-            checkbox_canvas_name=args.checkbox_canvas
+            checkbox_canvas_name=args.checkbox_canvas,
+            default_chronicle_location=args.default_chronicle
         )
         
         output = json.dumps(layout, indent=2)
