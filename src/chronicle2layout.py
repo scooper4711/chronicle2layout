@@ -24,11 +24,11 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
     
     Returns coordinates as percentages of canvas dimensions (or page if no region).
     """
-    # Load the PDF page
+    # Load the PDF page (use last page to handle full module PDFs)
     doc = fitz.open(pdf_path)
     if doc.page_count < 1:
         return []
-    page = doc.load_page(0)
+    page = doc.load_page(doc.page_count - 1)
     
     # Get page dimensions
     page_rect = page.rect
@@ -188,7 +188,7 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     doc = fitz.open(pdf_path)
     if doc.page_count < 1:
         return []
-    page = doc.load_page(0)
+    page = doc.load_page(doc.page_count - 1)
     
     # Get page dimensions
     page_rect = page.rect
@@ -312,7 +312,7 @@ def extract_checkbox_labels(pdf_path: str, checkboxes: list, region_pct: list, z
     doc = fitz.open(pdf_path)
     if doc.page_count < 1:
         return []
-    page = doc.load_page(0)
+    page = doc.load_page(doc.page_count - 1)
     
     # Get page dimensions
     page_rect = page.rect
