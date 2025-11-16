@@ -115,23 +115,30 @@ def find_layout_file(layout_dir, layout_id):
         # Simple case: pfs2 -> pfs2/pfs2.json
         layout_file = base_path / parts[0] / f"{parts[0]}.json"
     else:
-        # Complex case: need to search for the file
         # Start with the first part (e.g., pfs2)
         search_base = base_path / parts[0]
-        
-        # For patterns like pfs2.season5, look for Season 5.json in subdirectories
-        if parts[1].startswith('season'):
-            season_num = parts[1].replace('season', '')
-            # Look in s{N} subdirectory for Season {N}.json
-            layout_file = search_base / f"s{season_num}" / f"Season {season_num}.json"
-        elif parts[1].startswith('s') and '-' in parts[1]:
-            # For scenario IDs like s5-07
-            season_num = parts[1].split('-')[0][1:]  # Extract '5' from 's5'
-            # This would be a scenario file, but we're looking for parent layouts
-            layout_file = search_base / f"s{season_num}" / f"{parts[1]}.json"
+
+        ident = parts[1]
+        import re
+        m = re.match(r'^season(\d+)([a-z])?$', ident)
+        if m:
+            # Variant-aware season parent
+            season_num = m.group(1)
+            variant = m.group(2)
+            season_dir = search_base / f"s{season_num}"
+            if variant:
+                # File naming for variant: Season{N}{variant}.json (no space)
+                layout_file = season_dir / f"Season{season_num}{variant}.json"
+            else:
+                # Standard season parent: Season N.json (with space)
+                layout_file = season_dir / f"Season {season_num}.json"
+        elif ident.startswith('s') and '-' in ident:
+            # Scenario layout reference (not a parent variant)
+            season_num = ident.split('-')[0][1:]
+            layout_file = search_base / f"s{season_num}" / f"{ident}.json"
         else:
-            # Generic fallback
-            layout_file = search_base / parts[1] / f"{parts[1]}.json"
+            # Generic fallback directory
+            layout_file = search_base / ident / f"{ident}.json"
     
     if not layout_file.exists():
         raise ValueError(f"Layout file not found: {layout_file}")
@@ -212,7 +219,7 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
         if region_pct is None:
             region_pct = [0.5, 50.8, 40.0, 83.0]
 
-    # Convert percent region to PDF coordinates (points)
+    # Convert percent region to PDF coordinates (points) — use canvas exactly
     rx0, ry0, rx1, ry1 = region_pct
     region_x0 = (rx0 / 100.0) * page_width
     region_y0 = (ry0 / 100.0) * page_height
@@ -232,7 +239,7 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     for word_data in words_on_page:
         x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
         
-        # Check if word is in our region
+        # Check if word is strictly within our region (no extra margin)
         if (x0 >= region_x0 and x1 <= region_x2 and 
             y0 >= region_y0 and y1 <= region_y2):
             
