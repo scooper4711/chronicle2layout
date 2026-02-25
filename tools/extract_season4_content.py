@@ -96,6 +96,48 @@ def find_vertical_lines(img, threshold=60, min_height_fraction=0.02):
     return groups
 
 
+def find_grey_boxes(img, grey_min=200, grey_max=240, min_width=50, min_height=20):
+    """Find light grey filled rectangles (form fields).
+    Returns list of (x0, y0, x1, y1) tuples."""
+    arr = np.array(img.convert('L'))
+    h, w = arr.shape
+    
+    # Find horizontal spans of grey pixels
+    boxes = []
+    for y in range(h):
+        in_grey = False
+        x_start = 0
+        for x in range(w):
+            is_grey = grey_min <= arr[y, x] <= grey_max
+            if is_grey and not in_grey:
+                x_start = x
+                in_grey = True
+            elif not is_grey and in_grey:
+                # End of grey span
+                if x - x_start >= min_width:
+                    # Check if this span extends vertically to form a box
+                    box_height = 1
+                    for y2 in range(y + 1, min(y + 100, h)):
+                        # Check if this row also has grey in same x range
+                        grey_count = np.sum((arr[y2, x_start:x] >= grey_min) & (arr[y2, x_start:x] <= grey_max))
+                        if grey_count / (x - x_start) < 0.7:
+                            break
+                        box_height += 1
+                    
+                    if box_height >= min_height:
+                        # Check if we already have a box at this location
+                        is_duplicate = False
+                        for bx0, by0, bx1, by1 in boxes:
+                            if abs(x_start - bx0) < 5 and abs(y - by0) < 5:
+                                is_duplicate = True
+                                break
+                        if not is_duplicate:
+                            boxes.append((x_start, y, x, y + box_height))
+                in_grey = False
+    
+    return boxes
+
+
 def words_positions(page, zoom=2):
     words = page.get_text("words")
     scaled = []
@@ -229,11 +271,24 @@ def main():
             char_field_x1 = char_right - 2
             
             # Convert to main-relative percentages
-            # Assume main canvas margins similar to what we found
-            main_left = 10
-            main_top = 10
-            main_width = w - 20
-            main_height = h - 20
+            # The main canvas is defined in Season4a.json as:
+            # "main": { "parent": "page", "x": 0.8, "y": 0.6, "x2": 99.2, "y2": 99.4 }
+            # So main canvas in pixels (at 2x zoom):
+            main_x_percent = 0.8
+            main_y_percent = 0.6
+            main_x2_percent = 99.2
+            main_y2_percent = 99.4
+            
+            main_left = int(w * main_x_percent / 100)
+            main_top = int(h * main_y_percent / 100)
+            main_right = int(w * main_x2_percent / 100)
+            main_bottom = int(h * main_y2_percent / 100)
+            main_width = main_right - main_left
+            main_height = main_bottom - main_top
+            
+            print(f"\nMain canvas boundaries:")
+            print(f"  Pixels: x={main_left}, y={main_top}, x2={main_right}, y2={main_bottom}")
+            print(f"  Size: {main_width}x{main_height}")
             
             # Character name field in main-relative %
             char_x = ((char_field_x0 - main_left) / main_width) * 100
