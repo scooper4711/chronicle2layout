@@ -10,6 +10,8 @@ import sys
 
 import fitz  # PyMuPDF
 
+from shared_utils import find_layout_file, transform_canvas_coordinates
+
 
 def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4, 
                     max_box_size_pct: float = 1.2, debug_dir: str = None, 
@@ -88,93 +90,6 @@ def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4
     
     return checkboxes
 
-def find_layout_file(layout_dir, layout_id):
-    """Find the layout file for a given layout ID by searching the layout directory.
-    
-    The layout ID follows patterns like:
-    - pfs2 -> layouts/pfs2/pfs2.json
-    - pfs2.season5 -> layouts/pfs2/s5/Season 5.json
-    - pfs2.s5-07 -> layouts/pfs2/s5/5-07-SewerDragonCrisis.json
-    
-    Args:
-        layout_dir (str): Base layouts directory (e.g., 'layouts')
-        layout_id (str): Layout ID to find (e.g., 'pfs2.season5')
-        
-    Returns:
-        Path: Path to the layout file
-        
-    Raises:
-        ValueError: If the layout file cannot be found
-    """
-    base_path = Path(layout_dir)
-    
-    # Split the layout ID by dots
-    parts = layout_id.split('.')
-    
-    if len(parts) == 1:
-        # Simple case: pfs2 -> pfs2/pfs2.json
-        layout_file = base_path / parts[0] / f"{parts[0]}.json"
-    else:
-        # Start with the first part (e.g., pfs2)
-        search_base = base_path / parts[0]
-
-        ident = parts[1]
-        import re
-        m = re.match(r'^season(\d+)([a-z])?$', ident)
-        if m:
-            # Variant-aware season parent
-            season_num = m.group(1)
-            variant = m.group(2)
-            season_dir = search_base / f"s{season_num}"
-            if variant:
-                # File naming for variant: Season{N}{variant}.json (no space)
-                layout_file = season_dir / f"Season{season_num}{variant}.json"
-            else:
-                # Standard season parent: Season N.json (with space)
-                layout_file = season_dir / f"Season {season_num}.json"
-        elif ident.startswith('s') and '-' in ident:
-            # Scenario layout reference (not a parent variant)
-            season_num = ident.split('-')[0][1:]
-            layout_file = search_base / f"s{season_num}" / f"{ident}.json"
-        else:
-            # Generic fallback directory
-            layout_file = search_base / ident / f"{ident}.json"
-    
-    if not layout_file.exists():
-        raise ValueError(f"Layout file not found: {layout_file}")
-    
-    return layout_file
-
-def transform_canvas_coordinates(layout_json, canvas_name):
-    """Transform canvas coordinates into absolute page coordinates by following the parent chain.
-    
-    Args:
-        layout_json (dict): The loaded layout JSON object
-        canvas_name (str): Name of the canvas to transform
-        
-    Returns:
-        list: [x, y, x2, y2] coordinates in absolute page percent
-    """
-    if "canvas" not in layout_json or canvas_name not in layout_json["canvas"]:
-        raise ValueError(f"Canvas {canvas_name} not found in layout")
-        
-    def transform_coordinates(canvas_name):
-        canvas = layout_json["canvas"][canvas_name]
-        x, y = canvas["x"], canvas["y"]
-        x2, y2 = canvas["x2"], canvas["y2"]
-        if "parent" in canvas:
-            parent_coords = transform_coordinates(canvas["parent"])
-            # Transform coordinates relative to parent
-            px, py, px2, py2 = parent_coords
-            pw = px2 - px
-            ph = py2 - py
-            x = px + (x / 100.0) * pw
-            y = py + (y / 100.0) * ph
-            x2 = px + (x2 / 100.0) * pw
-            y2 = py + (y2 / 100.0) * ph
-        return [x, y, x2, y2]
-        
-    return transform_coordinates(canvas_name)
 
 def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, 
                       layout_dir=None, parent_id=None, canvas_name="items"):
