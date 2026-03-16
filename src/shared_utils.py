@@ -1,18 +1,25 @@
 """Shared utility functions for the chronicle2layout package.
 
 Consolidates functions that were previously duplicated across multiple modules
-into a single source of truth. All layout file resolution and canvas coordinate
-transformation should use these functions.
+into a single source of truth. All layout file resolution, canvas coordinate
+transformation, and PDF image rendering should use these functions.
 
 Public functions:
     find_layout_file: Resolve a layout ID to a filesystem Path.
     transform_canvas_coordinates: Transform canvas coordinates to absolute page percentages.
+    render_page_to_image: Render the last page of a PDF to a PIL Image.
+    words_positions: Extract word bounding boxes from a PDF page, scaled by zoom factor.
+    find_grey_boxes: Detect light grey filled rectangles (form fields) in an image.
 
-Requirements: refactor-chronicle2layout 1.1, 1.2, 1.6, 1.7, 1.8, 5.1, 5.2, 8.1, 10.1
+Requirements: refactor-chronicle2layout 1.1, 1.2, 1.6, 1.7, 1.8, 5.1, 5.2, 7.3, 8.1, 10.1
 """
 
 import re
 from pathlib import Path
+
+import fitz
+import numpy as np
+from PIL import Image
 
 
 def find_layout_file(layout_dir: str, layout_id: str) -> Path:
@@ -108,3 +115,116 @@ def transform_canvas_coordinates(layout_json: dict, canvas_name: str) -> list[fl
         return [x, y, x2, y2]
 
     return transform(canvas_name)
+
+
+def render_page_to_image(pdf_path: str, zoom: int = 2) -> tuple[fitz.Page, Image.Image]:
+    """Render the last page of a PDF document to a PIL Image.
+
+    Opens the PDF, selects the last page, and renders it at the given zoom
+    level using PyMuPDF. Returns both the page object (for text extraction)
+    and the rendered image.
+
+    Args:
+        pdf_path: Filesystem path to the PDF file.
+        zoom: Rendering scale factor (default 2 for 2× resolution).
+
+    Returns:
+        A tuple of ``(page, image)`` where *page* is the PyMuPDF ``Page``
+        object and *image* is the rendered ``PIL.Image.Image``.
+
+    Requirements: refactor-chronicle2layout 7.3
+    """
+    doc = fitz.open(str(pdf_path))
+    page = doc.load_page(doc.page_count - 1)
+    mat = fitz.Matrix(zoom, zoom)
+    pix = page.get_pixmap(matrix=mat, alpha=False)
+    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+    return page, img
+
+
+def words_positions(
+    page: fitz.Page, zoom: int = 2
+) -> list[tuple[str, int, int, int, int]]:
+    """Extract word bounding boxes from a PDF page, scaled by a zoom factor.
+
+    Each word is returned as a tuple of ``(text, x0, y0, x1, y1)`` where
+    the coordinates are integer pixel positions at the given zoom level.
+
+    Args:
+        page: A PyMuPDF ``Page`` object to extract words from.
+        zoom: Scale factor applied to the raw PDF coordinates (default 2).
+
+    Returns:
+        A list of ``(text, x0, y0, x1, y1)`` tuples for every word on the page.
+
+    Requirements: refactor-chronicle2layout 7.3
+    """
+    words = page.get_text("words")
+    scaled: list[tuple[str, int, int, int, int]] = []
+    for w in words:
+        x0, y0, x1, y1, text, _, _, _ = w
+        scaled.append((text, int(x0 * zoom), int(y0 * zoom), int(x1 * zoom), int(y1 * zoom)))
+    return scaled
+
+
+def find_grey_boxes(
+    img: Image.Image,
+    grey_min: int = 200,
+    grey_max: int = 240,
+    min_width: int = 50,
+    min_height: int = 20,
+) -> list[tuple[int, int, int, int]]:
+    """Detect light grey filled rectangles in an image.
+
+    Scans the image row-by-row for horizontal spans of grey pixels, then
+    checks whether each span extends vertically to form a box. Duplicate
+    detections at nearly the same position are suppressed.
+
+    Args:
+        img: A PIL ``Image.Image`` to scan (will be converted to greyscale).
+        grey_min: Minimum greyscale value to consider as "grey" (default 200).
+        grey_max: Maximum greyscale value to consider as "grey" (default 240).
+        min_width: Minimum horizontal span in pixels to qualify (default 50).
+        min_height: Minimum vertical extent in pixels to qualify (default 20).
+
+    Returns:
+        A list of ``(x0, y0, x1, y1)`` bounding-box tuples for each detected
+        grey rectangle.
+
+    Requirements: refactor-chronicle2layout 7.3
+    """
+    arr = np.array(img.convert("L"))
+    h, w = arr.shape
+
+    boxes: list[tuple[int, int, int, int]] = []
+    for y in range(h):
+        in_grey = False
+        x_start = 0
+        for x in range(w):
+            is_grey = grey_min <= arr[y, x] <= grey_max
+            if is_grey and not in_grey:
+                x_start = x
+                in_grey = True
+            elif not is_grey and in_grey:
+                if x - x_start >= min_width:
+                    box_height = 1
+                    for y2 in range(y + 1, min(y + 100, h)):
+                        grey_count = np.sum(
+                            (arr[y2, x_start:x] >= grey_min)
+                            & (arr[y2, x_start:x] <= grey_max)
+                        )
+                        if grey_count / (x - x_start) < 0.7:
+                            break
+                        box_height += 1
+
+                    if box_height >= min_height:
+                        is_duplicate = False
+                        for bx0, by0, bx1, by1 in boxes:
+                            if abs(x_start - bx0) < 5 and abs(y - by0) < 5:
+                                is_duplicate = True
+                                break
+                        if not is_duplicate:
+                            boxes.append((x_start, y, x, y + box_height))
+                in_grey = False
+
+    return boxes
