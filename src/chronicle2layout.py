@@ -1,225 +1,184 @@
-"""chronicle2layout
+"""chronicle2layout — CLI entry point.
 
-Detect checkboxes and extract text lines from a single-page PDF and output useful JSON data.
-This is a renamed copy of the previous `checkbox_finder_simple.py` module.
+Detect checkboxes and extract text lines from a single-page PDF
+and output layout-compatible JSON.
+
+Requirements: refactor-chronicle2layout 4.1, 4.2, 4.6, 5.3, 5.5, 3.2, 3.4
 """
+from __future__ import annotations
+
 import argparse
 import json
-from pathlib import Path
 import sys
+from typing import Optional
 
 import fitz  # PyMuPDF
 
+from shared_utils import find_layout_file, transform_canvas_coordinates
+from layout_generator import generate_layout_json
 
-def image_checkboxes(pdf_path: str, zoom: int = 3, min_box_size_pct: float = 0.4, 
-                    max_box_size_pct: float = 1.2, debug_dir: str = None, 
-                    max_fill_ratio: float = 0.96, min_mean_inner: float = 140.0,
-                    region_pct: list = None, min_box_size_px: int = 10, max_box_size_px: int = 50):
-    """Detect checkbox positions by finding □ characters in the PDF text.
-    
-    Args:
-        region_pct: Optional [x0, y0, x1, y1] in percent to crop before detection.
-                   Coordinates will be returned relative to this cropped region.
-        Other parameters kept for API compatibility but not used.
-    
-    Returns coordinates as percentages of canvas dimensions (or page if no region).
+DEFAULT_REGION_PCT: list[float] = [0.5, 50.8, 40.0, 83.0]
+"""Default item-region coordinates [x0, y0, x1, y1] as page percentages."""
+
+Y_COORDINATE_GROUPING_TOLERANCE: float = 2.0
+"""Maximum vertical distance (in PDF points) for grouping words into the same line."""
+
+
+def _resolve_region_from_layout(
+    layout_dir: str, parent_id: str, canvas_name: str,
+) -> Optional[list[float]]:
+    """Attempt to load region coordinates from a parent layout file."""
+    try:
+        base_layout_path = find_layout_file(layout_dir, parent_id)
+        with open(base_layout_path) as f:
+            base_layout = json.load(f)
+            return transform_canvas_coordinates(base_layout, canvas_name)
+    except Exception as e:
+        print(f"Warning: Failed to load layout file: {e}", file=sys.stderr)
+        return None
+
+
+def _group_words_by_line(
+    words_on_page: list[tuple],
+    region_x0: float,
+    region_y0: float,
+    region_x2: float,
+    region_y2: float,
+) -> dict[float, list[dict]]:
+    """Filter words to a region and group into lines by y-coordinate.
+
+    Words within Y_COORDINATE_GROUPING_TOLERANCE of each other vertically
+    are considered part of the same line.
+
+    Requirements: refactor-chronicle2layout 3.2, 3.4
     """
-    # Load the PDF page (use last page to handle full module PDFs)
-    doc = fitz.open(pdf_path)
-    if doc.page_count < 1:
-        return []
-    page = doc.load_page(doc.page_count - 1)
-    
-    # Get page dimensions
-    page_rect = page.rect
-    page_width = page_rect.width
-    page_height = page_rect.height
-    
-    # Calculate region bounds if specified
-    if region_pct:
-        rx0, ry0, rx1, ry1 = region_pct
-        region_x0 = (rx0 / 100.0) * page_width
-        region_y0 = (ry0 / 100.0) * page_height
-        region_x2 = (rx1 / 100.0) * page_width
-        region_y2 = (ry1 / 100.0) * page_height
-        region_width = region_x2 - region_x0
-        region_height = region_y2 - region_y0
-    else:
-        region_x0 = 0
-        region_y0 = 0
-        region_x2 = page_width
-        region_y2 = page_height
-        region_width = page_width
-        region_height = page_height
-    
-    # Extract all text with word-level positions
-    words_on_page = page.get_text("words")
-    
-    # Find all checkbox characters (□ and variants)
-    checkbox_chars = ['□', '☐', '☑', '☒']
-    checkboxes = []
-    
+    lines_dict: dict[float, list[dict]] = {}
+
     for word_data in words_on_page:
-        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
-        
-        # Check if this is a checkbox character
-        if text.strip() in checkbox_chars or text.startswith('□'):
-            # Check if checkbox is in our region
-            if (x0 >= region_x0 and x1 <= region_x2 and 
-                y0 >= region_y0 and y1 <= region_y2):
-                
-                # Convert to region-relative coordinates (as percentages)
-                rel_x = ((x0 - region_x0) / region_width) * 100.0
-                rel_y = ((y0 - region_y0) / region_height) * 100.0
-                rel_x2 = ((x1 - region_x0) / region_width) * 100.0
-                rel_y2 = ((y1 - region_y0) / region_height) * 100.0
-                
-                checkboxes.append({
-                    "x": round(rel_x, 3),
-                    "y": round(rel_y, 3),
-                    "x2": round(rel_x2, 3),
-                    "y2": round(rel_y2, 3)
-                })
-    
-    if debug_dir:
-        print(f"DEBUG: Found {len(checkboxes)} checkbox characters", file=sys.stderr)
-        for i, cb in enumerate(checkboxes, 1):
-            print(f"DEBUG: Checkbox {i}: x={cb['x']:.3f}, y={cb['y']:.3f}, x2={cb['x2']:.3f}, y2={cb['y2']:.3f}", file=sys.stderr)
-    
-    return checkboxes
+        x0, y0, x1, y1, text, _block_no, _line_no, _word_no = word_data
 
-def find_layout_file(layout_dir, layout_id):
-    """Find the layout file for a given layout ID by searching the layout directory.
-    
-    The layout ID follows patterns like:
-    - pfs2 -> layouts/pfs2/pfs2.json
-    - pfs2.season5 -> layouts/pfs2/s5/Season 5.json
-    - pfs2.s5-07 -> layouts/pfs2/s5/5-07-SewerDragonCrisis.json
-    
-    Args:
-        layout_dir (str): Base layouts directory (e.g., 'layouts')
-        layout_id (str): Layout ID to find (e.g., 'pfs2.season5')
-        
-    Returns:
-        Path: Path to the layout file
-        
-    Raises:
-        ValueError: If the layout file cannot be found
+        if not (x0 >= region_x0 and x1 <= region_x2
+                and y0 >= region_y0 and y1 <= region_y2):
+            continue
+
+        quantized_y = _find_matching_line_y(y0, lines_dict)
+        if quantized_y is None:
+            quantized_y = y0
+            lines_dict[quantized_y] = []
+
+        lines_dict[quantized_y].append({
+            'text': text, 'x0': x0, 'y0': y0, 'x1': x1, 'y1': y1,
+        })
+
+    return lines_dict
+
+
+def _find_matching_line_y(
+    y0: float,
+    lines_dict: dict[float, list[dict]],
+) -> Optional[float]:
+    """Return an existing line key within tolerance of y0, or None."""
+    for existing_y in lines_dict:
+        if abs(y0 - existing_y) <= Y_COORDINATE_GROUPING_TOLERANCE:
+            return existing_y
+    return None
+
+
+def _convert_lines_to_results(
+    lines_dict: dict[float, list[dict]],
+    region_x0: float,
+    region_y0: float,
+    region_width: float,
+    region_height: float,
+) -> list[dict]:
+    """Convert grouped word lines into percentage-based result dicts.
+
+    Each result contains joined text and bounding-box coordinates
+    as percentages relative to the extraction region.
+
+    Requirements: refactor-chronicle2layout 3.2, 3.4
     """
-    base_path = Path(layout_dir)
-    
-    # Split the layout ID by dots
-    parts = layout_id.split('.')
-    
-    if len(parts) == 1:
-        # Simple case: pfs2 -> pfs2/pfs2.json
-        layout_file = base_path / parts[0] / f"{parts[0]}.json"
-    else:
-        # Start with the first part (e.g., pfs2)
-        search_base = base_path / parts[0]
+    results: list[dict] = []
 
-        ident = parts[1]
-        import re
-        m = re.match(r'^season(\d+)([a-z])?$', ident)
-        if m:
-            # Variant-aware season parent
-            season_num = m.group(1)
-            variant = m.group(2)
-            season_dir = search_base / f"s{season_num}"
-            if variant:
-                # File naming for variant: Season{N}{variant}.json (no space)
-                layout_file = season_dir / f"Season{season_num}{variant}.json"
-            else:
-                # Standard season parent: Season N.json (with space)
-                layout_file = season_dir / f"Season {season_num}.json"
-        elif ident.startswith('s') and '-' in ident:
-            # Scenario layout reference (not a parent variant)
-            season_num = ident.split('-')[0][1:]
-            layout_file = search_base / f"s{season_num}" / f"{ident}.json"
-        else:
-            # Generic fallback directory
-            layout_file = search_base / ident / f"{ident}.json"
-    
-    if not layout_file.exists():
-        raise ValueError(f"Layout file not found: {layout_file}")
-    
-    return layout_file
+    for y_coord in sorted(lines_dict.keys()):
+        words = lines_dict[y_coord]
+        if not words:
+            continue
 
-def transform_canvas_coordinates(layout_json, canvas_name):
-    """Transform canvas coordinates into absolute page coordinates by following the parent chain.
-    
-    Args:
-        layout_json (dict): The loaded layout JSON object
-        canvas_name (str): Name of the canvas to transform
-        
-    Returns:
-        list: [x, y, x2, y2] coordinates in absolute page percent
-    """
-    if "canvas" not in layout_json or canvas_name not in layout_json["canvas"]:
-        raise ValueError(f"Canvas {canvas_name} not found in layout")
-        
-    def transform_coordinates(canvas_name):
-        canvas = layout_json["canvas"][canvas_name]
-        x, y = canvas["x"], canvas["y"]
-        x2, y2 = canvas["x2"], canvas["y2"]
-        if "parent" in canvas:
-            parent_coords = transform_coordinates(canvas["parent"])
-            # Transform coordinates relative to parent
-            px, py, px2, py2 = parent_coords
-            pw = px2 - px
-            ph = py2 - py
-            x = px + (x / 100.0) * pw
-            y = py + (y / 100.0) * ph
-            x2 = px + (x2 / 100.0) * pw
-            y2 = py + (y2 / 100.0) * ph
-        return [x, y, x2, y2]
-        
-    return transform_coordinates(canvas_name)
+        words.sort(key=lambda w: w['x0'])
+        text = ' '.join(w['text'] for w in words)
 
-def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None, 
-                      layout_dir=None, parent_id=None, canvas_name="items"):
+        if text.lower().strip() in ['items', 'items:']:
+            continue
+
+        x0 = min(w['x0'] for w in words)
+        y0 = min(w['y0'] for w in words)
+        x1 = max(w['x1'] for w in words)
+        y1 = max(w['y1'] for w in words)
+
+        x0_pct = ((x0 - region_x0) / region_width) * 100.0
+        y0_pct = ((y0 - region_y0) / region_height) * 100.0
+        x1_pct = ((x1 - region_x0) / region_width) * 100.0
+        y1_pct = ((y1 - region_y0) / region_height) * 100.0
+
+        results.append({
+            'text': text,
+            'top_left_pct': [round(x0_pct, 3), round(y0_pct, 3)],
+            'bottom_right_pct': [round(x1_pct, 3), round(y1_pct, 3)],
+        })
+
+    return results
+
+
+def extract_text_lines(
+    pdf_path: str,
+    region_pct: Optional[list[float]] = None,
+    zoom: int = 6,
+    debug_dir: Optional[str] = None,
+    layout_dir: Optional[str] = None,
+    parent_id: Optional[str] = None,
+    canvas_name: str = "items",
+) -> list[dict]:
     """Extract text lines from a PDF region using PyMuPDF text extraction.
-    
+
+    Opens the last page of the PDF, resolves the extraction region (from
+    arguments, a parent layout file, or the default), then groups words
+    into lines and converts them to percentage-based coordinates.
+
     Args:
-        pdf_path: Path to the PDF file
-        region_pct: Optional [x0, y0, x1, y1] in percent to extract from
-        zoom: Not used, kept for API compatibility
-        debug_dir: Optional debug output directory
-        layout_dir: Base layouts directory
-        parent_id: Parent layout ID for finding canvas
-        canvas_name: Name of the canvas to extract from
-        
+        pdf_path: Path to the PDF file.
+        region_pct: Optional [x0, y0, x1, y1] in percent to extract from.
+        zoom: Not used, kept for API compatibility.
+        debug_dir: Optional debug output directory.
+        layout_dir: Base layouts directory.
+        parent_id: Parent layout ID for finding canvas.
+        canvas_name: Name of the canvas to extract from.
+
     Returns:
-        List of dicts with 'text', 'top_left_pct', 'bottom_right_pct'
+        List of dicts with 'text', 'top_left_pct', 'bottom_right_pct'.
+
+    Requirements: refactor-chronicle2layout 4.1, 4.2, 4.6, 5.3, 5.5, 3.2, 3.4
     """
     doc = fitz.open(pdf_path)
     if doc.page_count < 1:
         return []
     page = doc.load_page(doc.page_count - 1)
-    
-    # Get page dimensions
+
     page_rect = page.rect
     page_width = page_rect.width
     page_height = page_rect.height
 
-    # If no region_pct provided, try to load from layout file
+    # Resolve region: argument → layout file → default
     if region_pct is None:
-        try:
-            if layout_dir and parent_id:
-                base_layout_path = find_layout_file(layout_dir, parent_id)
-                with open(base_layout_path) as f:
-                    base_layout = json.load(f)
-                    region_pct = transform_canvas_coordinates(base_layout, canvas_name)
-            else:
-                print("Warning: No layout_dir/parent_id provided for canvas lookup", file=sys.stderr)
-        except Exception as e:
-            print(f"Warning: Failed to load layout file: {e}", file=sys.stderr)
+        if layout_dir and parent_id:
+            region_pct = _resolve_region_from_layout(layout_dir, parent_id, canvas_name)
+        else:
+            print("Warning: No layout_dir/parent_id provided for canvas lookup", file=sys.stderr)
 
-        # Fall back to default if we couldn't load from layout
         if region_pct is None:
-            region_pct = [0.5, 50.8, 40.0, 83.0]
+            region_pct = list(DEFAULT_REGION_PCT)
 
-    # Convert percent region to PDF coordinates (points) — use canvas exactly
+    # Convert percent region to PDF coordinates (points)
     rx0, ry0, rx1, ry1 = region_pct
     region_x0 = (rx0 / 100.0) * page_width
     region_y0 = (ry0 / 100.0) * page_height
@@ -227,437 +186,24 @@ def extract_text_lines(pdf_path: str, region_pct=None, zoom=6, debug_dir=None,
     region_y2 = (ry1 / 100.0) * page_height
     region_width = region_x2 - region_x0
     region_height = region_y2 - region_y0
-    
-    # Extract all text with word-level positions
+
     words_on_page = page.get_text("words")
-    
-    # Filter words to region and group by y-coordinate (not line_no, which is unreliable)
-    # We'll group words that have similar y0 values (within a small tolerance)
-    y_tolerance = 2.0  # pixels
-    lines_dict = {}  # quantized_y -> list of words
-    
-    for word_data in words_on_page:
-        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
-        
-        # Check if word is strictly within our region (no extra margin)
-        if (x0 >= region_x0 and x1 <= region_x2 and 
-            y0 >= region_y0 and y1 <= region_y2):
-            
-            # Find existing line with similar y0, or create new one
-            quantized_y = None
-            for existing_y in lines_dict.keys():
-                if abs(y0 - existing_y) <= y_tolerance:
-                    quantized_y = existing_y
-                    break
-            
-            if quantized_y is None:
-                quantized_y = y0
-                lines_dict[quantized_y] = []
-            
-            lines_dict[quantized_y].append({
-                'text': text,
-                'x0': x0,
-                'y0': y0,
-                'x1': x1,
-                'y1': y1
-            })
-    
-    # Convert grouped lines to the expected format
-    results = []
-    for y_coord in sorted(lines_dict.keys()):
-        words = lines_dict[y_coord]
-        if not words:
-            continue
-            
-        # Sort words by x position
-        words.sort(key=lambda w: w['x0'])
-        
-        # Join text
-        text = ' '.join(w['text'] for w in words)
-        
-        # Skip lines that are just "Items:" or similar headers
-        if text.lower().strip() in ['items', 'items:']:
-            continue
-        
-        # Get line bounds
-        x0 = min(w['x0'] for w in words)
-        y0 = min(w['y0'] for w in words)
-        x1 = max(w['x1'] for w in words)
-        y1 = max(w['y1'] for w in words)
-        
-        # Convert to percentages relative to the region
-        x0_pct = ((x0 - region_x0) / region_width) * 100.0
-        y0_pct = ((y0 - region_y0) / region_height) * 100.0
-        x1_pct = ((x1 - region_x0) / region_width) * 100.0
-        y1_pct = ((y1 - region_y0) / region_height) * 100.0
-        
-        results.append({
-            'text': text,
-            'top_left_pct': [round(x0_pct, 3), round(y0_pct, 3)],
-            'bottom_right_pct': [round(x1_pct, 3), round(y1_pct, 3)]
-        })
 
-    return results
+    lines_dict = _group_words_by_line(
+        words_on_page, region_x0, region_y0, region_x2, region_y2,
+    )
+
+    return _convert_lines_to_results(
+        lines_dict, region_x0, region_y0, region_width, region_height,
+    )
 
 
-def extract_checkbox_labels(pdf_path: str, checkboxes: list, region_pct: list, zoom: int = 6, debug_dir: str = None):
-    """Extract text labels for checkboxes by finding text following □ characters.
-    
-    Args:
-        pdf_path: Path to the PDF file
-        checkboxes: List of checkbox dicts with x, y, x2, y2 (percentages)
-        region_pct: Region as [x0, y0, x1, y1] in percent of page
-        zoom: Zoom factor (not used, kept for API compatibility)
-        debug_dir: Optional debug output directory
-        
-    Returns:
-        List of dicts with checkbox coordinates and associated text labels
+def main() -> None:
+    """CLI entry point for chronicle2layout.
+
+    Parses command-line arguments, resolves the extraction region, runs
+    layout generation, and writes JSON output to a file or stdout.
     """
-    if not checkboxes:
-        return []
-    
-    doc = fitz.open(pdf_path)
-    if doc.page_count < 1:
-        return []
-    page = doc.load_page(doc.page_count - 1)
-    
-    # Get page dimensions
-    page_rect = page.rect
-    page_width = page_rect.width
-    page_height = page_rect.height
-    
-    # Calculate region bounds if specified
-    rx0, ry0, rx1, ry1 = region_pct
-    region_x0 = (rx0 / 100.0) * page_width
-    region_y0 = (ry0 / 100.0) * page_height
-    region_x2 = (rx1 / 100.0) * page_width
-    region_y2 = (ry1 / 100.0) * page_height
-    
-    # Extract all text with word-level positions
-    words_on_page = page.get_text("words")
-    
-    # Find all checkbox characters and their positions in the word list
-    checkbox_chars = ['□', '☐', '☑', '☒']
-    checkbox_positions = []
-    
-    for idx, word_data in enumerate(words_on_page):
-        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
-        
-        # Check if this is a checkbox character in our region
-        # Sometimes text is attached to the checkbox like '□killed'
-        if (text.strip() in checkbox_chars or '□' in text):
-            if (x0 >= region_x0 and x1 <= region_x2 and 
-                y0 >= region_y0 and y1 <= region_y2):
-                checkbox_positions.append(idx)
-    
-    # Extract labels: text between each □ and the next □/comma/period
-    results = []
-    for i, cb_idx in enumerate(checkbox_positions):
-        # Find the next checkbox position (or use end of words)
-        next_cb_idx = checkbox_positions[i + 1] if i + 1 < len(checkbox_positions) else len(words_on_page)
-        
-        # Check if the checkbox has text attached to it (e.g., '□killed')
-        cb_word_data = words_on_page[cb_idx]
-        cb_text = cb_word_data[4]  # text is at index 4
-        label_words = []
-        
-        # If checkbox has text attached after the □, extract it
-        if cb_text.startswith('□') and len(cb_text) > 1:
-            # Extract the text after the □
-            attached_text = cb_text[1:]  # Remove the □ character
-            label_words.append(attached_text)
-        
-        # Collect text from words after this checkbox until the next checkbox, comma, period, or "or"
-        for word_idx in range(cb_idx + 1, next_cb_idx):
-            word_data = words_on_page[word_idx]
-            x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
-            
-            # Only include words in our region
-            if (x0 >= region_x0 and x1 <= region_x2 and 
-                y0 >= region_y0 and y1 <= region_y2):
-                
-                # Stop if we encounter another checkbox character
-                if any(cb_char in text for cb_char in checkbox_chars):
-                    break
-                
-                # Stop if we hit the word "or"
-                if text.lower() == 'or':
-                    break
-                
-                # Stop if we hit a comma or period (but include the word if it ends with comma/period)
-                label_words.append(text)
-                if text.endswith(',') or text.endswith('.'):
-                    break
-        
-        # Join the words and clean up
-        label = ' '.join(label_words)
-        
-        # Clean up: remove trailing punctuation if it's just a period or comma at the end
-        label = label.strip()
-        if label.endswith('.') or label.endswith(','):
-            # Check if this is just trailing punctuation (not part of abbreviation)
-            if not (label.endswith('...') or (len(label) > 2 and label[-2:-1].isdigit())):
-                label = label[:-1].strip()
-        
-        # Return in the expected format (dict with 'checkbox' and 'label')
-        results.append({
-            'checkbox': checkboxes[i] if i < len(checkboxes) else None,
-            'label': label
-        })
-    
-    return results
-
-
-def generate_layout_json(pdf_path: str, region_pct=None, debug_dir=None, 
-                    layout_dir=None, parent_id=None, scenario_id=None, description=None, parent=None,
-                    checkbox_region_pct=None, item_canvas_name="items", checkbox_canvas_name="summary",
-                    default_chronicle_location=None):
-    """Generate JSON in layout file format with text-based choices for strikeouts.
-    
-    Args:
-        pdf_path (str): Path to the PDF file to process
-        region_pct (list, optional): Region as [x0, y0, x1, y1] in percent coordinates for items
-        debug_dir (str, optional): Directory for debug output images
-        layout_dir (str, optional): Base layouts directory (e.g. 'layouts')
-        parent_id (str, optional): Parent layout ID for finding canvas (e.g. 'pfs2.season5')
-        scenario_id (str, optional): ID for the layout (e.g. '5-07')
-        description (str, optional): Description of the scenario
-        parent (str, optional): Parent layout ID to write to output JSON (e.g. 'pfs2.season5')
-        checkbox_region_pct (list, optional): Region as [x0, y0, x1, y1] for checkbox detection
-        item_canvas_name (str, optional): Name of the canvas for items (default: "items")
-        checkbox_canvas_name (str, optional): Name of the canvas for checkboxes (default: "summary")
-        default_chronicle_location (str, optional): Default path to the blank chronicle PDF
-    
-    Returns:
-        dict: Layout JSON configuration with detected items and checkboxes
-    """
-    # Create base layout structure
-    layout = {}
-    
-    # Add metadata if provided
-    if scenario_id:
-        layout["id"] = scenario_id
-    if description:
-        layout["description"] = description
-    if parent:
-        layout["parent"] = parent
-    if default_chronicle_location:
-        layout["defaultChronicleLocation"] = default_chronicle_location
-
-    # Detect checkboxes first
-    boxes = image_checkboxes(pdf_path, debug_dir=debug_dir, region_pct=checkbox_region_pct)
-    
-    # Extract checkbox labels if we have checkboxes and a region
-    checkbox_labels = []
-    if boxes and checkbox_region_pct:
-        checkbox_labels = extract_checkbox_labels(pdf_path, boxes, checkbox_region_pct, debug_dir=debug_dir)
-    
-    # Extract text lines
-    lines = extract_text_lines(pdf_path, region_pct=region_pct, debug_dir=debug_dir,
-                        layout_dir=layout_dir, parent_id=parent_id, canvas_name=item_canvas_name)
-    
-    def clean_text(text):
-        # Remove any trailing quotes, dots, or periods while preserving smart quotes in the middle
-        text = text.strip()
-        
-        # Fix artifact: remove uppercase U unless preceded by uppercase letter
-        import re
-        text = re.sub(r'([^A-Z])U\b', r'\1', text)
-        
-        # Remove hair space character (\u200a)
-        text = text.replace('\u200a', '')
-        
-        return text
-
-    def has_unmatched_parens(text):
-        """Check if text has an opening parenthesis without a closing one."""
-        open_count = text.count('(')
-        close_count = text.count(')')
-        return open_count > close_count
-    
-    # Helper: split a long combined string into individual items using '(level ... )' groups as boundaries
-    # New simple heuristic segmentation based on user guidance:
-    # - Continue to next source line while there are unmatched parentheses.
-    # - A single item never has more than two parenthesis groups.
-    # - After the second complete parenthesis group, if more tokens follow on the same line,
-    #   start a new item.
-    # We implement this by token streaming across lines, finalizing an item when:
-    #   groups_completed == 2 and open_count == 0 and tokens remain; OR
-    #   end-of-line with open_count == 0.
-    def finalize_buffer(item_tokens, items_accum, y_start, y_end):
-        if not item_tokens:
-            return
-        text = ' '.join(item_tokens).strip()
-        if text:
-            items_accum.append({"text": text, "y": y_start, "y2": y_end})
-
-    # Stream tokens across lines applying the heuristic.
-    items = []
-    current_tokens = []
-    open_count = 0  # net '(' minus ')'
-    groups_completed = 0  # number of fully closed parenthesis groups in current item
-    current_y_start = None
-    current_y_end = None
-    
-    for line in lines:
-        raw_line_text = line["text"]
-        if "items" in raw_line_text.lower() and ":" not in raw_line_text:
-            continue
-        text = clean_text(raw_line_text)
-        if not text:
-            continue
-        tokens = text.split()
-        line_y_top = line["top_left_pct"][1]
-        line_y_bottom = line["bottom_right_pct"][1]
-        # Initialize current item vertical bounds
-        if current_y_start is None:
-            current_y_start = line_y_top
-        current_y_end = line_y_bottom
-        for idx, tok in enumerate(tokens):
-            # Track parentheses
-            # Count '(' occurrences
-            opens = tok.count('(')
-            closes = tok.count(')')
-            # Each '(' increases open_count
-            open_count += opens
-            # Each ')' closes one if available
-            for _ in range(closes):
-                if open_count > 0:
-                    open_count -= 1
-                    groups_completed += 1
-            current_tokens.append(tok)
-            # Heuristic split point: once two groups are completed and we're balanced, finalize immediately
-            if groups_completed >= 2 and open_count == 0:
-                finalize_buffer(current_tokens, items, current_y_start, current_y_end)
-                # Reset for next item starting immediately (same line or next)
-                current_tokens = []
-                open_count = 0
-                groups_completed = 0
-                current_y_start = line_y_top  # start new item at same line top (approximation)
-                current_y_end = line_y_bottom
-        # End-of-line: finalize item if balanced and we have tokens
-        if open_count == 0 and current_tokens:
-            finalize_buffer(current_tokens, items, current_y_start, current_y_end)
-            current_tokens = []
-            open_count = 0
-            groups_completed = 0
-            current_y_start = None
-            current_y_end = None
-        # Else continue to next line to complete parentheses
-    
-    # If unfinished item remains (unbalanced at EOF), flush as-is
-    if current_tokens:
-        finalize_buffer(current_tokens, items, current_y_start if current_y_start is not None else 0, current_y_end if current_y_end is not None else 0)
-
-    # Only add parameters, presets, and content if we have items or checkboxes
-    if items or checkbox_labels:
-        layout["parameters"] = {}
-        layout["presets"] = {}
-        layout["content"] = []
-    
-    # Add Items section only if we have items
-    if items:
-        layout["parameters"]["Items"] = {
-            "strikeout_item_lines": {
-                "type": "choice",
-                "description": "Item line text to be struck out",
-                "choices": [],
-                "example": ""
-            }
-        }
-        
-        layout["presets"]["strikeout_item"] = {
-            "canvas": item_canvas_name,
-            "color": "black",
-            "x": 0.5,
-            "x2": 95
-        }
-        
-        layout["content"].append({
-            "type": "choice",
-            "choices": "param:strikeout_item_lines",
-            "content": {}
-        })
-    
-    # Add checkbox parameters if checkboxes were detected
-    if checkbox_labels:
-        if "parameters" not in layout:
-            layout["parameters"] = {}
-        if "presets" not in layout:
-            layout["presets"] = {}
-        if "content" not in layout:
-            layout["content"] = []
-            
-        layout["parameters"]["Checkboxes"] = {
-            "summary_checkbox": {
-                "type": "choice",
-                "description": "Checkboxes in the adventure summary that should be selected",
-                "choices": [item['label'] for item in checkbox_labels if item['label']],
-                "example": checkbox_labels[0]['label'] if checkbox_labels and checkbox_labels[0]['label'] else ""
-            }
-        }
-        
-        layout["presets"]["checkbox"] = {
-            "canvas": checkbox_canvas_name,
-            "color": "black",
-            "size": 1
-        }
-        
-        checkbox_content = {
-            "type": "choice",
-            "choices": "param:summary_checkbox",
-            "content": {}
-        }
-        
-        for item in checkbox_labels:
-            if item['label']:
-                # Create safe preset name
-                safe_label = item['label'][:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
-                preset_name = f"checkbox.{safe_label}"
-                layout["presets"][preset_name] = {
-                    "x": item['checkbox']["x"],
-                    "y": item['checkbox']["y"],
-                    "x2": item['checkbox']["x2"],
-                    "y2": item['checkbox']["y2"]
-                }
-                checkbox_content["content"][item['label']] = [{
-                    "type": "checkbox",
-                    "presets": ["checkbox", preset_name]
-                }]
-        layout["content"].append(checkbox_content)
-    
-    # Process joined items - only if we have items
-    if items:
-        for item in items:
-            text = item["text"]
-            # Clean up OCR artifacts
-            text = text.strip()
-            # Add text as a choice if not already present
-            if text not in layout["parameters"]["Items"]["strikeout_item_lines"]["choices"]:
-                layout["parameters"]["Items"]["strikeout_item_lines"]["choices"].append(text)
-            
-            # Create preset for this line's position
-            safe_text = text[:50].replace(" ", "_").replace(",", "").replace(".", "").replace("(", "").replace(")", "").replace("'", "").replace('"', "")
-            preset_name = f"item.line.{safe_text}"
-            layout["presets"][preset_name] = {
-                "y": round(item["y"], 1),
-                "y2": round(item["y2"], 1)
-            }
-            
-            # Add content entry for this line - use strikeout to fill the entire bounding box
-            layout["content"][0]["content"][text] = [{
-                "type": "strikeout",
-                "presets": ["strikeout_item", preset_name]
-            }]
-
-        # Set example using first detected text
-        if layout["parameters"]["Items"]["strikeout_item_lines"]["choices"]:
-            first_text = layout["parameters"]["Items"]["strikeout_item_lines"]["choices"][0]
-            layout["parameters"]["Items"]["strikeout_item_lines"]["example"] = first_text
-
-    return layout
-
-def main():
     p = argparse.ArgumentParser(
         description="chronicle2layout: generate layout-compatible JSON with text-based strikeout choices")
     p.add_argument("pdf", help="Path to single-page PDF")
@@ -678,37 +224,25 @@ def main():
     args = p.parse_args()
 
     try:
-        # Parse region CLI arg if provided
-        region_pct = None
-        if args.region:
-            try:
-                parts = [p.strip() for p in args.region.split(',') if p.strip() != '']
-                if len(parts) != 4:
-                    raise ValueError('region must have four comma-separated values')
-                region_pct = [float(x) for x in parts]
-            except Exception as e:
-                print(json.dumps({"error": f"Invalid --region value: {e}"}))
-                return
+        region_pct = _parse_region_arg(args.region)
+        if region_pct is False:
+            return
 
-        # Load the layout file first to get canvas coordinates if needed
         checkbox_region_pct = None
         if args.layout_dir and args.parent:
             try:
                 base_layout_path = find_layout_file(args.layout_dir, args.parent)
                 with open(base_layout_path) as f:
                     base_layout = json.load(f)
-                    # Get absolute coordinates for the specified canvas
                     if region_pct is None:
                         region_pct = transform_canvas_coordinates(base_layout, args.item_canvas)
-                    # Get absolute coordinates for the checkbox canvas
                     checkbox_region_pct = transform_canvas_coordinates(base_layout, args.checkbox_canvas)
             except Exception as e:
                 print(json.dumps({"error": f"Failed to process layout file for parent '{args.parent}': {e}"}))
                 return
 
-        # If no region specified and no canvas found, use default
         if region_pct is None:
-            region_pct = [0.5, 50.8, 40.0, 83.0]
+            region_pct = list(DEFAULT_REGION_PCT)
 
         layout = generate_layout_json(
             args.pdf,
@@ -722,18 +256,36 @@ def main():
             checkbox_region_pct=checkbox_region_pct,
             item_canvas_name=args.item_canvas,
             checkbox_canvas_name=args.checkbox_canvas,
-            default_chronicle_location=args.default_chronicle
+            default_chronicle_location=args.default_chronicle,
         )
-        
+
         output = json.dumps(layout, indent=2)
         if args.output:
             with open(args.output, 'w') as f:
                 f.write(output)
         else:
             print(output)
-            
+
     except Exception as e:
         print(json.dumps({"error": str(e)}))
+
+
+def _parse_region_arg(region_str: Optional[str]) -> list[float] | None | bool:
+    """Parse the --region CLI argument into a list of floats.
+
+    Returns a list of four floats on success, None if not provided,
+    or False if parsing failed (caller should abort).
+    """
+    if region_str is None:
+        return None
+    try:
+        parts = [p.strip() for p in region_str.split(',') if p.strip() != '']
+        if len(parts) != 4:
+            raise ValueError('region must have four comma-separated values')
+        return [float(x) for x in parts]
+    except Exception as e:
+        print(json.dumps({"error": f"Invalid --region value: {e}"}))
+        return False
 
 
 if __name__ == '__main__':

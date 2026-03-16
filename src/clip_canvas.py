@@ -15,55 +15,19 @@ Usage:
 import argparse
 import json
 from pathlib import Path
+
 import fitz
 
-
-def find_layout_file(layout_dir: str, layout_id: str) -> Path:
-    base_path = Path(layout_dir)
-    parts = layout_id.split('.')
-    if len(parts) == 1:
-        return base_path / parts[0] / f"{parts[0]}.json"
-    search_base = base_path / parts[0]
-    ident = parts[1]
-    import re
-    m = re.match(r'^season(\d+)([a-z])?$', ident)
-    if m:
-        season_num = m.group(1)
-        variant = m.group(2)
-        season_dir = search_base / f"s{season_num}"
-        if variant:
-            # Check for .generated.json first, fall back to regular
-            generated = season_dir / f"Season{season_num}{variant}.generated.json"
-            if generated.exists():
-                return generated
-            return season_dir / f"Season{season_num}{variant}.json"
-        return season_dir / f"Season {season_num}.json"
-    if ident.startswith('s') and '-' in ident:
-        season_num = ident.split('-')[0][1:]
-        return search_base / f"s{season_num}" / f"{ident}.json"
-    return search_base / ident / f"{ident}.json"
+from shared_utils import find_layout_file, transform_canvas_coordinates
 
 
-def transform_canvas_coordinates(layout_json: dict, canvas_name: str):
-    if "canvas" not in layout_json or canvas_name not in layout_json["canvas"]:
-        raise ValueError(f"Canvas {canvas_name} not found in layout")
+def main() -> None:
+    """Clip a canvas region from a PDF and save it as a PNG image.
 
-    def transform(name: str):
-        c = layout_json["canvas"][name]
-        x, y, x2, y2 = c["x"], c["y"], c["x2"], c["y2"]
-        if "parent" in c:
-            px, py, px2, py2 = transform(c["parent"])
-            pw, ph = (px2 - px), (py2 - py)
-            x = px + (x / 100.0) * pw
-            y = py + (y / 100.0) * ph
-            x2 = px + (x2 / 100.0) * pw
-            y2 = py + (y2 / 100.0) * ph
-        return [x, y, x2, y2]
-
-    return transform(canvas_name)
-
-
-def main():
+    Parses CLI arguments for the PDF path, layout directory, parent layout
+    ID, canvas name, and output path. Resolves the canvas to absolute page
+    coordinates, renders the clipped region, and writes the result to disk.
+    """
     ap = argparse.ArgumentParser(description="Clip a canvas region from a PDF using layout coordinates")
     ap.add_argument('--pdf', required=True, help='Path to the PDF file')
     ap.add_argument('--layout-dir', required=True, help='Base layouts directory')

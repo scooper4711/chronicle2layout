@@ -1,0 +1,191 @@
+{
+  "id": "pfs2.s5-07",
+  "description": "5-07 Sewer Dragon Crisis",
+  "parent": "pfs2.season5",
+  "defaultChronicleLocation": "modules/pf2e-pfs05-year-of-unfettered-exploration/assets/chronicles-1/5-07-SewerDragonCrisisChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "dragon\u2019s crest (Item 1, 10 gp, Pathfinder Lost Omens Grand Bazaar 104)",
+          "vexing vapor (lesser) (Item 1, 4 gp, Pathfinder Lost Omens Grand Bazaar 27)",
+          "vexing vapor (moderate) (Item 3, 12 gp, Pathfinder Lost Omens Grand Bazaar 27)"
+        ],
+        "example": "dragon\u2019s crest (Item 1, 10 gp, Pathfinder Lost Omens Grand Bazaar 104)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "succeeded in at least two of those tasks",
+          "succeeded on all three",
+          "did not",
+          "successfully talked Trapmaster Tok down without violence",
+          "defeated Tok",
+          "killed the would- be-Trapmaster Chief"
+        ],
+        "example": "succeeded in at least two of those tasks"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.succeeded_in_at_least_two_of_those_tasks": {
+      "x": 51.048,
+      "y": 42.767,
+      "x2": 52.748,
+      "y2": 52.853
+    },
+    "checkbox.succeeded_on_all_three": {
+      "x": 83.529,
+      "y": 42.767,
+      "x2": 85.229,
+      "y2": 52.853
+    },
+    "checkbox.did_not": {
+      "x": 8.402,
+      "y": 50.97,
+      "x2": 10.102,
+      "y2": 61.056
+    },
+    "checkbox.successfully_talked_Trapmaster_Tok_down_without_vi": {
+      "x": 23.452,
+      "y": 50.97,
+      "x2": 25.152,
+      "y2": 61.056
+    },
+    "checkbox.defeated_Tok": {
+      "x": 69.268,
+      "y": 50.97,
+      "x2": 70.968,
+      "y2": 61.056
+    },
+    "checkbox.killed_the_would-_be-Trapmaster_Chief": {
+      "x": 83.73,
+      "y": 50.97,
+      "x2": 89.462,
+      "y2": 61.056
+    },
+    "item.line.dragon\u2019s_crest_Item_1_10_gp_Pathfinder_Lost_Ome": {
+      "y": 7.3,
+      "y2": 17.8
+    },
+    "item.line.vexing_vapor_lesser_Item_1_4_gp_Pathfinder_Lo": {
+      "y": 18.5,
+      "y2": 29.0
+    },
+    "item.line.vexing_vapor_moderate_Item_3_12_gp_Pathfinder": {
+      "y": 24.1,
+      "y2": 40.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "dragon\u2019s crest (Item 1, 10 gp, Pathfinder Lost Omens Grand Bazaar 104)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon\u2019s_crest_Item_1_10_gp_Pathfinder_Lost_Ome"
+            ]
+          }
+        ],
+        "vexing vapor (lesser) (Item 1, 4 gp, Pathfinder Lost Omens Grand Bazaar 27)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.vexing_vapor_lesser_Item_1_4_gp_Pathfinder_Lo"
+            ]
+          }
+        ],
+        "vexing vapor (moderate) (Item 3, 12 gp, Pathfinder Lost Omens Grand Bazaar 27)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.vexing_vapor_moderate_Item_3_12_gp_Pathfinder"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "succeeded in at least two of those tasks": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.succeeded_in_at_least_two_of_those_tasks"
+            ]
+          }
+        ],
+        "succeeded on all three": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.succeeded_on_all_three"
+            ]
+          }
+        ],
+        "did not": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did_not"
+            ]
+          }
+        ],
+        "successfully talked Trapmaster Tok down without violence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.successfully_talked_Trapmaster_Tok_down_without_vi"
+            ]
+          }
+        ],
+        "defeated Tok": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.defeated_Tok"
+            ]
+          }
+        ],
+        "killed the would- be-Trapmaster Chief": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.killed_the_would-_be-Trapmaster_Chief"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
