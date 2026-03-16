@@ -5,18 +5,30 @@ This script processes PDF chronicles and generates corresponding layout JSON fil
 with proper IDs and metadata.
 """
 
-import os
+from __future__ import annotations
+
 import re
-import json
+import sys
 from pathlib import Path
 import subprocess
 import argparse
 
-# Base paths
-BASE_DIR = Path("/Users/stephen/git/HelloFoundry/pfs-chronicle-generator")
-MODULES_DIR = BASE_DIR / "modules"
-LAYOUTS_DIR = BASE_DIR / "layouts/pfs2"
-DEBUG_DIR = BASE_DIR / "debug"
+
+def derive_paths(base_dir: Path) -> tuple[Path, Path, Path]:
+    """Derive standard project directories from the base directory.
+
+    Args:
+        base_dir: Project root directory.
+
+    Returns:
+        A tuple of (modules_dir, layouts_dir, debug_dir).
+
+    Requirements: refactor-chronicle2layout 6.2
+    """
+    modules_dir = base_dir / "modules"
+    layouts_dir = base_dir / "layouts" / "pfs2"
+    debug_dir = base_dir / "debug"
+    return modules_dir, layouts_dir, debug_dir
 
 # Season configurations
 SEASON_CONFIGS = {
@@ -79,47 +91,67 @@ def title_to_description(season_num: int, scenario_num: str, title: str) -> str:
     formatted_title = ' '.join(words)
     return f"{season_num}-{scenario_num} {formatted_title}"
 
-def process_season(season_num: int, scenario_filter=None):
+def process_season(
+    season_num: int,
+    base_dir: Path,
+    modules_dir: Path,
+    layouts_dir: Path,
+    debug_dir: Path,
+    python_exe: str,
+    scenario_filter: set[str] | None = None,
+) -> None:
     """Process chronicles for a given season.
-    If scenario_filter is provided (set of scenario numbers as zero-padded strings), only those are processed."""
+
+    Args:
+        season_num: The season number to process.
+        base_dir: Project root directory.
+        modules_dir: Path to the modules directory.
+        layouts_dir: Path to the layouts/pfs2 directory.
+        debug_dir: Path to the debug output directory.
+        python_exe: Path to the Python executable for subprocess calls.
+        scenario_filter: If provided, only process these scenario numbers
+            (zero-padded strings like "01", "02").
+
+    Requirements: refactor-chronicle2layout 6.1, 6.2, 6.3, 6.4, 6.5
+    """
     config = SEASON_CONFIGS[season_num]
-    layouts_path = LAYOUTS_DIR / config["layouts_dir"]
-    debug_base = DEBUG_DIR / f"season{season_num}"
-    
+    layouts_path = layouts_dir / config["layouts_dir"]
+    debug_base = debug_dir / f"season{season_num}"
+
     # Create directories if they don't exist
     layouts_path.mkdir(parents=True, exist_ok=True)
     debug_base.mkdir(parents=True, exist_ok=True)
-    
+
     # Process each chronicles subdirectory
     for chronicles_subdir in config["chronicles_subdirs"]:
-        chronicles_path = MODULES_DIR / config["module_name"] / chronicles_subdir
-        
+        chronicles_path = modules_dir / config["module_name"] / chronicles_subdir
+
         if not chronicles_path.exists():
             print(f"Skipping {chronicles_subdir} (directory not found)")
             continue
-        
+
         print(f"\nProcessing {chronicles_subdir}...")
-        
+
         # Find all chronicle PDFs for this season
         for pdf_file in chronicles_path.glob("*.pdf"):
             match = re.match(config["pdf_pattern"], pdf_file.name)
             if not match:
                 print(f"Warning: Couldn't parse filename {pdf_file.name}, skipping")
                 continue
-                
+
             scenario_num = match.group(1).zfill(2)
 
             # Apply scenario filter if provided
             if scenario_filter and scenario_num not in scenario_filter:
                 continue
             title = match.group(2)
-            
+
             # Construct layout filename
             layout_name = f"{season_num}-{scenario_num}-{title}"
             if layout_name.endswith("Chronicle"):
                 layout_name = layout_name[:-9]
             layout_file = layouts_path / f"{layout_name}.json"
-            
+
             # Construct defaultChronicleLocation if pattern provided
             default_chronicle_location = None
             if config["default_chronicle_pattern"]:
@@ -127,20 +159,16 @@ def process_season(season_num: int, scenario_filter=None):
                     subdir=chronicles_subdir,
                     filename=pdf_file.name
                 )
-            
+
             # Create debug directory for this scenario
-            debug_dir = debug_base / f"{season_num}-{scenario_num}"
-            debug_dir.mkdir(parents=True, exist_ok=True)
-            
+            scenario_debug_dir = debug_base / f"{season_num}-{scenario_num}"
+            scenario_debug_dir.mkdir(parents=True, exist_ok=True)
+
             print(f"  Processing {pdf_file.name}...")
-            
+
             # Generate description
             description = title_to_description(season_num, scenario_num, title)
-            
-            # Use the virtual environment Python
-            python_exe = "/Users/stephen/git/HelloFoundry/.venv/bin/python"
-            
-            # Run chronicle2layout.py
+
             # Determine parent layout variant for Season 4
             parent_id = config["parent_id"]
             if season_num == 4:
@@ -163,39 +191,62 @@ def process_season(season_num: int, scenario_filter=None):
                 "--parent", parent_id,
                 "--id", f"pfs2.s{season_num}-{scenario_num}",
                 "--description", description,
-                "--layout-dir", str(BASE_DIR / "layouts")
+                "--layout-dir", str(base_dir / "layouts")
             ]
-            
+
             # Add default chronicle location if available
             if default_chronicle_location:
                 cmd.extend(["--default-chronicle", default_chronicle_location])
-            
+
             try:
-                subprocess.run(cmd, check=True, cwd=BASE_DIR / "chronicle2layout" / "src")
+                subprocess.run(cmd, check=True, cwd=base_dir / "chronicle2layout" / "src")
                 print(f"  Successfully generated {layout_file.name}")
-                
+
             except subprocess.CalledProcessError as e:
                 print(f"  Error processing {pdf_file.name}: {e}")
             except Exception as e:
                 print(f"  Unexpected error processing {pdf_file.name}: {e}")
 
-def main():
-    """Process chronicles for one or more seasons."""
+def main() -> None:
+    """Process chronicles for one or more seasons.
+
+    Parses CLI arguments for season selection, scenario filtering, project
+    root directory, and Python executable path, then runs chronicle
+    processing for each requested season.
+
+    Requirements: refactor-chronicle2layout 6.1, 6.2, 6.3, 6.4, 6.5
+    """
     parser = argparse.ArgumentParser(description="Generate layout JSONs for PFS chronicles")
     parser.add_argument("--season", "-s", type=int, nargs="*", default=[],
                         help="Season number(s) to process (e.g., -s 6 7). If omitted, process all available seasons.")
     parser.add_argument("--scenarios", "-n", type=str, nargs="*", default=[],
                         help="Specific scenario numbers (e.g., -n 01 02 08). Only applied to listed seasons.")
+    parser.add_argument("--base-dir", type=Path, default=None,
+                        help="Project root directory (default: parent of chronicle2layout/)")
+    parser.add_argument("--python", type=str, default=None,
+                        help="Python executable path (default: sys.executable)")
     args = parser.parse_args()
 
+    base_dir: Path = args.base_dir or Path(__file__).resolve().parents[2]
+    python_exe: str = args.python or sys.executable
+    modules_dir, layouts_dir, debug_dir = derive_paths(base_dir)
+
     seasons = args.season if args.season else sorted(SEASON_CONFIGS.keys())
-    scenario_filter = set(args.scenarios) if args.scenarios else None
+    scenario_filter: set[str] | None = set(args.scenarios) if args.scenarios else None
     for s in seasons:
         if s not in SEASON_CONFIGS:
             print(f"Skipping unknown season {s}")
             continue
         print(f"\nProcessing Season {s}...")
-        process_season(s, scenario_filter=scenario_filter if scenario_filter else None)
+        process_season(
+            s,
+            base_dir=base_dir,
+            modules_dir=modules_dir,
+            layouts_dir=layouts_dir,
+            debug_dir=debug_dir,
+            python_exe=python_exe,
+            scenario_filter=scenario_filter,
+        )
 
 if __name__ == "__main__":
     main()
