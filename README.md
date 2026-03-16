@@ -1,12 +1,30 @@
-# Checkbox Finder
+# chronicle2layout
 
-This small tool finds checkboxes on a single-page PDF and reports their center locations as percentages of page width/height.
+Extract checkboxes and text from PDF chronicle sheets (Pathfinder Society) and generate layout JSON files describing form field positions.
 
-Features:
-- First attempts to read AcroForm checkbox field rectangles (fast and exact when present).
-- If no AcroForm checkboxes are found, falls back to image-based detection using PyMuPDF + OpenCV to find square contours.
+The generated layout JSON is consumed by the PFS Chronicle Generator Foundry VTT module to render filled chronicle sheets.
 
-Install
+## Module Structure
+
+```
+src/
+├── chronicle2layout.py    CLI entry point, text extraction
+├── shared_utils.py        Shared utilities (layout file resolution, canvas transforms, image rendering)
+├── item_segmenter.py      Item segmentation using parenthesis-based heuristics
+├── checkbox_extractor.py  Checkbox detection and label extraction
+├── layout_generator.py    Layout JSON assembly
+├── clip_canvas.py         Canvas region clipping utility
+├── generate_layouts.py    Batch processing across seasons
+└── yaml2json.py           YAML to JSON converter
+
+tools/
+├── build_season4_layout.py          Build Season 4 layout from template
+├── extract_season4_canvases.py      Extract canvas regions from Season 4 PDFs
+├── extract_season4_content.py       Extract content from Season 4 chronicle sheets
+└── season4_template.json            Template data for Season 4 layout generation
+```
+
+## Install
 
 Create a virtual environment and install dependencies:
 
@@ -16,21 +34,84 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Usage
+## Usage
+
+### Single Chronicle
+
+Generate a layout JSON for one PDF:
 
 ```bash
-python -m src.chronicle2layout /path/to/single_page.pdf
+cd src
+python chronicle2layout.py /path/to/chronicle.pdf \
+  --parent pfs2.season6 \
+  --id pfs2.s6-07 \
+  --description "6-07 Rotten Apples" \
+  --layout-dir ../../layouts \
+  --output output.json
 ```
 
-The script prints JSON to stdout with a list of checkboxes. Each checkbox entry contains:
-- `x_pct` — X position of the checkbox center as percentage (0 = left, 100 = right)
-- `y_pct` — Y position of the checkbox center as percentage (0 = bottom, 100 = top)
-- `method` — `acroform` or `image` indicating how it was found
+The script prints JSON to stdout (or writes to `--output`). Key CLI options:
 
-Notes and assumptions
+- `--parent` — Parent layout ID for canvas coordinate lookup
+- `--id` — Layout ID for the output JSON
+- `--description` — Scenario description
+- `--layout-dir` — Base layouts directory
+- `--region` — Manual region as `x0,y0,x1,y1` percentages (overrides canvas lookup)
+- `--item-canvas` — Canvas name for item extraction (default: `items`)
+- `--checkbox-canvas` — Canvas name for checkbox detection (default: `summary`)
+- `--default-chronicle` — Default path to the blank chronicle PDF
+- `--debug-dir` — Directory for debug output
 
-- Works best on single-page PDFs. If a multi-page PDF is provided, the script processes the first page.
-- For image-based detection, the algorithm looks for roughly square shapes. It may detect other square elements depending on the form layout. You can tune thresholds in the script.
-- Coordinates use PDF-style origin (0,0) at bottom-left so `y_pct=0` is bottom of the page and `y_pct=100` is top.
+### Batch Processing
 
-License: MIT
+Generate layouts for all chronicles in one or more seasons:
+
+```bash
+cd src
+python generate_layouts.py --season 6 7
+python generate_layouts.py --season 4 --scenarios 01 02 08
+```
+
+Options:
+
+- `--season` / `-s` — Season number(s) to process (default: all)
+- `--scenarios` / `-n` — Filter to specific scenario numbers
+- `--base-dir` — Project root directory (default: auto-detected)
+- `--python` — Python executable for subprocess calls (default: current interpreter)
+
+### Utilities
+
+Clip a canvas region from a PDF:
+
+```bash
+cd src
+python clip_canvas.py --pdf /path/to/chronicle.pdf \
+  --layout-dir ../../layouts --parent pfs2.season5 \
+  --canvas items --output clipped.png
+```
+
+Convert YAML layout files to JSON:
+
+```bash
+cd src
+python yaml2json.py
+```
+
+### Tools (Season 4)
+
+The `tools/` directory contains scripts for Season 4 chronicle processing:
+
+- `extract_season4_canvases.py` — Extract canvas regions from Season 4 PDFs
+- `extract_season4_content.py` — Detect grey boxes and extract text content
+- `build_season4_layout.py` — Assemble Season 4 layout JSON from template
+
+## Running Tests
+
+```bash
+source .venv/bin/activate
+python -m pytest
+```
+
+## License
+
+MIT
