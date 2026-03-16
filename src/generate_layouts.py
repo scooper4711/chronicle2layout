@@ -80,7 +80,19 @@ SEASON_CONFIGS = {
 }
 
 def title_to_description(season_num: int, scenario_num: str, title: str) -> str:
-    """Convert a filename title to a proper description."""
+    """Convert a filename title to a human-readable scenario description.
+
+    Splits camelCase titles into separate words and prepends the season
+    and scenario number.
+
+    Args:
+        season_num: The season number (e.g. 5).
+        scenario_num: Zero-padded scenario number (e.g. ``"07"``).
+        title: CamelCase title extracted from the PDF filename.
+
+    Returns:
+        Formatted description like ``"5-07 Rotten Apples"``.
+    """
     # Split on camelCase
     words = re.findall('[A-Z][^A-Z]*', title)
     if not words:

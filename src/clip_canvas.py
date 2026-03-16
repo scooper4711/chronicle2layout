@@ -21,7 +21,13 @@ import fitz
 from shared_utils import find_layout_file, transform_canvas_coordinates
 
 
-def main():
+def main() -> None:
+    """Clip a canvas region from a PDF and save it as a PNG image.
+
+    Parses CLI arguments for the PDF path, layout directory, parent layout
+    ID, canvas name, and output path. Resolves the canvas to absolute page
+    coordinates, renders the clipped region, and writes the result to disk.
+    """
     ap = argparse.ArgumentParser(description="Clip a canvas region from a PDF using layout coordinates")
     ap.add_argument('--pdf', required=True, help='Path to the PDF file')
     ap.add_argument('--layout-dir', required=True, help='Base layouts directory')
