@@ -19,7 +19,7 @@ from item_segmenter import segment_items
 STRIKEOUT_X_START: float = 0.5
 """Left x-coordinate (percentage) for item strikeout lines."""
 
-STRIKEOUT_X_END: float = 95.0
+STRIKEOUT_X_END: int = 95
 """Right x-coordinate (percentage) for item strikeout lines."""
 
 
@@ -298,18 +298,33 @@ def generate_layout_json(
     layout["presets"] = {}
     layout["content"] = []
 
+    # Build sections separately
+    item_params = item_base_presets = item_line_presets = item_content = None
     if items:
         item_params, item_presets, item_content = _build_items_section(items, item_canvas_name)
-        layout["parameters"].update(item_params)
-        layout["presets"].update(item_presets)
-        layout["content"].append(item_content)
+        # Split base preset from line presets to match original insertion order:
+        # strikeout_item base → checkbox presets → item line presets
+        item_base_presets = {"strikeout_item": item_presets.pop("strikeout_item")}
+        item_line_presets = item_presets
 
+    cb_params = cb_presets = cb_content = None
     if checkbox_labels:
         cb_params, cb_presets, cb_content = _build_checkboxes_section(
             checkbox_labels, checkbox_canvas_name
         )
+
+    # Assemble in original order: items skeleton → checkboxes → item lines
+    if item_params:
+        layout["parameters"].update(item_params)
+        layout["presets"].update(item_base_presets)
+        layout["content"].append(item_content)
+
+    if cb_params:
         layout["parameters"].update(cb_params)
         layout["presets"].update(cb_presets)
         layout["content"].append(cb_content)
+
+    if item_line_presets:
+        layout["presets"].update(item_line_presets)
 
     return layout

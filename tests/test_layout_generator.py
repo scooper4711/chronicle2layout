@@ -120,4 +120,4 @@ class TestNamedConstants:
         assert STRIKEOUT_X_START == 0.5
 
     def test_strikeout_x_end(self) -> None:
-        assert STRIKEOUT_X_END == 95.0
+        assert STRIKEOUT_X_END == 95
