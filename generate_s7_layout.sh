@@ -7,7 +7,7 @@
 
 set -e
 
-if [ $# -ne 1 ]; then
+if [[ $# -ne 1 ]]; then
     echo "Usage: $0 <path-to-chronicle-pdf>"
     echo "Example: $0 modules/pf2e-pfs07-year-of-battles-spark/assets/chronicles-1/710-chronicle-ShatteredBlades.pdf"
     exit 1
@@ -16,7 +16,7 @@ fi
 PDF_PATH="$1"
 
 # Check if file exists
-if [ ! -f "$PDF_PATH" ]; then
+if [[ ! -f "$PDF_PATH" ]]; then
     echo "Error: File not found: $PDF_PATH"
     exit 1
 fi
@@ -57,7 +57,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Find Python executable (prefer venv if available)
-if [ -f "$PROJECT_ROOT/../.venv/bin/python" ]; then
+if [[ -f "$PROJECT_ROOT/../.venv/bin/python" ]]; then
     PYTHON="$PROJECT_ROOT/../.venv/bin/python"
 else
     PYTHON="python3"
