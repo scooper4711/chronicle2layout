@@ -11,21 +11,23 @@ Usage: run from project root with project's venv python.
     python extract_season4_canvases.py [scenario_number]
     Example: python extract_season4_canvases.py 4-04
 """
-import fitz
 from PIL import Image
 import numpy as np
-import os
 import sys
 from pathlib import Path
 
-BASE = Path(__file__).resolve().parents[2]
-PDF_DIR = BASE / "modules" / "pfs-chronicle-generator" / "assets" / "chronicles-4"
+# Allow importing from src/ directory
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+from shared_utils import render_page_to_image, words_positions
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent.parent
+PDF_DIR = REPO_ROOT / "modules" / "pfs-chronicle-generator" / "assets" / "chronicles-4"
 
 # Get scenario from command line or default to 4-03
 SCENARIO = sys.argv[1] if len(sys.argv) > 1 else "4-03"
 PDF_NAME = f"{SCENARIO}-*.pdf"
 # Find the actual PDF file
-import glob
 pdf_files = list(PDF_DIR.glob(PDF_NAME))
 if not pdf_files:
     print(f"No PDF found matching {PDF_NAME} in {PDF_DIR}")
@@ -33,28 +35,11 @@ if not pdf_files:
 PDF_PATH = pdf_files[0]
 PDF_NAME = PDF_PATH.name
 
-DEBUG_DIR = BASE / "chronicle2layout" / "debug" / "season4" / SCENARIO
+DEBUG_DIR = SCRIPT_DIR.parent / "debug" / "season4" / SCENARIO
 DEBUG_DIR.mkdir(parents=True, exist_ok=True)
 
 # Render settings
 ZOOM = 2  # rendering scale
-
-def render_page_to_image(pdf_path, zoom=2):
-    doc = fitz.open(str(pdf_path))
-    page = doc.load_page(doc.page_count - 1)
-    mat = fitz.Matrix(zoom, zoom)
-    pix = page.get_pixmap(matrix=mat, alpha=False)
-    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-    return page, img
-
-
-def words_positions(page, zoom=2):
-    words = page.get_text("words")  # x0,y0,x1,y1,word,block_no,line_no,word_no
-    scaled = []
-    for w in words:
-        x0,y0,x1,y1,text,_,_,_ = w
-        scaled.append((text, int(x0*zoom), int(y0*zoom), int(x1*zoom), int(y1*zoom)))
-    return scaled
 
 
 def find_label_y(words, candidates):
