@@ -44,7 +44,6 @@ graph LR
 |--------|------|
 | `clip_canvas.py` | Clips a canvas region from a PDF and saves it as PNG. Useful for debugging canvas coordinates. |
 | `generate_layouts.py` | Batch processes chronicles across multiple seasons, invoking `chronicle2layout.py` as a subprocess for each PDF. |
-| `yaml2json.py` | Converts YAML layout files to JSON format. |
 
 ## Dependency Flow
 
