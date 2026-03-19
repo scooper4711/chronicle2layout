@@ -22,6 +22,17 @@ import numpy as np
 from PIL import Image
 
 
+def _resolve_season_layout(search_base: Path, season_num: str, variant: str | None) -> Path:
+    """Resolve a season-based layout ID to a file path."""
+    season_dir = search_base / f"s{season_num}"
+    if variant:
+        generated = season_dir / f"Season{season_num}{variant}.generated.json"
+        if generated.exists():
+            return generated
+        return season_dir / f"Season{season_num}{variant}.json"
+    return season_dir / f"Season {season_num}.json"
+
+
 def find_layout_file(layout_dir: str, layout_id: str) -> Path:
     """Resolve a layout ID string to the corresponding layout JSON file path.
 
@@ -54,18 +65,9 @@ def find_layout_file(layout_dir: str, layout_id: str) -> Path:
         match = re.match(r"^season(\d+)([a-z])?$", ident)
 
         if match:
-            season_num = match.group(1)
-            variant = match.group(2)
-            season_dir = search_base / f"s{season_num}"
-
-            if variant:
-                # Check for .generated.json first, fall back to regular .json
-                generated = season_dir / f"Season{season_num}{variant}.generated.json"
-                if generated.exists():
-                    return generated
-                layout_file = season_dir / f"Season{season_num}{variant}.json"
-            else:
-                layout_file = season_dir / f"Season {season_num}.json"
+            layout_file = _resolve_season_layout(
+                search_base, match.group(1), match.group(2)
+            )
         elif ident.startswith("s") and "-" in ident:
             season_num = ident.split("-")[0][1:]
             layout_file = search_base / f"s{season_num}" / f"{ident}.json"
@@ -167,6 +169,42 @@ def words_positions(
     return scaled
 
 
+def _measure_box_height(
+    arr: np.ndarray,
+    y: int,
+    x_start: int,
+    x_end: int,
+    grey_min: int,
+    grey_max: int,
+) -> int:
+    """Measure how many rows below y maintain a grey span from x_start to x_end."""
+    h = arr.shape[0]
+    span_width = x_end - x_start
+    box_height = 1
+    for y2 in range(y + 1, min(y + 100, h)):
+        grey_count = np.sum(
+            (arr[y2, x_start:x_end] >= grey_min)
+            & (arr[y2, x_start:x_end] <= grey_max)
+        )
+        if grey_count / span_width < 0.7:
+            break
+        box_height += 1
+    return box_height
+
+
+def _is_duplicate_box(
+    x_start: int,
+    y: int,
+    boxes: list[tuple[int, int, int, int]],
+    tolerance: int = 5,
+) -> bool:
+    """Check if a box at (x_start, y) is a near-duplicate of an existing box."""
+    return any(
+        abs(x_start - bx0) < tolerance and abs(y - by0) < tolerance
+        for bx0, by0, _, _ in boxes
+    )
+
+
 def find_grey_boxes(
     img: Image.Image,
     grey_min: int = 200,
@@ -207,24 +245,9 @@ def find_grey_boxes(
                 in_grey = True
             elif not is_grey and in_grey:
                 if x - x_start >= min_width:
-                    box_height = 1
-                    for y2 in range(y + 1, min(y + 100, h)):
-                        grey_count = np.sum(
-                            (arr[y2, x_start:x] >= grey_min)
-                            & (arr[y2, x_start:x] <= grey_max)
-                        )
-                        if grey_count / (x - x_start) < 0.7:
-                            break
-                        box_height += 1
-
-                    if box_height >= min_height:
-                        is_duplicate = False
-                        for bx0, by0, bx1, by1 in boxes:
-                            if abs(x_start - bx0) < 5 and abs(y - by0) < 5:
-                                is_duplicate = True
-                                break
-                        if not is_duplicate:
-                            boxes.append((x_start, y, x, y + box_height))
+                    box_height = _measure_box_height(arr, y, x_start, x, grey_min, grey_max)
+                    if box_height >= min_height and not _is_duplicate_box(x_start, y, boxes):
+                        boxes.append((x_start, y, x, y + box_height))
                 in_grey = False
 
     return boxes

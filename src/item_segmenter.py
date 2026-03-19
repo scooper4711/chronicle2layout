@@ -67,6 +67,44 @@ def _clean_line_text(text: str) -> str:
     return text
 
 
+class _ItemAccumulator:
+    """Tracks state while accumulating tokens into items."""
+
+    def __init__(self) -> None:
+        self.tokens: list[str] = []
+        self.open_count: int = 0
+        self.groups_completed: int = 0
+        self.y_start: float | None = None
+        self.y_end: float | None = None
+
+    def process_token(self, tok: str) -> bool:
+        """Add a token and return True if the item should be finalized."""
+        opens = tok.count("(")
+        closes = tok.count(")")
+        self.open_count += opens
+        for _ in range(closes):
+            if self.open_count > 0:
+                self.open_count -= 1
+                self.groups_completed += 1
+        self.tokens.append(tok)
+        return self.groups_completed >= MAX_PAREN_GROUPS_PER_ITEM and self.open_count == 0
+
+    def is_balanced(self) -> bool:
+        return self.open_count == 0 and bool(self.tokens)
+
+    def flush(self, items: list[dict]) -> None:
+        """Finalize the current item and reset state."""
+        finalize_buffer(self.tokens, items, self.y_start or 0, self.y_end or 0)
+        self.tokens = []
+        self.open_count = 0
+        self.groups_completed = 0
+
+    def reset_position(self) -> None:
+        """Reset vertical position tracking for a new item."""
+        self.y_start = None
+        self.y_end = None
+
+
 def segment_items(lines: list[dict]) -> list[dict]:
     """Segment extracted text lines into individual item entries.
 
@@ -95,11 +133,7 @@ def segment_items(lines: list[dict]) -> list[dict]:
         vertical extent as region percentages.
     """
     items: list[dict] = []
-    current_tokens: list[str] = []
-    open_count: int = 0
-    groups_completed: int = 0
-    current_y_start: float | None = None
-    current_y_end: float | None = None
+    acc = _ItemAccumulator()
 
     for line in lines:
         raw_line_text: str = line["text"]
@@ -116,47 +150,25 @@ def segment_items(lines: list[dict]) -> list[dict]:
         line_y_bottom: float = line["bottom_right_pct"][1]
 
         # Initialize current item vertical bounds
-        if current_y_start is None:
-            current_y_start = line_y_top
-        current_y_end = line_y_bottom
+        if acc.y_start is None:
+            acc.y_start = line_y_top
+        acc.y_end = line_y_bottom
 
         for tok in tokens:
-            opens = tok.count("(")
-            closes = tok.count(")")
-            open_count += opens
-            for _ in range(closes):
-                if open_count > 0:
-                    open_count -= 1
-                    groups_completed += 1
-            current_tokens.append(tok)
-
-            # Split point: max groups reached and parens balanced
-            if groups_completed >= MAX_PAREN_GROUPS_PER_ITEM and open_count == 0:
-                finalize_buffer(current_tokens, items, current_y_start, current_y_end)
-                current_tokens = []
-                open_count = 0
-                groups_completed = 0
-                # New item starts at same line (approximation)
-                current_y_start = line_y_top
-                current_y_end = line_y_bottom
+            should_split = acc.process_token(tok)
+            if should_split:
+                acc.flush(items)
+                acc.y_start = line_y_top
+                acc.y_end = line_y_bottom
 
         # End-of-line: finalize if balanced
-        if open_count == 0 and current_tokens:
-            finalize_buffer(current_tokens, items, current_y_start, current_y_end)
-            current_tokens = []
-            open_count = 0
-            groups_completed = 0
-            current_y_start = None
-            current_y_end = None
+        if acc.is_balanced():
+            acc.flush(items)
+            acc.reset_position()
         # Else continue to next line to complete parentheses
 
     # Flush any remaining tokens (unbalanced at EOF)
-    if current_tokens:
-        finalize_buffer(
-            current_tokens,
-            items,
-            current_y_start if current_y_start is not None else 0,
-            current_y_end if current_y_end is not None else 0,
-        )
+    if acc.tokens:
+        acc.flush(items)
 
     return items

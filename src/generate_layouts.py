@@ -103,6 +103,24 @@ def title_to_description(season_num: int, scenario_num: str, title: str) -> str:
     formatted_title = ' '.join(words)
     return f"{season_num}-{scenario_num} {formatted_title}"
 
+
+# Season 4 uses multiple parent layout variants based on scenario number
+_SEASON4_PARENT_MAP: dict[int, str] = {
+    **{sn: "pfs2.season4a" for sn in (1, 2, 3, 8)},
+    **{sn: "pfs2.season4b" for sn in (4, 5)},
+    6: "pfs2.season4c",
+    7: "pfs2.season4d",
+    **{sn: "pfs2.season4e" for sn in range(9, 18)},
+}
+
+
+def _resolve_parent_id(default_parent: str, season_num: int, scenario_num: int) -> str:
+    """Resolve the parent layout ID, handling Season 4 variant overrides."""
+    if season_num == 4:
+        return _SEASON4_PARENT_MAP.get(scenario_num, default_parent)
+    return default_parent
+
+
 def process_season(
     season_num: int,
     base_dir: Path,
@@ -182,19 +200,7 @@ def process_season(
             description = title_to_description(season_num, scenario_num, title)
 
             # Determine parent layout variant for Season 4
-            parent_id = config["parent_id"]
-            if season_num == 4:
-                sn = int(scenario_num)
-                if sn in {1,2,3,8}:
-                    parent_id = "pfs2.season4a"
-                elif sn in {4,5}:
-                    parent_id = "pfs2.season4b"
-                elif sn == 6:
-                    parent_id = "pfs2.season4c"
-                elif sn == 7:
-                    parent_id = "pfs2.season4d"
-                elif 9 <= sn <= 17:
-                    parent_id = "pfs2.season4e"
+            parent_id = _resolve_parent_id(config["parent_id"], season_num, int(scenario_num))
 
             cmd = [
                 python_exe, "chronicle2layout.py",

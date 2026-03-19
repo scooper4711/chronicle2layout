@@ -102,6 +102,62 @@ def image_checkboxes(
     return checkboxes
 
 
+def _is_in_region(x0: float, y0: float, x1: float, y1: float,
+                  region_x0: float, region_y0: float,
+                  region_x2: float, region_y2: float) -> bool:
+    """Check if a word bounding box falls within the specified region."""
+    return (x0 >= region_x0 and x1 <= region_x2
+            and y0 >= region_y0 and y1 <= region_y2)
+
+
+def _is_checkbox_word(text: str) -> bool:
+    """Check if a word contains a checkbox character."""
+    return text.strip() in CHECKBOX_CHARS or '□' in text
+
+
+def _collect_label_words(
+    words_on_page: list,
+    start_idx: int,
+    end_idx: int,
+    cb_text: str,
+    region_x0: float,
+    region_y0: float,
+    region_x2: float,
+    region_y2: float,
+) -> list[str]:
+    """Collect label words following a checkbox until a delimiter is reached."""
+    label_words: list[str] = []
+
+    # If checkbox has text attached after the □, extract it
+    if cb_text.startswith('□') and len(cb_text) > 1:
+        label_words.append(cb_text[1:])
+
+    for word_idx in range(start_idx + 1, end_idx):
+        word_data = words_on_page[word_idx]
+        x0, y0, x1, y1, text = word_data[0], word_data[1], word_data[2], word_data[3], word_data[4]
+
+        if not _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
+            continue
+        if any(cb_char in text for cb_char in CHECKBOX_CHARS):
+            break
+        if text.lower() == 'or':
+            break
+        label_words.append(text)
+        if text.endswith(',') or text.endswith('.'):
+            break
+
+    return label_words
+
+
+def _clean_label(label_words: list[str]) -> str:
+    """Join label words and strip trailing punctuation."""
+    label = ' '.join(label_words).strip()
+    if label.endswith('.') or label.endswith(','):
+        if not (label.endswith('...') or (len(label) > 2 and label[-2:-1].isdigit())):
+            label = label[:-1].strip()
+    return label
+
+
 def extract_checkbox_labels(
     pdf_path: str,
     checkboxes: list[dict],
@@ -147,11 +203,10 @@ def extract_checkbox_labels(
 
     checkbox_positions: list[int] = []
     for idx, word_data in enumerate(words_on_page):
-        x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
+        x0, y0, x1, y1, text = word_data[0], word_data[1], word_data[2], word_data[3], word_data[4]
 
-        if text.strip() in CHECKBOX_CHARS or '□' in text:
-            if (x0 >= region_x0 and x1 <= region_x2
-                    and y0 >= region_y0 and y1 <= region_y2):
+        if _is_checkbox_word(text):
+            if _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
                 checkbox_positions.append(idx)
 
     results: list[dict] = []
@@ -163,32 +218,11 @@ def extract_checkbox_labels(
         )
 
         cb_text = words_on_page[cb_idx][4]
-        label_words: list[str] = []
-
-        # If checkbox has text attached after the □, extract it
-        if cb_text.startswith('□') and len(cb_text) > 1:
-            label_words.append(cb_text[1:])
-
-        for word_idx in range(cb_idx + 1, next_cb_idx):
-            word_data = words_on_page[word_idx]
-            x0, y0, x1, y1, text, block_no, line_no, word_no = word_data
-
-            if (x0 >= region_x0 and x1 <= region_x2
-                    and y0 >= region_y0 and y1 <= region_y2):
-                if any(cb_char in text for cb_char in CHECKBOX_CHARS):
-                    break
-                if text.lower() == 'or':
-                    break
-                label_words.append(text)
-                if text.endswith(',') or text.endswith('.'):
-                    break
-
-        label = ' '.join(label_words).strip()
-
-        # Remove trailing punctuation unless it's an ellipsis or number abbreviation
-        if label.endswith('.') or label.endswith(','):
-            if not (label.endswith('...') or (len(label) > 2 and label[-2:-1].isdigit())):
-                label = label[:-1].strip()
+        label_words = _collect_label_words(
+            words_on_page, cb_idx, next_cb_idx, cb_text,
+            region_x0, region_y0, region_x2, region_y2,
+        )
+        label = _clean_label(label_words)
 
         results.append({
             'checkbox': checkboxes[i] if i < len(checkboxes) else None,
