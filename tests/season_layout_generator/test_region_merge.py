@@ -82,11 +82,11 @@ class TestPickRegion:
         assert result == _TEXT_PLAYER_INFO
 
     def test_text_only_region_ignores_image(self) -> None:
-        """Text-only regions (player_info, notes, etc.) always use text."""
+        """Text-only regions (player_info, boons, etc.) always use text."""
         fake_image = CanvasCoordinates(x=0, y=0, x2=50, y2=50)
-        text = {"notes": _TEXT_NOTES}
-        image = {"notes": fake_image}
-        result = _pick_region("notes", text, image)
+        text = {"boons": _TEXT_NOTES}
+        image = {"boons": fake_image}
+        result = _pick_region("boons", text, image)
         assert result == _TEXT_NOTES
 
     def test_returns_none_when_both_missing(self) -> None:

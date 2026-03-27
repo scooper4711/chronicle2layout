@@ -8,7 +8,9 @@ for edge positions and using text for identity confirmation.
 from season_layout_generator.models import CanvasCoordinates, PageRegions
 
 # Regions detected by image analysis (preferred for edge positions).
-_IMAGE_REGIONS = frozenset({"summary", "items", "rewards", "session_info"})
+_IMAGE_REGIONS = frozenset({
+    "summary", "items", "rewards", "session_info", "notes",
+})
 
 # All sub-regions that live inside the main canvas.
 _SUB_REGIONS = (

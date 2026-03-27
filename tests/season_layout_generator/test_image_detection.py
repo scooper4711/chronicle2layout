@@ -70,7 +70,9 @@ class TestReturnStructure:
     def test_contains_expected_keys(
         self, season5_regions: dict[str, CanvasCoordinates | None],
     ) -> None:
-        expected_keys = {"summary", "items", "rewards", "session_info"}
+        expected_keys = {
+            "summary", "items", "rewards", "session_info", "notes",
+        }
         assert set(season5_regions.keys()) == expected_keys
 
     def test_detected_values_are_canvas_coordinates(
@@ -317,12 +319,12 @@ class TestBlackBarDetection:
     def test_items_right_edge_at_rewards_border(
         self, regions: dict[str, CanvasCoordinates | None],
     ) -> None:
-        """Items right edge should align with the rewards left edge."""
+        """Items right edge should align with the notes left edge or rewards."""
         items = regions["items"]
-        rewards = regions["rewards"]
-        assert items is not None and rewards is not None
-        assert abs(items.x2 - rewards.x) < 5.0, (
-            f"Items x2={items.x2:.1f} should be near rewards x={rewards.x:.1f}"
+        notes = regions["notes"]
+        assert items is not None and notes is not None
+        assert abs(items.x2 - notes.x) < 2.0, (
+            f"Items x2={items.x2:.1f} should be near notes x={notes.x:.1f}"
         )
 
 
