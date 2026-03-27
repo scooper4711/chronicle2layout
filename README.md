@@ -7,6 +7,7 @@ A collection of utilities for Pathfinder Society (PFS) organized play. Each tool
 | Utility | Description |
 |---------|-------------|
 | [Chronicle Extractor](chronicle_extractor/README.md) | Extracts chronicle sheet pages from PFS scenario PDFs into organized, per-season directories. |
+| [Scenario Renamer](scenario_renamer/README.md) | Copies and renames PFS scenario PDFs and images into organized, per-season directories with descriptive filenames. |
 
 ## Setup
 
