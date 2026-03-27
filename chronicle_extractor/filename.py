@@ -7,7 +7,7 @@ path with season-based subdirectories.
 
 from pathlib import Path
 
-from chronicle_extractor.parser import ScenarioInfo
+from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
 
 UNSAFE_CHARACTERS: str = "':;?/\\*<>|\",\u2019"
 
@@ -45,6 +45,10 @@ def build_output_path(output_dir: Path, info: ScenarioInfo) -> Path:
     Requirements: chronicle-extractor 4.2, 5.1
     """
     sanitized = sanitize_name(info.name)
+
+    if info.season == _BOUNTY_SEASON:
+        filename = f"B{info.scenario}-{sanitized}Chronicle.pdf"
+        return output_dir / "Bounties" / filename
 
     if info.season == 0:
         filename = f"Q{info.scenario}-{sanitized}Chronicle.pdf"

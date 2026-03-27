@@ -7,7 +7,7 @@ build_output_path functions.
 from pathlib import Path
 
 from chronicle_extractor.filename import build_output_path, sanitize_name
-from chronicle_extractor.parser import ScenarioInfo
+from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
 
 
 class TestSanitizeName:
@@ -93,4 +93,20 @@ class TestBuildOutputPath:
         info = ScenarioInfo(season=2, scenario="03", name="Test")
         result = build_output_path(Path("output"), info)
         expected = Path("output/Season 2/2-03-TestChronicle.pdf")
+        assert result == expected
+
+    def test_bounty_output_path(self) -> None:
+        info = ScenarioInfo(
+            season=_BOUNTY_SEASON, scenario="2", name="Blood of the Beautiful"
+        )
+        result = build_output_path(Path("/output"), info)
+        expected = Path("/output/Bounties/B2-BloodoftheBeautifulChronicle.pdf")
+        assert result == expected
+
+    def test_bounty_double_digit(self) -> None:
+        info = ScenarioInfo(
+            season=_BOUNTY_SEASON, scenario="15", name="Treasure Off The Coast"
+        )
+        result = build_output_path(Path("/output"), info)
+        expected = Path("/output/Bounties/B15-TreasureOffTheCoastChronicle.pdf")
         assert result == expected

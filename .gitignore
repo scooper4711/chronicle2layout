@@ -19,6 +19,7 @@ htmlcov/
 .coverage
 .coverage.*
 coverage.xml
+debug*
 
 # IDE
 .vscode/
@@ -34,3 +35,5 @@ Thumbs.db
 # Paizo copyright
 Chronicles
 Scenarios
+Layouts
+PFS

@@ -6,6 +6,8 @@ extract_scenario_number, extract_scenario_name, and extract_scenario_info.
 
 from chronicle_extractor.parser import (
     ScenarioInfo,
+    _BOUNTY_SEASON,
+    extract_from_chronicle,
     extract_scenario_info,
     extract_scenario_name,
     extract_scenario_number,
@@ -52,6 +54,19 @@ class TestExtractScenarioNumber:
 
     def test_empty_string(self) -> None:
         assert extract_scenario_number("") is None
+
+    def test_bounty_first_page_format(self) -> None:
+        """Bounty first pages use 'Bounty: N' format."""
+        result = extract_scenario_number("Bounty: 2\nLevel: 1\n")
+        assert result == (_BOUNTY_SEASON, "2")
+
+    def test_bounty_double_digit(self) -> None:
+        result = extract_scenario_number("Bounty: 15\nLevel: 1\n")
+        assert result == (_BOUNTY_SEASON, "15")
+
+    def test_bounty_first_page_no_number(self) -> None:
+        """Some bounties lack a number on the first page."""
+        assert extract_scenario_number("By Author\nTitle\nSecond Edition\n") is None
 
 
 class TestExtractScenarioName:
@@ -114,3 +129,98 @@ class TestExtractScenarioInfo:
         p1 = "#1-07 text"
         result = extract_scenario_info(p1)
         assert result is None
+
+
+class TestExtractFromChronicle:
+    """Tests for extract_from_chronicle with bounty formats."""
+
+    def test_bounty_older_format(self) -> None:
+        """Older bounties: number before 'Adventure Summary'."""
+        text = (
+            "Chronicle Code\nCharacter Chronicle #\n"
+            "Bounty #2:\nBlood of the Beautiful\n"
+            "Adventure Summary\nPurchases\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == _BOUNTY_SEASON
+        assert result.scenario == "2"
+        assert result.name == "Blood of the Beautiful"
+
+    def test_bounty_newer_format(self) -> None:
+        """Newer bounties: 'Adventure Summary' at top, number near bottom."""
+        text = (
+            "Adventure Summary\nBoons\nRewards\nPurchases\n"
+            "Items\nNotes\nCharacter Name\n"
+            "Chronicle Code: WT12\n"
+            "Bounty #15:\nTreasure Off The Coast\n"
+            "You and your allies helped Laela Vost recover goods from "
+            "the Infidius, a Chelaxian ship that crashed off the stormy "
+            "coast of Kintargo in Ravounel.\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == _BOUNTY_SEASON
+        assert result.scenario == "15"
+        assert result.name == "Treasure Off The Coast"
+
+    def test_pathfinder_bounty_prefix(self) -> None:
+        """Some bounties use 'Pathfinder Bounty #N:' format."""
+        text = (
+            "Adventure Summary\nBoons\nRewards\n"
+            "Chronicle Code: GVG9\n"
+            "Pathfinder Bounty #16:\nBoom Town Betrayal\n"
+            "You and your allies offered to help the family of the "
+            "desperate Wiston Drent who explained that his elderly "
+            "parents had been swindled by a nobleman from Taldor.\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == _BOUNTY_SEASON
+        assert result.scenario == "16"
+        assert result.name == "Boom Town Betrayal"
+
+    def test_bounty_name_on_same_line(self) -> None:
+        """Bounty number and name on the same line."""
+        text = (
+            "Chronicle Code: XXXX\n"
+            "Bounty #5: Witch's Winter Holiday\n"
+            "Adventure Summary\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.scenario == "5"
+        assert result.name == "Witch's Winter Holiday"
+
+
+class TestExtractScenarioInfoBounty:
+    """Tests for extract_scenario_info with bounty PDFs."""
+
+    def test_bounty_via_chronicle(self) -> None:
+        """Bounty extracted from chronicle sheet (primary path)."""
+        p1 = "Bounty: 2\nLevel: 1\n"
+        last = (
+            "Chronicle Code\nBounty #2:\n"
+            "Blood of the Beautiful\nAdventure Summary\n"
+        )
+        result = extract_scenario_info(p1, last_page_text=last)
+        assert result is not None
+        assert result.season == _BOUNTY_SEASON
+        assert result.scenario == "2"
+        assert result.name == "Blood of the Beautiful"
+
+    def test_bounty_no_first_page_number(self) -> None:
+        """Bounty with no number on first page, extracted from chronicle."""
+        p1 = "By Author\nAgainst the Unliving\nSecond Edition\n"
+        last = (
+            "Adventure Summary\nBoons\n"
+            "Chronicle Code: AWM1\n"
+            "Bounty #21:\nAgainst the Unliving\n"
+            "You met with a Knight of Lastwall who requested that you "
+            "investigate what happened to his friends and mentors.\n"
+        )
+        result = extract_scenario_info(p1, last_page_text=last)
+        assert result is not None
+        assert result.season == _BOUNTY_SEASON
+        assert result.scenario == "21"
+        assert result.name == "Against the Unliving"
