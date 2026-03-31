@@ -20,7 +20,7 @@ from season_layout_generator.image_detection import extract_image_regions
 from season_layout_generator.models import CanvasCoordinates
 
 # Base path for chronicle PDFs, relative to the project root.
-_CHRONICLES_DIR = Path("Chronicles")
+_CHRONICLES_DIR = Path("Chronicles/pfs")
 
 # Regions that image detection should find on Season 5+ chronicles.
 _SEASON5_IMAGE_REGIONS: list[str] = [

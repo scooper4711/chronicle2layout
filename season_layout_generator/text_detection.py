@@ -27,6 +27,7 @@ from season_layout_generator.models import CanvasCoordinates
 _PLAYER_INFO_LABELS: list[str] = [
     "character name",
     "organized play #",
+    "character #",
 ]
 
 # Adventure summary: identified by its title bar text.
@@ -203,14 +204,20 @@ def _envelope(
 
 def _detect_player_info(
     spans: list[tuple[str, tuple[float, float, float, float]]],
+    page_height: float,
 ) -> tuple[float, float, float, float] | None:
     """Detect the player info region from characteristic labels.
 
-    Looks for "Character Name" and "Organized Play #" labels and
-    returns their combined bounding envelope.
+    Looks for "Character Name", "Organized Play #", and "Character #"
+    labels and returns a bounding box that extends upward from the
+    labels to include the writing lines above them. The labels sit
+    at the bottom of the player info area; the actual fields (where
+    users write) are in the space above.
 
     Args:
         spans: List of (text, bbox) pairs.
+        page_height: Page height in points, used to compute the
+            vertical extension above the labels.
 
     Returns:
         Bounding box of the player info region, or None.
@@ -218,7 +225,13 @@ def _detect_player_info(
     matches = _find_all_matching(spans, _PLAYER_INFO_LABELS)
     if not matches:
         return None
-    return _envelope(matches)
+    envelope = _envelope(matches)
+    # Extend the top edge upward by ~3% of page height to include
+    # the writing lines above the labels.
+    label_height = envelope[3] - envelope[1]
+    extension = max(label_height * 2.0, page_height * 0.03)
+    top_y = max(0.0, envelope[1] - extension)
+    return (envelope[0], top_y, envelope[2], envelope[3])
 
 
 def _detect_summary(
@@ -239,16 +252,19 @@ def _detect_summary(
 
 def _detect_rewards(
     spans: list[tuple[str, tuple[float, float, float, float]]],
+    page_height: float,
 ) -> tuple[float, float, float, float] | None:
     """Detect the rewards region from XP/GP field labels.
 
     Searches for reward-related labels (Starting XP, XP Gained, etc.)
-    and returns their combined bounding envelope. Requires at least
-    two matching labels to confirm the region. Also checks for a
-    standalone "Rewards" header label as a fallback anchor.
+    and returns their combined bounding envelope, extended downward
+    to include the fill-in area below the last label. Also checks
+    for a standalone "Rewards" header label as a fallback anchor.
 
     Args:
         spans: List of (text, bbox) pairs.
+        page_height: Page height in points, used to compute the
+            vertical extension below the labels.
 
     Returns:
         Bounding box of the rewards region, or None.
@@ -263,14 +279,21 @@ def _detect_rewards(
     if len(matches) < _MIN_REWARDS_LABEL_MATCHES and not all_bboxes:
         return None
 
+    envelope = None
     if len(matches) >= _MIN_REWARDS_LABEL_MATCHES:
-        return _envelope(all_bboxes)
+        envelope = _envelope(all_bboxes)
+    elif header is not None:
+        envelope = header
 
-    # Only header found without enough field labels
-    if header is not None:
-        return header
+    if envelope is None:
+        return None
 
-    return None
+    # Extend the bottom edge downward by ~2% of page height to
+    # include the fill-in area below the last label (e.g. Total GP).
+    label_height = envelope[3] - envelope[1]
+    extension = max(label_height * 0.3, page_height * 0.02)
+    bottom_y = min(page_height, envelope[3] + extension)
+    return (envelope[0], envelope[1], envelope[2], bottom_y)
 
 
 def _detect_session_info(
@@ -334,44 +357,73 @@ def _detect_items(
 
 def _detect_boons(
     spans: list[tuple[str, tuple[float, float, float, float]]],
+    page_height: float,
 ) -> tuple[float, float, float, float] | None:
     """Detect the boons region.
 
-    Looks for a standalone "Boons" label.
+    Looks for a standalone "Boons" label and extends downward to
+    include the boon content area below it.
 
     Args:
         spans: List of (text, bbox) pairs.
+        page_height: Page height in points.
 
     Returns:
-        Bounding box of the boons label, or None.
+        Bounding box of the boons region, or None.
     """
-    return _find_label(spans, _BOONS_LABEL)
+    bbox = _find_label(spans, _BOONS_LABEL)
+    if bbox is None:
+        return None
+    # Extend downward by ~12% of page height to cover boon entries.
+    extension = page_height * 0.12
+    return (bbox[0], bbox[1], bbox[2], min(page_height, bbox[3] + extension))
 
 
 def _detect_reputation(
     spans: list[tuple[str, tuple[float, float, float, float]]],
+    page_height: float,
 ) -> tuple[float, float, float, float] | None:
     """Detect the reputation region.
 
     Matches labels starting with "Reputation" (case-insensitive),
     covering variations like "Reputation", "Reputation/Infamy",
-    and "Reputation Gained". When multiple reputation labels are
-    found (e.g., three "Reputation" rows in early Bounties),
-    returns their combined envelope.
+    and "Reputation Gained". Also includes "Faction" labels when
+    found alongside reputation (S1 has a Faction/Reputation box).
+
+    When multiple labels are found, returns their combined envelope
+    extended downward to include the fill-in area.
 
     Args:
         spans: List of (text, bbox) pairs.
+        page_height: Page height in points.
 
     Returns:
         Bounding box of the reputation region, or None.
     """
-    matches = [
+    rep_matches = [
         bbox for text, bbox in spans
         if _REPUTATION_PATTERN.match(text)
     ]
-    if not matches:
+    if not rep_matches:
         return None
-    return _envelope(matches)
+
+    # Include "Faction" labels when co-located with reputation (S1).
+    faction_matches = [
+        bbox for text, bbox in spans
+        if text.strip().lower() == "faction"
+    ]
+    all_matches = rep_matches + faction_matches
+
+    envelope = _envelope(all_matches)
+    # Extend upward slightly to include writing lines above labels.
+    label_height = envelope[3] - envelope[1]
+    top_extension = label_height * 0.15
+    return (
+        envelope[0],
+        max(0.0, envelope[1] - top_extension),
+        envelope[2],
+        envelope[3],
+    )
 
 
 
@@ -409,14 +461,14 @@ def extract_text_regions(
         str,
         tuple[float, float, float, float] | None,
     ] = {
-        "player_info": _detect_player_info(spans),
+        "player_info": _detect_player_info(spans, height),
         "summary": _detect_summary(spans),
-        "rewards": _detect_rewards(spans),
+        "rewards": _detect_rewards(spans, height),
         "session_info": _detect_session_info(spans),
         "notes": _detect_notes(spans),
         "items": _detect_items(spans),
-        "boons": _detect_boons(spans),
-        "reputation": _detect_reputation(spans),
+        "boons": _detect_boons(spans, height),
+        "reputation": _detect_reputation(spans, height),
     }
 
     return {

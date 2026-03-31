@@ -42,7 +42,7 @@ MIN_REGION_HEIGHT_FRACTION: float = 0.02
 
 # Minimum fraction of a column's pixels that must be black to
 # count as a vertical border line.
-_VERTICAL_BORDER_MIN_FRACTION: float = 0.3
+_VERTICAL_BORDER_MIN_FRACTION: float = 0.25
 
 # Minimum thickness in pixels for a vertical border to be
 # considered a thick border (not just an edge artifact).
@@ -263,31 +263,29 @@ def _is_partial_width_bar(
 
 def _classify_horizontal_bars(
     bars: list[tuple[float, float]],
-    rewards_left_x: float | None,
     gray: np.ndarray,
     width: int,
 ) -> dict[str, CanvasCoordinates | None]:
     """Classify horizontal bars into named regions.
 
-    Uses the vertical position and horizontal extent of each bar
-    to determine which canvas region it belongs to.
+    Uses the vertical position of each bar to determine which canvas
+    region it belongs to. Bars are processed top-to-bottom.
 
     The classification logic:
-    - The first thick bar in the upper portion is the summary top.
-    - A bar that stops at the rewards border (partial width) is the
-      items top.
-    - The last thick bar before the session info area is the bottom
-      boundary of the rewards/items area.
+    - The first thick bar in the upper portion (<25%) is summary top.
+    - The first thick bar above 70% is content bottom.
+    - Thick bars in the middle (25-70%) use "last wins" for items_top
+      and "first wins" for summary_bottom.
 
     Args:
         bars: Horizontal bars as (y_start_pct, y_end_pct) pairs.
-        rewards_left_x: X percentage of the rewards left border.
         gray: Grayscale image array for checking bar extent.
         width: Page width in pixels.
 
     Returns:
         Dict with detected region coordinates. Keys may include
-        ``summary_top``, ``items_top``, ``content_bottom``.
+        ``summary_top``, ``summary_bottom``, ``items_top``,
+        ``content_bottom``.
     """
     if not bars:
         return {}
@@ -307,16 +305,9 @@ def _classify_horizontal_bars(
         bar_x_end_pct = float(black_pixels[-1]) / width * 100.0
         bar_x_start_pct = float(black_pixels[0]) / width * 100.0
 
-        is_partial = False
-        if rewards_left_x is not None and 40.0 < y_start < 70.0:
-            is_partial = _is_partial_width_bar(
-                gray, mid_row, rewards_left_x, width,
-            )
-
         _classify_single_bar(
             result, y_start, y_end,
             bar_x_start_pct, bar_x_end_pct,
-            is_partial=is_partial,
         )
 
     return result
@@ -328,8 +319,6 @@ def _classify_single_bar(
     y_end: float,
     bar_x_start: float,
     bar_x_end: float,
-    *,
-    is_partial: bool = False,
 ) -> None:
     """Classify a single horizontal bar and add it to the result dict.
 
@@ -343,8 +332,6 @@ def _classify_single_bar(
         y_end: Bar bottom edge as page percentage.
         bar_x_start: Bar left edge as page percentage.
         bar_x_end: Bar right edge as page percentage.
-        is_partial: Whether the bar is partial width (stops at
-            the rewards border).
     """
     is_thick = (y_end - y_start) > 0.5
 
@@ -487,21 +474,22 @@ def _build_notes_coords_side_by_side(
 
 
 def _build_notes_coords_stacked(
-    content_bottom_y: float,
+    content_bottom: CanvasCoordinates,
     session_info_top_y: float | None,
-    items_x: float,
-    items_x2: float,
+    divider_x: float | None = None,
 ) -> CanvasCoordinates | None:
-    """Build notes coordinates for stacked layout (S1-S3).
+    """Build notes coordinates for stacked layout (S1-S3, Bounties).
 
-    Notes sits below items, directly above session info.
+    Notes sits below items, directly above session info. When a
+    vertical divider exists (separating notes from downtime in S2),
+    notes is trimmed to the left of the divider. Otherwise it spans
+    the full content width.
 
     Args:
-        content_bottom_y: Y percentage of the content bottom bar
-            (bottom of items, top of notes).
+        content_bottom: The content bottom bar coordinates, used
+            for the notes top edge and horizontal extent.
         session_info_top_y: Y percentage of the session info top edge.
-        items_x: X percentage of the items left edge.
-        items_x2: X percentage of the items right edge.
+        divider_x: X percentage of the vertical divider, or None.
 
     Returns:
         CanvasCoordinates for the notes region, or None if
@@ -510,10 +498,12 @@ def _build_notes_coords_stacked(
     if session_info_top_y is None:
         return None
 
+    right_x = divider_x if divider_x is not None else content_bottom.x2
+
     return CanvasCoordinates(
-        x=items_x,
-        y=content_bottom_y,
-        x2=items_x2,
+        x=content_bottom.x,
+        y=content_bottom.y2,
+        x2=right_x,
         y2=session_info_top_y,
     )
 
@@ -596,21 +586,80 @@ def _build_items_coords(
     )
 
 
+def _find_rewards_bottom(
+    gray: np.ndarray,
+    top_y: float,
+    rewards_left_x: float,
+    right_edge_x: float,
+    height: int,
+    width: int,
+) -> float | None:
+    """Find the bottom bar of the rewards box by scanning its column.
+
+    Scans the rewards column for the first thick horizontal bar
+    below the rewards top edge. This bar sits below the last
+    rewards field (e.g. Total GP).
+
+    Args:
+        gray: Grayscale image array.
+        top_y: Y percentage of the rewards top edge.
+        rewards_left_x: X percentage of the rewards left border.
+        right_edge_x: X percentage of the rewards right edge.
+        height: Page height in pixels.
+        width: Page width in pixels.
+
+    Returns:
+        Y percentage of the bottom bar, or None if not found.
+    """
+    x_left = int(rewards_left_x / 100.0 * width)
+    x_right = int(right_edge_x / 100.0 * width)
+    # Start scanning below the top bar (skip 3% to clear it).
+    y_start = int((top_y + 3.0) / 100.0 * height)
+    y_end = int(0.90 * height)
+
+    if x_left >= x_right or y_start >= y_end:
+        return None
+
+    band = gray[y_start:y_end, x_left:x_right]
+    row_black = (band < BLACK_PIXEL_THRESHOLD).mean(axis=1)
+
+    # Find the first row with >50% black (a thick bar).
+    bar_rows = np.nonzero(row_black > 0.5)[0]
+    if len(bar_rows) == 0:
+        return None
+
+    # Group consecutive rows and find the first thick group.
+    groups = _group_consecutive(bar_rows, gap=3)
+    for group in groups:
+        bar_height_pct = len(group) / height * 100.0
+        if bar_height_pct > 0.5:
+            return float(group[-1] + y_start) / height * 100.0
+
+    return None
+
+
 def _build_rewards_coords(
     classified: dict[str, CanvasCoordinates | None],
     rewards_left_x: float | None,
     right_edge_x: float,
+    gray: np.ndarray,
+    height: int,
+    width: int,
 ) -> CanvasCoordinates | None:
     """Build rewards region coordinates.
 
     The rewards box is bounded by the left vertical border, the
     right edge of the main content area, and the horizontal bars
-    above and below it.
+    above and below it. The bottom edge is the first thick bar
+    within the rewards column below the top edge.
 
     Args:
         classified: Dict of classified bar coordinates.
         rewards_left_x: X percentage of the rewards left border.
         right_edge_x: X percentage of the right edge of main content.
+        gray: Grayscale image array for scanning the rewards column.
+        height: Page height in pixels.
+        width: Page width in pixels.
 
     Returns:
         CanvasCoordinates for the rewards region, or None.
@@ -618,8 +667,7 @@ def _build_rewards_coords(
     if rewards_left_x is None:
         return None
 
-    # Top edge: the first bar after summary (summary_bottom) or
-    # summary top as fallback.
+    # Top edge: the first bar after summary.
     top_y = None
     for key in ("summary_bottom", "summary_top"):
         candidate = classified.get(key)
@@ -627,11 +675,19 @@ def _build_rewards_coords(
             top_y = candidate.y
             break
 
-    # Bottom edge: content bottom bar
-    content_bottom = classified.get("content_bottom")
-    bottom_y = content_bottom.y if content_bottom is not None else None
+    if top_y is None:
+        return None
 
-    if top_y is None or bottom_y is None:
+    # Bottom edge: scan the rewards column for the first thick bar
+    # below the top edge. This is the bar below Total GP.
+    bottom_y = _find_rewards_bottom(
+        gray, top_y, rewards_left_x, right_edge_x, height, width,
+    )
+    if bottom_y is None:
+        content_bottom = classified.get("content_bottom")
+        bottom_y = content_bottom.y if content_bottom is not None else None
+
+    if bottom_y is None:
         return None
 
     return CanvasCoordinates(
@@ -707,6 +763,114 @@ def _find_main_content_edges(
     return right_edge
 
 
+def _build_notes(
+    gray: np.ndarray,
+    width: int,
+    height: int,
+    divider_x: float | None,
+    items_top: CanvasCoordinates | None,
+    items_coords: CanvasCoordinates | None,
+    content_bottom: CanvasCoordinates | None,
+    session_info: CanvasCoordinates | None,
+    search_right_x: float,
+    vertical_borders: list[tuple[float, float]],
+) -> CanvasCoordinates | None:
+    """Determine notes coordinates based on layout type.
+
+    Side-by-side (S4+): notes is right of the grey divider, same
+    height as items. Stacked (S1-S3, Bounties): notes is below
+    items, above session info, optionally trimmed by a divider
+    that extends into the notes band.
+
+    Args:
+        gray: Grayscale image array.
+        width: Page width in pixels.
+        height: Page height in pixels.
+        divider_x: X percentage of the items divider, or None.
+        items_top: Classified items top bar, or None.
+        items_coords: Built items coordinates, or None.
+        content_bottom: Classified content bottom bar, or None.
+        session_info: Session info coordinates, or None.
+        search_right_x: Right boundary for divider search.
+        vertical_borders: Known thick vertical borders.
+
+    Returns:
+        CanvasCoordinates for the notes region, or None.
+    """
+    is_side_by_side = _is_side_by_side_layout(
+        gray, width, height, divider_x, items_top, content_bottom,
+    )
+
+    if is_side_by_side and items_top and content_bottom:
+        return _build_notes_coords_side_by_side(
+            items_top_y=items_top.y,
+            content_bottom_y=content_bottom.y,
+            divider_x=divider_x,
+            rewards_left_x=search_right_x,
+        )
+
+    if items_coords is None or session_info is None or content_bottom is None:
+        return None
+
+    # Stacked layout: check if the divider extends into the notes band.
+    notes_divider_x = None
+    if divider_x is not None:
+        notes_divider_x = _find_items_notes_divider(
+            gray,
+            items_top_y=content_bottom.y2,
+            content_bottom_y=session_info.y,
+            left_x=content_bottom.x,
+            rewards_left_x=search_right_x,
+            width=width,
+            height=height,
+            vertical_borders=vertical_borders,
+        )
+    return _build_notes_coords_stacked(
+        content_bottom=content_bottom,
+        session_info_top_y=session_info.y,
+        divider_x=notes_divider_x,
+    )
+
+
+def _is_side_by_side_layout(
+    gray: np.ndarray,
+    width: int,
+    height: int,
+    divider_x: float | None,
+    items_top: CanvasCoordinates | None,
+    content_bottom: CanvasCoordinates | None,
+) -> bool:
+    """Check if the items/notes layout is side-by-side (S4+).
+
+    Distinguishes by checking the median dark pixel value along
+    the divider column. Dark grey (40-105) indicates S4+ side-by-side;
+    lighter grey (>105) or black (<40) indicates S1-S3 stacked.
+
+    Args:
+        gray: Grayscale image array.
+        width: Page width in pixels.
+        height: Page height in pixels.
+        divider_x: X percentage of the divider, or None.
+        items_top: Classified items top bar, or None.
+        content_bottom: Classified content bottom bar, or None.
+
+    Returns:
+        True if the layout is side-by-side.
+    """
+    if divider_x is None or items_top is None or content_bottom is None:
+        return False
+
+    divider_col = int(divider_x / 100.0 * width)
+    y_top_px = int((items_top.y2 + 2.0) / 100.0 * height)
+    y_bot_px = int((content_bottom.y - 2.0) / 100.0 * height)
+    col_vals = gray[y_top_px:y_bot_px, divider_col]
+    dark_vals = col_vals[col_vals < _THIN_LINE_PIXEL_THRESHOLD]
+    median_dark = (
+        float(np.median(dark_vals)) if len(dark_vals) > 0 else 255.0
+    )
+    return BLACK_PIXEL_THRESHOLD <= median_dark <= 105.0
+
+
 def extract_image_regions(
     page: fitz.Page,
 ) -> dict[str, CanvasCoordinates | None]:
@@ -741,26 +905,25 @@ def extract_image_regions(
     )
 
     classified = _classify_horizontal_bars(
-        bars, rewards_left_x, gray, width,
+        bars, gray, width,
     )
 
     items_top = classified.get("items_top")
     content_bottom = classified.get("content_bottom")
     session_info = _build_session_info_coords(grey_regions)
 
-    # Detect the thin vertical divider between items and notes (S4+).
+    # Detect the thin vertical divider within the items band.
+    # Works for all seasons: S4+ grey divider, S1-S3 items/purchases
+    # border. Uses rewards_left_x or right_edge as the search bound.
     divider_x = None
-    if (
-        items_top is not None
-        and content_bottom is not None
-        and rewards_left_x is not None
-    ):
+    search_right_x = rewards_left_x if rewards_left_x is not None else right_edge
+    if items_top is not None and content_bottom is not None:
         divider_x = _find_items_notes_divider(
             gray,
             items_top_y=items_top.y2,
             content_bottom_y=content_bottom.y,
             left_x=items_top.x,
-            rewards_left_x=rewards_left_x,
+            rewards_left_x=search_right_x,
             width=width,
             height=height,
             vertical_borders=vertical_borders,
@@ -770,56 +933,18 @@ def extract_image_regions(
         classified, rewards_left_x, divider_x,
     )
 
-    # Build notes from image data when possible.
-    # The divider_x trims items' right edge in all seasons, but
-    # notes placement depends on the layout:
-    # - S4+: dark grey divider (median ~74-89) → notes side-by-side
-    # - S1-S3: lighter grey or black border → notes stacked below
-    # We distinguish by checking the median dark pixel value along
-    # the divider column.
-    notes_coords: CanvasCoordinates | None = None
-    is_side_by_side = False
-    if divider_x is not None and items_top and content_bottom:
-        divider_col = int(divider_x / 100.0 * width)
-        y_top_px = int((items_top.y2 + 2.0) / 100.0 * height)
-        y_bot_px = int((content_bottom.y - 2.0) / 100.0 * height)
-        col_vals = gray[y_top_px:y_bot_px, divider_col]
-        dark_vals = col_vals[col_vals < _THIN_LINE_PIXEL_THRESHOLD]
-        median_dark = (
-            float(np.median(dark_vals)) if len(dark_vals) > 0 else 255.0
-        )
-        # Dark grey dividers (S4+) have median values 40-105.
-        # Lighter grey borders (S1/S2) have values >105.
-        # Pure black borders (S3) have values <40.
-        is_side_by_side = (
-            BLACK_PIXEL_THRESHOLD <= median_dark <= 105.0
-        )
-
-    if is_side_by_side and items_top and content_bottom:
-        notes_coords = _build_notes_coords_side_by_side(
-            items_top_y=items_top.y,
-            content_bottom_y=content_bottom.y,
-            divider_x=divider_x,
-            rewards_left_x=rewards_left_x
-            if rewards_left_x is not None
-            else right_edge,
-        )
-    elif items_coords is not None and session_info is not None:
-        # Stacked layout: notes is below items, above session info.
-        notes_coords = _build_notes_coords_stacked(
-            content_bottom_y=content_bottom.y
-            if content_bottom is not None
-            else items_coords.y2,
-            session_info_top_y=session_info.y,
-            items_x=items_coords.x,
-            items_x2=items_coords.x2,
-        )
+    notes_coords = _build_notes(
+        gray, width, height,
+        divider_x, items_top, items_coords, content_bottom,
+        session_info, search_right_x, vertical_borders,
+    )
 
     return {
         "summary": _build_summary_coords(classified),
         "items": items_coords,
         "rewards": _build_rewards_coords(
             classified, rewards_left_x, right_edge,
+            gray, height, width,
         ),
         "session_info": session_info,
         "notes": notes_coords,

@@ -20,7 +20,7 @@ from season_layout_generator.models import CanvasCoordinates
 from season_layout_generator.text_detection import extract_text_regions
 
 # Base path for chronicle PDFs, relative to the project root.
-_CHRONICLES_DIR = Path("Chronicles")
+_CHRONICLES_DIR = Path("Chronicles/pfs")
 
 # Regions expected on all Season 5+ chronicles.
 _SEASON5_EXPECTED_REGIONS: list[str] = [

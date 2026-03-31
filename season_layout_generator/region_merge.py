@@ -62,9 +62,9 @@ def _infer_main_canvas(
 ) -> CanvasCoordinates | None:
     """Infer the main content area from all detected regions.
 
-    The main canvas is the bounding box that encloses all detected
-    sub-regions. We take the minimum x/y and maximum x2/y2 across
-    every non-None region from both sources.
+    The horizontal extent is derived from the summary bar (which
+    spans the full content width within the page margins). The
+    vertical extent is the bounding box of all detected sub-regions.
 
     Args:
         text_regions: Regions from text extraction.
@@ -83,10 +83,20 @@ def _infer_main_canvas(
     if not all_coords:
         return None
 
+    # Use summary bar for horizontal extent (it spans the content
+    # area within margins). Fall back to bounding box if no summary.
+    summary = _pick_region("summary", text_regions, image_regions)
+    if summary is not None:
+        x = summary.x
+        x2 = summary.x2
+    else:
+        x = min(c.x for c in all_coords)
+        x2 = max(c.x2 for c in all_coords)
+
     return CanvasCoordinates(
-        x=min(c.x for c in all_coords),
+        x=x,
         y=min(c.y for c in all_coords),
-        x2=max(c.x2 for c in all_coords),
+        x2=x2,
         y2=max(c.y2 for c in all_coords),
     )
 
@@ -119,6 +129,182 @@ def _to_main_relative(
         y=_clamp((coords.y - main.y) / main_height * 100.0),
         x2=_clamp((coords.x2 - main.x) / main_width * 100.0),
         y2=_clamp((coords.y2 - main.y) / main_height * 100.0),
+    )
+
+
+def _refine_boons(
+    merged: dict[str, CanvasCoordinates | None],
+    text_regions: dict[str, CanvasCoordinates | None],
+    image_regions: dict[str, CanvasCoordinates | None],
+    main: CanvasCoordinates,
+) -> None:
+    """Expand boons width and height using structural regions.
+
+    The boons text detection only captures the label. The actual
+    boons canvas spans from the content left edge to the rewards
+    left border. The bottom edge extends to whichever region sits
+    directly below boons: reputation (Bounties, S2, S3) or items
+    (Quests, S1, S4+).
+
+    Args:
+        merged: Merged regions dict (main-relative). Modified in place.
+        text_regions: Text-detected regions (page-relative).
+        image_regions: Image-detected regions (page-relative).
+        main: Main canvas coordinates (page-relative).
+    """
+    boons = merged.get("boons")
+    if boons is None:
+        return
+
+    summary_img = image_regions.get("summary")
+    rewards_img = image_regions.get("rewards")
+
+    # Left edge: summary left or content left.
+    left_x = summary_img.x if summary_img is not None else main.x
+
+    # Right edge: rewards left border from image detection when
+    # available (S4+). Otherwise use the items divider/border which
+    # marks the right edge of the left content column (S1-S3, Bounties).
+    if rewards_img is not None:
+        right_x = rewards_img.x
+    else:
+        items_img = image_regions.get("items")
+        if items_img is not None:
+            right_x = items_img.x2
+        elif summary_img is not None:
+            right_x = summary_img.x2
+        else:
+            return
+
+    main_width = main.x2 - main.x
+    main_height = main.y2 - main.y
+    if main_width <= 0 or main_height <= 0:
+        return
+
+    rel_left = _clamp((left_x - main.x) / main_width * 100.0)
+    rel_right = _clamp((right_x - main.x) / main_width * 100.0)
+
+    # Bottom edge: extend to the top of the next region below boons.
+    # Use raw text positions to find reputation or items, whichever
+    # is closer below the boons label.
+    bottom_y = boons.y2
+    items_img = image_regions.get("items")
+    rep_txt = text_regions.get("reputation")
+
+    candidates: list[float] = []
+    if items_img is not None:
+        candidates.append(
+            _clamp((items_img.y - main.y) / main_height * 100.0),
+        )
+    if rep_txt is not None:
+        rep_top_rel = _clamp(
+            (rep_txt.y - main.y) / main_height * 100.0,
+        )
+        # Only use reputation if it's below boons.
+        if rep_top_rel > boons.y:
+            candidates.append(rep_top_rel)
+
+    # Pick the closest region below boons.
+    below = [c for c in candidates if c > boons.y]
+    if below:
+        bottom_y = min(below)
+
+    merged["boons"] = CanvasCoordinates(
+        x=rel_left,
+        y=boons.y,
+        x2=rel_right,
+        y2=bottom_y,
+    )
+
+
+def _refine_reputation(
+    merged: dict[str, CanvasCoordinates | None],
+    image_regions: dict[str, CanvasCoordinates | None],
+    main: CanvasCoordinates,
+) -> None:
+    """Expand reputation width and height using structural regions.
+
+    The reputation text detection only captures the label. The actual
+    canvas depends on position:
+    - Above items (S1-S3, Bounties): same width as boons, extends
+      down to items top.
+    - Below items (S4+, Quests): spans full content width, extends
+      down to session info top.
+
+    Args:
+        merged: Merged regions dict (main-relative). Modified in place.
+        image_regions: Image-detected regions (page-relative).
+        main: Main canvas coordinates (page-relative).
+    """
+    reputation = merged.get("reputation")
+    if reputation is None:
+        return
+
+    boons = merged.get("boons")
+    items_img = image_regions.get("items")
+    session_info_img = image_regions.get("session_info")
+
+    main_height = main.y2 - main.y
+    main_width = main.x2 - main.x
+    if main_height <= 0 or main_width <= 0:
+        return
+
+    items_top_rel = None
+    if items_img is not None:
+        items_top_rel = _clamp(
+            (items_img.y - main.y) / main_height * 100.0,
+        )
+
+    # Determine if reputation is in the boons area (between summary
+    # bottom and items top) or elsewhere. Only extend when it's
+    # clearly in the boons band.
+    summary_img = image_regions.get("summary")
+    summary_bottom_rel = None
+    if summary_img is not None:
+        summary_bottom_rel = _clamp(
+            (summary_img.y2 - main.y) / main_height * 100.0,
+        )
+
+    is_in_boons_band = (
+        items_top_rel is not None
+        and summary_bottom_rel is not None
+        and reputation.y >= summary_bottom_rel - 2.0
+        and reputation.y < items_top_rel
+    )
+
+    is_below_items = (
+        items_top_rel is not None
+        and reputation.y >= items_top_rel
+    )
+
+    if is_in_boons_band:
+        # Between boons and items: match boons width, extend to items.
+        left_x = boons.x if boons is not None else reputation.x
+        right_x = boons.x2 if boons is not None else reputation.x2
+        bottom_y = items_top_rel
+    elif is_below_items:
+        # Below items: span full content width, extend to session info.
+        left_x = 0.0
+        right_x = 100.0
+        if session_info_img is not None:
+            bottom_y = _clamp(
+                (session_info_img.y - main.y) / main_height * 100.0,
+            )
+        else:
+            bottom_y = reputation.y2
+    else:
+        # Player info band (S1): left edge at player_info right,
+        # right edge at main right. Keep text-detected height.
+        player_info = merged.get("player_info")
+        left_x = player_info.x2 if player_info is not None else reputation.x
+        right_x = 100.0
+        bottom_y = reputation.y2
+
+    merged["reputation"] = CanvasCoordinates(
+        x=left_x,
+        y=reputation.y,
+        x2=right_x,
+        y2=bottom_y,
     )
 
 
@@ -181,6 +367,9 @@ def merge_regions(
             merged[name] = _to_main_relative(picked, main)
         else:
             merged[name] = None
+
+    _refine_boons(merged, text_regions, image_regions, main)
+    _refine_reputation(merged, image_regions, main)
 
     return PageRegions(main=main, **merged)
 

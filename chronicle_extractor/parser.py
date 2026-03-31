@@ -41,7 +41,13 @@ _BOUNTY_SEASON = -1  # Sentinel value for bounties (distinct from 0 = Quests)
 _HEADER_LABEL = "pathfinder society scenario"
 
 # Lines on the chronicle sheet that signal end of the name.
-_CHRONICLE_STOP = {"adventure summary", "boons", "rewards", "purchases"}
+_CHRONICLE_STOP = {
+    "adventure summary",
+    "boons",
+    "rewards",
+    "purchases",
+    "character chronicle #",
+}
 
 
 
