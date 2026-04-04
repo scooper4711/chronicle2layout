@@ -1,0 +1,71 @@
+{
+  "id": "pfs2.b1",
+  "parent": "pfs2",
+  "description": "#B1: The Whitefang Wyrm",
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_bar[0]",
+      "right": "v_thin[2]",
+      "top": "h_thin[2]",
+      "bottom": "h_thin[8]"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[1]",
+      "top": "main.top",
+      "bottom": "h_bar[0]"
+    },
+    {
+      "name": "reputation",
+      "parent": "main",
+      "left": "character_info.right",
+      "right": "main.right",
+      "top": "main.top",
+      "bottom": "h_bar[0]"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[0]",
+      "bottom": "h_bar[1]"
+    },
+    {
+      "name": "items",
+      "parent": "main",
+      "left": "v_bar[0]",
+      "right": "v_thin[0]",
+      "top": "h_bar[1]",
+      "bottom": "h_bar[2]"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[1]",
+      "right": "main.right",
+      "top": "h_bar[1]",
+      "bottom": "h_thin[7]"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "main.left",
+      "right": "rewards.left",
+      "top": "items.bottom",
+      "bottom": "rewards.bottom"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "notes.bottom",
+      "bottom": "main.bottom"
+    }
+  ]
+}

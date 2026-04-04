@@ -1,0 +1,14 @@
+{
+  "id": "pfs2",
+  "description": "Pathfinder 2 Society Chronicle",
+  "aspectratio": "603:783",
+  "canvases": [
+    {
+      "name": "page",
+      "left": 0,
+      "right": 100,
+      "top": 0,
+      "bottom": 100
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "pfs2.b13",
+  "parent": "pfs2",
+  "description": "Bounties B13+ chronicle layout",
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_thin[0]",
+      "right": "v_thin[3]",
+      "top": "h_thin[0]",
+      "bottom": "h_thin[5]"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "main.top",
+      "bottom": "h_bar[0]"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[0]",
+      "bottom": "h_bar[1]"
+    },
+    {
+      "name": "boons",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0]",
+      "top": "h_bar[1]",
+      "bottom": "h_bar[2]"
+    },
+    {
+      "name": "reputation",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0]",
+      "top": "h_bar[2]",
+      "bottom": "h_bar[3]"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[0]",
+      "right": "main.right",
+      "top": "h_bar[1]",
+      "bottom": "h_bar[3]"
+    },
+    {
+      "name": "items",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[1]",
+      "top": "h_bar[3]",
+      "bottom": "h_bar[4]"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[4]",
+      "bottom": "h_thin[4]"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_thin[4]",
+      "bottom": "main.bottom"
+    }
+  ]
+}

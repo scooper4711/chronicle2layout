@@ -33,7 +33,8 @@ debug*
 Thumbs.db
 
 # Paizo copyright
-Chronicles
-Scenarios
-Layouts
-PFS
+/Chronicles
+/Scenarios
+/Layouts
+/PFS
+/SFS
