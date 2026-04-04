@@ -6,7 +6,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
 
 ## Tasks
 
-- [ ] 1. Set up project structure and data models
+- [x] 1. Set up project structure and data models
   - [x] 1.1 Create package and module stubs
     - Create `blueprint2layout/__init__.py`, `__main__.py`, `pdf_preparation.py`, `detection.py`, `blueprint.py`, `resolver.py`, `converter.py`, `output.py`, `models.py` as modules with module-level docstrings
     - Create `tests/blueprint2layout/` directory with empty `conftest.py`
@@ -17,7 +17,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
     - Include type hints and Google-style docstrings
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6_
 
-- [ ] 2. Implement PDF page preparation
+- [x] 2. Implement PDF page preparation
   - [x] 2.1 Implement `prepare_page` in `pdf_preparation.py`
     - Open last page of PDF using PyMuPDF
     - Redact all text blocks and embedded images
@@ -32,7 +32,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
     - Test `FileNotFoundError` for missing PDF path
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
-- [ ] 3. Implement horizontal black line detection
+- [x] 3. Implement horizontal black line detection
   - [x] 3.1 Implement `detect_horizontal_black_lines` in `detection.py`
     - Define detection constants: `BLACK_PIXEL_THRESHOLD`, `THIN_LINE_MAX_THICKNESS`, `HORIZONTAL_MIN_WIDTH_RATIO`, `LINE_GROUPING_TOLERANCE`
     - Scan rows for black pixel runs > 5% page width
@@ -49,7 +49,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
     - Verify percentage coordinate computation
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
 
-- [ ] 4. Implement vertical black line detection and grey detection
+- [x] 4. Implement vertical black line detection and grey detection
   - [x] 4.1 Implement `detect_vertical_black_lines` in `detection.py`
     - Define `VERTICAL_MIN_HEIGHT_RATIO` constant
     - Scan columns for black pixel runs > 3% page height
@@ -85,7 +85,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
 - [x] 5. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 6. Implement Blueprint parsing and inheritance
+- [x] 6. Implement Blueprint parsing and inheritance
   - [x] 6.1 Implement `parse_blueprint` in `blueprint.py`
     - Validate required fields (`id`, `canvases`)
     - Convert each canvas entry dict into `CanvasEntry` dataclass
@@ -111,7 +111,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
     - Test `load_blueprint_with_inheritance`: single Blueprint (no parent), parent-child chain, circular reference error, duplicate canvas name error, unknown parent id error
     - _Requirements: 7.1–7.6, 8.1–8.9_
 
-- [ ] 7. Implement edge value resolution
+- [x] 7. Implement edge value resolution
   - [x] 7.1 Implement `resolve_edge_value` in `resolver.py`
     - Define `LINE_REFERENCE_PATTERN` and `CANVAS_REFERENCE_PATTERN` regex constants
     - Handle numeric literals (return as float)
@@ -133,7 +133,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
     - Test `resolve_canvases` with inherited + target canvases, verify backward-only enforcement
     - _Requirements: 9.1–9.6, 10.1–10.4_
 
-- [ ] 8. Implement parent-relative coordinate conversion
+- [x] 8. Implement parent-relative coordinate conversion
   - [x] 8.1 Implement `convert_to_parent_relative` in `converter.py`
     - Compute x, y, x2, y2 relative to parent canvas bounds
     - Use absolute percentages directly for canvases without a parent
@@ -149,7 +149,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
     - Test unknown parent name raises error
     - _Requirements: 11.1–11.8_
 
-- [ ] 9. Implement layout assembly and output
+- [x] 9. Implement layout assembly and output
   - [x] 9.1 Implement `assemble_layout` in `output.py`
     - Build layout dict with `id`, optional `parent`, and `canvas` section
     - Include only target Blueprint's own canvases (not inherited)
@@ -171,7 +171,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
 - [x] 10. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Implement public API and CLI entry point
+- [x] 11. Implement public API and CLI entry point
   - [x] 11.1 Implement `generate_layout` in `__init__.py`
     - Wire the full pipeline: prepare_page → detect_structures → load_blueprint_with_inheritance → resolve_canvases → convert_to_parent_relative → assemble_layout
     - Accept blueprint_path, pdf_path, optional blueprints_dir
@@ -194,7 +194,7 @@ Incremental implementation of the `blueprint2layout` Python CLI tool and library
 - [x] 12. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 13. Remove season_layout_generator package
+- [x] 13. Remove season_layout_generator package
   - [x] 13.1 Remove old package and related files
     - Delete `season_layout_generator/` package directory and all modules
     - Delete `tests/season_layout_generator/` test directory and all test modules
