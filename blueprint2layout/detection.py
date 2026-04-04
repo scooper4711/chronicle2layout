@@ -31,6 +31,45 @@ GREY_BOX_MIN_BLOCKS = 3
 GREY_BOX_MIN_AREA = 500
 
 
+def _find_all_grey_runs(
+    row: np.ndarray, min_value: int, max_value: int, min_length: int
+) -> list[tuple[int, int, int]]:
+    """Find all runs of consecutive grey pixels in a row exceeding min_length.
+
+    Args:
+        row: 1D grayscale pixel array for a single row.
+        min_value: Minimum grayscale value (inclusive) for grey.
+        max_value: Maximum grayscale value (inclusive) for grey.
+        min_length: Minimum run length to include.
+
+    Returns:
+        List of (run_length, leftmost_pixel, rightmost_pixel) tuples.
+        Empty list if no qualifying runs exist.
+    """
+    is_grey = (row >= min_value) & (row <= max_value)
+    if not np.any(is_grey):
+        return []
+
+    runs = []
+    current_length = 0
+    current_start = 0
+
+    for i, grey in enumerate(is_grey):
+        if grey:
+            if current_length == 0:
+                current_start = i
+            current_length += 1
+        else:
+            if current_length > min_length:
+                runs.append((current_length, current_start, i - 1))
+            current_length = 0
+
+    if current_length > min_length:
+        runs.append((current_length, current_start, current_start + current_length - 1))
+
+    return runs
+
+
 def _find_longest_grey_run(
     row: np.ndarray, min_value: int, max_value: int
 ) -> tuple[int, int, int]:
@@ -401,7 +440,10 @@ def detect_vertical_black_lines(
 def _scan_qualifying_grey_rows(
     grayscale: np.ndarray, min_run_length: int
 ) -> list[tuple[int, int, int]]:
-    """Scan all rows and return those with a grey run exceeding the minimum.
+    """Scan all rows and return all grey runs exceeding the minimum.
+
+    Returns multiple entries per row when a row contains several
+    separate grey segments (e.g., field separator lines).
 
     Args:
         grayscale: Grayscale image array, shape (height, width).
@@ -409,26 +451,41 @@ def _scan_qualifying_grey_rows(
 
     Returns:
         List of (row_index, leftmost_pixel, rightmost_pixel) tuples
-        for rows that qualify.
+        for all qualifying runs, sorted by row then left position.
     """
     height = grayscale.shape[0]
     qualifying = []
 
     for row_idx in range(height):
-        run_length, left, right = _find_longest_grey_run(
-            grayscale[row_idx], GREY_RULE_MIN_VALUE, GREY_RULE_MAX_VALUE
+        runs = _find_all_grey_runs(
+            grayscale[row_idx], GREY_RULE_MIN_VALUE,
+            GREY_RULE_MAX_VALUE, min_run_length,
         )
-        if run_length > min_run_length:
+        for _length, left, right in runs:
             qualifying.append((row_idx, left, right))
 
     return qualifying
+
+
+def _ranges_overlap(left_a: int, right_a: int, left_b: int, right_b: int) -> bool:
+    """Check if two horizontal pixel ranges overlap.
+
+    Uses a small tolerance (10px) to allow for slight misalignment
+    between rows of the same grey line segment.
+    """
+    tolerance = 10
+    return left_a <= right_b + tolerance and left_b <= right_a + tolerance
 
 
 def _group_rows_with_tolerance(
     qualifying_rows: list[tuple[int, int, int]],
     tolerance: int,
 ) -> list[list[tuple[int, int, int]]]:
-    """Group qualifying rows where gaps are within a given tolerance.
+    """Group qualifying rows by vertical proximity and horizontal overlap.
+
+    Rows are grouped when they are within the vertical tolerance AND
+    their x-ranges overlap. This ensures that separate grey segments
+    on the same row (e.g., field separator lines) become distinct groups.
 
     Args:
         qualifying_rows: Sorted list of (row_index, left, right) tuples.
@@ -441,19 +498,25 @@ def _group_rows_with_tolerance(
         return []
 
     groups: list[list[tuple[int, int, int]]] = []
-    current_group = [qualifying_rows[0]]
 
-    for row_data in qualifying_rows[1:]:
-        previous_row_idx = current_group[-1][0]
-        current_row_idx = row_data[0]
+    for row_data in qualifying_rows:
+        row_idx, left, right = row_data
+        merged = False
 
-        if current_row_idx - previous_row_idx <= tolerance:
-            current_group.append(row_data)
-        else:
-            groups.append(current_group)
-            current_group = [row_data]
+        for group in groups:
+            last_row_idx = group[-1][0]
+            if row_idx - last_row_idx > tolerance:
+                continue
+            group_left = min(entry[1] for entry in group)
+            group_right = max(entry[2] for entry in group)
+            if _ranges_overlap(left, right, group_left, group_right):
+                group.append(row_data)
+                merged = True
+                break
 
-    groups.append(current_group)
+        if not merged:
+            groups.append([row_data])
+
     return groups
 
 
@@ -769,18 +832,107 @@ def detect_grey_boxes(rgb: np.ndarray) -> list[GreyBox]:
     return boxes
 
 
+VECTOR_LINE_MAX_WIDTH = 1.0
+VECTOR_LINE_DEDUP_TOLERANCE = 0.3
+
+
+def extract_vector_h_rules(
+    pdf_path: str,
+    h_thin: list[HorizontalLine],
+    h_bar: list[HorizontalLine],
+    h_rule: list[HorizontalLine],
+) -> list[HorizontalLine]:
+    """Extract thin horizontal vector lines from the PDF.
+
+    Finds horizontal line segments in the PDF's vector drawing commands
+    that are too thin to survive rasterization (width <= 1pt). Deduplicates
+    against already-detected raster lines.
+
+    Args:
+        pdf_path: Path to the PDF file.
+        h_thin: Already-detected horizontal thin lines.
+        h_bar: Already-detected horizontal thick bars.
+        h_rule: Already-detected grey horizontal rules.
+
+    Returns:
+        List of new HorizontalLine instances not already detected.
+    """
+    import fitz
+
+    try:
+        doc = fitz.open(pdf_path)
+    except Exception:
+        return []
+
+    if doc.page_count == 0:
+        doc.close()
+        return []
+
+    page = doc[doc.page_count - 1]
+    page_width = page.rect.width
+    page_height = page.rect.height
+
+    min_width_pts = page_width * HORIZONTAL_MIN_WIDTH_RATIO
+
+    all_existing = list(h_thin) + list(h_bar) + list(h_rule)
+    candidates: list[HorizontalLine] = []
+
+    for path in page.get_drawings():
+        line_width = path.get("width") or 0
+        if line_width > VECTOR_LINE_MAX_WIDTH:
+            continue
+
+        for item in path["items"]:
+            if item[0] != "l":
+                continue
+            p1, p2 = item[1], item[2]
+            if abs(p1.y - p2.y) > 0.5:
+                continue
+            span = abs(p2.x - p1.x)
+            if span < min_width_pts:
+                continue
+
+            x_left = min(p1.x, p2.x)
+            x_right = max(p1.x, p2.x)
+            y_pct = round(p1.y / page_height * 100, 1)
+            x_pct = round(x_left / page_width * 100, 1)
+            x2_pct = round(x_right / page_width * 100, 1)
+
+            line = HorizontalLine(
+                y=y_pct, x=x_pct, x2=x2_pct, thickness_px=1,
+            )
+
+            is_duplicate = any(
+                abs(line.y - existing.y) < VECTOR_LINE_DEDUP_TOLERANCE
+                and abs(line.x - existing.x) < 1.0
+                and abs(line.x2 - existing.x2) < 1.0
+                for existing in all_existing
+            )
+            if not is_duplicate:
+                candidates.append(line)
+                all_existing.append(line)
+
+    doc.close()
+    candidates.sort(key=lambda l: (l.y, l.x))
+    return candidates
+
+
 def detect_structures(
     grayscale: np.ndarray,
     rgb: np.ndarray,
+    pdf_path: str | None = None,
 ) -> DetectionResult:
     """Run all detection passes and assemble the complete result.
 
     Orchestrates horizontal black lines, vertical black lines,
-    grey rules (with deduplication), and grey boxes.
+    grey rules (with deduplication), grey boxes, and optionally
+    extracts thin vector lines from the PDF that are too thin
+    to survive rasterization.
 
     Args:
         grayscale: Grayscale image array, shape (height, width).
         rgb: RGB image array, shape (height, width, 3).
+        pdf_path: Optional path to the PDF for vector line extraction.
 
     Returns:
         A DetectionResult with all six arrays populated.
@@ -791,6 +943,12 @@ def detect_structures(
     v_thin, v_bar = detect_vertical_black_lines(grayscale)
     h_rule = detect_grey_rules(grayscale, h_thin, h_bar)
     grey_box = detect_grey_boxes(rgb)
+
+    if pdf_path is not None:
+        vector_h_rules = extract_vector_h_rules(pdf_path, h_thin, h_bar, h_rule)
+        if vector_h_rules:
+            h_rule = list(h_rule) + vector_h_rules
+            h_rule.sort(key=lambda line: (line.y, line.x))
 
     return DetectionResult(
         h_thin=h_thin,

@@ -289,13 +289,15 @@ class TestLoadBlueprintNoParent:
         bp_path = tmp_path / "solo.json"
         _write_blueprint_json(bp_path, data)
 
-        blueprint, inherited = load_blueprint_with_inheritance(bp_path, {})
+        blueprint, inherited, merged_params, merged_styles, _ = load_blueprint_with_inheritance(bp_path, {})
 
         assert blueprint.id == "solo.bp"
         assert blueprint.parent is None
         assert len(blueprint.canvases) == 1
         assert blueprint.canvases[0].name == "page"
         assert inherited == []
+        assert merged_params is None
+        assert merged_styles is None
 
 
 class TestLoadBlueprintWithParent:
@@ -314,7 +316,7 @@ class TestLoadBlueprintWithParent:
         _write_blueprint_json(child_path, child_data)
 
         index = build_blueprint_index(tmp_path)
-        blueprint, inherited = load_blueprint_with_inheritance(child_path, index)
+        blueprint, inherited, _, _, _ = load_blueprint_with_inheritance(child_path, index)
 
         assert blueprint.id == "child.bp"
         assert blueprint.parent == "parent.bp"
@@ -346,7 +348,7 @@ class TestLoadBlueprintGrandparentChain:
         _write_blueprint_json(tmp_path / "leaf.json", leaf_data)
 
         index = build_blueprint_index(tmp_path)
-        blueprint, inherited = load_blueprint_with_inheritance(
+        blueprint, inherited, _, _, _ = load_blueprint_with_inheritance(
             tmp_path / "leaf.json", index,
         )
 

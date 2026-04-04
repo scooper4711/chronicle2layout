@@ -118,7 +118,7 @@ class TestResolveEdgeValueErrors:
     """Tests for error cases (Requirements 9.4, 9.5, 9.6)."""
 
     def test_unknown_category_raises_error(self, empty_detection: DetectionResult):
-        with pytest.raises(ValueError, match="not a numeric literal.*line reference.*canvas reference"):
+        with pytest.raises(ValueError, match="not a recognized pattern"):
             resolve_edge_value("unknown[0]", empty_detection, {})
 
     def test_out_of_bounds_index_raises_error(self, detection_with_h_bar: DetectionResult):
@@ -129,8 +129,9 @@ class TestResolveEdgeValueErrors:
         with pytest.raises(ValueError, match="has not been resolved yet"):
             resolve_edge_value("future.left", empty_detection, {})
 
-    def test_grey_box_line_reference_raises_error(self, empty_detection: DetectionResult):
-        with pytest.raises(ValueError, match="not a valid line reference category"):
+    def test_grey_box_plain_reference_raises_error(self, empty_detection: DetectionResult):
+        """Plain grey_box[0] is not valid — grey_box requires a secondary edge."""
+        with pytest.raises(ValueError, match="not a recognized pattern"):
             resolve_edge_value("grey_box[0]", empty_detection, {})
 
 

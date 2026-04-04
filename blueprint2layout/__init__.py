@@ -9,6 +9,7 @@ from pathlib import Path
 
 from blueprint2layout.blueprint import build_blueprint_index, load_blueprint_with_inheritance
 from blueprint2layout.detection import detect_structures
+from blueprint2layout.field_resolver import resolve_fields
 from blueprint2layout.output import assemble_layout
 from blueprint2layout.pdf_preparation import prepare_page
 from blueprint2layout.resolver import resolve_canvases
@@ -55,13 +56,27 @@ def generate_layout(
         blueprints_dir = Path(blueprints_dir)
 
     grayscale, rgb = prepare_page(str(pdf_path))
-    detection = detect_structures(grayscale, rgb)
+    detection = detect_structures(grayscale, rgb, str(pdf_path))
 
     blueprint_index = build_blueprint_index(blueprints_dir)
-    blueprint, inherited_canvases = load_blueprint_with_inheritance(
-        blueprint_path, blueprint_index
+    blueprint, inherited_canvases, merged_parameters, merged_field_styles, effective_aspectratio = (
+        load_blueprint_with_inheritance(blueprint_path, blueprint_index)
     )
 
     resolved = resolve_canvases(inherited_canvases, blueprint.canvases, detection)
 
-    return assemble_layout(blueprint, resolved, resolved)
+    resolved_fields = None
+    if blueprint.fields is not None:
+        resolved_fields = resolve_fields(
+            blueprint.fields,
+            merged_field_styles or {},
+            resolved,
+            detection,
+            effective_aspectratio,
+        )
+
+    return assemble_layout(
+        blueprint, resolved, resolved,
+        resolved_fields=resolved_fields,
+        merged_parameters=merged_parameters,
+    )

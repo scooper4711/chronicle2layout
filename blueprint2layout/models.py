@@ -1,8 +1,9 @@
 """Data models for the blueprint2layout pipeline.
 
 Defines frozen dataclasses for detection results (HorizontalLine,
-VerticalLine, GreyBox, DetectionResult) and Blueprint structures
-(CanvasEntry, ResolvedCanvas, Blueprint).
+VerticalLine, GreyBox, DetectionResult), Blueprint structures
+(CanvasEntry, ResolvedCanvas, Blueprint), and field models
+(FieldEntry, ResolvedField).
 """
 
 from __future__ import annotations
@@ -130,6 +131,105 @@ class ResolvedCanvas:
 
 
 @dataclass(frozen=True)
+class FieldEntry:
+    """A single field entry from a Blueprint file.
+
+    Binds a parameter (or static value) to a positioned region
+    within a canvas. Edge values may include em offset expressions.
+
+    Attributes:
+        name: Unique field name within the Blueprint.
+        canvas: Canvas name this field renders in (after style resolution).
+        type: Element type: text, multiline, line, rectangle (after style resolution).
+        param: Parameter name this field renders (mutually exclusive with value).
+        value: Static text value (mutually exclusive with param).
+        left: Left edge value (numeric, line ref, canvas ref, or em offset).
+        right: Right edge value.
+        top: Top edge value (may be None for auto-default).
+        bottom: Bottom edge value.
+        font: Font family.
+        fontsize: Font size in points.
+        fontweight: Font weight (e.g., "bold").
+        align: Alignment code (e.g., "CM", "LB").
+        color: Color for line/rectangle elements.
+        linewidth: Line width for line elements.
+        size: Size for checkbox-like elements.
+        lines: Number of lines for multiline elements.
+        styles: List of field style names to inherit from.
+        trigger: Optional trigger parameter for conditional rendering.
+    """
+
+    name: str
+    canvas: str | None = None
+    type: str | None = None
+    param: str | None = None
+    value: str | None = None
+    left: int | float | str | None = None
+    right: int | float | str | None = None
+    top: int | float | str | None = None
+    bottom: int | float | str | None = None
+    font: str | None = None
+    fontsize: int | float | None = None
+    fontweight: str | None = None
+    align: str | None = None
+    color: str | None = None
+    linewidth: int | float | None = None
+    size: int | float | None = None
+    lines: int | None = None
+    styles: list[str] = field(default_factory=list)
+    trigger: str | None = None
+
+
+@dataclass(frozen=True)
+class ResolvedField:
+    """A field with all edges resolved to parent-relative percentages.
+
+    Contains the fully resolved properties ready for content element
+    generation. All edge values are parent-relative percentages within
+    the field's canvas.
+
+    Attributes:
+        name: Field name.
+        canvas: Canvas name.
+        type: Element type.
+        param: Parameter name (or None).
+        value: Static text (or None).
+        x: Left edge as parent-relative percentage.
+        y: Top edge as parent-relative percentage.
+        x2: Right edge as parent-relative percentage.
+        y2: Bottom edge as parent-relative percentage.
+        font: Font family (or None).
+        fontsize: Font size (or None).
+        fontweight: Font weight (or None).
+        align: Alignment code (or None).
+        color: Color (or None).
+        linewidth: Line width (or None).
+        size: Size (or None).
+        lines: Line count (or None).
+        trigger: Trigger parameter (or None).
+    """
+
+    name: str
+    canvas: str
+    type: str
+    param: str | None = None
+    value: str | None = None
+    x: float | None = None
+    y: float | None = None
+    x2: float | None = None
+    y2: float | None = None
+    font: str | None = None
+    fontsize: int | float | None = None
+    fontweight: str | None = None
+    align: str | None = None
+    color: str | None = None
+    linewidth: int | float | None = None
+    size: int | float | None = None
+    lines: int | None = None
+    trigger: str | None = None
+
+
+@dataclass(frozen=True)
 class Blueprint:
     """A parsed Blueprint with id, optional parent id, and canvas entries.
 
@@ -140,6 +240,10 @@ class Blueprint:
         description: Optional human-readable description.
         flags: Optional metadata flags (e.g., ["hidden"]).
         aspectratio: Optional aspect ratio string (e.g., "603:783").
+        parameters: Optional parameter groups dict.
+        default_chronicle_location: Optional Foundry VTT path.
+        field_styles: Optional dict of style name to style properties.
+        fields: Optional ordered list of field entries.
     """
 
     id: str
@@ -148,3 +252,7 @@ class Blueprint:
     description: str | None = None
     flags: list[str] = field(default_factory=list)
     aspectratio: str | None = None
+    parameters: dict | None = None
+    default_chronicle_location: str | None = None
+    field_styles: dict[str, dict] | None = None
+    fields: list[FieldEntry] | None = None
