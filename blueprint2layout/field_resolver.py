@@ -314,9 +314,14 @@ def resolve_fields(
 
     for field_entry in fields:
         effective = resolve_field_styles(field_entry, field_styles)
-        resolved_field = _resolve_single_field(
-            field_entry, effective, resolved_canvases, detection, aspectratio,
-        )
+        try:
+            resolved_field = _resolve_single_field(
+                field_entry, effective, resolved_canvases, detection, aspectratio,
+            )
+        except ValueError as exc:
+            raise ValueError(
+                f"Field '{field_entry.name}': {exc}",
+            ) from exc
         resolved.append(resolved_field)
 
     return resolved

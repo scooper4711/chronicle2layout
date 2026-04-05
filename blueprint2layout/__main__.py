@@ -265,9 +265,19 @@ def watch_and_regenerate(
     blueprint_ids = [bid for bid, _ in targets]
 
     for blueprint_id, output_path in targets:
-        run_single_layout(blueprints_dir, blueprint_id, output_path)
+        try:
+            run_single_layout(blueprints_dir, blueprint_id, output_path)
+        except Exception as exc:  # noqa: BLE001 — report and continue
+            print(
+                f"Error ({blueprint_id}): {exc}",
+                file=sys.stderr,
+            )
 
-    watched_paths = _collect_watched_paths(blueprints_dir, blueprint_ids)
+    try:
+        watched_paths = _collect_watched_paths(blueprints_dir, blueprint_ids)
+    except Exception as exc:  # noqa: BLE001 — report and continue
+        print(f"Error collecting watch paths: {exc}", file=sys.stderr)
+        watched_paths = []
     mtimes = _record_mtimes(watched_paths)
 
     try:
@@ -277,17 +287,23 @@ def watch_and_regenerate(
                 continue
 
             print("Regenerating...")
-            try:
-                for blueprint_id, output_path in targets:
+            for blueprint_id, output_path in targets:
+                try:
                     run_single_layout(
                         blueprints_dir, blueprint_id, output_path,
                     )
+                except Exception as exc:  # noqa: BLE001 — report and continue
+                    print(
+                        f"Error ({blueprint_id}): {exc}",
+                        file=sys.stderr,
+                    )
+            try:
                 watched_paths = _collect_watched_paths(
                     blueprints_dir, blueprint_ids,
                 )
-            except Exception as exc:  # noqa: BLE001 — continue watching
+            except Exception as exc:  # noqa: BLE001 — keep previous paths
                 print(
-                    f"Error: Regeneration failed: {exc}",
+                    f"Error collecting watch paths: {exc}",
                     file=sys.stderr,
                 )
 
