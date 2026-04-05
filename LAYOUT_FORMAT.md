@@ -165,10 +165,11 @@ Alignment is specified as a two-character string: horizontal position + vertical
 | Character | Horizontal | Vertical |
 |-----------|-----------|----------|
 | `L` | Left | — |
-| `C` | Center | Center |
+| `C` | Center | — |
 | `R` | Right | — |
 | `B` | — | Bottom |
 | `M` | — | Middle |
+| `T` | — | Top |
 
 Examples: `"LB"` = left-bottom, `"CM"` = center-middle, `"RB"` = right-bottom.
 
