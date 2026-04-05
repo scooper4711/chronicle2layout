@@ -137,8 +137,8 @@
       "lines": 6,
       "align": "LB",
       "left": "notes.left + 1em",
-      "right": "notes.right",
-      "top": "notes.top",
+      "right": "rewards.left - 1em",
+      "top": "h_bar[2].bottom",
       "bottom": "notes.bottom"
     }
   ],

@@ -61,6 +61,102 @@
       "right": "@grey_box[1].right",
       "top": "@grey_box[1].top",
       "bottom": "@grey_box[1].bottom"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[1].left",
+      "right": "@grey_box[1].right",
+      "top": "@grey_box[1].top",
+      "bottom": "@grey_box[1].bottom"
+    },
+    {
+      "name": "gp_gained",
+      "param": "gp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[4].left",
+      "right": "@grey_box[4].right",
+      "top": "@grey_box[4].top",
+      "bottom": "@grey_box[4].bottom"
+    },
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "eventcode",
+      "param": "eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "gmid",
+      "param": "gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "CB",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "date",
+      "param": "date",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "CB",
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "notes",
+      "param": "notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "styles": ["defaultfont"],
+      "fontsize": 11,
+      "lines": 6,
+      "align": "LB",
+      "left": "notes.left + 1em",
+      "right": "notes.right - 1em",
+      "top": "h_bar[2].bottom",
+      "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": ["defaultfont"],
+      "fontsize": 11,
+      "lines": 4,
+      "align": "LB",
+      "left": "reputation.left + 1em",
+      "right": "reputation.right - 1em",
+      "top": "h_bar[3].bottom",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [
