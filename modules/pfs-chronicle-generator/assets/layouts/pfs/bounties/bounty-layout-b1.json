@@ -333,6 +333,19 @@
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"
+    },
+    {
+      "value": "param:notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "x": 2.6,
+      "y": 0.0,
+      "x2": 100.0,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 6
     }
   ]
 }

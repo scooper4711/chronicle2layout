@@ -126,6 +126,20 @@
       "right": "@grey_box[3].right",
       "top": "@grey_box[3].bottom",
       "bottom": "@grey_box[4].top"
+    },
+    {
+      "name": "notes",
+      "param": "notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "styles": ["defaultfont"],
+      "fontsize": 11,
+      "lines": 6,
+      "align": "LB",
+      "left": "notes.left + 1em",
+      "right": "notes.right",
+      "top": "notes.top",
+      "bottom": "notes.bottom"
     }
   ],
   "canvases": [
