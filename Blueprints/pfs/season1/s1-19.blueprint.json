@@ -1,8 +1,8 @@
 {
-  "id": "pfs2.season1-layout-s1-24",
+  "id": "pfs2.season1-layout-s1-19",
   "parent": "pfs2",
-  "description": "Layout for Season 1 Chronicle 1-24",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-24-LightningStrikesStarsFallChronicle.pdf",
+  "description": "Layout for Season 1 Chronicles starting with 1-19",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-19-IoliteSquadAlphaChronicle.pdf",
   "flags": ["hidden"],
   "fields": [
     {
@@ -12,10 +12,9 @@
       "canvas": "session_info",
       "styles": ["defaultfont"],
       "align": "LB",
-      "top": "@h_rule[0] - 1em",
       "left": "@h_rule[0].left",
       "right": "@h_rule[0].right",
-      "bottom": "@h_rule[1]"
+      "bottom": "@h_rule[0]"
     },
     {
       "name": "eventcode",
@@ -121,7 +120,7 @@
       "fontsize": 11,
       "lines": 6,
       "align": "LB",
-      "left": "@v_bar[0] + 1em",
+      "left": "v_bar[0] + 1em",
       "right": "@v_thin[1] - 1em",
       "top": "@h_bar[0].bottom",
       "bottom": "notes.bottom"
@@ -134,7 +133,7 @@
       "left": "v_bar[0]",
       "right": "v_thin[3]",
       "top": "h_thin[2]",
-      "bottom": "h_thin[10]"
+      "bottom": "h_thin[9]"
     },
     {
       "name": "character_info",
@@ -165,8 +164,8 @@
       "parent": "main",
       "left": "v_bar[0]",
       "right": "v_thin[0]",
-      "top": "h_bar[3]",
-      "bottom": "h_bar[4]"
+      "top": "h_bar[2]",
+      "bottom": "h_bar[3]"
     },
     {
       "name": "rewards",
@@ -174,7 +173,7 @@
       "left": "v_bar[1]",
       "right": "main.right",
       "top": "h_bar[1]",
-      "bottom": "h_thin[9]"
+      "bottom": "h_thin[8]"
     },
     {
       "name": "notes",

@@ -1,6 +1,6 @@
 {
   "id": "pfs.s1-20",
   "description": "Season 1 #20: The Lost Legend",
-  "parent": "pfs2.season1-layout-s1-17",
+  "parent": "pfs2.season1-layout-s1-19",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-20-TheLostLegendChronicle.pdf"
 }

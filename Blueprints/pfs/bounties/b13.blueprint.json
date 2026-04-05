@@ -37,10 +37,9 @@
     },
     {
       "name": "societyid_player",
-      "param": "societyid.player",
+      "param": "societyid",
       "type": "text",
       "canvas": "character_info",
-      "trigger": "societyid",
       "styles": ["defaultfont"],
       "fontsize": 9,
       "fontweight": "bold",
@@ -50,25 +49,10 @@
       "bottom": "@h_rule[1]"
     },
     {
-      "name": "societyid_dash",
-      "value": "-",
-      "type": "text",
-      "canvas": "character_info",
-      "trigger": "societyid",
-      "styles": ["defaultfont"],
-      "fontsize": 9,
-      "fontweight": "bold",
-      "align": "CM",
-      "left": "@h_rule[1].right",
-      "right": "@h_rule[2].left",
-      "bottom": "@h_rule[2]"
-    },
-    {
       "name": "societyid_char",
-      "param": "societyid.char_without_first_digit",
+      "param": "char_number_short",
       "type": "text",
       "canvas": "character_info",
-      "trigger": "societyid",
       "styles": ["defaultfont"],
       "fontsize": 9,
       "fontweight": "bold",

@@ -36,9 +36,19 @@
         "example": "Stormageddon"
       },
       "societyid": {
-        "type": "societyid",
-        "description": "Pathfinder Society ID",
-        "example": "123456-2001"
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
+      },
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
       }
     },
     "Rewards": {
@@ -213,61 +223,30 @@
       "align": "LB"
     },
     {
-      "type": "trigger",
-      "trigger": "param:societyid",
-      "content": [
-        {
-          "value": "param:societyid.player",
-          "type": "text",
-          "canvas": "character_info",
-          "x": 67.6,
-          "y": 0.0,
-          "x2": 87.6,
-          "y2": 49.1,
-          "font": "Helvetica",
-          "fontsize": 9,
-          "fontweight": "bold",
-          "align": "CM"
-        }
-      ]
+      "value": "param:societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 67.6,
+      "y": 0.0,
+      "x2": 87.6,
+      "y2": 49.1,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "CM"
     },
     {
-      "type": "trigger",
-      "trigger": "param:societyid",
-      "content": [
-        {
-          "value": "-",
-          "type": "text",
-          "canvas": "character_info",
-          "x": 87.6,
-          "y": 0.0,
-          "x2": 89.4,
-          "y2": 49.1,
-          "font": "Helvetica",
-          "fontsize": 9,
-          "fontweight": "bold",
-          "align": "CM"
-        }
-      ]
-    },
-    {
-      "type": "trigger",
-      "trigger": "param:societyid",
-      "content": [
-        {
-          "value": "param:societyid.char_without_first_digit",
-          "type": "text",
-          "canvas": "character_info",
-          "x": 91.1,
-          "y": 0.0,
-          "x2": 97.5,
-          "y2": 49.1,
-          "font": "Helvetica",
-          "fontsize": 9,
-          "fontweight": "bold",
-          "align": "LM"
-        }
-      ]
+      "value": "param:char_number_short",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 91.1,
+      "y": 0.0,
+      "x2": 97.5,
+      "y2": 49.1,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM"
     },
     {
       "value": "param:xp_gained",
