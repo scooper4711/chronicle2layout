@@ -1,7 +1,179 @@
 {
-  "id": "pfs2.b13",
+  "id": "pfs2.bounty-layout-b13",
   "parent": "pfs2",
-  "description": "Bounties B13+ chronicle layout",
+  "description": "Layout for Bounty Chronicles starting with B13",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
+  "flags": ["hidden"],
+  "parameters": {
+    "Checkboxes, Reputation and Items": {
+      "reputation": {
+        "type": "multiline",
+        "description": "Reputation Gained",
+        "example": "Grand Archive: +4",
+        "lines": 4
+      }
+    },
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 6
+      }
+    }
+  },
+  "fields": [
+    {
+      "name": "char",
+      "param": "char",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": ["defaultfont"],
+      "fontweight": "bold",
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "societyid_player",
+      "param": "societyid.player",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "societyid_dash",
+      "value": "-",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "CM",
+      "left": "@h_rule[1].right",
+      "right": "@h_rule[2].left",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "societyid_char",
+      "param": "societyid.char_without_first_digit",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM",
+      "left": "@h_rule[2].left + 1em",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[1].left",
+      "right": "@grey_box[1].right",
+      "top": "@grey_box[1].top",
+      "bottom": "@grey_box[1].bottom"
+    },
+    {
+      "name": "gp_gained",
+      "param": "gp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[4].left",
+      "right": "@grey_box[4].right",
+      "top": "@grey_box[4].top",
+      "bottom": "@grey_box[4].bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": ["defaultfont"],
+      "fontsize": 11,
+      "lines": 4,
+      "align": "LB",
+      "left": "reputation.left + 1em",
+      "right": "reputation.right",
+      "top": "@h_bar[0].bottom",
+      "bottom": "reputation.bottom"
+    },
+    {
+      "name": "notes",
+      "param": "notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "styles": ["defaultfont"],
+      "fontsize": 11,
+      "lines": 6,
+      "align": "LB",
+      "left": "notes.left + 1em",
+      "right": "notes.right",
+      "top": "notes.top",
+      "bottom": "notes.bottom"
+    },
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "eventcode",
+      "param": "eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "date",
+      "param": "date",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "CB",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "gmid",
+      "param": "gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "CB",
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    }
+  ],
   "canvases": [
     {
       "name": "main",

@@ -89,7 +89,13 @@
       "summary_checkbox": {
         "type": "choice",
         "description": "Checkboxes in the adventure summary that should be selected",
-        "choices": [1, 2, 3, 4, 5],
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
         "example": "1,2,3,4,5"
       },
       "reputation": {
@@ -101,7 +107,17 @@
       "strikeout_item_lines": {
         "type": "choice",
         "description": "Item line numbers that should be struk out",
-        "choices": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
         "example": "1,2,3,4,5,6,7,8,9"
       }
     },
@@ -114,19 +130,12 @@
       }
     }
   },
-  "field_styles": {
-    "defaultfont": {
-      "font": "Helvetica",
-      "fontsize": 14
+  "canvas": {
+    "page": {
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
+      "y2": 100.0
     }
-  },
-  "canvases": [
-    {
-      "name": "page",
-      "left": 0,
-      "right": 100,
-      "top": 0,
-      "bottom": 100
-    }
-  ]
+  }
 }

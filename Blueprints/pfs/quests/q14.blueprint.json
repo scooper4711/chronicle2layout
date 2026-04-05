@@ -1,7 +1,68 @@
 {
-  "id": "pfs2.q14",
+  "id": "pfs2.quest-layout-q14",
   "parent": "pfs2",
   "description": "Quests Q14+ chronicle layout",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q14-TheSwordlordsChallengeChronicle.pdf",
+  "flags": ["hidden"],
+  "fields": [
+    {
+      "name": "char",
+      "param": "char",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": ["defaultfont"],
+      "fontweight": "bold",
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "societyid_player",
+      "param": "societyid.player",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "CM",
+      "left": "@grey_box[0].left",
+      "right": "@grey_box[0].right",
+      "top": "@grey_box[0].top",
+      "bottom": "@grey_box[0].bottom"
+    },
+    {
+      "name": "societyid_dash",
+      "value": "-",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "CM",
+      "left": "@grey_box[0].right",
+      "right": "@grey_box[1].left",
+      "top": "@grey_box[0].top",
+      "bottom": "@grey_box[0].bottom"
+    },
+    {
+      "name": "societyid_char",
+      "param": "societyid.char_without_first_digit",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM",
+      "left": "@grey_box[1].left + 1em",
+      "right": "@grey_box[1].right",
+      "top": "@grey_box[1].top",
+      "bottom": "@grey_box[1].bottom"
+    }
+  ],
   "canvases": [
     {
       "name": "main",
