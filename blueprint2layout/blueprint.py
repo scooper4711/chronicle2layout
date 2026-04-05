@@ -374,9 +374,7 @@ def parse_blueprint(data: dict) -> Blueprint:
 def build_blueprint_index(blueprints_dir: Path) -> dict[str, Path]:
     """Scan a directory for Blueprint JSON files and build an id-to-path map.
 
-    Reads each .json file in the directory (recursively), parses the
-    "id" field, and maps it to the file path. Files that are not valid
-    JSON or lack an "id" field are silently skipped.
+    Delegates to shared.layout_index.build_json_index.
 
     Args:
         blueprints_dir: Directory containing Blueprint JSON files.
@@ -386,16 +384,9 @@ def build_blueprint_index(blueprints_dir: Path) -> dict[str, Path]:
 
     Requirements: chronicle-blueprints 8.3
     """
-    index: dict[str, Path] = {}
-    for json_path in blueprints_dir.rglob("*.json"):
-        try:
-            with open(json_path, encoding="utf-8") as f:
-                data = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            continue
-        if isinstance(data, dict) and isinstance(data.get("id"), str):
-            index[data["id"]] = json_path
-    return index
+    from shared.layout_index import build_json_index
+
+    return build_json_index(blueprints_dir)
 
 
 def _validate_unique_canvas_names(
