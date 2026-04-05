@@ -1,5 +1,6 @@
 {
   "id": "pfs.q19",
   "description": "Quest #19: The Elsewhere Feast",
-  "parent": "pfs2.quest-layout-q14"
+  "parent": "pfs2.quest-layout-q14",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q19-TheElsewhereFeastChronicle.pdf"
 }

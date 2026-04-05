@@ -1,5 +1,6 @@
 {
   "id": "pfs.b07",
   "description": "Bounty #7: Cleanup Duty",
-  "parent": "pfs2.bounty-layout-b1"
+  "parent": "pfs2.bounty-layout-b1",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B7-CleanupDutyChronicle.pdf"
 }

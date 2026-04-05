@@ -1,5 +1,6 @@
 {
   "id": "pfs.q23",
   "description": "Quest #23: Lacking Respect",
-  "parent": "pfs2.quest-layout-q14"
+  "parent": "pfs2.quest-layout-q14",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q23-LackingRespectChronicle.pdf"
 }

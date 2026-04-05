@@ -1,5 +1,6 @@
 {
   "id": "pfs.q14",
   "description": "Quest #14: The Swordlord's Challenge",
-  "parent": "pfs2.quest-layout-q14"
+  "parent": "pfs2.quest-layout-q14",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q14-TheSwordlordsChallengeChronicle.pdf"
 }

@@ -1,5 +1,6 @@
 {
   "id": "pfs.b16",
   "description": "Bounty #16: Boom Town Betrayal",
-  "parent": "pfs2.bounty-layout-b13"
+  "parent": "pfs2.bounty-layout-b13",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B16-BoomTownBetrayalChronicle.pdf"
 }

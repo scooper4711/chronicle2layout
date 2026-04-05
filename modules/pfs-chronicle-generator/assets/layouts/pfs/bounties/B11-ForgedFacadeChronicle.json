@@ -1,5 +1,6 @@
 {
   "id": "pfs.b11",
   "description": "Bounty #11: Forged Facade",
-  "parent": "pfs2.bounty-layout-b1"
+  "parent": "pfs2.bounty-layout-b1",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B11-ForgedFacadeChronicle.pdf"
 }
