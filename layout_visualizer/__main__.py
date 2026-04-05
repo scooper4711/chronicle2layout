@@ -225,7 +225,9 @@ def run_visualizer(
 
     colors = assign_colors(list(pixel_rects.keys()))
     composited = draw_overlays(pixmap, pixel_rects, colors)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     composited.save(str(output_path))
+    print(f"Wrote {output_path}")
 
 
 def _collect_watched_paths(
@@ -377,7 +379,9 @@ def main(argv: list[str] | None = None) -> int:
         for layout_id in matched_ids:
             pdf_path = resolve_chronicle_pdf(layout_id, layout_index)
             output_name = _build_output_filename(layout_id, pdf_path)
-            output_path = args.output_dir / output_name
+            layout_file = layout_index[layout_id]
+            sub_dir = layout_file.parent.relative_to(args.layout_root)
+            output_path = args.output_dir / sub_dir / output_name
             targets.append((layout_id, output_path))
 
         if args.watch:
@@ -387,7 +391,6 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         for layout_id, output_path in targets:
-            print(f"Generating {output_path} ...")
             run_visualizer(
                 args.layout_root, layout_id,
                 output_path, args.mode,

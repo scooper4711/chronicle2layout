@@ -247,7 +247,7 @@ class TestSuccessfulRun:
         code = main(args)
 
         assert code == 0
-        pngs = list(tmp_path.glob("*.png"))
+        pngs = list(tmp_path.rglob("*.png"))
         assert len(pngs) == 1
         assert "pfs.b13" in pngs[0].name
         assert pngs[0].stat().st_size > 0
@@ -259,8 +259,19 @@ class TestSuccessfulRun:
         code = main(args)
 
         assert code == 0
-        pngs = list(tmp_path.glob("*.png"))
+        pngs = list(tmp_path.rglob("*.png"))
         assert len(pngs) > 1
+
+    def test_output_mirrors_layout_subdirectory(self, tmp_path):
+        """PNGs are written under the same subdirectory as the layout file."""
+        args = _base_args() + ["--output-dir", str(tmp_path)]
+        main(args)
+
+        pngs = list(tmp_path.rglob("*.png"))
+        assert len(pngs) == 1
+        # pfs.b13 lives in pfs/bounties/ relative to layout root
+        relative = pngs[0].relative_to(tmp_path)
+        assert relative.parts[:-1] == ("pfs", "bounties")
 
 
 # ---------------------------------------------------------------------------
