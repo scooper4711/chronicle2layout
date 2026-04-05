@@ -22,7 +22,7 @@ from layout_visualizer.__main__ import (
 )
 
 LAYOUT_ROOT = Path("modules/pfs-chronicle-generator/assets/layouts")
-LAYOUT_ID = "pfs.b13"
+LAYOUT_ID = "pfs2.b13"
 
 
 def _base_args(
@@ -109,14 +109,14 @@ class TestBuildOutputFilename:
 
     def test_basic_filename(self):
         result = _build_output_filename(
-            "pfs.b13",
+            "pfs2.b13",
             Path("chronicles/B13-TheBlackwoodAbundanceChronicle.pdf"),
         )
-        assert result == "pfs.b13_B13-TheBlackwoodAbundanceChronicle.png"
+        assert result == "pfs2.b13_B13-TheBlackwoodAbundanceChronicle.png"
 
     def test_different_layout_same_chronicle(self):
         pdf = Path("chronicles/B1-TheWhitefangWyrmChronicle.pdf")
-        name_a = _build_output_filename("pfs.b01", pdf)
+        name_a = _build_output_filename("pfs2.b01", pdf)
         name_b = _build_output_filename("pfs2.bounty-layout-b1", pdf)
         assert name_a != name_b
         assert name_a.endswith(".png")
@@ -211,25 +211,25 @@ class TestCollectWatchedPaths:
     """_collect_watched_paths unions inheritance chains for all ids."""
 
     def test_single_id_returns_chain(self):
-        paths = _collect_watched_paths(LAYOUT_ROOT, ["pfs.b13"])
+        paths = _collect_watched_paths(LAYOUT_ROOT, ["pfs2.b13"])
         assert len(paths) > 0
         assert all(p.exists() for p in paths)
 
     def test_multiple_ids_unions_chains(self):
-        paths_b13 = _collect_watched_paths(LAYOUT_ROOT, ["pfs.b13"])
-        paths_q14 = _collect_watched_paths(LAYOUT_ROOT, ["pfs.q14"])
+        paths_b13 = _collect_watched_paths(LAYOUT_ROOT, ["pfs2.b13"])
+        paths_q14 = _collect_watched_paths(LAYOUT_ROOT, ["pfs2.q14"])
         paths_both = _collect_watched_paths(
-            LAYOUT_ROOT, ["pfs.b13", "pfs.q14"],
+            LAYOUT_ROOT, ["pfs2.b13", "pfs2.q14"],
         )
         # The union should contain all paths from both individual chains
         assert set(paths_b13) <= set(paths_both)
         assert set(paths_q14) <= set(paths_both)
 
     def test_shared_ancestor_is_not_duplicated(self):
-        # Both pfs.b01 and pfs.b02 share pfs2 in their chain.
+        # Both pfs2.b01 and pfs2.b02 share pfs2 in their chain.
         # The result should have no duplicates.
         paths = _collect_watched_paths(
-            LAYOUT_ROOT, ["pfs.b01", "pfs.b02"],
+            LAYOUT_ROOT, ["pfs2.b01", "pfs2.b02"],
         )
         assert len(paths) == len(set(paths))
 
@@ -249,11 +249,11 @@ class TestSuccessfulRun:
         assert code == 0
         pngs = list(tmp_path.rglob("*.png"))
         assert len(pngs) == 1
-        assert "pfs.b13" in pngs[0].name
+        assert "pfs2.b13" in pngs[0].name
         assert pngs[0].stat().st_size > 0
 
     def test_wildcard_produces_multiple_pngs(self, tmp_path):
-        args = _base_args(layout_id="pfs.b0?") + [
+        args = _base_args(layout_id="pfs2.b0?") + [
             "--output-dir", str(tmp_path),
         ]
         code = main(args)
@@ -269,9 +269,9 @@ class TestSuccessfulRun:
 
         pngs = list(tmp_path.rglob("*.png"))
         assert len(pngs) == 1
-        # pfs.b13 lives in pfs/bounties/ relative to layout root
+        # pfs2.b13 lives in pfs2/bounties/ relative to layout root
         relative = pngs[0].relative_to(tmp_path)
-        assert relative.parts[:-1] == ("pfs", "bounties")
+        assert relative.parts[:-1] == ("pfs2", "bounties")
 
 
 # ---------------------------------------------------------------------------

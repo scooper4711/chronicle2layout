@@ -5,10 +5,16 @@ to produce a merged set of canvas regions. Delegates directory scanning
 and chain walking to the shared.layout_index module.
 """
 
+import logging
 from pathlib import Path
 
-from layout_visualizer.models import CanvasRegion
+from layout_visualizer.models import CanvasRegion, DataContentEntry
 from shared.layout_index import build_json_index, collect_inheritance_chain
+
+logger = logging.getLogger(__name__)
+
+_TEXT_TYPES = {"text", "multiline"}
+_SKIP_TYPES = {"checkbox", "strikeout", "line", "rectangle"}
 
 
 def build_layout_index(layouts_dir: Path) -> dict[str, Path]:
@@ -214,3 +220,284 @@ def load_content_fields(
     _extract_fields_from_content(merged_content, fields, [0])
 
     return fields, merged_canvases, file_paths
+
+
+def merge_parameters(
+    chain: list[tuple[Path, dict]],
+) -> dict[str, dict]:
+    """Merge parameters from the inheritance chain into a flat lookup.
+
+    Walks root-to-leaf. For each layout, iterates parameter groups
+    and collects parameters by name. Child definitions override
+    parent definitions for the same parameter name.
+
+    Args:
+        chain: Inheritance chain from ``collect_inheritance_chain``
+               (root-first order).
+
+    Returns:
+        Flat dict mapping parameter name to its definition dict
+        (containing type, description, example, etc.).
+
+    Requirements: layout-data-mode 2.1
+    """
+    merged: dict[str, dict] = {}
+    for _path, data in chain:
+        parameters = data.get("parameters", {})
+        for group in parameters.values():
+            if isinstance(group, dict):
+                merged.update(group)
+    return merged
+
+
+def merge_presets(
+    chain: list[tuple[Path, dict]],
+) -> dict[str, dict]:
+    """Merge presets from the inheritance chain.
+
+    Walks root-to-leaf. Child preset definitions override parent
+    definitions for the same preset name.
+
+    Args:
+        chain: Inheritance chain (root-first order).
+
+    Returns:
+        Dict mapping preset name to its property dict.
+
+    Requirements: layout-data-mode 3.3
+    """
+    merged: dict[str, dict] = {}
+    for _path, data in chain:
+        presets = data.get("presets", {})
+        if isinstance(presets, dict):
+            merged.update(presets)
+    return merged
+
+
+def _resolve_preset_chain(
+    preset_name: str,
+    presets: dict[str, dict],
+    visited: set[str] | None = None,
+) -> dict:
+    """Recursively resolve a single preset and its nested references.
+
+    Walks depth-first left-to-right through nested preset references,
+    collecting properties. Later presets override earlier ones.
+
+    Args:
+        preset_name: Name of the preset to resolve.
+        presets: Merged preset definitions.
+        visited: Set of already-visited preset names (cycle guard).
+
+    Returns:
+        Merged property dict from the preset chain.
+    """
+    if visited is None:
+        visited = set()
+    if preset_name in visited or preset_name not in presets:
+        return {}
+    visited.add(preset_name)
+
+    preset_def = presets[preset_name]
+    resolved: dict = {}
+
+    for nested_name in preset_def.get("presets", []):
+        resolved.update(_resolve_preset_chain(nested_name, presets, visited))
+
+    for key, value in preset_def.items():
+        if key != "presets":
+            resolved[key] = value
+
+    return resolved
+
+
+def resolve_entry_presets(
+    entry: dict,
+    presets: dict[str, dict],
+) -> dict:
+    """Apply preset properties to a content entry as defaults.
+
+    Walks the entry's presets array (if any), resolving nested
+    preset references recursively. Collects properties from
+    presets in order, then overlays the entry's inline properties.
+    Inline values always win over preset values.
+
+    Args:
+        entry: Raw content entry dict from the layout JSON.
+        presets: Merged preset definitions.
+
+    Returns:
+        A new dict with all properties resolved (presets merged
+        as defaults, inline values as overrides).
+
+    Requirements: layout-data-mode 3.1, 3.2
+    """
+    resolved: dict = {}
+
+    for preset_name in entry.get("presets", []):
+        resolved.update(_resolve_preset_chain(preset_name, presets, set()))
+
+    for key, value in entry.items():
+        if key != "presets":
+            resolved[key] = value
+
+    return resolved
+
+
+def _collect_choice_nested_content(raw_entry: dict) -> list[dict]:
+    """Gather all nested content arrays from a choice entry."""
+    choices = raw_entry.get("content", {})
+    combined: list[dict] = []
+    if isinstance(choices, dict):
+        for choice_content in choices.values():
+            if isinstance(choice_content, list):
+                combined.extend(choice_content)
+    return combined
+
+
+def _lookup_example_value(
+    param_name: str,
+    parameters: dict[str, dict],
+) -> str | None:
+    """Look up and stringify a parameter's example value.
+
+    Returns ``None`` (with a warning) when the parameter is missing
+    or has no ``example`` field.
+    """
+    param_def = parameters.get(param_name)
+    if param_def is None:
+        logger.warning("Missing parameter '%s' — skipping entry", param_name)
+        return None
+    if "example" not in param_def:
+        logger.warning(
+            "Parameter '%s' has no example field — skipping entry",
+            param_name,
+        )
+        return None
+    return str(param_def["example"])
+
+
+def _build_data_content_entry(
+    resolved: dict,
+    entry_type: str,
+    param_name: str,
+    example_value: str,
+) -> DataContentEntry:
+    """Construct a ``DataContentEntry`` from a resolved property dict."""
+    return DataContentEntry(
+        param_name=param_name,
+        example_value=example_value,
+        entry_type=entry_type,
+        canvas=resolved["canvas"],
+        x=float(resolved.get("x", 0)),
+        y=float(resolved.get("y", 0)),
+        x2=float(resolved.get("x2", 100)),
+        y2=float(resolved.get("y2", 100)),
+        font=resolved.get("font", "Helvetica"),
+        fontsize=float(resolved.get("fontsize", 12)),
+        fontweight=resolved.get("fontweight"),
+        align=resolved.get("align", "LB"),
+        lines=int(resolved.get("lines", 1)),
+    )
+
+
+def _extract_data_entries(
+    content: list[dict],
+    presets: dict[str, dict],
+    parameters: dict[str, dict],
+    canvases: dict[str, CanvasRegion],
+    entries: list[DataContentEntry],
+) -> None:
+    """Recursively extract text/multiline entries from a content array.
+
+    Skips non-text types. Recurses into trigger and choice nested
+    content. Resolves presets, looks up example values, and appends
+    fully resolved ``DataContentEntry`` instances.
+
+    Args:
+        content: The content array to walk.
+        presets: Merged preset definitions.
+        parameters: Merged parameter definitions (flat).
+        canvases: Merged canvas regions.
+        entries: Accumulator list for extracted entries.
+    """
+    for raw_entry in content:
+        entry_type = raw_entry.get("type")
+
+        if entry_type == "trigger":
+            nested = raw_entry.get("content", [])
+            _extract_data_entries(nested, presets, parameters, canvases, entries)
+            continue
+
+        if entry_type == "choice":
+            nested = _collect_choice_nested_content(raw_entry)
+            _extract_data_entries(nested, presets, parameters, canvases, entries)
+            continue
+
+        if entry_type not in _TEXT_TYPES:
+            continue
+
+        resolved = resolve_entry_presets(raw_entry, presets)
+        canvas_name = resolved.get("canvas")
+        if not canvas_name or canvas_name not in canvases:
+            continue
+
+        value = resolved.get("value", "")
+        if not isinstance(value, str) or not value.startswith("param:"):
+            continue
+
+        param_name = value[6:]
+        example_value = _lookup_example_value(param_name, parameters)
+        if example_value is None:
+            continue
+
+        entries.append(
+            _build_data_content_entry(resolved, entry_type, param_name, example_value),
+        )
+
+
+def load_data_content(
+    layout_path: Path,
+    layout_index: dict[str, Path],
+) -> tuple[list[DataContentEntry], dict[str, CanvasRegion], list[Path]]:
+    """Load content entries for data mode rendering.
+
+    Walks the inheritance chain, merges canvases, parameters,
+    presets, and content. Extracts text/multiline entries,
+    resolves presets, looks up example values, and returns
+    fully resolved ``DataContentEntry`` instances.
+
+    Skips non-text types (checkbox, strikeout, line, rectangle).
+    Recurses into trigger and choice nested content.
+    Warns and skips entries with missing parameters or examples.
+
+    Args:
+        layout_path: Path to the target layout JSON file.
+        layout_index: Map of layout ids to file paths.
+
+    Returns:
+        Tuple of (entries, merged_canvases, layout_file_paths).
+
+    Requirements: layout-data-mode 2.1-2.5, 3.1-3.3, 7.1-7.6
+    """
+    chain = collect_inheritance_chain(layout_path, layout_index)
+
+    merged_canvases: dict[str, CanvasRegion] = {}
+    merged_content: list[dict] = []
+    file_paths: list[Path] = []
+
+    for path, data in chain:
+        file_paths.append(path)
+        canvas_data = data.get("canvas", {})
+        merged_canvases.update(_parse_canvas_object(canvas_data))
+        merged_content.extend(data.get("content", []))
+
+    parameters = merge_parameters(chain)
+    presets = merge_presets(chain)
+
+    entries: list[DataContentEntry] = []
+    _extract_data_entries(
+        merged_content, presets, parameters, merged_canvases, entries,
+    )
+
+    return entries, merged_canvases, file_paths

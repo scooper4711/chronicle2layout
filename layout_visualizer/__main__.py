@@ -23,9 +23,11 @@ from layout_visualizer.coordinate_resolver import (
     resolve_canvas_pixels,
     resolve_field_pixels,
 )
+from layout_visualizer.data_renderer import draw_data_text
 from layout_visualizer.layout_loader import (
     build_layout_index,
     load_content_fields,
+    load_data_content,
     load_layout_with_inheritance,
     resolve_default_chronicle_location,
 )
@@ -133,11 +135,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--mode",
-        choices=["canvases", "fields"],
+        choices=["canvases", "fields", "data"],
         default="canvases",
         help=(
             "What to visualize: 'canvases' draws canvas regions, "
-            "'fields' draws content field positions (default: canvases)."
+            "'fields' draws content field positions, "
+            "'data' renders example parameter values as text "
+            "(default: canvases)."
         ),
     )
 
@@ -195,7 +199,7 @@ def run_visualizer(
         layout_root: Root directory containing layout JSON files.
         layout_id: Layout id to visualize.
         output_path: Path for the output PNG file.
-        mode: What to visualize — "canvases" or "fields".
+        mode: What to visualize — "canvases", "fields", or "data".
 
     Raises:
         FileNotFoundError: If PDF not found or layout id not in index.
@@ -219,6 +223,14 @@ def run_visualizer(
         fields, canvases, _chain = load_content_fields(layout_path, layout_index)
         canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
         pixel_rects = resolve_field_pixels(fields, canvas_pixels)
+    elif mode == "data":
+        entries, canvases, _chain = load_data_content(layout_path, layout_index)
+        canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
+        composited = draw_data_text(pixmap, entries, canvas_pixels)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        composited.save(str(output_path))
+        print(f"Wrote {output_path}")
+        return
     else:
         canvases, _chain = load_layout_with_inheritance(layout_path, layout_index)
         pixel_rects = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
@@ -308,7 +320,7 @@ def watch_and_regenerate(
     Args:
         layout_root: Root directory containing layout JSON files.
         targets: List of (layout_id, output_path) pairs to generate.
-        mode: What to visualize — "canvases" or "fields".
+        mode: What to visualize — "canvases", "fields", or "data".
 
     Requirements: layout-visualizer 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7
     """
