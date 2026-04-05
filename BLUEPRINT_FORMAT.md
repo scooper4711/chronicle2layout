@@ -40,10 +40,14 @@ Blueprint files use the `.blueprint.json` extension to distinguish them from lay
 | `parent` | string | no | Id of the parent Blueprint. The parent's canvases are resolved first and available for canvas references. |
 | `description` | string | no | Human-readable description. Passed through to the output layout. |
 | `flags` | string[] | no | Metadata flags (e.g., `["hidden"]`). Passed through to the output layout. |
-| `aspectratio` | string | no | Page aspect ratio (e.g., `"603:783"` for US Letter). Passed through to the output layout. |
+| `aspectratio` | string | no | Page aspect ratio (e.g., `"603:783"` for US Letter). Passed through to the output layout. Inherited from parent if not declared. |
+| `defaultChronicleLocation` | string | no | Foundry VTT module path to the chronicle PDF. Passed through to the output layout. |
+| `parameters` | object | no | Parameter groups matching the LAYOUT_FORMAT.md parameter schema. Merged with parent parameters (child overrides parent). |
+| `field_styles` | object | no | Named reusable bundles of styling/positioning properties for fields. Merged with parent styles (child overrides parent). |
+| `fields` | array | no | Ordered array of field entries that bind parameters to positioned regions. |
 | `canvases` | array | yes | Ordered array of canvas entries. |
 
-Properties `id`, `parent`, `description`, `flags`, and `aspectratio` are pass-through: they appear in the output layout exactly as written in the Blueprint.
+Properties `id`, `parent`, `description`, `flags`, `aspectratio`, and `defaultChronicleLocation` are pass-through: they appear in the output layout exactly as written in the Blueprint.
 
 ## Canvas Entries
 
@@ -108,6 +112,139 @@ A string of the form `canvas_name.edge` that resolves to an already-defined canv
 
 Valid edges are `left`, `right`, `top`, and `bottom`. The referenced canvas must appear earlier in the array (or be inherited from a parent Blueprint). Forward references are not allowed.
 
+### Secondary axis reference
+
+A string of the form `category[index].edge` that resolves to a detected element's secondary axis position.
+
+```json
+"left": "h_rule[0].left",
+"right": "h_rule[0].right",
+"top": "v_thin[1].top"
+```
+
+Horizontal lines support `.left` (x position) and `.right` (x2 position). Vertical lines support `.top` (y position) and `.bottom` (y2 position). Grey boxes support all four edges.
+
+| Category | Valid secondary edges |
+|----------|---------------------|
+| `h_thin`, `h_bar`, `h_rule` | `.left` → x, `.right` → x2 |
+| `v_thin`, `v_bar` | `.top` → y, `.bottom` → y2 |
+| `grey_box` | `.left` → x, `.right` → x2, `.top` → y, `.bottom` → y2 |
+
+### Canvas-scoped reference (`@` prefix)
+
+A string prefixed with `@` that uses canvas-local indexing instead of global indexing. Only available on field edge values (not canvas edge values).
+
+```json
+"bottom": "@h_rule[0]",
+"left": "@h_rule[0].left",
+"right": "@grey_box[1].right"
+```
+
+When a field references `@h_rule[0]`, the tool filters the detection result to only elements that fall within the field's canvas bounds (both x and y overlap), then uses index 0 within that filtered set. This means `@h_rule[0]` in one canvas may refer to a completely different global element than `@h_rule[0]` in another canvas.
+
+This is useful when the same type of structural element appears many times across the page but you only care about the ones in your canvas. Without `@`, you'd need to count through all elements globally to find the right index.
+
+The `@` prefix works with plain line references, secondary axis references, and em offset expressions:
+
+```json
+"bottom": "@h_rule[0]",
+"left": "@h_rule[0].left",
+"top": "@h_rule[0] - 1em"
+```
+
+### Em offset expression (fields only)
+
+A string of the form `"<base_ref> +/- <N>em"` that offsets a resolved position by N times the field's font size. Only available on field edge values.
+
+```json
+"top": "@h_rule[0] - 1em",
+"left": "@h_rule[2].left + 1em"
+```
+
+The offset is computed as: `offset_percentage = N × fontsize / page_dimension × 100`, where `page_dimension` is the page height (from `aspectratio`) for top/bottom edges and the page width for left/right edges.
+
+The base reference can be any valid edge value type: line reference, secondary axis reference, canvas reference, or canvas-scoped reference.
+
+## Parameters
+
+The optional `parameters` property declares user-fillable fields using the same schema as LAYOUT_FORMAT.md parameters. Parameters are passed through to the output layout's `parameters` section.
+
+```json
+"parameters": {
+  "Event Info": {
+    "event": { "type": "text", "description": "Event name", "example": "PaizoCon" },
+    "date": { "type": "text", "description": "Session date", "example": "27.06.2020" }
+  },
+  "Player Info": {
+    "char": { "type": "text", "description": "Character name", "example": "Stormageddon" }
+  }
+}
+```
+
+When a child Blueprint has a parent with parameters, they are merged: groups from both are included, and within shared groups, the child's parameter definitions override the parent's.
+
+## Field Styles
+
+The optional `field_styles` property defines reusable bundles of styling and positioning properties that fields can reference.
+
+```json
+"field_styles": {
+  "defaultfont": {
+    "font": "Helvetica",
+    "fontsize": 14
+  },
+  "player_infoline": {
+    "styles": ["defaultfont"],
+    "canvas": "main",
+    "align": "CM"
+  }
+}
+```
+
+Styles can reference other styles via their own `styles` array, forming a composition chain. Resolution is depth-first: base styles are applied first, then more specific styles, then the field's own direct properties. Circular references are detected and raise an error.
+
+Style properties that can be inherited: `canvas`, `type`, `font`, `fontsize`, `fontweight`, `align`, `color`, `linewidth`, `size`, `lines`, `left`, `right`, `top`, `bottom`.
+
+Field styles inherit from parent Blueprints: a child's `field_styles` are merged with the parent's, with child definitions overriding parent definitions for the same style name.
+
+## Field Entries
+
+The optional `fields` property is an ordered array of field entries. Each field binds a parameter (or static value) to a positioned region within a canvas.
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `name` | string | yes | Unique field name within the Blueprint (including inherited fields) |
+| `canvas` | string | after styles | Canvas this field renders in. May be inherited from a style. |
+| `type` | string | after styles | Element type: `text`, `multiline`, `line`, or `rectangle`. May be inherited from a style. |
+| `param` | string | no | Parameter name this field renders. Output value becomes `"param:<name>"`. |
+| `value` | string | no | Static text value. Mutually exclusive with `param`. |
+| `styles` | string[] | no | List of field style names to inherit properties from. |
+| `trigger` | string | no | Wraps the output element in a trigger for conditional rendering. |
+| `left` | edge value | no | Left edge. Supports all edge value types including `@` and em offsets. |
+| `right` | edge value | no | Right edge. |
+| `top` | edge value | no | Top edge. Defaults to `bottom - 1em` when omitted (requires `bottom` and `fontsize`). |
+| `bottom` | edge value | no | Bottom edge. |
+| `font` | string | no | Font family. |
+| `fontsize` | number | no | Font size in points. |
+| `fontweight` | string | no | Font weight (e.g., `"bold"`). |
+| `align` | string | no | Alignment code (e.g., `"CM"`, `"LB"`). |
+| `color` | string | no | Color for line/rectangle elements. |
+| `linewidth` | number | no | Line width for line elements. |
+| `size` | number | no | Size for checkbox-like elements. |
+| `lines` | number | no | Number of lines for multiline elements. |
+
+### Top edge default
+
+When a field omits `top` but has both `bottom` and an effective `fontsize` (from direct property or styles), the tool computes `top = bottom - 1em`. This is convenient for single-line text fields that sit just above a structural line.
+
+### Field output
+
+Each field produces a content element in the output layout with all properties inlined (no presets). Fields with a `trigger` property are wrapped in a trigger element. Content elements appear in the same order as the fields array.
+
+### Field bounds validation
+
+After resolving a field's edges, the tool validates that all edges fall within the field's canvas bounds. If any edge is outside the canvas, a descriptive error is raised listing the elements of the referenced type that do fall within the canvas — helping you find the correct index.
+
 ## Inheritance
 
 Blueprints form a parent chain via the `parent` property, mirroring the layout inheritance model.
@@ -125,6 +262,11 @@ When a Blueprint has a parent:
 3. Child canvases can reference parent canvases via canvas references.
 4. Only the child's own canvases appear in the output layout — parent canvases are resolved for reference but not emitted.
 5. Canvas names must be unique across the entire inheritance chain.
+6. Parameters are merged through the chain (child overrides parent at the individual parameter level within groups).
+7. Field styles are merged through the chain (child definitions override parent for the same style name).
+8. Field names must be unique across the chain (a child cannot redefine a parent's field name).
+9. The `aspectratio` is inherited from the nearest ancestor that declares it.
+10. Only the child's own fields produce content elements in the output.
 
 ## Resolution Order
 
@@ -137,7 +279,15 @@ This makes resolution deterministic and cycle-free without needing a dependency 
 
 ## Output
 
-The tool produces a layout.json conforming to [LAYOUT_FORMAT.md](LAYOUT_FORMAT.md). Canvas coordinates in the output are parent-relative percentages (0–100 relative to the parent canvas), rounded to one decimal place.
+The tool produces a layout.json conforming to [LAYOUT_FORMAT.md](LAYOUT_FORMAT.md). Output sections appear in this order: `id`, `parent`, `description`, `flags`, `aspectratio`, `defaultChronicleLocation`, `parameters`, `canvas`, `content`. Sections with no value are omitted.
+
+Canvas coordinates are parent-relative percentages (0–100 relative to the parent canvas), rounded to one decimal place. Field coordinates are similarly parent-relative within their canvas.
+
+When a Blueprint defines no fields, the output contains only the sections it would have produced before fields were added (backward compatible).
+
+### Detection enhancements
+
+The tool also extracts thin vector lines directly from the PDF's drawing commands. Lines with a stroke width ≤ 1pt that are too thin to survive rasterization at 150 DPI are added to the `h_rule` category. This ensures that fine structural lines (like field separators) are available for referencing even when they're invisible in the raster image.
 
 ## Example
 
@@ -191,3 +341,58 @@ Running `python -m blueprint2layout b1.blueprint.json chronicle.pdf output.json`
 ```
 
 The `page` canvas from the parent Blueprint is not in the output — it was resolved internally so that `main` could compute its parent-relative coordinates.
+
+## Full Example with Fields
+
+A Blueprint with parameters, field styles, and fields:
+
+```json
+{
+  "id": "pfs2.b1",
+  "parent": "pfs2",
+  "description": "#B1: The Whitefang Wyrm",
+  "parameters": {
+    "Event Info": {
+      "event": { "type": "text", "description": "Event name", "example": "PaizoCon" }
+    },
+    "Player Info": {
+      "char": { "type": "text", "description": "Character name", "example": "Stormageddon" }
+    }
+  },
+  "field_styles": {
+    "defaultfont": { "font": "Helvetica", "fontsize": 14 }
+  },
+  "fields": [
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[0].left",
+      "right": "@grey_box[0].right",
+      "top": "@grey_box[0].bottom",
+      "bottom": "@grey_box[1].top"
+    }
+  ],
+  "canvases": [
+    { "name": "main", "parent": "page", "left": "v_bar[0]", "right": "v_thin[2]", "top": "h_thin[2]", "bottom": "h_thin[8]" },
+    { "name": "session_info", "parent": "main", "left": "main.left", "right": "main.right", "top": "notes.bottom", "bottom": "main.bottom" },
+    { "name": "rewards", "parent": "main", "left": "v_bar[1]", "right": "main.right", "top": "h_bar[1]", "bottom": "h_thin[7]" }
+  ]
+}
+```
+
+The `event` field uses `@h_rule[0]` — the first grey rule within the `session_info` canvas — as its bottom edge, with the top auto-computed as 1em above. The `xp_gained` field fills the white space between two grey box labels in the rewards area.
