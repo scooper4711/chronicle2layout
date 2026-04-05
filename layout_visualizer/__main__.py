@@ -2,11 +2,17 @@
 
 Invoked via ``python -m layout_visualizer``. Parses command-line arguments,
 runs the visualization pipeline, and optionally watches for file changes.
+
+The chronicle PDF is resolved automatically from the layout's
+``defaultChronicleLocation`` field (walking the inheritance chain).
+``--layout-id`` supports shell-style wildcards (e.g. ``pfs.b*``) to
+generate PNGs for multiple layouts in one invocation.
 """
 
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import os
 import sys
 import time
@@ -21,33 +27,83 @@ from layout_visualizer.layout_loader import (
     build_layout_index,
     load_content_fields,
     load_layout_with_inheritance,
+    resolve_default_chronicle_location,
 )
 from layout_visualizer.overlay_renderer import draw_overlays
 from layout_visualizer.pdf_renderer import render_pdf_page
 
 
+def _build_output_filename(layout_id: str, chronicle_path: Path) -> str:
+    """Derive the output PNG filename from a layout id and chronicle PDF.
+
+    Format: ``{layout_id}_{chronicle_stem}.png``.  The layout id is
+    included because multiple layouts can reference the same chronicle.
+
+    Args:
+        layout_id: The layout's unique identifier.
+        chronicle_path: Path to the chronicle PDF.
+
+    Returns:
+        The output filename string (no directory component).
+    """
+    return f"{layout_id}_{chronicle_path.stem}.png"
+
+
+def match_layout_ids(
+    pattern: str,
+    layout_index: dict[str, Path],
+) -> list[str]:
+    """Return layout ids matching a shell-style wildcard pattern.
+
+    If the pattern contains no wildcard characters it is treated as a
+    literal id and must exist in the index.
+
+    Args:
+        pattern: A layout id or glob pattern (e.g. ``pfs.b*``).
+        layout_index: Map of layout ids to file paths.
+
+    Returns:
+        Sorted list of matching layout ids.
+
+    Raises:
+        ValueError: If no ids match the pattern.
+    """
+    has_wildcard = any(ch in pattern for ch in ("*", "?", "["))
+    if has_wildcard:
+        matched = sorted(
+            lid for lid in layout_index if fnmatch.fnmatch(lid, pattern)
+        )
+    else:
+        if pattern not in layout_index:
+            raise ValueError(f"Layout id '{pattern}' not found")
+        matched = [pattern]
+
+    if not matched:
+        raise ValueError(
+            f"No layout ids match pattern '{pattern}'"
+        )
+    return matched
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse command-line arguments for layout_visualizer.
-
-    Positional: layout_file, pdf_file.
-    Optional positional: output (PNG path).
-    Optional flag: --watch.
-
-    When no output path is given, the default is the layout file's
-    directory with the same base name and a ``.png`` extension.
 
     Args:
         argv: Argument list (defaults to sys.argv[1:]).
 
     Returns:
-        Parsed namespace with layout_file and pdf_file as Paths,
-        output as Path or None, and watch as bool.
+        Parsed namespace with layout_root, layout_id, output_dir,
+        watch, and mode.
 
-    Requirements: layout-visualizer 1.1, 1.2, 1.3, 1.4, 1.6
+    Requirements: layout-visualizer 1.1, 1.3, 1.4, 1.6
     """
     parser = argparse.ArgumentParser(
         prog="layout_visualizer",
-        description="Visualize canvas regions from a layout JSON on a chronicle PDF.",
+        description=(
+            "Visualize canvas regions from a layout JSON on its "
+            "chronicle PDF.  The PDF is resolved from the layout's "
+            "defaultChronicleLocation field."
+        ),
     )
     parser.add_argument(
         "--layout-root",
@@ -58,19 +114,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--layout-id",
         required=True,
-        help="Layout id to visualize (e.g. 'pfs2.season7').",
+        help=(
+            "Layout id to visualize.  Supports shell-style wildcards "
+            "(e.g. 'pfs.b*') to generate PNGs for multiple layouts."
+        ),
     )
     parser.add_argument(
-        "pdf_file",
+        "--output-dir",
         type=Path,
-        help="Path to the chronicle PDF file.",
-    )
-    parser.add_argument(
-        "output",
-        nargs="?",
-        type=Path,
-        default=None,
-        help="Output PNG file path (default: <layout_id>.png in current directory).",
+        default=Path("."),
+        help="Directory for output PNG files (default: current directory).",
     )
     parser.add_argument(
         "--watch",
@@ -82,34 +135,65 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--mode",
         choices=["canvases", "fields"],
         default="canvases",
-        help="What to visualize: 'canvases' draws canvas regions, "
-             "'fields' draws content field positions (default: canvases).",
+        help=(
+            "What to visualize: 'canvases' draws canvas regions, "
+            "'fields' draws content field positions (default: canvases)."
+        ),
     )
 
-    args = parser.parse_args(argv)
+    return parser.parse_args(argv)
 
-    if args.output is None:
-        args.output = Path(f"{args.layout_id}.png")
 
-    return args
+def resolve_chronicle_pdf(
+    layout_id: str,
+    layout_index: dict[str, Path],
+) -> Path:
+    """Resolve the chronicle PDF path for a layout id.
+
+    Walks the inheritance chain to find ``defaultChronicleLocation``.
+
+    Args:
+        layout_id: The layout's unique identifier.
+        layout_index: Map of layout ids to file paths.
+
+    Returns:
+        Path to the chronicle PDF.
+
+    Raises:
+        ValueError: If no ``defaultChronicleLocation`` is found.
+        FileNotFoundError: If the resolved PDF does not exist.
+    """
+    layout_path = layout_index[layout_id]
+    location = resolve_default_chronicle_location(layout_path, layout_index)
+    if location is None:
+        raise ValueError(
+            f"Layout '{layout_id}' has no defaultChronicleLocation "
+            f"in its inheritance chain"
+        )
+    pdf_path = Path(location)
+    if not pdf_path.exists():
+        raise FileNotFoundError(
+            f"Chronicle PDF not found: {pdf_path} "
+            f"(from layout '{layout_id}')"
+        )
+    return pdf_path
 
 
 def run_visualizer(
     layout_root: Path,
     layout_id: str,
-    pdf_path: Path,
     output_path: Path,
     mode: str = "canvases",
 ) -> None:
     """Run the full visualization pipeline once.
 
     Builds a layout index from layout_root, looks up the layout by id,
-    resolves inheritance, renders the PDF, draws overlays, and writes PNG.
+    resolves the chronicle PDF from ``defaultChronicleLocation``,
+    renders the PDF, draws overlays, and writes PNG.
 
     Args:
         layout_root: Root directory containing layout JSON files.
         layout_id: Layout id to visualize.
-        pdf_path: Path to the chronicle PDF.
         output_path: Path for the output PNG file.
         mode: What to visualize — "canvases" or "fields".
 
@@ -118,7 +202,7 @@ def run_visualizer(
         ValueError: If layout JSON is invalid or parent not found.
         OSError: If output path is not writable.
 
-    Requirements: layout-visualizer 1.1, 1.2, 1.3, 1.4, 8.1, 8.2
+    Requirements: layout-visualizer 1.1–1.4, 8.1, 8.2
     """
     layout_index = build_layout_index(layout_root)
 
@@ -128,6 +212,7 @@ def run_visualizer(
         )
 
     layout_path = layout_index[layout_id]
+    pdf_path = resolve_chronicle_pdf(layout_id, layout_index)
     pixmap = render_pdf_page(pdf_path)
 
     if mode == "fields":
@@ -143,20 +228,35 @@ def run_visualizer(
     composited.save(str(output_path))
 
 
-def _collect_watched_paths(layout_root: Path, layout_id: str) -> list[Path]:
-    """Build the list of layout file paths to monitor for changes.
+def _collect_watched_paths(
+    layout_root: Path,
+    layout_ids: list[str],
+) -> list[Path]:
+    """Build the deduplicated list of layout file paths to monitor.
+
+    Unions the inheritance chains of all provided layout ids so that
+    a change to any file in any chain triggers regeneration.
 
     Args:
         layout_root: Root directory containing layout JSON files.
-        layout_id: Layout id to visualize.
+        layout_ids: Layout ids to watch.
 
     Returns:
-        List of all layout file paths in the inheritance chain.
+        Deduplicated list of all layout file paths across all chains.
     """
     layout_index = build_layout_index(layout_root)
-    layout_path = layout_index[layout_id]
-    _canvases, chain_paths = load_layout_with_inheritance(layout_path, layout_index)
-    return chain_paths
+    seen: set[Path] = set()
+    result: list[Path] = []
+    for layout_id in layout_ids:
+        layout_path = layout_index[layout_id]
+        _canvases, chain_paths = load_layout_with_inheritance(
+            layout_path, layout_index,
+        )
+        for path in chain_paths:
+            if path not in seen:
+                seen.add(path)
+                result.append(path)
+    return result
 
 
 def _record_mtimes(paths: list[Path]) -> dict[Path, float]:
@@ -195,25 +295,27 @@ def _any_file_changed(
 
 def watch_and_regenerate(
     layout_root: Path,
-    layout_id: str,
-    pdf_path: Path,
-    output_path: Path,
+    targets: list[tuple[str, Path]],
     mode: str = "canvases",
 ) -> None:
-    """Watch layout files for changes and regenerate PNG.
+    """Watch layout files for changes and regenerate PNGs.
+
+    Monitors the inheritance chains of all target layouts. When any
+    watched file changes, every target is regenerated.
 
     Args:
         layout_root: Root directory containing layout JSON files.
-        layout_id: Layout id to visualize.
-        pdf_path: Path to the chronicle PDF.
-        output_path: Path for the output PNG file.
+        targets: List of (layout_id, output_path) pairs to generate.
         mode: What to visualize — "canvases" or "fields".
 
     Requirements: layout-visualizer 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7
     """
-    run_visualizer(layout_root, layout_id, pdf_path, output_path, mode)
+    layout_ids = [lid for lid, _ in targets]
 
-    watched_paths = _collect_watched_paths(layout_root, layout_id)
+    for layout_id, output_path in targets:
+        run_visualizer(layout_root, layout_id, output_path, mode)
+
+    watched_paths = _collect_watched_paths(layout_root, layout_ids)
     mtimes = _record_mtimes(watched_paths)
 
     try:
@@ -224,8 +326,13 @@ def watch_and_regenerate(
 
             print("Regenerating...")
             try:
-                run_visualizer(layout_root, layout_id, pdf_path, output_path, mode)
-                watched_paths = _collect_watched_paths(layout_root, layout_id)
+                for layout_id, output_path in targets:
+                    run_visualizer(
+                        layout_root, layout_id, output_path, mode,
+                    )
+                watched_paths = _collect_watched_paths(
+                    layout_root, layout_ids,
+                )
             except Exception as exc:  # noqa: BLE001 — continue watching on any error
                 print(f"Error: Regeneration failed: {exc}", file=sys.stderr)
 
@@ -237,9 +344,9 @@ def watch_and_regenerate(
 def main(argv: list[str] | None = None) -> int:
     """Entry point for the layout_visualizer CLI.
 
-    Parses arguments, validates file existence, and runs the
-    visualization pipeline. Prints errors to stderr and returns
-    an appropriate exit code.
+    Parses arguments, validates inputs, resolves matching layout ids,
+    and runs the visualization pipeline for each match. Prints errors
+    to stderr and returns an appropriate exit code.
 
     Args:
         argv: Argument list (defaults to sys.argv[1:]).
@@ -258,24 +365,33 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
-    if not args.pdf_file.exists():
-        print(
-            f"Error: PDF file not found: {args.pdf_file}",
-            file=sys.stderr,
-        )
+    try:
+        layout_index = build_layout_index(args.layout_root)
+        matched_ids = match_layout_ids(args.layout_id, layout_index)
+    except ValueError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
         return 1
 
     try:
+        targets: list[tuple[str, Path]] = []
+        for layout_id in matched_ids:
+            pdf_path = resolve_chronicle_pdf(layout_id, layout_index)
+            output_name = _build_output_filename(layout_id, pdf_path)
+            output_path = args.output_dir / output_name
+            targets.append((layout_id, output_path))
+
         if args.watch:
             watch_and_regenerate(
-                args.layout_root, args.layout_id,
-                args.pdf_file, args.output, args.mode,
+                args.layout_root, targets, args.mode,
             )
             return 0
-        run_visualizer(
-            args.layout_root, args.layout_id,
-            args.pdf_file, args.output, args.mode,
-        )
+
+        for layout_id, output_path in targets:
+            print(f"Generating {output_path} ...")
+            run_visualizer(
+                args.layout_root, layout_id,
+                output_path, args.mode,
+            )
     except FileNotFoundError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

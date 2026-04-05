@@ -156,6 +156,32 @@ def _try_parse_field(entry: dict, counter: list[int]) -> CanvasRegion | None:
     )
 
 
+def resolve_default_chronicle_location(
+    layout_path: Path,
+    layout_index: dict[str, Path],
+) -> str | None:
+    """Walk the inheritance chain and return the defaultChronicleLocation.
+
+    The leaf layout's value takes precedence. If the leaf doesn't define
+    it, walks up the chain (child-first) until one is found.
+
+    Args:
+        layout_path: Path to the target layout JSON file.
+        layout_index: Map of layout ids to file paths.
+
+    Returns:
+        The defaultChronicleLocation string, or None if not defined
+        anywhere in the chain.
+    """
+    chain = collect_inheritance_chain(layout_path, layout_index)
+    # chain is root-first; walk in reverse (leaf-first) so child wins
+    for _path, data in reversed(chain):
+        location = data.get("defaultChronicleLocation")
+        if location is not None:
+            return location
+    return None
+
+
 def load_content_fields(
     layout_path: Path,
     layout_index: dict[str, Path],
