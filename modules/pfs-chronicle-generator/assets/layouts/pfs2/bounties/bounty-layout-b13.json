@@ -7,6 +7,14 @@
   ],
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
   "parameters": {
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 6
+      }
+    },
     "Checkboxes, Reputation and Items": {
       "summary_checkbox": {
         "type": "choice",
@@ -43,14 +51,6 @@
         "example": "1,2,3,4,5,6,7,8,9"
       }
     },
-    "Notes": {
-      "notes": {
-        "type": "multiline",
-        "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
-        "lines": 6
-      }
-    },
     "Event Info": {
       "event": {
         "type": "text",
@@ -71,6 +71,28 @@
         "type": "text",
         "description": "Gamemasters PFS ID",
         "example": 654321
+      }
+    },
+    "Player Info": {
+      "char": {
+        "type": "text",
+        "description": "Players character name",
+        "example": "Stormageddon"
+      },
+      "societyid": {
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
+      },
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
       }
     },
     "Rewards": {
@@ -118,28 +140,6 @@
         "type": "text",
         "description": "Total GP",
         "example": "3gp 7sp 1cp"
-      }
-    },
-    "Player Info": {
-      "char": {
-        "type": "text",
-        "description": "Players character name",
-        "example": "Stormageddon"
-      },
-      "societyid": {
-        "type": "text",
-        "description": "Organized Play ID",
-        "example": "123456"
-      },
-      "char_number": {
-        "type": "text",
-        "description": "Character number",
-        "example": "2001"
-      },
-      "char_number_short": {
-        "type": "text",
-        "description": "Character number without leading digit",
-        "example": "001"
       }
     }
   },
@@ -227,9 +227,9 @@
       "type": "text",
       "canvas": "character_info",
       "x": 67.3,
-      "y": 29.5,
+      "y": 23.3,
       "x2": 87.4,
-      "y2": 50.0,
+      "y2": 43.8,
       "font": "Helvetica",
       "fontsize": 9,
       "fontweight": "bold",
@@ -239,10 +239,10 @@
       "value": "param:char_number_short",
       "type": "text",
       "canvas": "character_info",
-      "x": 91.1,
-      "y": 29.5,
+      "x": 90.3,
+      "y": 23.3,
       "x2": 97.5,
-      "y2": 50.0,
+      "y2": 43.8,
       "font": "Helvetica",
       "fontsize": 9,
       "fontweight": "bold",

@@ -46,7 +46,7 @@
       "align": "RM",
       "left": "@h_rule[1].left",
       "right": "@h_rule[1].right",
-      "bottom": "@h_rule[1]"
+      "bottom": "@h_rule[1] - 0.3em"
     },
     {
       "name": "societyid_char",
@@ -57,9 +57,9 @@
       "fontsize": 9,
       "fontweight": "bold",
       "align": "LM",
-      "left": "@h_rule[2].left + 1em",
+      "left": "@h_rule[2].left + 0.5em",
       "right": "@h_rule[2].right",
-      "bottom": "@h_rule[2]"
+      "bottom": "@h_rule[2] - 0.3em"
     },
     {
       "name": "xp_gained",

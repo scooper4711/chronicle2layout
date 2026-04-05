@@ -29,7 +29,7 @@
       "left": "@grey_box[0].left",
       "right": "@grey_box[0].right",
       "top": "@grey_box[0].top",
-      "bottom": "@grey_box[0].bottom"
+      "bottom": "@grey_box[0].bottom - 0.3em"
     },
     {
       "name": "societyid_char",
@@ -40,10 +40,10 @@
       "fontsize": 9,
       "fontweight": "bold",
       "align": "LM",
-      "left": "@grey_box[1].left + 1em",
+      "left": "@grey_box[1].left + 0.5em",
       "right": "@grey_box[1].right",
       "top": "@grey_box[1].top",
-      "bottom": "@grey_box[1].bottom"
+      "bottom": "@grey_box[1].bottom - 0.3em"
     },
     {
       "name": "xp_gained",
