@@ -1,19 +1,53 @@
 # Blueprint to Layout
 
-Converts declarative Blueprint JSON files into layout.json files conforming to [LAYOUT_FORMAT.md](../LAYOUT_FORMAT.md). Takes a Blueprint and a chronicle PDF as inputs, detects structural elements (lines, bars, grey boxes) via pixel analysis, resolves canvas edge references, and outputs parent-relative percentage coordinates.
+Converts declarative Blueprint JSON files into layout.json files conforming to [LAYOUT_FORMAT.md](../LAYOUT_FORMAT.md). Takes a Blueprint and its associated chronicle PDF, detects structural elements (lines, bars, grey boxes) via pixel analysis, resolves canvas edge references, and outputs parent-relative percentage coordinates.
 
 ## Usage
 
 ### CLI
 
 ```bash
-python -m blueprint2layout <blueprint.json> <chronicle.pdf> <output.json> [--blueprints-dir <dir>]
+python -m blueprint2layout --blueprints-dir <dir> --blueprint-id <id-or-pattern> [--output-dir <dir>] [--watch]
 ```
 
-- `blueprint.json` — the Blueprint file describing canvas regions
-- `chronicle.pdf` — the chronicle PDF to analyze
-- `output.json` — where to write the layout
-- `--blueprints-dir` — directory to scan for parent Blueprints (defaults to the Blueprint file's directory)
+#### Arguments
+
+| Argument | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `--blueprints-dir` | Yes | — | Root directory containing `.blueprint.json` files (scanned recursively). |
+| `--blueprint-id` | Yes | — | Blueprint id or shell-style wildcard pattern (e.g. `pfs2.*`, `pfs2.bounty*`). |
+| `--output-dir` | No | `.` (current directory) | Directory for generated layout JSON files. Subdirectory structure mirrors `--blueprints-dir`. |
+| `--watch` | No | off | Watch blueprint files for changes and auto-regenerate layouts. |
+
+The chronicle PDF is resolved automatically from the `defaultChronicleLocation` field in the blueprint's inheritance chain — no need to specify it manually.
+
+#### Examples
+
+Generate a single layout:
+
+```bash
+python -m blueprint2layout --blueprints-dir Blueprints --blueprint-id pfs2.bounty-layout-b13
+```
+
+Generate all layouts matching a wildcard pattern:
+
+```bash
+python -m blueprint2layout --blueprints-dir Blueprints --blueprint-id "pfs2.*"
+```
+
+Write output to a specific directory:
+
+```bash
+python -m blueprint2layout --blueprints-dir Blueprints --blueprint-id "pfs2.*" --output-dir out/layouts
+```
+
+Watch mode — regenerate layouts automatically when any blueprint in the inheritance chain changes:
+
+```bash
+python -m blueprint2layout --blueprints-dir Blueprints --blueprint-id "pfs2.*" --output-dir out/layouts --watch
+```
+
+Press `Ctrl+C` to stop watch mode.
 
 ### Python API
 
