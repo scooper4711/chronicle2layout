@@ -260,6 +260,7 @@ def _classify_line_groups(
             x=round(leftmost / width * 100, 1),
             x2=round(rightmost / width * 100, 1),
             thickness_px=thickness,
+            y2=round((bottom_row + 1) / height * 100, 1),
         )
 
         if thickness <= THIN_LINE_MAX_THICKNESS:
@@ -547,6 +548,7 @@ def _build_horizontal_lines_from_groups(
             x=round(leftmost / width * 100, 1),
             x2=round(rightmost / width * 100, 1),
             thickness_px=thickness,
+            y2=round((bottom_row + 1) / height * 100, 1),
         ))
 
     return lines
@@ -899,7 +901,7 @@ def extract_vector_h_rules(
             x2_pct = round(x_right / page_width * 100, 1)
 
             line = HorizontalLine(
-                y=y_pct, x=x_pct, x2=x2_pct, thickness_px=1,
+                y=y_pct, x=x_pct, x2=x2_pct, thickness_px=1, y2=y_pct,
             )
 
             is_duplicate = any(

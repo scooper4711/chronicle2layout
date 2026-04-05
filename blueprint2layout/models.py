@@ -20,12 +20,14 @@ class HorizontalLine:
         x: Left-edge x position as absolute page percentage.
         x2: Right-edge x position as absolute page percentage.
         thickness_px: Thickness in pixels at 150 DPI.
+        y2: Bottom-edge y position as absolute page percentage.
     """
 
     y: float
     x: float
     x2: float
     thickness_px: int
+    y2: float = 0.0
 
 
 @dataclass(frozen=True)

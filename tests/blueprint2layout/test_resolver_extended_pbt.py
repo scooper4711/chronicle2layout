@@ -82,9 +82,10 @@ def valid_secondary_axis_reference(draw, detection: DetectionResult):
         category = draw(st.sampled_from(_HORIZONTAL_CATEGORIES))
         elements = getattr(detection, category)
         index = draw(st.integers(min_value=0, max_value=len(elements) - 1))
-        edge = draw(st.sampled_from(["left", "right"]))
+        edge = draw(st.sampled_from(["left", "right", "top", "bottom"]))
         element = elements[index]
-        expected = element.x if edge == "left" else element.x2
+        attr_map = {"left": "x", "right": "x2", "top": "y", "bottom": "y2"}
+        expected = getattr(element, attr_map[edge])
     elif choice == "vertical":
         category = draw(st.sampled_from(_VERTICAL_CATEGORIES))
         elements = getattr(detection, category)
@@ -109,16 +110,11 @@ def valid_secondary_axis_reference(draw, detection: DetectionResult):
 def invalid_secondary_axis_reference(draw):
     """Generate a secondary axis reference with an invalid edge for its category.
 
-    Horizontal lines with .top or .bottom, vertical lines with .left or .right.
+    Vertical lines with .left or .right are invalid.
+    Horizontal lines now support all four edges, so only vertical is invalid.
     """
-    choice = draw(st.sampled_from(["horizontal", "vertical"]))
-
-    if choice == "horizontal":
-        category = draw(st.sampled_from(_HORIZONTAL_CATEGORIES))
-        edge = draw(st.sampled_from(["top", "bottom"]))
-    else:
-        category = draw(st.sampled_from(_VERTICAL_CATEGORIES))
-        edge = draw(st.sampled_from(["left", "right"]))
+    category = draw(st.sampled_from(_VERTICAL_CATEGORIES))
+    edge = draw(st.sampled_from(["left", "right"]))
 
     index = draw(st.integers(min_value=0, max_value=4))
     return f"{category}[{index}].{edge}"

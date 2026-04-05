@@ -186,18 +186,17 @@ class TestPlainLineReferencesUnchanged:
 class TestInvalidSecondaryEdge:
     """Tests that invalid secondary edges raise descriptive errors (Req 4.4)."""
 
-    def test_h_thin_top_raises_error(
+    def test_h_thin_top_returns_y(
         self, detection_with_all: DetectionResult,
     ):
-        with pytest.raises(ValueError, match="Invalid secondary edge '.top' for 'h_thin'"):
-            resolve_edge_value("h_thin[0].top", detection_with_all, {})
+        result = resolve_edge_value("h_thin[0].top", detection_with_all, {})
+        assert result == 10.0
 
-    def test_h_thin_bottom_raises_error(
+    def test_h_thin_bottom_returns_y2(
         self, detection_with_all: DetectionResult,
     ):
-        with pytest.raises(ValueError, match="Invalid secondary edge '.bottom' for 'h_thin'"):
-            resolve_edge_value("h_thin[0].bottom", detection_with_all, {})
-
+        result = resolve_edge_value("h_thin[0].bottom", detection_with_all, {})
+        assert result == detection_with_all.h_thin[0].y2
     def test_v_thin_left_raises_error(
         self, detection_with_all: DetectionResult,
     ):
