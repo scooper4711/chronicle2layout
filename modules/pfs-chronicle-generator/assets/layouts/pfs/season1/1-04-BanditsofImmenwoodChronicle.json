@@ -1,0 +1,6 @@
+{
+  "id": "pfs.s1-04",
+  "description": "Season 1 #04: Bandits of Immenwood",
+  "parent": "pfs2.season1-layout-s1-00",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-04-BanditsofImmenwoodChronicle.pdf"
+}

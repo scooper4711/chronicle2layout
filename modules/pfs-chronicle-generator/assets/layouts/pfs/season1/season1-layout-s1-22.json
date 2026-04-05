@@ -1,18 +1,44 @@
 {
-  "id": "pfs2.bounty-layout-b13",
+  "id": "pfs2.season1-layout-s1-22",
   "parent": "pfs2",
-  "description": "Layout for Bounty Chronicles starting with B13",
+  "description": "Layout for Season 1 Chronicle 1-22",
   "flags": [
     "hidden"
   ],
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-22-DoomofCassomirChronicle.pdf",
   "parameters": {
-    "Notes": {
-      "notes": {
-        "type": "multiline",
-        "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
-        "lines": 6
+    "Event Info": {
+      "event": {
+        "type": "text",
+        "description": "Event name",
+        "example": "PaizoCon"
+      },
+      "eventcode": {
+        "type": "text",
+        "description": "Event code",
+        "example": 1234
+      },
+      "date": {
+        "type": "text",
+        "description": "The date on which the game session took place",
+        "example": "27.06.2020"
+      },
+      "gmid": {
+        "type": "text",
+        "description": "Gamemasters PFS ID",
+        "example": 654321
+      }
+    },
+    "Player Info": {
+      "char": {
+        "type": "text",
+        "description": "Players character name",
+        "example": "Stormageddon"
+      },
+      "societyid": {
+        "type": "societyid",
+        "description": "Pathfinder Society ID",
+        "example": "123456-2001"
       }
     },
     "Rewards": {
@@ -79,7 +105,7 @@
         "type": "multiline",
         "description": "Reputation Gained",
         "example": "Grand Archive: +4",
-        "lines": 4
+        "lines": 3
       },
       "strikeout_item_lines": {
         "type": "choice",
@@ -98,38 +124,12 @@
         "example": "1,2,3,4,5,6,7,8,9"
       }
     },
-    "Player Info": {
-      "char": {
-        "type": "text",
-        "description": "Players character name",
-        "example": "Stormageddon"
-      },
-      "societyid": {
-        "type": "societyid",
-        "description": "Pathfinder Society ID",
-        "example": "123456-2001"
-      }
-    },
-    "Event Info": {
-      "event": {
-        "type": "text",
-        "description": "Event name",
-        "example": "PaizoCon"
-      },
-      "eventcode": {
-        "type": "text",
-        "description": "Event code",
-        "example": 1234
-      },
-      "date": {
-        "type": "text",
-        "description": "The date on which the game session took place",
-        "example": "27.06.2020"
-      },
-      "gmid": {
-        "type": "text",
-        "description": "Gamemasters PFS ID",
-        "example": 654321
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 12
       }
     }
   },
@@ -144,49 +144,42 @@
     "character_info": {
       "x": 0.0,
       "y": 0.0,
+      "x2": 68.6,
+      "y2": 10.2,
+      "parent": "main"
+    },
+    "reputation": {
+      "x": 68.6,
+      "y": 0.0,
       "x2": 100.0,
-      "y2": 6.7,
+      "y2": 10.2,
       "parent": "main"
     },
     "summary": {
       "x": 0.0,
-      "y": 6.7,
+      "y": 10.2,
       "x2": 100.0,
       "y2": 21.2,
       "parent": "main"
     },
-    "boons": {
+    "items": {
       "x": 0.0,
-      "y": 21.2,
-      "x2": 80.0,
-      "y2": 38.1,
-      "parent": "main"
-    },
-    "reputation": {
-      "x": 0.0,
-      "y": 38.1,
-      "x2": 80.0,
-      "y2": 46.8,
+      "y": 42.4,
+      "x2": 32.1,
+      "y2": 83.0,
       "parent": "main"
     },
     "rewards": {
       "x": 80.0,
       "y": 21.2,
       "x2": 100.0,
-      "y2": 46.8,
-      "parent": "main"
-    },
-    "items": {
-      "x": 0.0,
-      "y": 46.8,
-      "x2": 51.8,
-      "y2": 82.9,
+      "y2": 94.5,
       "parent": "main"
     },
     "notes": {
       "x": 0.0,
-      "y": 82.9,
-      "x2": 100.0,
+      "y": 83.0,
+      "x2": 39.9,
       "y2": 94.5,
       "parent": "main"
     },
@@ -200,13 +193,61 @@
   },
   "content": [
     {
+      "value": "param:event",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 1.1,
+      "y": 24.2,
+      "x2": 19.9,
+      "y2": 63.0,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 22.9,
+      "y": 26.3,
+      "x2": 33.1,
+      "y2": 65.2,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:date",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 35.9,
+      "y": 26.3,
+      "x2": 50.3,
+      "y2": 65.2,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
+      "value": "param:gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 80.0,
+      "y": 24.2,
+      "x2": 99.2,
+      "y2": 63.0,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
       "value": "param:char",
       "type": "text",
       "canvas": "character_info",
-      "x": 1.6,
-      "y": 18.1,
-      "x2": 63.6,
-      "y2": 50.0,
+      "x": 35.9,
+      "y": 31.5,
+      "x2": 64.0,
+      "y2": 52.3,
       "font": "Helvetica",
       "fontsize": 14,
       "fontweight": "bold",
@@ -220,10 +261,10 @@
           "value": "param:societyid.player",
           "type": "text",
           "canvas": "character_info",
-          "x": 67.3,
-          "y": 29.5,
-          "x2": 87.4,
-          "y2": 50.0,
+          "x": 65.8,
+          "y": 39.0,
+          "x2": 83.9,
+          "y2": 52.3,
           "font": "Helvetica",
           "fontsize": 9,
           "fontweight": "bold",
@@ -239,10 +280,10 @@
           "value": "-",
           "type": "text",
           "canvas": "character_info",
-          "x": 87.4,
-          "y": 29.5,
-          "x2": 89.4,
-          "y2": 50.0,
+          "x": 83.9,
+          "y": 39.0,
+          "x2": 86.9,
+          "y2": 52.3,
           "font": "Helvetica",
           "fontsize": 9,
           "fontweight": "bold",
@@ -258,10 +299,10 @@
           "value": "param:societyid.char_without_first_digit",
           "type": "text",
           "canvas": "character_info",
-          "x": 91.1,
-          "y": 29.5,
-          "x2": 97.5,
-          "y2": 50.0,
+          "x": 89.4,
+          "y": 39.0,
+          "x2": 98.8,
+          "y2": 52.3,
           "font": "Helvetica",
           "fontsize": 9,
           "fontweight": "bold",
@@ -274,9 +315,9 @@
       "type": "text",
       "canvas": "rewards",
       "x": 14.2,
-      "y": 29.8,
+      "y": 11.0,
       "x2": 98.9,
-      "y2": 38.1,
+      "y2": 16.6,
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"
@@ -286,86 +327,25 @@
       "type": "text",
       "canvas": "rewards",
       "x": 14.2,
-      "y": 75.3,
+      "y": 35.2,
       "x2": 98.9,
-      "y2": 83.7,
+      "y2": 41.2,
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"
     },
     {
-      "value": "param:reputation",
-      "type": "multiline",
-      "canvas": "reputation",
-      "x": 2.6,
-      "y": 21.9,
-      "x2": 100.0,
-      "y2": 100.0,
-      "font": "Helvetica",
-      "fontsize": 11,
-      "align": "LB",
-      "lines": 4
-    },
-    {
       "value": "param:notes",
       "type": "multiline",
       "canvas": "notes",
-      "x": 2.1,
-      "y": 16.3,
-      "x2": 97.9,
+      "x": 5.2,
+      "y": 15.5,
+      "x2": 94.8,
       "y2": 100.0,
       "font": "Helvetica",
       "fontsize": 11,
       "align": "LB",
       "lines": 6
-    },
-    {
-      "value": "param:event",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 2.4,
-      "y": 24.2,
-      "x2": 50.1,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "LB"
-    },
-    {
-      "value": "param:eventcode",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 52.3,
-      "y": 24.2,
-      "x2": 62.4,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "LB"
-    },
-    {
-      "value": "param:date",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 64.1,
-      "y": 24.2,
-      "x2": 78.5,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "CB"
-    },
-    {
-      "value": "param:gmid",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 80.2,
-      "y": 24.2,
-      "x2": 99.4,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "CB"
     }
   ]
 }

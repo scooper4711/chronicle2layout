@@ -1,0 +1,211 @@
+{
+  "id": "pfs2.season1-layout-s1-00",
+  "parent": "pfs2",
+  "description": "Layout for Season 1 Chronicles",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-00-OriginoftheOpenRoadChronicle.pdf",
+  "flags": ["hidden"],
+  "fields": [
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "eventcode",
+      "param": "eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "LB",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "date",
+      "param": "date",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "CB",
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "gmid",
+      "param": "gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": ["defaultfont"],
+      "align": "CB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "char",
+      "param": "char",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": ["defaultfont"],
+      "fontweight": "bold",
+      "align": "LB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "societyid_player",
+      "param": "societyid.player",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "societyid_dash",
+      "value": "-",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "CM",
+      "left": "@h_rule[2].right",
+      "right": "@h_rule[3].left",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "societyid_char",
+      "param": "societyid.char_without_first_digit",
+      "type": "text",
+      "canvas": "character_info",
+      "trigger": "societyid",
+      "styles": ["defaultfont"],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM",
+      "left": "@h_rule[3].left + 1em",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[0].left",
+      "right": "@grey_box[0].right",
+      "top": "@grey_box[0].bottom",
+      "bottom": "@grey_box[1].top"
+    },
+    {
+      "name": "gp_gained",
+      "param": "gp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": ["defaultfont"],
+      "align": "CM",
+      "left": "@grey_box[3].left",
+      "right": "@grey_box[3].right",
+      "top": "@grey_box[3].bottom",
+      "bottom": "@grey_box[4].top"
+    },
+    {
+      "name": "notes",
+      "param": "notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "styles": ["defaultfont"],
+      "fontsize": 11,
+      "lines": 6,
+      "align": "LB",
+      "left": "v_bar[0] + 1em",
+      "right": "@v_thin[1] - 1em",
+      "top": "@h_bar[0].bottom",
+      "bottom": "notes.bottom"
+    }
+  ],
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_bar[0]",
+      "right": "v_thin[3]",
+      "top": "h_thin[2]",
+      "bottom": "h_thin[8]"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[2]",
+      "top": "main.top",
+      "bottom": "h_bar[0]"
+    },
+    {
+      "name": "reputation",
+      "parent": "main",
+      "left": "character_info.right",
+      "right": "main.right",
+      "top": "main.top",
+      "bottom": "h_bar[0]"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[0]",
+      "bottom": "h_bar[1]"
+    },
+    {
+      "name": "items",
+      "parent": "main",
+      "left": "v_bar[0]",
+      "right": "v_thin[0]",
+      "top": "h_bar[2]",
+      "bottom": "h_bar[3]"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[1]",
+      "right": "main.right",
+      "top": "h_bar[1]",
+      "bottom": "h_thin[7]"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[1]",
+      "top": "items.bottom",
+      "bottom": "rewards.bottom"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "notes.bottom",
+      "bottom": "main.bottom"
+    }
+  ]
+}
