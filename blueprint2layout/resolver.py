@@ -31,6 +31,7 @@ def resolve_edge_value(
     edge_value: int | float | str,
     detection: DetectionResult,
     resolved_canvases: dict[str, ResolvedCanvas],
+    context: str = "",
 ) -> float:
     """Resolve a single edge value to an absolute page percentage.
 
@@ -49,6 +50,8 @@ def resolve_edge_value(
         edge_value: The raw edge value from the Blueprint.
         detection: The detection result for line reference lookups.
         resolved_canvases: Already-resolved canvases for canvas ref lookups.
+        context: Human-readable origin for error messages (e.g.
+            ``"canvas 'main', edge 'bottom'"``).
 
     Returns:
         The resolved absolute page percentage.
@@ -64,24 +67,26 @@ def resolve_edge_value(
     if isinstance(edge_value, (int, float)):
         return float(edge_value)
 
+    suffix = f" (in {context})" if context else ""
+
     secondary_match = re.match(SECONDARY_AXIS_PATTERN, edge_value)
     if secondary_match:
-        return _resolve_secondary_axis_reference(secondary_match, detection)
+        return _resolve_secondary_axis_reference(secondary_match, detection, suffix)
 
     line_match = re.match(LINE_REFERENCE_PATTERN, edge_value)
     if line_match:
-        return _resolve_line_reference(line_match, detection)
+        return _resolve_line_reference(line_match, detection, suffix)
 
     canvas_match = re.match(CANVAS_REFERENCE_PATTERN, edge_value)
     if canvas_match:
-        return _resolve_canvas_reference(canvas_match, resolved_canvases)
+        return _resolve_canvas_reference(canvas_match, resolved_canvases, suffix)
 
     raise ValueError(
-        f"Edge value '{edge_value}' is not a recognized pattern"
+        f"Edge value '{edge_value}' is not a recognized pattern{suffix}"
     )
 
 
-def _resolve_line_reference(match: re.Match, detection: DetectionResult) -> float:
+def _resolve_line_reference(match: re.Match, detection: DetectionResult, suffix: str) -> float:
     """Look up a line reference's primary-axis value from the detection result."""
     category = match.group(1)
     index = int(match.group(2))
@@ -90,7 +95,7 @@ def _resolve_line_reference(match: re.Match, detection: DetectionResult) -> floa
     if index >= len(lines):
         raise ValueError(
             f"Index {index} out of bounds for '{category}' "
-            f"(has {len(lines)} element{'s' if len(lines) != 1 else ''})"
+            f"(has {len(lines)} element{'s' if len(lines) != 1 else ''}){suffix}"
         )
 
     line = lines[index]
@@ -102,6 +107,7 @@ def _resolve_line_reference(match: re.Match, detection: DetectionResult) -> floa
 def _resolve_secondary_axis_reference(
     match: re.Match,
     detection: DetectionResult,
+    suffix: str,
 ) -> float:
     """Resolve a secondary axis reference to the element's attribute.
 
@@ -127,14 +133,14 @@ def _resolve_secondary_axis_reference(
     if edge not in valid_edges:
         raise ValueError(
             f"Invalid secondary edge '.{edge}' for '{category}'; "
-            f"valid edges are {sorted(valid_edges)}"
+            f"valid edges are {sorted(valid_edges)}{suffix}"
         )
 
     elements = getattr(detection, category)
     if index >= len(elements):
         raise ValueError(
             f"Index {index} out of bounds for '{category}' "
-            f"(has {len(elements)} element{'s' if len(elements) != 1 else ''})"
+            f"(has {len(elements)} element{'s' if len(elements) != 1 else ''}){suffix}"
         )
 
     element = elements[index]
@@ -145,6 +151,7 @@ def _resolve_secondary_axis_reference(
 def _resolve_canvas_reference(
     match: re.Match,
     resolved_canvases: dict[str, ResolvedCanvas],
+    suffix: str,
 ) -> float:
     """Look up a canvas reference's edge value from already-resolved canvases."""
     canvas_name = match.group(1)
@@ -153,7 +160,7 @@ def _resolve_canvas_reference(
     if canvas_name not in resolved_canvases:
         raise ValueError(
             f"Canvas '{canvas_name}' has not been resolved yet; "
-            f"canvas references must refer to previously resolved canvases"
+            f"canvas references must refer to previously resolved canvases{suffix}"
         )
 
     return getattr(resolved_canvases[canvas_name], edge)
@@ -188,10 +195,11 @@ def resolve_canvases(
     all_canvases = list(inherited_canvases) + list(target_canvases)
 
     for canvas in all_canvases:
-        left = resolve_edge_value(canvas.left, detection, resolved)
-        right = resolve_edge_value(canvas.right, detection, resolved)
-        top = resolve_edge_value(canvas.top, detection, resolved)
-        bottom = resolve_edge_value(canvas.bottom, detection, resolved)
+        ctx = f"canvas '{canvas.name}'"
+        left = resolve_edge_value(canvas.left, detection, resolved, f"{ctx}, edge 'left'")
+        right = resolve_edge_value(canvas.right, detection, resolved, f"{ctx}, edge 'right'")
+        top = resolve_edge_value(canvas.top, detection, resolved, f"{ctx}, edge 'top'")
+        bottom = resolve_edge_value(canvas.bottom, detection, resolved, f"{ctx}, edge 'bottom'")
 
         resolved[canvas.name] = ResolvedCanvas(
             name=canvas.name,

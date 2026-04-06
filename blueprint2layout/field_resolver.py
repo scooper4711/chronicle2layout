@@ -191,6 +191,7 @@ def resolve_field_edge(
     detection: DetectionResult,
     resolved_canvases: dict[str, ResolvedCanvas],
     scoped_detection: DetectionResult | None = None,
+    context: str = "",
 ) -> float:
     """Resolve a field edge value, including em offset expressions.
 
@@ -219,7 +220,7 @@ def resolve_field_edge(
     Requirements: blueprint-fields 5.1, 5.2, 5.3, 5.4, 5.5, 5.8, 5.9, 12.2
     """
     if isinstance(edge_value, (int, float)):
-        return resolve_edge_value(edge_value, detection, resolved_canvases)
+        return resolve_edge_value(edge_value, detection, resolved_canvases, context)
 
     # Handle @ prefix for canvas-scoped references
     is_scoped = edge_value.startswith(CANVAS_SCOPED_PREFIX)
@@ -245,7 +246,7 @@ def resolve_field_edge(
                 f"but no fontsize is available"
             )
 
-        base_value = resolve_edge_value(base_ref, active_detection, resolved_canvases)
+        base_value = resolve_edge_value(base_ref, active_detection, resolved_canvases, context)
         width, height = _parse_aspectratio(aspectratio)
         page_dimension = height if edge_name in ("top", "bottom") else width
         offset_percentage = em_count * fontsize / page_dimension * 100
@@ -254,7 +255,7 @@ def resolve_field_edge(
             return base_value + offset_percentage
         return base_value - offset_percentage
 
-    return resolve_edge_value(edge_value, active_detection, resolved_canvases)
+    return resolve_edge_value(edge_value, active_detection, resolved_canvases, context)
 
 
 def compute_top_default(
@@ -426,6 +427,7 @@ def _resolve_field_edges(
             edges[edge_name] = resolve_field_edge(
                 raw, edge_name, fontsize, aspectratio,
                 detection, resolved_canvases, scoped_detection,
+                context=f"field '{field_name}', edge '{edge_name}'",
             )
 
     raw_top = effective.get("top")
@@ -433,6 +435,7 @@ def _resolve_field_edges(
         edges["top"] = resolve_field_edge(
             raw_top, "top", fontsize, aspectratio,
             detection, resolved_canvases, scoped_detection,
+            context=f"field '{field_name}', edge 'top'",
         )
     else:
         if "bottom" not in edges or fontsize is None:
