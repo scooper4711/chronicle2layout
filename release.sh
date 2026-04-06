@@ -1,65 +1,97 @@
 #!/usr/bin/env bash
 #
-# release.sh — Create a signed release tag with a Conventional Commits message.
+# Determines the next semantic version based on conventional commits
+# since the last tag, then creates and pushes the tag to trigger
+# the draft-release workflow.
 #
 # Usage:
-#   ./release.sh <version>
+#   ./scripts-build/release.sh           # auto-detect bump type
+#   ./scripts-build/release.sh patch     # force patch bump
+#   ./scripts-build/release.sh minor     # force minor bump
+#   ./scripts-build/release.sh major     # force major bump
 #
-# Example:
-#   ./release.sh 1.0.0
-#   ./release.sh 2.1.0
-#
-# The version argument should follow semver (e.g., 1.0.0, 1.2.3).
-# The script will create a signed, annotated tag named v<version>.
-
 set -euo pipefail
 
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 <version>" >&2
-  echo "Example: $0 1.0.0" >&2
-  exit 1
+FORCE_BUMP="${1:-}"
+
+# Get the latest semver tag
+LATEST_TAG=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+
+if [[ -z "$LATEST_TAG" ]]; then
+  echo "No existing version tags found. Starting at v0.1.0"
+  NEXT_TAG="v0.1.0"
+else
+  # Parse current version
+  VERSION="${LATEST_TAG#v}"
+  MAJOR=$(echo "$VERSION" | cut -d. -f1)
+  MINOR=$(echo "$VERSION" | cut -d. -f2)
+  PATCH=$(echo "$VERSION" | cut -d. -f3)
+
+  echo "Current version: $LATEST_TAG"
+
+  if [[ -n "$FORCE_BUMP" ]]; then
+    BUMP="$FORCE_BUMP"
+    echo "Forced bump type: $BUMP"
+  else
+    # Analyze commits since last tag to determine bump type
+    BUMP="patch"
+    BUMP_REASON="no feat or breaking change commits found (defaulting to patch)"
+    while IFS= read -r subject; do
+      if echo "$subject" | grep -qE '^feat(\(.+\))?!:|^fix(\(.+\))?!:|^refactor(\(.+\))?!:|BREAKING CHANGE'; then
+        BUMP="major"
+        BUMP_REASON="breaking change: $subject"
+        break
+      elif echo "$subject" | grep -qE '^feat(\(.+\))?:'; then
+        BUMP="minor"
+        BUMP_REASON="new feature: $subject"
+      fi
+    done <<< "$(git log "${LATEST_TAG}..HEAD" --format='%s')"
+
+    echo "Detected bump type: $BUMP"
+    echo "  Reason: $BUMP_REASON"
+  fi
+
+  # Calculate next version
+  case "$BUMP" in
+    major)
+      NEXT_TAG="v$((MAJOR + 1)).0.0"
+      ;;
+    minor)
+      NEXT_TAG="v${MAJOR}.$((MINOR + 1)).0"
+      ;;
+    patch)
+      NEXT_TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
+      ;;
+    *)
+      echo "Error: Invalid bump type '$BUMP'. Use major, minor, or patch."
+      exit 1
+      ;;
+  esac
 fi
 
-VERSION="$1"
-TAG="v${VERSION}"
-
-# Validate semver format
-if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-  echo "Error: Version must be in semver format (e.g., 1.0.0)" >&2
-  exit 1
-fi
-
-# Check that the tag doesn't already exist
-if git rev-parse "$TAG" >/dev/null 2>&1; then
-  echo "Error: Tag $TAG already exists" >&2
-  exit 1
-fi
-
-# Verify working tree is clean
-if ! git diff --quiet || ! git diff --cached --quiet; then
-  echo "Error: Working tree is not clean. Commit or stash changes first." >&2
-  exit 1
-fi
-
-# Verify GPG signing is configured
-if ! git config --get commit.gpgsign >/dev/null 2>&1 || \
-   [ "$(git config --get commit.gpgsign)" != "true" ]; then
-  echo "Error: commit.gpgsign is not enabled." >&2
-  echo "Run: git config commit.gpgsign true" >&2
-  exit 1
-fi
-
-if ! git config --get tag.gpgsign >/dev/null 2>&1 || \
-   [ "$(git config --get tag.gpgsign)" != "true" ]; then
-  echo "Error: tag.gpgsign is not enabled." >&2
-  echo "Run: git config tag.gpgsign true" >&2
-  exit 1
-fi
-
-echo "Creating signed tag $TAG..."
-git tag -s "$TAG" -m "chore: Release $VERSION"
-
-echo "Tag $TAG created and signed."
+# Show what will happen
 echo ""
-echo "To push the tag:"
-echo "  git push origin $TAG"
+echo "Commits since ${LATEST_TAG:-beginning}:"
+if [[ -n "$LATEST_TAG" ]]; then
+  git log "${LATEST_TAG}..HEAD" --oneline
+else
+  git log --oneline
+fi
+
+echo ""
+echo "Next version: $NEXT_TAG"
+echo ""
+
+# Confirm with user
+read -rp "Create and push tag $NEXT_TAG? [y/N] " CONFIRM
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+  echo "Aborted."
+  exit 0
+fi
+
+git tag "$NEXT_TAG"
+git push origin "$NEXT_TAG"
+
+echo ""
+echo "Tag $NEXT_TAG pushed. The draft-release workflow will create a draft release on GitHub."
+echo "Once ready, publish the draft at: https://github.com/$(git remote get-url origin | sed 's/.*github.com[:/]\(.*\)\.git/\1/')/releases"
