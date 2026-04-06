@@ -251,35 +251,33 @@ def run_visualizer(
     print(f"Wrote {output_path}")
 
 
-def _collect_watched_paths(
+def _build_dependency_map(
     layout_root: Path,
     layout_ids: list[str],
-) -> list[Path]:
-    """Build the deduplicated list of layout file paths to monitor.
+) -> dict[Path, set[str]]:
+    """Map each watched file path to the layout ids that depend on it.
 
-    Unions the inheritance chains of all provided layout ids so that
-    a change to any file in any chain triggers regeneration.
+    Walks the inheritance chain of every layout id and records which
+    ids include each file. A shared parent file maps to all children
+    that inherit from it.
 
     Args:
         layout_root: Root directory containing layout JSON files.
         layout_ids: Layout ids to watch.
 
     Returns:
-        Deduplicated list of all layout file paths across all chains.
+        Dictionary mapping file paths to sets of dependent layout ids.
     """
     layout_index = build_layout_index(layout_root)
-    seen: set[Path] = set()
-    result: list[Path] = []
+    dep_map: dict[Path, set[str]] = {}
     for layout_id in layout_ids:
         layout_path = layout_index[layout_id]
         _canvases, chain_paths = load_layout_with_inheritance(
             layout_path, layout_index,
         )
         for path in chain_paths:
-            if path not in seen:
-                seen.add(path)
-                result.append(path)
-    return result
+            dep_map.setdefault(path, set()).add(layout_id)
+    return dep_map
 
 
 def _record_mtimes(paths: list[Path]) -> dict[Path, float]:
@@ -294,26 +292,27 @@ def _record_mtimes(paths: list[Path]) -> dict[Path, float]:
     return {path: os.path.getmtime(path) for path in paths}
 
 
-def _any_file_changed(
+def _find_changed_paths(
     paths: list[Path],
     previous_mtimes: dict[Path, float],
-) -> bool:
-    """Check whether any monitored file has been modified.
+) -> list[Path]:
+    """Return the watched paths whose mtime has changed.
 
     Args:
         paths: List of file paths to check.
         previous_mtimes: Previously recorded modification times.
 
     Returns:
-        True if any file's mtime differs from the recorded value.
+        List of paths that have been modified since last check.
     """
+    changed: list[Path] = []
     for path in paths:
         try:
             if os.path.getmtime(path) != previous_mtimes.get(path):
-                return True
+                changed.append(path)
         except OSError:
             continue
-    return False
+    return changed
 
 
 def watch_and_regenerate(
@@ -321,10 +320,11 @@ def watch_and_regenerate(
     targets: list[tuple[str, Path]],
     mode: str = "canvases",
 ) -> None:
-    """Watch layout files for changes and regenerate PNGs.
+    """Watch layout files for changes and regenerate affected PNGs.
 
-    Monitors the inheritance chains of all target layouts. When any
-    watched file changes, every target is regenerated.
+    Monitors the inheritance chains of all target layouts. When a
+    watched file changes, only the targets that depend on that file
+    are regenerated.
 
     Args:
         layout_root: Root directory containing layout JSON files.
@@ -333,32 +333,44 @@ def watch_and_regenerate(
 
     Requirements: layout-visualizer 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7
     """
-    layout_ids = [lid for lid, _ in targets]
+    target_map = {lid: out for lid, out in targets}
 
     for layout_id, output_path in targets:
         run_visualizer(layout_root, layout_id, output_path, mode)
 
-    watched_paths = _collect_watched_paths(layout_root, layout_ids)
+    dep_map = _build_dependency_map(layout_root, list(target_map))
+    watched_paths = list(dep_map)
     mtimes = _record_mtimes(watched_paths)
 
     try:
         while True:
             time.sleep(1)
-            if not _any_file_changed(watched_paths, mtimes):
+            changed = _find_changed_paths(watched_paths, mtimes)
+            if not changed:
                 continue
 
-            print("Regenerating...")
+            affected_ids: set[str] = set()
+            for path in changed:
+                affected_ids.update(dep_map.get(path, set()))
+
+            affected_targets = [
+                (lid, target_map[lid]) for lid in sorted(affected_ids)
+            ]
+            names = ", ".join(lid for lid, _ in affected_targets)
+            print(f"Regenerating {names}...")
+
             try:
-                for layout_id, output_path in targets:
+                for layout_id, output_path in affected_targets:
                     run_visualizer(
                         layout_root, layout_id, output_path, mode,
                     )
-                watched_paths = _collect_watched_paths(
-                    layout_root, layout_ids,
+                dep_map = _build_dependency_map(
+                    layout_root, list(target_map),
                 )
             except Exception as exc:  # noqa: BLE001 — continue watching on any error
                 _print_error(f"Error: Regeneration failed: {exc}")
 
+            watched_paths = list(dep_map)
             mtimes = _record_mtimes(watched_paths)
     except KeyboardInterrupt:
         print("Stopped.")

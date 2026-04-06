@@ -15,7 +15,7 @@ from hypothesis import strategies as st
 
 from layout_visualizer.__main__ import (
     _build_output_filename,
-    _collect_watched_paths,
+    _build_dependency_map,
     main,
     match_layout_ids,
     parse_args,
@@ -211,31 +211,34 @@ class TestParseArgs:
 # ---------------------------------------------------------------------------
 
 
-class TestCollectWatchedPaths:
-    """_collect_watched_paths unions inheritance chains for all ids."""
+class TestBuildDependencyMap:
+    """_build_dependency_map maps files to dependent layout ids."""
 
-    def test_single_id_returns_chain(self):
-        paths = _collect_watched_paths(LAYOUT_ROOT, ["pfs2.b13"])
-        assert len(paths) > 0
-        assert all(p.exists() for p in paths)
+    def test_single_id_returns_map(self):
+        dep_map = _build_dependency_map(LAYOUT_ROOT, ["pfs2.b13"])
+        assert len(dep_map) > 0
+        assert all(p.exists() for p in dep_map)
+        assert all("pfs2.b13" in ids for ids in dep_map.values())
 
     def test_multiple_ids_unions_chains(self):
-        paths_b13 = _collect_watched_paths(LAYOUT_ROOT, ["pfs2.b13"])
-        paths_q14 = _collect_watched_paths(LAYOUT_ROOT, ["pfs2.q14"])
-        paths_both = _collect_watched_paths(
+        map_b13 = _build_dependency_map(LAYOUT_ROOT, ["pfs2.b13"])
+        map_q14 = _build_dependency_map(LAYOUT_ROOT, ["pfs2.q14"])
+        map_both = _build_dependency_map(
             LAYOUT_ROOT, ["pfs2.b13", "pfs2.q14"],
         )
-        # The union should contain all paths from both individual chains
-        assert set(paths_b13) <= set(paths_both)
-        assert set(paths_q14) <= set(paths_both)
+        # The union should contain all paths from both individual maps
+        assert set(map_b13) <= set(map_both)
+        assert set(map_q14) <= set(map_both)
 
-    def test_shared_ancestor_is_not_duplicated(self):
+    def test_shared_ancestor_maps_to_both_ids(self):
         # Both pfs2.b01 and pfs2.b02 share pfs2 in their chain.
-        # The result should have no duplicates.
-        paths = _collect_watched_paths(
+        # The shared parent should map to both ids.
+        dep_map = _build_dependency_map(
             LAYOUT_ROOT, ["pfs2.b01", "pfs2.b02"],
         )
-        assert len(paths) == len(set(paths))
+        # Find the shared parent (pfs2 root layout)
+        shared = [p for p, ids in dep_map.items() if len(ids) > 1]
+        assert len(shared) > 0
 
 
 # ---------------------------------------------------------------------------
