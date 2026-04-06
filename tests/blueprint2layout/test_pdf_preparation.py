@@ -11,7 +11,7 @@ import pytest
 
 from blueprint2layout.pdf_preparation import prepare_page
 
-REAL_PDF = "Chronicles/pfs2/season5/5-01-IntroYearofUnfetteredExplorationChronicle.pdf"
+REAL_PDF = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-01-IntroYearofUnfetteredExplorationChronicle.pdf"
 
 
 @pytest.fixture
