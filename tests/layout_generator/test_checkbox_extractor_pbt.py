@@ -27,8 +27,6 @@ PAGE_WIDTH = 612.0
 PAGE_HEIGHT = 792.0
 FONT_SIZE = 12.0
 
-CHECKBOX_FONT_PATH = "/System/Library/Fonts/Apple Symbols.ttf"
-"""System font that supports checkbox Unicode characters."""
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -45,14 +43,14 @@ def create_pdf_with_checkboxes(
 ) -> Path:
     """Create a single-page PDF with checkbox characters at specific positions.
 
-    Uses TextWriter with Apple Symbols font for checkbox characters
-    so that PyMuPDF can extract them from the text layer.
+    Uses TextWriter with the built-in Helvetica font, which supports
+    checkbox Unicode glyphs in PyMuPDF.
     """
     pdf_path = tmp_path / filename
     doc = fitz.open()
     page = doc.new_page(width=page_width, height=page_height)
 
-    checkbox_font = fitz.Font(fontfile=CHECKBOX_FONT_PATH)
+    checkbox_font = fitz.Font("helv")
     tw = fitz.TextWriter(page.rect)
 
     for x, y, text in entries:

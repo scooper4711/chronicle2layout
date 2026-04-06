@@ -17,6 +17,10 @@ REAL_PDF = Path(
 class TestRenderPdfPage:
     """Tests for render_pdf_page."""
 
+    @pytest.mark.skipif(
+        not REAL_PDF.exists(),
+        reason="Real chronicle PDF not available",
+    )
     def test_renders_real_pdf_as_rgb_pixmap(self):
         """Render a real chronicle PDF and verify the pixmap is RGB."""
         pixmap = render_pdf_page(REAL_PDF)
@@ -25,6 +29,10 @@ class TestRenderPdfPage:
         assert pixmap.n == 3, "Pixmap should be RGB (3 channels)"
         assert not pixmap.alpha, "Pixmap should not have an alpha channel"
 
+    @pytest.mark.skipif(
+        not REAL_PDF.exists(),
+        reason="Real chronicle PDF not available",
+    )
     def test_pixmap_dimensions_match_150_dpi(self):
         """Verify rendered pixmap dimensions are consistent with 150 DPI."""
         pixmap = render_pdf_page(REAL_PDF, dpi=150)

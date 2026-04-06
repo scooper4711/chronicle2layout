@@ -22,10 +22,7 @@ from layout_generator.checkbox_extractor import (
     extract_checkbox_labels,
 )
 
-REAL_PDF = Path("Scenarios/pfs2/season1/1-00-OriginoftheOpenRoad.pdf")
-
-CHECKBOX_FONT_PATH = "/System/Library/Fonts/Apple Symbols.ttf"
-"""System font that supports checkbox Unicode characters."""
+REAL_PDF = Path("Scenarios/PFS/Season 1/1-00-OriginoftheOpenRoad.pdf")
 
 
 # ---------------------------------------------------------------------------
@@ -43,9 +40,8 @@ def create_pdf_with_checkboxes(
 ) -> Path:
     """Create a single-page PDF with checkbox characters and labels.
 
-    Uses TextWriter with Apple Symbols font for checkbox characters
-    and Helvetica for regular text, since the default insert_text
-    cannot render checkbox Unicode glyphs.
+    Uses TextWriter with the built-in Helvetica font, which supports
+    checkbox Unicode glyphs in PyMuPDF.
 
     Args:
         tmp_path: Temporary directory for the PDF file.
@@ -62,7 +58,7 @@ def create_pdf_with_checkboxes(
     doc = fitz.open()
     page = doc.new_page(width=page_width, height=page_height)
 
-    checkbox_font = fitz.Font(fontfile=CHECKBOX_FONT_PATH)
+    checkbox_font = fitz.Font("helv")
     text_font = fitz.Font("helv")
     tw = fitz.TextWriter(page.rect)
 

@@ -23,6 +23,10 @@ from layout_visualizer.__main__ import (
 
 LAYOUT_ROOT = Path("modules/pfs-chronicle-generator/assets/layouts")
 LAYOUT_ID = "pfs2.b13"
+REAL_CHRONICLE_PDF = Path(
+    "modules/pfs-chronicle-generator/assets/chronicles"
+    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+)
 
 
 def _base_args(
@@ -239,9 +243,16 @@ class TestCollectWatchedPaths:
 # ---------------------------------------------------------------------------
 
 
+_skip_no_pdf = pytest.mark.skipif(
+    not REAL_CHRONICLE_PDF.exists(),
+    reason="Real chronicle PDF not available",
+)
+
+
 class TestSuccessfulRun:
     """End-to-end test with real layout and PDF files."""
 
+    @_skip_no_pdf
     def test_single_layout_produces_png(self, tmp_path):
         args = _base_args() + ["--output-dir", str(tmp_path)]
         code = main(args)
@@ -252,6 +263,7 @@ class TestSuccessfulRun:
         assert "pfs2.b13" in pngs[0].name
         assert pngs[0].stat().st_size > 0
 
+    @_skip_no_pdf
     def test_wildcard_produces_multiple_pngs(self, tmp_path):
         args = _base_args(layout_id="pfs2.b0?") + [
             "--output-dir", str(tmp_path),
@@ -262,6 +274,7 @@ class TestSuccessfulRun:
         pngs = list(tmp_path.rglob("*.png"))
         assert len(pngs) > 1
 
+    @_skip_no_pdf
     def test_output_mirrors_layout_subdirectory(self, tmp_path):
         """PNGs are written under the same subdirectory as the layout file."""
         args = _base_args() + ["--output-dir", str(tmp_path)]

@@ -9,10 +9,16 @@ Requirements: layout-data-mode 1.1, 1.2, 1.3, 8.1
 
 from pathlib import Path
 
+import pytest
+
 from layout_visualizer.__main__ import main, parse_args
 
 LAYOUT_ROOT = Path("modules/pfs-chronicle-generator/assets/layouts")
 LAYOUT_ID = "pfs2.b13"
+REAL_CHRONICLE_PDF = Path(
+    "modules/pfs-chronicle-generator/assets/chronicles"
+    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+)
 
 
 def _base_args(
@@ -42,6 +48,10 @@ class TestParseArgsDataMode:
 class TestDataModeRun:
     """End-to-end data mode run with real layout and PDF files."""
 
+    @pytest.mark.skipif(
+        not REAL_CHRONICLE_PDF.exists(),
+        reason="Real chronicle PDF not available",
+    )
     def test_data_mode_produces_png(self, tmp_path):
         args = _base_args() + [
             "--output-dir", str(tmp_path),
