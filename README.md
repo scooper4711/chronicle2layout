@@ -1,5 +1,13 @@
 # PFS Tools
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=bugs)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
+
 A collection of utilities for Pathfinder Society (PFS) organized play. Each tool lives in its own Python package directory with dedicated documentation.
 
 ## Utilities
