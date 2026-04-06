@@ -1,0 +1,131 @@
+{
+  "id": "pfs2.s1-14",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-14 Lions of Katapesh",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-14-LionsofKatapeshChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bola (5 sp, Lost Omens Gods & Magic 120)",
+          "fighting fan (11 sp, Lost Omens Gods & Magic 120)",
+          "1\u20132",
+          "khopesh (2 gp, Lost Omens Gods & Magic 120)",
+          "SUBTIER",
+          "3\u20134",
+          "+1 khopesh (35 gp, Lost Omens Gods & Magic SUBTIER 120)"
+        ],
+        "example": "bola (5 sp, Lost Omens Gods & Magic 120)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.bola_5_sp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 57.5,
+      "y2": 60.8
+    },
+    "item.line.fighting_fan_11_sp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 61.9,
+      "y2": 69.8
+    },
+    "item.line.1\u20132": {
+      "y": 20.2,
+      "y2": 24.4
+    },
+    "item.line.khopesh_2_gp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 21.5,
+      "y2": 24.8
+    },
+    "item.line.SUBTIER": {
+      "y": 25.0,
+      "y2": 36.3
+    },
+    "item.line.3\u20134": {
+      "y": 68.1,
+      "y2": 72.8
+    },
+    "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_SUBTIER_1": {
+      "y": 70.9,
+      "y2": 78.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bola (5 sp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bola_5_sp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ],
+        "fighting fan (11 sp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.fighting_fan_11_sp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ],
+        "1\u20132": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.1\u20132"
+            ]
+          }
+        ],
+        "khopesh (2 gp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.khopesh_2_gp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ],
+        "SUBTIER": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.SUBTIER"
+            ]
+          }
+        ],
+        "3\u20134": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.3\u20134"
+            ]
+          }
+        ],
+        "+1 khopesh (35 gp, Lost Omens Gods & Magic SUBTIER 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_SUBTIER_1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

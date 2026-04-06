@@ -2,5 +2,5 @@
   "id": "pfs2.b18",
   "description": "Bounty #18: From Family Lost",
   "parent": "pfs2.bounty-layout-b13",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B18-FromFamilyLostChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B18-FromFamilyLostChronicle.pdf"
 }

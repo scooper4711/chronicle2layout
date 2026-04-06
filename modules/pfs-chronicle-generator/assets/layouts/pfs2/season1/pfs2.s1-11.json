@@ -1,0 +1,145 @@
+{
+  "id": "pfs2.s1-11",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-11 Flames of Rebellion",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-11-FlamesofRebellionChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 handwraps of mighty blows (level 2; 35 gp)",
+          "archaic wayfinder (Lost Omens World 1\u20132 Guide; level 2; 30 gp)",
+          "SUBTIER tracker\u2019s goggles (level 3; 60 gp)",
+          "+1 striking handwraps of mighty blows",
+          "(level 4; 100 gp)",
+          "archaic wayfinder (Lost Omens World 3\u20134 Guide; level 2; 30 gp)",
+          "SUBTIER",
+          "goggles of night (level 5; 150 gp)"
+        ],
+        "example": "+1 handwraps of mighty blows (level 2; 35 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp": {
+      "y": 7.7,
+      "y2": 15.9
+    },
+    "item.line.archaic_wayfinder_Lost_Omens_World_1\u20132_Guide;_leve": {
+      "y": 16.7,
+      "y2": 24.9
+    },
+    "item.line.SUBTIER_tracker\u2019s_goggles_level_3;_60_gp": {
+      "y": 25.0,
+      "y2": 36.3
+    },
+    "item.line.+1_striking_handwraps_of_mighty_blows": {
+      "y": 57.1,
+      "y2": 60.9
+    },
+    "item.line.level_4;_100_gp": {
+      "y": 61.6,
+      "y2": 65.4
+    },
+    "item.line.archaic_wayfinder_Lost_Omens_World_3\u20134_Guide;_leve": {
+      "y": 66.1,
+      "y2": 74.3
+    },
+    "item.line.SUBTIER": {
+      "y": 73.4,
+      "y2": 84.7
+    },
+    "item.line.goggles_of_night_level_5;_150_gp": {
+      "y": 75.1,
+      "y2": 78.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 handwraps of mighty blows (level 2; 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp"
+            ]
+          }
+        ],
+        "archaic wayfinder (Lost Omens World 1\u20132 Guide; level 2; 30 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.archaic_wayfinder_Lost_Omens_World_1\u20132_Guide;_leve"
+            ]
+          }
+        ],
+        "SUBTIER tracker\u2019s goggles (level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.SUBTIER_tracker\u2019s_goggles_level_3;_60_gp"
+            ]
+          }
+        ],
+        "+1 striking handwraps of mighty blows": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_handwraps_of_mighty_blows"
+            ]
+          }
+        ],
+        "(level 4; 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.level_4;_100_gp"
+            ]
+          }
+        ],
+        "archaic wayfinder (Lost Omens World 3\u20134 Guide; level 2; 30 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.archaic_wayfinder_Lost_Omens_World_3\u20134_Guide;_leve"
+            ]
+          }
+        ],
+        "SUBTIER": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.SUBTIER"
+            ]
+          }
+        ],
+        "goggles of night (level 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.goggles_of_night_level_5;_150_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

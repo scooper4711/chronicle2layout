@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s1-00",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-00 Origin of the Open Road",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-00-OriginoftheOpenRoadChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bag of holding type II (level 7; 300 gp)",
+          "dagger of venom (level 5; 150 gp)",
+          "ring of the ram (level 6; 220 gp)",
+          "5",
+          "TIER"
+        ],
+        "example": "bag of holding type II (level 7; 300 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.bag_of_holding_type_II_level_7;_300_gp": {
+      "y": 7.7,
+      "y2": 11.4
+    },
+    "item.line.dagger_of_venom_level_5;_150_gp": {
+      "y": 12.2,
+      "y2": 15.9
+    },
+    "item.line.ring_of_the_ram_level_6;_220_gp": {
+      "y": 16.7,
+      "y2": 20.4
+    },
+    "item.line.5": {
+      "y": 48.5,
+      "y2": 50.2
+    },
+    "item.line.TIER": {
+      "y": 50.7,
+      "y2": 56.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bag of holding type II (level 7; 300 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bag_of_holding_type_II_level_7;_300_gp"
+            ]
+          }
+        ],
+        "dagger of venom (level 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dagger_of_venom_level_5;_150_gp"
+            ]
+          }
+        ],
+        "ring of the ram (level 6; 220 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_the_ram_level_6;_220_gp"
+            ]
+          }
+        ],
+        "5": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.5"
+            ]
+          }
+        ],
+        "TIER": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.TIER"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

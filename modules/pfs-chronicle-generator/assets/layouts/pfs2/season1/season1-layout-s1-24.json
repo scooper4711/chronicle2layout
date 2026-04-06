@@ -5,7 +5,7 @@
   "flags": [
     "hidden"
   ],
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Season 1/1-24-LightningStrikesStarsFallChronicle.pdf",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-24-LightningStrikesStarsFallChronicle.pdf",
   "parameters": {
     "Event Info": {
       "event": {
@@ -317,9 +317,9 @@
       "value": "param:notes",
       "type": "multiline",
       "canvas": "notes",
-      "x": 5.2,
-      "y": 15.5,
-      "x2": 94.8,
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
       "y2": 100.0,
       "font": "Helvetica",
       "fontsize": 11,

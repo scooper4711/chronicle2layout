@@ -1,0 +1,57 @@
+{
+  "id": "pfs2.s1-18",
+  "parent": "pfs2.season1-layout-s1-17",
+  "description": "1-18 Lodge of the Living God",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-18-LodgeoftheLivingGodChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately 1\u20132 purchased with a 10% discount when SUBTIER that book is released; limit 1)",
+          "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately 3\u20134 purchased with a 10% discount when SUBTIER that book is released; limit 1)"
+        ],
+        "example": "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately 1\u20132 purchased with a 10% discount when SUBTIER that book is released; limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Razmiri_wayfinder_This_item_will_appear_in_Lost_Om": {
+      "y": 57.0,
+      "y2": 78.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately 1\u20132 purchased with a 10% discount when SUBTIER that book is released; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Razmiri_wayfinder_This_item_will_appear_in_Lost_Om"
+            ]
+          }
+        ],
+        "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately 3\u20134 purchased with a 10% discount when SUBTIER that book is released; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Razmiri_wayfinder_This_item_will_appear_in_Lost_Om"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

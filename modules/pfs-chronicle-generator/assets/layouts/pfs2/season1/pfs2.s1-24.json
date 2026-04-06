@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s1-24",
+  "parent": "pfs2.season1-layout-s1-24",
+  "description": "1-24 Lightning Strikes Stars Fall",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-24-LightningStrikesStarsFallChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "adamantine chunk (500 gp; limit 1)",
+          "Numerian steel breastplateR (900 gp; level 10; limit 1)",
+          "5\u20136",
+          "SUBTIER",
+          "7\u20138"
+        ],
+        "example": "adamantine chunk (500 gp; limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.adamantine_chunk_500_gp;_limit_1": {
+      "y": 57.0,
+      "y2": 60.9
+    },
+    "item.line.Numerian_steel_breastplateR_900_gp;_level_10;_limi": {
+      "y": 61.5,
+      "y2": 69.9
+    },
+    "item.line.5\u20136": {
+      "y": 20.0,
+      "y2": 24.7
+    },
+    "item.line.SUBTIER": {
+      "y": 73.3,
+      "y2": 84.6
+    },
+    "item.line.7\u20138": {
+      "y": 68.2,
+      "y2": 72.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "adamantine chunk (500 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.adamantine_chunk_500_gp;_limit_1"
+            ]
+          }
+        ],
+        "Numerian steel breastplateR (900 gp; level 10; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Numerian_steel_breastplateR_900_gp;_level_10;_limi"
+            ]
+          }
+        ],
+        "5\u20136": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.5\u20136"
+            ]
+          }
+        ],
+        "SUBTIER": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.SUBTIER"
+            ]
+          }
+        ],
+        "7\u20138": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.7\u20138"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

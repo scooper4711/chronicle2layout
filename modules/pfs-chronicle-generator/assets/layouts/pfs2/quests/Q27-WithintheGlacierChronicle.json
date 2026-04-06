@@ -2,5 +2,5 @@
   "id": "pfs2.q27",
   "description": "Quest #27: Within the Glacier",
   "parent": "pfs2.quest-layout-q14",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q27-WithintheGlacierChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q27-WithintheGlacierChronicle.pdf"
 }

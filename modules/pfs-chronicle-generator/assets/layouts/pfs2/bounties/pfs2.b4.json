@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b4",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B4 Cats Cradle",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B4-CatsCradleChronicle.pdf"
+}

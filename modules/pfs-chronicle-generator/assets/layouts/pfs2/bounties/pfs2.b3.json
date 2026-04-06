@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b3",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B3 Shadows and Scarecrows",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B3-ShadowsandScarecrowsChronicle.pdf"
+}

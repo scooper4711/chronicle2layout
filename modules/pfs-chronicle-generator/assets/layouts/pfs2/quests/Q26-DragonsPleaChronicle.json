@@ -2,5 +2,5 @@
   "id": "pfs2.q26",
   "description": "Quest #26: Dragon's Plea",
   "parent": "pfs2.quest-layout-q14",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q26-DragonsPleaChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q26-DragonsPleaChronicle.pdf"
 }

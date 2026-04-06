@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.q25",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q25 The Greengold Dilemma",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q25-TheGreengoldDilemmaChronicle.pdf"
+}

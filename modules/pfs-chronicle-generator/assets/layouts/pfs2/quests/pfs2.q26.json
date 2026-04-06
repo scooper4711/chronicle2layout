@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.q26",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q26 Dragons Plea",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q26-DragonsPleaChronicle.pdf"
+}

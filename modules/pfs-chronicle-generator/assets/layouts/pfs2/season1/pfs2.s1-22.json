@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s1-22",
+  "parent": "pfs2.season1-layout-s1-22",
+  "description": "1-22 Doom of Cassomir",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-22-DoomofCassomirChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "1\u20132",
+          "SUBTIER",
+          "3\u20134"
+        ],
+        "example": "1\u20132"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.1\u20132": {
+      "y": 20.2,
+      "y2": 24.4
+    },
+    "item.line.SUBTIER": {
+      "y": 73.7,
+      "y2": 85.0
+    },
+    "item.line.3\u20134": {
+      "y": 67.8,
+      "y2": 72.5
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "1\u20132": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.1\u20132"
+            ]
+          }
+        ],
+        "SUBTIER": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.SUBTIER"
+            ]
+          }
+        ],
+        "3\u20134": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.3\u20134"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

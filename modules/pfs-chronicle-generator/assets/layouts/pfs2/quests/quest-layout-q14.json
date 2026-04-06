@@ -5,7 +5,7 @@
   "flags": [
     "hidden"
   ],
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q14-TheSwordlordsChallengeChronicle.pdf",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q14-TheSwordlordsChallengeChronicle.pdf",
   "parameters": {
     "Event Info": {
       "event": {
@@ -324,9 +324,9 @@
       "value": "param:notes",
       "type": "multiline",
       "canvas": "notes",
-      "x": 5.2,
-      "y": 5.2,
-      "x2": 94.8,
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
       "y2": 100.0,
       "font": "Helvetica",
       "fontsize": 11,

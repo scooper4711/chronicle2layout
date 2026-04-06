@@ -5,7 +5,7 @@
   "flags": [
     "hidden"
   ],
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B1-TheWhitefangWyrmChronicle.pdf",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B1-TheWhitefangWyrmChronicle.pdf",
   "parameters": {
     "Event Info": {
       "event": {
@@ -317,9 +317,9 @@
       "value": "param:notes",
       "type": "multiline",
       "canvas": "notes",
-      "x": 2.6,
-      "y": 15.5,
-      "x2": 97.4,
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
       "y2": 100.0,
       "font": "Helvetica",
       "fontsize": 11,

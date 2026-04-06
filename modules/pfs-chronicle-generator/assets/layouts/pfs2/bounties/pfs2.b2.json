@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b2",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B2 Blood of the Beautiful",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B2-BloodoftheBeautifulChronicle.pdf"
+}

@@ -2,5 +2,5 @@
   "id": "pfs2.q17",
   "description": "Quest #17: Escorting a Mirage",
   "parent": "pfs2.quest-layout-q14",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Quests/Q17-EscortingaMirageChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q17-EscortingaMirageChronicle.pdf"
 }

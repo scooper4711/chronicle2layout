@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b10",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B10 Hillcross Roundup",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B10-HillcrossRoundupChronicle.pdf"
+}

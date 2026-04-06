@@ -2,5 +2,5 @@
   "id": "pfs2.b06",
   "description": "Bounty #6: The Road From Otari",
   "parent": "pfs2.bounty-layout-b1",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B6-TheRoadFromOtariChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B6-TheRoadFromOtariChronicle.pdf"
 }

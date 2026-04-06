@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.q21",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q21 Infernal Infiltration",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q21-InfernalInfiltrationChronicle.pdf"
+}
