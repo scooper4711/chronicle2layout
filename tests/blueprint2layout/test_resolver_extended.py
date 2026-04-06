@@ -197,17 +197,17 @@ class TestInvalidSecondaryEdge:
     ):
         result = resolve_edge_value("h_thin[0].bottom", detection_with_all, {})
         assert result == detection_with_all.h_thin[0].y2
-    def test_v_thin_left_raises_error(
+    def test_v_thin_left_resolves(
         self, detection_with_all: DetectionResult,
     ):
-        with pytest.raises(ValueError, match="Invalid secondary edge '.left' for 'v_thin'"):
-            resolve_edge_value("v_thin[0].left", detection_with_all, {})
+        result = resolve_edge_value("v_thin[0].left", detection_with_all, {})
+        assert result == detection_with_all.v_thin[0].x
 
-    def test_v_thin_right_raises_error(
+    def test_v_thin_right_resolves(
         self, detection_with_all: DetectionResult,
     ):
-        with pytest.raises(ValueError, match="Invalid secondary edge '.right' for 'v_thin'"):
-            resolve_edge_value("v_thin[0].right", detection_with_all, {})
+        result = resolve_edge_value("v_thin[0].right", detection_with_all, {})
+        assert result == detection_with_all.v_thin[0].x2
 
 
 # ---------------------------------------------------------------------------

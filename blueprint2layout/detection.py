@@ -399,6 +399,7 @@ def _classify_vertical_line_groups(
             y=round(topmost / height * 100, 1),
             y2=round(bottommost / height * 100, 1),
             thickness_px=thickness,
+            x2=round((rightmost_col + 1) / width * 100, 1),
         )
 
         if thickness <= THIN_LINE_MAX_THICKNESS:

@@ -21,10 +21,10 @@ python -m chronicle_extractor --input-dir <path> --output-dir <path>
 ### Example
 
 ```bash
-python -m chronicle_extractor --input-dir "Scenarios/Season 1" --output-dir chronicles
+python -m chronicle_extractor --input-dir "Scenarios/season1" --output-dir chronicles
 ```
 
-This processes all scenario PDFs in `Scenarios/Season 1/`, extracts the last page from each, and saves them under `chronicles/Season 1/` with filenames like `1-07-FloodedKingsCourtChronicle.pdf`.
+This processes all scenario PDFs in `Scenarios/season1/`, extracts the last page from each, and saves them under `chronicles/season1/` with filenames like `1-07-FloodedKingsCourtChronicle.pdf`.
 
 ## How It Works
 

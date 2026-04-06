@@ -128,8 +128,8 @@ class TestMainEndToEnd:
         output_dir = tmp_path / "output"
         main(["--input-dir", str(scenario_dir), "--output-dir", str(output_dir)])
 
-        assert (output_dir / "Season 1").is_dir()
-        assert (output_dir / "Season 2").is_dir()
+        assert (output_dir / "season1").is_dir()
+        assert (output_dir / "season2").is_dir()
 
     def test_chronicle_pdfs_have_one_page(
         self, scenario_dir: Path, tmp_path: Path

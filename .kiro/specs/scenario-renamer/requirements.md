@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A Python command-line utility that creates renamed copies of Pathfinder Society (PFS) scenario PDF and map files. The utility reuses the existing scenario info extraction and filename sanitization logic from the chronicle_extractor package to determine each scenario's season, number, and name. Unlike the chronicle extractor (which extracts only the last page), the scenario renamer copies the entire file and names it without the "Chronicle" suffix. Output files are organized into season-based subdirectories under a configurable output directory (e.g., `PFS/Season 1/1-01-TheAbsalomInitiation.pdf`).
+A Python command-line utility that creates renamed copies of Pathfinder Society (PFS) scenario PDF and map files. The utility reuses the existing scenario info extraction and filename sanitization logic from the chronicle_extractor package to determine each scenario's season, number, and name. Unlike the chronicle extractor (which extracts only the last page), the scenario renamer copies the entire file and names it without the "Chronicle" suffix. Output files are organized into season-based subdirectories under a configurable output directory (e.g., `PFS/season1/1-01-TheAbsalomInitiation.pdf`).
 
 In addition to scenario PDFs, the utility processes image files (PDF maps, JPG, and PNG). Image files cannot be parsed for scenario metadata, so the utility first processes all scenario PDFs to build a lookup table mapping (season, scenario) pairs to scenario names, then renames image files by extracting the scenario identifier from the filename and resolving it against the lookup table. The scenario identifier is detected via PZOPFS filename prefix or X-YY season-number pattern. Any descriptive suffix after the identifier (e.g., "Maps", "A-Nighttime Ambush") is preserved in the output filename. Files that cannot be attributed to a scenario (no extractable metadata, or unresolved identifiers) are copied as-is to the output directory with their original filenames, ensuring no input files are lost.
 
@@ -15,7 +15,7 @@ This utility is the third in the PFS Tools collection. It shares the `ScenarioIn
 - **Scenario_Info**: The parsed metadata for a scenario, consisting of season number, scenario number, and scenario name. Extracted using the existing `extract_scenario_info` function from the chronicle_extractor package.
 - **Sanitized_Name**: The scenario name with spaces removed and unsafe filename characters stripped, produced by the existing `sanitize_name` function from the chronicle_extractor package.
 - **Output_Directory**: The base directory where renamed scenario PDFs are saved (e.g., `PFS/`).
-- **Season_Subdirectory**: A subdirectory under the Output_Directory named `Season X` where X is the season number (e.g., `PFS/Season 1/`).
+- **Season_Subdirectory**: A subdirectory under the Output_Directory named `Season X` where X is the season number (e.g., `PFS/season1/`).
 - **Quests_Subdirectory**: A subdirectory under the Output_Directory named `Quests` for quest scenario PDFs.
 - **Bounties_Subdirectory**: A subdirectory under the Output_Directory named `Bounties` for bounty scenario PDFs.
 - **Scenario_Image**: A JPG, PNG, or PDF file associated with a scenario that is not a Scenario_PDF. Identified by having a PZOPFS_Pattern or Season_Number_Pattern in its filename stem. Includes map files, handout images, and other scenario-related images. The portion of the stem after the scenario identifier is the Image_Suffix.
@@ -88,8 +88,8 @@ This utility is the third in the PFS Tools collection. It shares the `ScenarioIn
 #### Acceptance Criteria
 
 1. WHEN the Scenario_Info has a positive season number, THE Scenario_Renamer SHALL place the output file in `{Output_Directory}/Season {season}/`.
-2. WHEN the Scenario_Info has season=0 (quest), THE Scenario_Renamer SHALL place the output file in `{Output_Directory}/Quests/`.
-3. WHEN the Scenario_Info has season=-1 (bounty), THE Scenario_Renamer SHALL place the output file in `{Output_Directory}/Bounties/`.
+2. WHEN the Scenario_Info has season=0 (quest), THE Scenario_Renamer SHALL place the output file in `{Output_Directory}/quests/`.
+3. WHEN the Scenario_Info has season=-1 (bounty), THE Scenario_Renamer SHALL place the output file in `{Output_Directory}/bounties/`.
 
 ### Requirement 7: Recursive Directory Traversal
 
@@ -203,4 +203,4 @@ This utility is the third in the PFS Tools collection. It shares the `ScenarioIn
 2. WHEN a Scenario_Image stem matches neither the PZOPFS_Pattern nor the Season_Number_Pattern, THE Scenario_Renamer SHALL copy the file to the Output_Directory using its original filename via `shutil.copy2`.
 3. WHEN a Scenario_Image has an extracted scenario identifier with no matching entry in the Scenario_Lookup_Table, THE Scenario_Renamer SHALL copy the file to the Output_Directory using its original filename via `shutil.copy2`.
 4. WHEN a JPG/JPEG/PNG file does not contain a recognizable scenario identifier pattern, THE Scenario_Renamer SHALL copy the file to the Output_Directory using its original filename via `shutil.copy2`.
-5. THE Scenario_Renamer SHALL place the As-Is_Copy in the Output_Directory preserving the file's relative path from the input directory (e.g., a file at `Scenarios/Season 1/unknown.pdf` with `--input-dir Scenarios` is copied to `PFS/Season 1/unknown.pdf`).
+5. THE Scenario_Renamer SHALL place the As-Is_Copy in the Output_Directory preserving the file's relative path from the input directory (e.g., a file at `Scenarios/season1/unknown.pdf` with `--input-dir Scenarios` is copied to `PFS/season1/unknown.pdf`).

@@ -23,7 +23,7 @@ CANVAS_REFERENCE_PATTERN = r"^(\w+)\.(left|right|top|bottom)$"
 _HORIZONTAL_CATEGORIES = {"h_thin", "h_bar", "h_rule"}
 _VERTICAL_CATEGORIES = {"v_thin", "v_bar"}
 _HORIZONTAL_SECONDARY_EDGES = {"left", "right", "top", "bottom"}
-_VERTICAL_SECONDARY_EDGES = {"top", "bottom"}
+_VERTICAL_SECONDARY_EDGES = {"left", "right", "top", "bottom"}
 _GREY_BOX_SECONDARY_EDGES = {"left", "right", "top", "bottom"}
 
 

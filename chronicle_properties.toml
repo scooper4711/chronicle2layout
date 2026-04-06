@@ -1,0 +1,180 @@
+# Layout Generator Metadata — PFS2 Chronicle Properties
+#
+# Run against the chronicle PDFs under:
+#   modules/pfs-chronicle-generator/assets/chronicles/
+#
+# Rules are tested in order; the first matching pattern wins.
+# Templates support regex capture group substitution: $0 (full match),
+# $1, $2, etc.  Use ${~N} to CamelCase-split group N into words.
+#
+# All season patterns are anchored to pfs2/ to avoid matching SFS
+# chronicles that use the same N-XX-Name format.
+
+layouts_dir = "modules/pfs-chronicle-generator/assets/layouts"
+
+# =========================================================================
+# Bounties
+# =========================================================================
+# B1–B12 use bounty-layout-b1, B13+ use bounty-layout-b13.
+
+[[rules]]
+pattern = 'pfs2/bounties/B(1[0-2]|[1-9])-(\S+)Chronicle\.pdf$'
+id = "pfs2.b$1"
+parent = "pfs2.bounty-layout-b1"
+description = "B$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/bounties/B(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.b$1"
+parent = "pfs2.bounty-layout-b13"
+description = "B$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B$1-$2Chronicle.pdf"
+
+# =========================================================================
+# Quests
+# =========================================================================
+
+[[rules]]
+pattern = 'pfs2/quests/Q(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.q$1"
+parent = "pfs2.quest-layout-q14"
+description = "Q$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q$1-$2Chronicle.pdf"
+
+# =========================================================================
+# Season 1 — parent changes at s1-15, s1-16, s1-17, s1-19, s1-22–s1-25
+# =========================================================================
+# Per-file overrides go before the catch-all for their range.
+
+[[rules]]
+pattern = 'pfs2/season1/1-02-TheMosquitoWitchChronicle\.pdf$'
+id = "pfs2.s1-02"
+parent = "pfs2.season1-layout-s1-00"
+description = "1-02 The Mosquito Witch"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-02-TheMosquitoWitchChronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-(0[0-9]|1[0-4])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-$1"
+parent = "pfs2.season1-layout-s1-00"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-15-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-15"
+parent = "pfs2.season1-layout-s1-15"
+description = "1-15 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-15-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-16-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-16"
+parent = "pfs2.season1-layout-s1-16"
+description = "1-16 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-16-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-(1[78])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-$1"
+parent = "pfs2.season1-layout-s1-17"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-(19|2[01])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-$1"
+parent = "pfs2.season1-layout-s1-19"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-22-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-22"
+parent = "pfs2.season1-layout-s1-22"
+description = "1-22 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-22-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-23-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-23"
+parent = "pfs2.season1-layout-s1-23"
+description = "1-23 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-23-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-24-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-24"
+parent = "pfs2.season1-layout-s1-24"
+description = "1-24 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-24-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season1/1-25-(\S+)Chronicle\.pdf$'
+id = "pfs2.s1-25"
+parent = "pfs2.season1-layout-s1-25"
+description = "1-25 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-25-$1Chronicle.pdf"
+
+# =========================================================================
+# Seasons 2–7
+# =========================================================================
+# No parent layout breakpoints known yet — each season uses a single
+# parent. Create parent layouts before running, and split rules here
+# if the chronicle format changes mid-season.
+
+[[rules]]
+pattern = 'pfs2/season2/2-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s2-$1"
+parent = "pfs2.season2-layout-s2-00"
+description = "2-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season3/3-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s3-$1"
+parent = "pfs2.season3-layout-s3-00"
+description = "3-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season4/4-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s4-$1"
+parent = "pfs2.season4-layout-s4-00"
+description = "4-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season5/5-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s5-$1"
+parent = "pfs2.season5-layout-s5-00"
+description = "5-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season6/6-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s6-$1"
+parent = "pfs2.season6-layout-s6-00"
+description = "6-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season7/7-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s7-$1"
+parent = "pfs2.season7-layout-s7-00"
+description = "7-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-$1-$2Chronicle.pdf"
+
+# =========================================================================
+# SFS2 — Starfinder Society Season 1
+# =========================================================================
+# No parent layouts yet — placeholder parent sfs2.season1-layout-s1-00.
+# Create the parent layout before running the generator.
+
+[[rules]]
+pattern = 'sfs2/season1/1-(\d+)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-$1"
+parent = "sfs2.season1-layout-s1-00"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"

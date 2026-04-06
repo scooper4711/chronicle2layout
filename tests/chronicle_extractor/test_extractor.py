@@ -184,8 +184,8 @@ class TestProcessDirectory:
         output_dir = tmp_path / "output"
         process_directory(mixed_input_dir, output_dir)
 
-        season1 = output_dir / "Season 1"
-        season2 = output_dir / "Season 2"
+        season1 = output_dir / "season1"
+        season2 = output_dir / "season2"
         assert season1.is_dir()
         assert season2.is_dir()
 
@@ -231,8 +231,8 @@ class TestProcessDirectory:
         captured = capsys.readouterr()
         stdout = captured.out
         # Two valid scenario PDFs should produce stdout output
-        assert "Season 1" in stdout
-        assert "Season 2" in stdout
+        assert "season1" in stdout
+        assert "season2" in stdout
         assert "Chronicle.pdf" in stdout
 
     def test_output_pdfs_have_one_page(

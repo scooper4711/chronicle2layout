@@ -68,31 +68,31 @@ class TestBuildOutputPath:
     def test_standard_scenario(self) -> None:
         info = ScenarioInfo(season=1, scenario="07", name="Flooded King's Court")
         result = build_output_path(Path("/output"), info)
-        expected = Path("/output/Season 1/1-07-FloodedKingsCourtChronicle.pdf")
+        expected = Path("/output/season1/1-07-FloodedKingsCourtChronicle.pdf")
         assert result == expected
 
     def test_multi_digit_season(self) -> None:
         info = ScenarioInfo(season=12, scenario="01", name="Big Season")
         result = build_output_path(Path("/out"), info)
-        expected = Path("/out/Season 12/12-01-BigSeasonChronicle.pdf")
+        expected = Path("/out/season12/12-01-BigSeasonChronicle.pdf")
         assert result == expected
 
     def test_name_with_colons(self) -> None:
         info = ScenarioInfo(season=3, scenario="15", name="Part One: The Beginning")
         result = build_output_path(Path("/out"), info)
-        expected = Path("/out/Season 3/3-15-PartOneTheBeginningChronicle.pdf")
+        expected = Path("/out/season3/3-15-PartOneTheBeginningChronicle.pdf")
         assert result == expected
 
     def test_empty_sanitized_name(self) -> None:
         info = ScenarioInfo(season=1, scenario="01", name="' : ;")
         result = build_output_path(Path("/out"), info)
-        expected = Path("/out/Season 1/1-01-Chronicle.pdf")
+        expected = Path("/out/season1/1-01-Chronicle.pdf")
         assert result == expected
 
     def test_relative_output_dir(self) -> None:
         info = ScenarioInfo(season=2, scenario="03", name="Test")
         result = build_output_path(Path("output"), info)
-        expected = Path("output/Season 2/2-03-TestChronicle.pdf")
+        expected = Path("output/season2/2-03-TestChronicle.pdf")
         assert result == expected
 
     def test_bounty_output_path(self) -> None:
@@ -100,7 +100,7 @@ class TestBuildOutputPath:
             season=_BOUNTY_SEASON, scenario="2", name="Blood of the Beautiful"
         )
         result = build_output_path(Path("/output"), info)
-        expected = Path("/output/Bounties/B2-BloodoftheBeautifulChronicle.pdf")
+        expected = Path("/output/bounties/B2-BloodoftheBeautifulChronicle.pdf")
         assert result == expected
 
     def test_bounty_double_digit(self) -> None:
@@ -108,5 +108,5 @@ class TestBuildOutputPath:
             season=_BOUNTY_SEASON, scenario="15", name="Treasure Off The Coast"
         )
         result = build_output_path(Path("/output"), info)
-        expected = Path("/output/Bounties/B15-TreasureOffTheCoastChronicle.pdf")
+        expected = Path("/output/bounties/B15-TreasureOffTheCoastChronicle.pdf")
         assert result == expected

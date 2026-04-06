@@ -32,8 +32,8 @@ def sanitize_name(name: str) -> str:
 def build_output_path(output_dir: Path, info: ScenarioInfo) -> Path:
     """Construct the full output path for a chronicle PDF.
 
-    For scenarios: output_dir/Season {season}/{season}-{scenario}-{sanitized}Chronicle.pdf
-    For quests (season=0): output_dir/Quests/Q{scenario}-{sanitized}Chronicle.pdf
+    For scenarios: output_dir/season{season}/{season}-{scenario}-{sanitized}Chronicle.pdf
+    For quests (season=0): output_dir/quests/Q{scenario}-{sanitized}Chronicle.pdf
 
     Args:
         output_dir: The base output directory.
@@ -48,11 +48,11 @@ def build_output_path(output_dir: Path, info: ScenarioInfo) -> Path:
 
     if info.season == _BOUNTY_SEASON:
         filename = f"B{info.scenario}-{sanitized}Chronicle.pdf"
-        return output_dir / "Bounties" / filename
+        return output_dir / "bounties" / filename
 
     if info.season == 0:
         filename = f"Q{info.scenario}-{sanitized}Chronicle.pdf"
-        return output_dir / "Quests" / filename
+        return output_dir / "quests" / filename
 
     filename = f"{info.season}-{info.scenario}-{sanitized}Chronicle.pdf"
-    return output_dir / f"Season {info.season}" / filename
+    return output_dir / f"season{info.season}" / filename

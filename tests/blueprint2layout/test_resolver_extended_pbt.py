@@ -108,14 +108,15 @@ def valid_secondary_axis_reference(draw, detection: DetectionResult):
 
 @st.composite
 def invalid_secondary_axis_reference(draw):
-    """Generate a secondary axis reference with an invalid edge for its category.
+    """Generate a secondary axis reference with a bogus edge name.
 
-    Vertical lines with .left or .right are invalid.
-    Horizontal lines now support all four edges, so only vertical is invalid.
+    All standard categories now support left/right/top/bottom, so
+    the only invalid edges are non-standard names like 'center'.
     """
-    category = draw(st.sampled_from(_VERTICAL_CATEGORIES))
-    edge = draw(st.sampled_from(["left", "right"]))
-
+    category = draw(st.sampled_from(
+        list(_HORIZONTAL_CATEGORIES) + list(_VERTICAL_CATEGORIES) + ["grey_box"],
+    ))
+    edge = draw(st.sampled_from(["center", "middle", "start", "end"]))
     index = draw(st.integers(min_value=0, max_value=4))
     return f"{category}[{index}].{edge}"
 
@@ -186,8 +187,10 @@ class TestSecondaryAxisResolutionProperty:
 class TestInvalidSecondaryEdgeProperty:
     """**Validates: Requirements 4.4**
 
-    For any secondary axis reference that uses an edge name invalid
-    for its category, the resolver SHALL raise a ValueError.
+    For any secondary axis reference that uses an edge name not in
+    (left, right, top, bottom), the resolver SHALL raise a ValueError.
+    All standard categories now support all four edges, so only
+    non-standard edge names are invalid.
     """
 
     @given(
@@ -198,8 +201,8 @@ class TestInvalidSecondaryEdgeProperty:
     def test_invalid_edge_raises_value_error(
         self, ref_string: str, detection: DetectionResult,
     ) -> None:
-        """Invalid secondary edge for the category raises ValueError."""
-        with pytest.raises(ValueError, match="Invalid secondary edge"):
+        """Bogus secondary edge name raises ValueError."""
+        with pytest.raises(ValueError, match="not a recognized pattern"):
             resolve_edge_value(ref_string, detection, {})
 
 

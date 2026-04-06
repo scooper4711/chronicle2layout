@@ -18,6 +18,15 @@ import sys
 import time
 from pathlib import Path
 
+_RED = "\033[91m"
+_RESET = "\033[0m"
+
+
+def _print_error(message: str) -> None:
+    """Print a red-highlighted error message to stderr."""
+    print(f"{_RED}{message}{_RESET}", file=sys.stderr)
+
+
 from layout_visualizer.coordinate_resolver import (
     assign_colors,
     resolve_canvas_pixels,
@@ -348,7 +357,7 @@ def watch_and_regenerate(
                     layout_root, layout_ids,
                 )
             except Exception as exc:  # noqa: BLE001 — continue watching on any error
-                print(f"Error: Regeneration failed: {exc}", file=sys.stderr)
+                _print_error(f"Error: Regeneration failed: {exc}")
 
             mtimes = _record_mtimes(watched_paths)
     except KeyboardInterrupt:
@@ -383,7 +392,7 @@ def main(argv: list[str] | None = None) -> int:
         layout_index = build_layout_index(args.layout_root)
         matched_ids = match_layout_ids(args.layout_id, layout_index)
     except ValueError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        _print_error(f"Error: {exc}")
         return 1
 
     try:
@@ -408,13 +417,13 @@ def main(argv: list[str] | None = None) -> int:
                 output_path, args.mode,
             )
     except FileNotFoundError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        _print_error(f"Error: {exc}")
         return 1
     except ValueError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        _print_error(f"Error: {exc}")
         return 1
     except OSError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        _print_error(f"Error: {exc}")
         return 1
 
     return 0

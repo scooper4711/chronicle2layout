@@ -18,6 +18,15 @@ from blueprint2layout.output import write_layout
 from shared.layout_index import collect_inheritance_chain
 
 
+_RED = "\033[91m"
+_RESET = "\033[0m"
+
+
+def _print_error(message: str) -> None:
+    """Print a red-highlighted error message to stderr."""
+    print(f"{_RED}{message}{_RESET}", file=sys.stderr)
+
+
 def match_blueprint_ids(
     pattern: str,
     blueprint_index: dict[str, Path],
@@ -268,15 +277,12 @@ def watch_and_regenerate(
         try:
             run_single_layout(blueprints_dir, blueprint_id, output_path)
         except Exception as exc:  # noqa: BLE001 — report and continue
-            print(
-                f"Error ({blueprint_id}): {exc}",
-                file=sys.stderr,
-            )
+            _print_error(f"Error ({blueprint_id}): {exc}")
 
     try:
         watched_paths = _collect_watched_paths(blueprints_dir, blueprint_ids)
     except Exception as exc:  # noqa: BLE001 — report and continue
-        print(f"Error collecting watch paths: {exc}", file=sys.stderr)
+        _print_error(f"Error collecting watch paths: {exc}")
         watched_paths = []
     mtimes = _record_mtimes(watched_paths)
 
@@ -293,19 +299,13 @@ def watch_and_regenerate(
                         blueprints_dir, blueprint_id, output_path,
                     )
                 except Exception as exc:  # noqa: BLE001 — report and continue
-                    print(
-                        f"Error ({blueprint_id}): {exc}",
-                        file=sys.stderr,
-                    )
+                    _print_error(f"Error ({blueprint_id}): {exc}")
             try:
                 watched_paths = _collect_watched_paths(
                     blueprints_dir, blueprint_ids,
                 )
             except Exception as exc:  # noqa: BLE001 — keep previous paths
-                print(
-                    f"Error collecting watch paths: {exc}",
-                    file=sys.stderr,
-                )
+                _print_error(f"Error collecting watch paths: {exc}")
 
             mtimes = _record_mtimes(watched_paths)
     except KeyboardInterrupt:
@@ -379,9 +379,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
 
     if not args.blueprints_dir.is_dir():
-        print(
-            f"Error: Blueprints directory is not a directory: {args.blueprints_dir}",
-            file=sys.stderr,
+        _print_error(
+            f"Error: Blueprints directory is not a directory: {args.blueprints_dir}"
         )
         return 1
 
@@ -389,7 +388,7 @@ def main(argv: list[str] | None = None) -> int:
         blueprint_index = build_blueprint_index(args.blueprints_dir)
         matched_ids = match_blueprint_ids(args.blueprint_id, blueprint_index)
     except ValueError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        _print_error(f"Error: {exc}")
         return 1
 
     try:
@@ -411,7 +410,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.blueprints_dir, blueprint_id, output_path,
             )
     except (ValueError, FileNotFoundError, OSError) as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        _print_error(f"Error: {exc}")
         return 1
 
     return 0

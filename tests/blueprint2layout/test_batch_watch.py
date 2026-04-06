@@ -405,11 +405,11 @@ class TestDeriveOutputPathUnit:
         """Blueprint in a deeply nested subdirectory mirrors the structure."""
         result = derive_output_path(
             "pfs2.bounty-layout-b13",
-            Path("/blueprints/pfs/bounties/deep/b13.blueprint.json"),
+            Path("/blueprints/pfs2/bounties/deep/b13.blueprint.json"),
             Path("/blueprints"),
             Path("/output"),
         )
-        assert result == Path("/output/pfs/bounties/deep/bounty-layout-b13.json")
+        assert result == Path("/output/pfs2/bounties/deep/bounty-layout-b13.json")
 
     def test_id_with_single_dot(self):
         """Id with a single dot strips the prefix correctly."""
@@ -425,11 +425,11 @@ class TestDeriveOutputPathUnit:
         """Id with multiple dots strips only up to the first dot."""
         result = derive_output_path(
             "pfs2.bounty.layout.b13",
-            Path("/blueprints/pfs/b13.blueprint.json"),
+            Path("/blueprints/pfs2/b13.blueprint.json"),
             Path("/blueprints"),
             Path("/output"),
         )
-        assert result == Path("/output/pfs/bounty.layout.b13.json")
+        assert result == Path("/output/pfs2/bounty.layout.b13.json")
 
 
 # ---------------------------------------------------------------------------

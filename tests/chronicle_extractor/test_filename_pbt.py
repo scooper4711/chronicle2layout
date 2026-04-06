@@ -82,7 +82,7 @@ def test_output_filename_format(
 ) -> None:
     """build_output_path produces a path matching the expected format.
 
-    The path should be: output_dir/Season {season}/{season}-{scenario}-{sanitized}Chronicle.pdf
+    The path should be: output_dir/season{season}/{season}-{scenario}-{sanitized}Chronicle.pdf
 
     Validates: Requirements 4.2, 5.1
     """
@@ -91,7 +91,7 @@ def test_output_filename_format(
 
     sanitized = sanitize_name(name)
     expected_filename = f"{season}-{scenario}-{sanitized}Chronicle.pdf"
-    expected_parent = f"Season {season}"
+    expected_parent = f"season{season}"
 
     assert result.name == expected_filename, (
         f"Filename mismatch: {result.name!r} != {expected_filename!r}"

@@ -10,7 +10,7 @@ from layout_visualizer.pdf_renderer import render_pdf_page
 
 REAL_PDF = Path(
     "modules/pfs-chronicle-generator/assets/chronicles"
-    "/pfs/Bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
 )
 
 

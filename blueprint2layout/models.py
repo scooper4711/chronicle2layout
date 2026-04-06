@@ -39,12 +39,14 @@ class VerticalLine:
         y: Top-edge y position as absolute page percentage.
         y2: Bottom-edge y position as absolute page percentage.
         thickness_px: Thickness in pixels at 150 DPI.
+        x2: Right-edge x position as absolute page percentage.
     """
 
     x: float
     y: float
     y2: float
     thickness_px: int
+    x2: float = 0.0
 
 
 @dataclass(frozen=True)
