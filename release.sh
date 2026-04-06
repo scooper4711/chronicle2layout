@@ -89,7 +89,7 @@ if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
   exit 0
 fi
 
-git tag "$NEXT_TAG"
+git tag -S "$NEXT_TAG"
 git push origin "$NEXT_TAG"
 
 echo ""
