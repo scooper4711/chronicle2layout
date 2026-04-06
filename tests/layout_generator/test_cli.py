@@ -17,7 +17,7 @@ import pytest
 
 from layout_generator.__main__ import main
 
-REAL_PDF = Path("Scenarios/pfs2/season1/1-00-OriginoftheOpenRoad.pdf")
+REAL_PDF = Path("modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-00-OriginoftheOpenRoadChronicle.pdf")
 LAYOUTS_DIR = Path(
     "modules/pfs-chronicle-generator/assets/layouts/pfs2",
 )

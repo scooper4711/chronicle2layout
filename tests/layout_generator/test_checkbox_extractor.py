@@ -22,7 +22,7 @@ from layout_generator.checkbox_extractor import (
     extract_checkbox_labels,
 )
 
-REAL_PDF = Path("Scenarios/PFS/Season 1/1-00-OriginoftheOpenRoad.pdf")
+REAL_PDF = Path("modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-00-OriginoftheOpenRoadChronicle.pdf")
 
 
 # ---------------------------------------------------------------------------

@@ -23,7 +23,7 @@ from layout_generator.generator import (
     make_safe_label,
 )
 
-REAL_PDF = Path("Scenarios/pfs2/season1/1-00-OriginoftheOpenRoad.pdf")
+REAL_PDF = Path("modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-00-OriginoftheOpenRoadChronicle.pdf")
 
 
 # ---------------------------------------------------------------------------
