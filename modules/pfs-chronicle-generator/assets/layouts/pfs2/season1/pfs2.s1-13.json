@@ -10,11 +10,8 @@
         "description": "Item line text to be struck out",
         "choices": [
           "Bag of holding (type I) (level 4; 75 gp)",
-          "3\u20134",
-          "SUBTIER",
           "Bag of holding (type II) (level 7; 300 gp)",
-          "Boots of elvenkind (level 5; 145 gp)",
-          "5\u20136"
+          "Boots of elvenkind (level 5; 145 gp)"
         ],
         "example": "Bag of holding (type I) (level 4; 75 gp)"
       }
@@ -28,28 +25,16 @@
       "x2": 95
     },
     "item.line.Bag_of_holding_type_I_level_4;_75_gp": {
-      "y": 8.0,
-      "y2": 11.4
-    },
-    "item.line.3\u20134": {
-      "y": 8.0,
-      "y2": 24.7
-    },
-    "item.line.SUBTIER": {
-      "y": 73.4,
-      "y2": 84.7
+      "y": 3.5,
+      "y2": 7.0
     },
     "item.line.Bag_of_holding_type_II_level_7;_300_gp": {
-      "y": 57.5,
-      "y2": 60.8
+      "y": 3.5,
+      "y2": 58.9
     },
     "item.line.Boots_of_elvenkind_level_5;_145_gp": {
-      "y": 57.5,
-      "y2": 65.3
-    },
-    "item.line.5\u20136": {
-      "y": 68.1,
-      "y2": 72.8
+      "y": 55.4,
+      "y2": 63.6
     }
   },
   "content": [
@@ -63,24 +48,6 @@
             "presets": [
               "strikeout_item",
               "item.line.Bag_of_holding_type_I_level_4;_75_gp"
-            ]
-          }
-        ],
-        "3\u20134": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.3\u20134"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
             ]
           }
         ],
@@ -99,15 +66,6 @@
             "presets": [
               "strikeout_item",
               "item.line.Boots_of_elvenkind_level_5;_145_gp"
-            ]
-          }
-        ],
-        "5\u20136": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.5\u20136"
             ]
           }
         ]

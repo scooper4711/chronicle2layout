@@ -10,8 +10,6 @@
         "description": "Item line text to be struck out",
         "choices": [
           "Book of Thuvian History (Item 2, 25 gp)",
-          "BOOK OF THUVIAN HISTORY ITEM 2",
-          "UNCOMMON",
           "Price 25 gp",
           "Usage held in 1 hand",
           "Bulk L",
@@ -39,14 +37,6 @@
     "item.line.Book_of_Thuvian_History_Item_2_25_gp": {
       "y": 12.4,
       "y2": 17.1
-    },
-    "item.line.BOOK_OF_THUVIAN_HISTORY_ITEM_2": {
-      "y": 22.0,
-      "y2": 27.9
-    },
-    "item.line.UNCOMMON": {
-      "y": 29.8,
-      "y2": 33.2
     },
     "item.line.Price_25_gp": {
       "y": 33.8,
@@ -108,24 +98,6 @@
             "presets": [
               "strikeout_item",
               "item.line.Book_of_Thuvian_History_Item_2_25_gp"
-            ]
-          }
-        ],
-        "BOOK OF THUVIAN HISTORY ITEM 2": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.BOOK_OF_THUVIAN_HISTORY_ITEM_2"
-            ]
-          }
-        ],
-        "UNCOMMON": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.UNCOMMON"
             ]
           }
         ],

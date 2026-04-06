@@ -2,7 +2,7 @@
   "id": "pfs2",
   "description": "Pathfinder 2 Society Chronicle",
   "aspectratio": "603:783",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs/Bounties/B1-TheWhitefangWyrmChronicle.pdf",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B1-TheWhitefangWyrmChronicle.pdf",
   "parameters": {
     "Event Info": {
       "event": {

@@ -11,12 +11,9 @@
         "choices": [
           "jade cat (level 2; 6 gp)",
           "pendant of the occult (level 3; 60 gp)",
-          "1\u20132",
-          "SUBTIER",
           "goggles of night (level 5; 150 gp)",
           "shark tooth charm (level 5; 23 gp)",
-          "viper arrow (level 4; 17 gp)",
-          "3\u20134"
+          "viper arrow (level 4; 17 gp)"
         ],
         "example": "jade cat (level 2; 6 gp)"
       }
@@ -30,36 +27,24 @@
       "x2": 95
     },
     "item.line.jade_cat_level_2;_6_gp": {
-      "y": 7.7,
-      "y2": 11.4
+      "y": 3.1,
+      "y2": 7.1
     },
     "item.line.pendant_of_the_occult_level_3;_60_gp": {
-      "y": 12.2,
-      "y2": 15.9
-    },
-    "item.line.1\u20132": {
-      "y": 20.2,
-      "y2": 24.4
-    },
-    "item.line.SUBTIER": {
-      "y": 73.4,
-      "y2": 84.7
+      "y": 7.9,
+      "y2": 11.8
     },
     "item.line.goggles_of_night_level_5;_150_gp": {
-      "y": 57.1,
-      "y2": 60.9
+      "y": 55.0,
+      "y2": 58.9
     },
     "item.line.shark_tooth_charm_level_5;_23_gp": {
-      "y": 61.6,
-      "y2": 65.4
+      "y": 59.7,
+      "y2": 63.7
     },
     "item.line.viper_arrow_level_4;_17_gp": {
-      "y": 66.1,
-      "y2": 69.8
-    },
-    "item.line.3\u20134": {
-      "y": 68.1,
-      "y2": 72.8
+      "y": 64.4,
+      "y2": 68.4
     }
   },
   "content": [
@@ -82,24 +67,6 @@
             "presets": [
               "strikeout_item",
               "item.line.pendant_of_the_occult_level_3;_60_gp"
-            ]
-          }
-        ],
-        "1\u20132": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.1\u20132"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
             ]
           }
         ],
@@ -127,15 +94,6 @@
             "presets": [
               "strikeout_item",
               "item.line.viper_arrow_level_4;_17_gp"
-            ]
-          }
-        ],
-        "3\u20134": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.3\u20134"
             ]
           }
         ]

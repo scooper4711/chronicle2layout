@@ -9,10 +9,7 @@
         "type": "choice",
         "description": "Item line text to be struck out",
         "choices": [
-          "mambele (level 1; 6 sp; Pathfinder Lost Omens Gods & Magic 120)",
-          "3\u20134",
-          "SUBTIER",
-          "5\u20136"
+          "mambele (level 1; 6 sp; Pathfinder Lost Omens Gods & Magic 120)"
         ],
         "example": "mambele (level 1; 6 sp; Pathfinder Lost Omens Gods & Magic 120)"
       }
@@ -26,20 +23,8 @@
       "x2": 95
     },
     "item.line.mambele_level_1;_6_sp;_Pathfinder_Lost_Omens_Gods_": {
-      "y": 57.1,
-      "y2": 65.4
-    },
-    "item.line.3\u20134": {
-      "y": 19.9,
-      "y2": 24.7
-    },
-    "item.line.SUBTIER": {
-      "y": 73.4,
-      "y2": 84.7
-    },
-    "item.line.5\u20136": {
-      "y": 68.1,
-      "y2": 72.8
+      "y": 55.0,
+      "y2": 63.7
     }
   },
   "content": [
@@ -53,33 +38,6 @@
             "presets": [
               "strikeout_item",
               "item.line.mambele_level_1;_6_sp;_Pathfinder_Lost_Omens_Gods_"
-            ]
-          }
-        ],
-        "3\u20134": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.3\u20134"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
-            ]
-          }
-        ],
-        "5\u20136": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.5\u20136"
             ]
           }
         ]

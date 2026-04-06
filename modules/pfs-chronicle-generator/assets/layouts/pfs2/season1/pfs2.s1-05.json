@@ -10,10 +10,7 @@
         "description": "Item line text to be struck out",
         "choices": [
           "animal staff (level 4; 90 gp)",
-          "1\u20132",
-          "SUBTIER",
-          "verdant staff (level 6; 225 gp)",
-          "3\u20134"
+          "verdant staff (level 6; 225 gp)"
         ],
         "example": "animal staff (level 4; 90 gp)"
       }
@@ -27,24 +24,12 @@
       "x2": 95
     },
     "item.line.animal_staff_level_4;_90_gp": {
-      "y": 8.0,
-      "y2": 11.4
-    },
-    "item.line.1\u20132": {
-      "y": 20.2,
-      "y2": 24.4
-    },
-    "item.line.SUBTIER": {
-      "y": 73.4,
-      "y2": 84.7
+      "y": 3.5,
+      "y2": 7.0
     },
     "item.line.verdant_staff_level_6;_225_gp": {
-      "y": 57.5,
-      "y2": 60.8
-    },
-    "item.line.3\u20134": {
-      "y": 68.1,
-      "y2": 72.8
+      "y": 55.4,
+      "y2": 58.9
     }
   },
   "content": [
@@ -61,39 +46,12 @@
             ]
           }
         ],
-        "1\u20132": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.1\u20132"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
-            ]
-          }
-        ],
         "verdant staff (level 6; 225 gp)": [
           {
             "type": "strikeout",
             "presets": [
               "strikeout_item",
               "item.line.verdant_staff_level_6;_225_gp"
-            ]
-          }
-        ],
-        "3\u20134": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.3\u20134"
             ]
           }
         ]

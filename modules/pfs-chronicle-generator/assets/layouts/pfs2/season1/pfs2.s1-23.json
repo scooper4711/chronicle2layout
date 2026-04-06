@@ -11,11 +11,8 @@
         "choices": [
           "lifting belt (Level 4; 80 gp)",
           "ventriloquist\u2019s ring (Level 3; 60 gp)",
-          "3\u20134",
-          "SUBTIER",
           "diplomat\u2019s badge (Level 5; 125 gp)",
-          "ring of the ram (Level 6; 220 gp)",
-          "5\u20136"
+          "ring of the ram (Level 6; 220 gp)"
         ],
         "example": "lifting belt (Level 4; 80 gp)"
       }
@@ -29,32 +26,20 @@
       "x2": 95
     },
     "item.line.lifting_belt_Level_4;_80_gp": {
-      "y": 7.5,
-      "y2": 11.5
+      "y": 3.0,
+      "y2": 7.2
     },
     "item.line.ventriloquist\u2019s_ring_Level_3;_60_gp": {
-      "y": 12.0,
-      "y2": 16.0
-    },
-    "item.line.3\u20134": {
-      "y": 19.9,
-      "y2": 24.7
-    },
-    "item.line.SUBTIER": {
-      "y": 73.7,
-      "y2": 85.0
+      "y": 7.7,
+      "y2": 11.9
     },
     "item.line.diplomat\u2019s_badge_Level_5;_125_gp": {
-      "y": 57.0,
-      "y2": 60.9
+      "y": 54.9,
+      "y2": 59.0
     },
     "item.line.ring_of_the_ram_Level_6;_220_gp": {
-      "y": 61.5,
-      "y2": 65.4
-    },
-    "item.line.5\u20136": {
-      "y": 67.8,
-      "y2": 72.5
+      "y": 59.6,
+      "y2": 63.7
     }
   },
   "content": [
@@ -80,24 +65,6 @@
             ]
           }
         ],
-        "3\u20134": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.3\u20134"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
-            ]
-          }
-        ],
         "diplomat\u2019s badge (Level 5; 125 gp)": [
           {
             "type": "strikeout",
@@ -113,15 +80,6 @@
             "presets": [
               "strikeout_item",
               "item.line.ring_of_the_ram_Level_6;_220_gp"
-            ]
-          }
-        ],
-        "5\u20136": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.5\u20136"
             ]
           }
         ]

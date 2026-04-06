@@ -11,11 +11,8 @@
         "choices": [
           "bola (5 sp, Lost Omens Gods & Magic 120)",
           "fighting fan (11 sp, Lost Omens Gods & Magic 120)",
-          "1\u20132",
           "khopesh (2 gp, Lost Omens Gods & Magic 120)",
-          "SUBTIER",
-          "3\u20134",
-          "+1 khopesh (35 gp, Lost Omens Gods & Magic SUBTIER 120)"
+          "+1 khopesh (35 gp, Lost Omens Gods & Magic 120)"
         ],
         "example": "bola (5 sp, Lost Omens Gods & Magic 120)"
       }
@@ -29,32 +26,20 @@
       "x2": 95
     },
     "item.line.bola_5_sp_Lost_Omens_Gods_&_Magic_120": {
-      "y": 57.5,
-      "y2": 60.8
+      "y": 55.4,
+      "y2": 58.9
     },
     "item.line.fighting_fan_11_sp_Lost_Omens_Gods_&_Magic_120": {
-      "y": 61.9,
-      "y2": 69.8
-    },
-    "item.line.1\u20132": {
-      "y": 20.2,
-      "y2": 24.4
+      "y": 60.1,
+      "y2": 68.3
     },
     "item.line.khopesh_2_gp_Lost_Omens_Gods_&_Magic_120": {
-      "y": 21.5,
-      "y2": 24.8
+      "y": 17.6,
+      "y2": 21.1
     },
-    "item.line.SUBTIER": {
-      "y": 25.0,
-      "y2": 36.3
-    },
-    "item.line.3\u20134": {
-      "y": 68.1,
-      "y2": 72.8
-    },
-    "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_SUBTIER_1": {
-      "y": 70.9,
-      "y2": 78.8
+    "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 69.5,
+      "y2": 77.7
     }
   },
   "content": [
@@ -80,15 +65,6 @@
             ]
           }
         ],
-        "1\u20132": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.1\u20132"
-            ]
-          }
-        ],
         "khopesh (2 gp, Lost Omens Gods & Magic 120)": [
           {
             "type": "strikeout",
@@ -98,30 +74,12 @@
             ]
           }
         ],
-        "SUBTIER": [
+        "+1 khopesh (35 gp, Lost Omens Gods & Magic 120)": [
           {
             "type": "strikeout",
             "presets": [
               "strikeout_item",
-              "item.line.SUBTIER"
-            ]
-          }
-        ],
-        "3\u20134": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.3\u20134"
-            ]
-          }
-        ],
-        "+1 khopesh (35 gp, Lost Omens Gods & Magic SUBTIER 120)": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_SUBTIER_1"
+              "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_120"
             ]
           }
         ]

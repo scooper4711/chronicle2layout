@@ -160,42 +160,42 @@
     },
     "summary": {
       "x": 0.0,
-      "y": 6.5,
+      "y": 8.3,
       "x2": 100.0,
       "y2": 30.5,
       "parent": "main"
     },
     "boons": {
       "x": 0.0,
-      "y": 30.5,
+      "y": 32.4,
       "x2": 80.0,
       "y2": 48.6,
       "parent": "main"
     },
     "rewards": {
-      "x": 80.0,
-      "y": 30.5,
+      "x": 82.2,
+      "y": 32.4,
       "x2": 100.0,
       "y2": 83.0,
       "parent": "main"
     },
     "items": {
       "x": 0.0,
-      "y": 48.6,
+      "y": 50.4,
       "x2": 40.1,
       "y2": 83.0,
       "parent": "main"
     },
     "notes": {
       "x": 40.1,
-      "y": 48.6,
+      "y": 50.4,
       "x2": 80.0,
       "y2": 83.0,
       "parent": "main"
     },
     "reputation": {
       "x": 0.0,
-      "y": 83.0,
+      "y": 84.8,
       "x2": 100.0,
       "y2": 94.5,
       "parent": "main"
@@ -252,10 +252,10 @@
       "value": "param:xp_gained",
       "type": "text",
       "canvas": "rewards",
-      "x": 11.4,
-      "y": 22.2,
+      "x": 0.6,
+      "y": 19.3,
       "x2": 99.4,
-      "y2": 30.4,
+      "y2": 27.8,
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"
@@ -264,10 +264,10 @@
       "value": "param:gp_gained",
       "type": "text",
       "canvas": "rewards",
-      "x": 11.4,
-      "y": 64.2,
+      "x": 0.6,
+      "y": 62.8,
       "x2": 100.0,
-      "y2": 72.1,
+      "y2": 71.1,
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"
@@ -338,7 +338,7 @@
       "type": "multiline",
       "canvas": "reputation",
       "x": 2.1,
-      "y": 15.5,
+      "y": 0.0,
       "x2": 97.9,
       "y2": 100.0,
       "font": "Helvetica",

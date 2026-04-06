@@ -10,12 +10,10 @@
         "description": "Item line text to be struck out",
         "choices": [
           "+1 handwraps of mighty blows (level 2; 35 gp)",
-          "archaic wayfinder (Lost Omens World 1\u20132 Guide; level 2; 30 gp)",
-          "SUBTIER tracker\u2019s goggles (level 3; 60 gp)",
+          "archaic wayfinder (Lost Omens World Guide; level 2; 30 gp)",
+          "tracker\u2019s goggles (level 3; 60 gp)",
           "+1 striking handwraps of mighty blows",
           "(level 4; 100 gp)",
-          "archaic wayfinder (Lost Omens World 3\u20134 Guide; level 2; 30 gp)",
-          "SUBTIER",
           "goggles of night (level 5; 150 gp)"
         ],
         "example": "+1 handwraps of mighty blows (level 2; 35 gp)"
@@ -30,36 +28,28 @@
       "x2": 95
     },
     "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp": {
-      "y": 7.7,
-      "y2": 15.9
+      "y": 3.1,
+      "y2": 11.8
     },
-    "item.line.archaic_wayfinder_Lost_Omens_World_1\u20132_Guide;_leve": {
-      "y": 16.7,
-      "y2": 24.9
+    "item.line.archaic_wayfinder_Lost_Omens_World_Guide;_level_2;": {
+      "y": 64.4,
+      "y2": 73.1
     },
-    "item.line.SUBTIER_tracker\u2019s_goggles_level_3;_60_gp": {
-      "y": 25.0,
-      "y2": 36.3
+    "item.line.tracker\u2019s_goggles_level_3;_60_gp": {
+      "y": 22.0,
+      "y2": 25.9
     },
     "item.line.+1_striking_handwraps_of_mighty_blows": {
-      "y": 57.1,
-      "y2": 60.9
+      "y": 55.0,
+      "y2": 58.9
     },
     "item.line.level_4;_100_gp": {
-      "y": 61.6,
-      "y2": 65.4
-    },
-    "item.line.archaic_wayfinder_Lost_Omens_World_3\u20134_Guide;_leve": {
-      "y": 66.1,
-      "y2": 74.3
-    },
-    "item.line.SUBTIER": {
-      "y": 73.4,
-      "y2": 84.7
+      "y": 59.7,
+      "y2": 63.7
     },
     "item.line.goggles_of_night_level_5;_150_gp": {
-      "y": 75.1,
-      "y2": 78.8
+      "y": 73.9,
+      "y2": 77.8
     }
   },
   "content": [
@@ -76,21 +66,21 @@
             ]
           }
         ],
-        "archaic wayfinder (Lost Omens World 1\u20132 Guide; level 2; 30 gp)": [
+        "archaic wayfinder (Lost Omens World Guide; level 2; 30 gp)": [
           {
             "type": "strikeout",
             "presets": [
               "strikeout_item",
-              "item.line.archaic_wayfinder_Lost_Omens_World_1\u20132_Guide;_leve"
+              "item.line.archaic_wayfinder_Lost_Omens_World_Guide;_level_2;"
             ]
           }
         ],
-        "SUBTIER tracker\u2019s goggles (level 3; 60 gp)": [
+        "tracker\u2019s goggles (level 3; 60 gp)": [
           {
             "type": "strikeout",
             "presets": [
               "strikeout_item",
-              "item.line.SUBTIER_tracker\u2019s_goggles_level_3;_60_gp"
+              "item.line.tracker\u2019s_goggles_level_3;_60_gp"
             ]
           }
         ],
@@ -109,24 +99,6 @@
             "presets": [
               "strikeout_item",
               "item.line.level_4;_100_gp"
-            ]
-          }
-        ],
-        "archaic wayfinder (Lost Omens World 3\u20134 Guide; level 2; 30 gp)": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.archaic_wayfinder_Lost_Omens_World_3\u20134_Guide;_leve"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
             ]
           }
         ],

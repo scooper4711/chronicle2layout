@@ -11,11 +11,10 @@
         "choices": [
           "+1 shortsword (level 2; 35 gp)",
           "hat of the magi (level 3; 50 gp)",
-          "scroll of darkness (level 3; discounted 1\u20132 price 6 gp; limit 1)",
-          "SUBTIER",
+          "scroll of darkness (level 3; discounted price 6 gp; limit 1)",
           "+1 striking shortsword (level 4; 100 gp)",
           "goggles of night (level 5; 150 gp)",
-          "scroll of haste (level 5; discounted price 3\u20134 15 gp; limit 1)"
+          "scroll of haste (level 5; discounted price 15 gp; limit 1)"
         ],
         "example": "+1 shortsword (level 2; 35 gp)"
       }
@@ -29,32 +28,28 @@
       "x2": 95
     },
     "item.line.+1_shortsword_level_2;_35_gp": {
-      "y": 7.7,
-      "y2": 11.4
+      "y": 3.1,
+      "y2": 7.1
     },
     "item.line.hat_of_the_magi_level_3;_50_gp": {
-      "y": 12.2,
-      "y2": 15.9
+      "y": 7.9,
+      "y2": 11.8
     },
-    "item.line.scroll_of_darkness_level_3;_discounted_1\u20132_price_6": {
-      "y": 16.7,
-      "y2": 24.9
-    },
-    "item.line.SUBTIER": {
-      "y": 73.4,
-      "y2": 84.7
+    "item.line.scroll_of_darkness_level_3;_discounted_price_6_gp;": {
+      "y": 12.6,
+      "y2": 21.2
     },
     "item.line.+1_striking_shortsword_level_4;_100_gp": {
-      "y": 57.1,
-      "y2": 60.9
+      "y": 55.0,
+      "y2": 58.9
     },
     "item.line.goggles_of_night_level_5;_150_gp": {
-      "y": 61.6,
-      "y2": 65.4
+      "y": 59.7,
+      "y2": 63.7
     },
-    "item.line.scroll_of_haste_level_5;_discounted_price_3\u20134_15_g": {
-      "y": 66.1,
-      "y2": 74.3
+    "item.line.scroll_of_haste_level_5;_discounted_price_15_gp;_l": {
+      "y": 64.4,
+      "y2": 73.1
     }
   },
   "content": [
@@ -80,21 +75,12 @@
             ]
           }
         ],
-        "scroll of darkness (level 3; discounted 1\u20132 price 6 gp; limit 1)": [
+        "scroll of darkness (level 3; discounted price 6 gp; limit 1)": [
           {
             "type": "strikeout",
             "presets": [
               "strikeout_item",
-              "item.line.scroll_of_darkness_level_3;_discounted_1\u20132_price_6"
-            ]
-          }
-        ],
-        "SUBTIER": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.SUBTIER"
+              "item.line.scroll_of_darkness_level_3;_discounted_price_6_gp;"
             ]
           }
         ],
@@ -116,12 +102,12 @@
             ]
           }
         ],
-        "scroll of haste (level 5; discounted price 3\u20134 15 gp; limit 1)": [
+        "scroll of haste (level 5; discounted price 15 gp; limit 1)": [
           {
             "type": "strikeout",
             "presets": [
               "strikeout_item",
-              "item.line.scroll_of_haste_level_5;_discounted_price_3\u20134_15_g"
+              "item.line.scroll_of_haste_level_5;_discounted_price_15_gp;_l"
             ]
           }
         ]
