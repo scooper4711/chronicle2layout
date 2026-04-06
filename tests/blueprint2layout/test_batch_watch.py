@@ -437,14 +437,14 @@ class TestDeriveOutputPathUnit:
 # ---------------------------------------------------------------------------
 
 from blueprint2layout.__main__ import (
-    _collect_watched_paths,
+    _build_dependency_map,
     _record_mtimes,
-    _any_file_changed,
+    _find_changed_paths,
 )
 
 
 # ---------------------------------------------------------------------------
-# Hypothesis strategies for _collect_watched_paths
+# Hypothesis strategies for _build_dependency_map
 # ---------------------------------------------------------------------------
 
 
@@ -481,20 +481,20 @@ def _index_with_chains(draw):
 # ---------------------------------------------------------------------------
 
 
-class TestCollectWatchedPathsProperty:
-    """Property 4: Watched paths cover all files in all inheritance chains.
+class TestBuildDependencyMapProperty:
+    """Property 4: Dependency map covers all files in all inheritance chains.
 
     **Validates: Requirements 6.3**
     """
 
     @given(chain_data=_index_with_chains())
     @settings(max_examples=100)
-    def test_watched_paths_cover_all_chain_files(
+    def test_dependency_map_covers_all_chain_files(
         self,
         chain_data: tuple[list[dict], list[str]],
         tmp_path_factory,
     ):
-        """Collected paths are a superset of all chain files with no duplicates."""
+        """Dependency map keys are a superset of all chain files."""
         all_nodes, leaf_ids = chain_data
 
         # Write all nodes to temp files and build index
@@ -505,21 +505,20 @@ class TestCollectWatchedPathsProperty:
             file_path.write_text(json.dumps(node), encoding="utf-8")
             index[node["id"]] = file_path
 
-        result = _collect_watched_paths(tmp_dir, leaf_ids)
-
-        # Verify no duplicates
-        assert len(result) == len(set(result))
+        dep_map = _build_dependency_map(tmp_dir, leaf_ids)
 
         # Verify superset: every file in every chain must be present
-        result_set = set(result)
         from shared.layout_index import collect_inheritance_chain
 
         for leaf_id in leaf_ids:
             leaf_path = index[leaf_id]
             chain = collect_inheritance_chain(leaf_path, index)
             for path, _data in chain:
-                assert path in result_set, (
-                    f"Path {path} from chain of {leaf_id} not in watched paths"
+                assert path in dep_map, (
+                    f"Path {path} from chain of {leaf_id} not in dependency map"
+                )
+                assert leaf_id in dep_map[path], (
+                    f"Leaf {leaf_id} not mapped for {path}"
                 )
 
 
@@ -552,14 +551,14 @@ class TestRecordMtimesUnit:
         assert _record_mtimes([]) == {}
 
 
-class TestAnyFileChangedUnit:
-    """Unit tests for _any_file_changed.
+class TestFindChangedPathsUnit:
+    """Unit tests for _find_changed_paths.
 
     **Validates: Requirements 6.1, 6.2**
     """
 
     def test_detects_modification(self, tmp_path):
-        """Returns True when a file's mtime changes."""
+        """Returns changed path when a file's mtime changes."""
         file_a = tmp_path / "a.json"
         file_a.write_text("{}", encoding="utf-8")
 
@@ -571,21 +570,22 @@ class TestAnyFileChangedUnit:
         _time.sleep(0.05)
         file_a.write_text('{"changed": true}', encoding="utf-8")
 
-        assert _any_file_changed(paths, mtimes) is True
+        changed = _find_changed_paths(paths, mtimes)
+        assert file_a in changed
 
-    def test_no_change_returns_false(self, tmp_path):
-        """Returns False when no files have changed."""
+    def test_no_change_returns_empty(self, tmp_path):
+        """Returns empty list when no files have changed."""
         file_a = tmp_path / "a.json"
         file_a.write_text("{}", encoding="utf-8")
 
         paths = [file_a]
         mtimes = _record_mtimes(paths)
 
-        assert _any_file_changed(paths, mtimes) is False
+        assert _find_changed_paths(paths, mtimes) == []
 
-    def test_empty_paths_returns_false(self):
-        """Empty path list always returns False."""
-        assert _any_file_changed([], {}) is False
+    def test_empty_paths_returns_empty(self):
+        """Empty path list always returns empty list."""
+        assert _find_changed_paths([], {}) == []
 
 
 # ---------------------------------------------------------------------------

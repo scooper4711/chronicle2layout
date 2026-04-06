@@ -187,35 +187,33 @@ def run_single_layout(
     print(f"Wrote {output_path}")
 
 
-def _collect_watched_paths(
+def _build_dependency_map(
     blueprints_dir: Path,
     blueprint_ids: list[str],
-) -> list[Path]:
-    """Build the deduplicated list of blueprint file paths to monitor.
+) -> dict[Path, set[str]]:
+    """Map each watched file path to the blueprint ids that depend on it.
 
-    Unions the inheritance chains of all provided blueprint ids so that
-    a change to any file in any chain triggers regeneration.
+    Walks the inheritance chain of every blueprint id and records which
+    ids include each file. A shared parent file maps to all children
+    that inherit from it.
 
     Args:
         blueprints_dir: Root directory containing blueprint files.
         blueprint_ids: Blueprint ids to watch.
 
     Returns:
-        Deduplicated list of all blueprint file paths across all chains.
+        Dictionary mapping file paths to sets of dependent blueprint ids.
 
     Requirements: blueprint-batch-watch 6.3
     """
     blueprint_index = build_blueprint_index(blueprints_dir)
-    seen: set[Path] = set()
-    result: list[Path] = []
+    dep_map: dict[Path, set[str]] = {}
     for blueprint_id in blueprint_ids:
         blueprint_path = blueprint_index[blueprint_id]
         chain = collect_inheritance_chain(blueprint_path, blueprint_index)
         for path, _data in chain:
-            if path not in seen:
-                seen.add(path)
-                result.append(path)
-    return result
+            dep_map.setdefault(path, set()).add(blueprint_id)
+    return dep_map
 
 
 def _record_mtimes(paths: list[Path]) -> dict[Path, float]:
@@ -232,38 +230,40 @@ def _record_mtimes(paths: list[Path]) -> dict[Path, float]:
     return {path: os.path.getmtime(path) for path in paths}
 
 
-def _any_file_changed(
+def _find_changed_paths(
     paths: list[Path],
     previous_mtimes: dict[Path, float],
-) -> bool:
-    """Check whether any monitored file has been modified.
+) -> list[Path]:
+    """Return the watched paths whose mtime has changed.
 
     Args:
         paths: List of file paths to check.
         previous_mtimes: Previously recorded modification times.
 
     Returns:
-        True if any file's mtime differs from the recorded value.
+        List of paths that have been modified since last check.
 
     Requirements: blueprint-batch-watch 6.1, 6.2
     """
+    changed: list[Path] = []
     for path in paths:
         try:
             if os.path.getmtime(path) != previous_mtimes.get(path):
-                return True
+                changed.append(path)
         except OSError:
             continue
-    return False
+    return changed
 
 
 def watch_and_regenerate(
     blueprints_dir: Path,
     targets: list[tuple[str, Path]],
 ) -> None:
-    """Watch blueprint files for changes and regenerate layouts.
+    """Watch blueprint files for changes and regenerate affected layouts.
 
-    Monitors the inheritance chains of all target blueprints. When any
-    watched file changes, every target is regenerated.
+    Monitors the inheritance chains of all target blueprints. When a
+    watched file changes, only the targets that depend on that file
+    are regenerated.
 
     Args:
         blueprints_dir: Root directory containing blueprint files.
@@ -271,7 +271,7 @@ def watch_and_regenerate(
 
     Requirements: blueprint-batch-watch 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7
     """
-    blueprint_ids = [bid for bid, _ in targets]
+    target_map = {bid: out for bid, out in targets}
 
     for blueprint_id, output_path in targets:
         try:
@@ -280,33 +280,48 @@ def watch_and_regenerate(
             _print_error(f"Error ({blueprint_id}): {exc}")
 
     try:
-        watched_paths = _collect_watched_paths(blueprints_dir, blueprint_ids)
+        dep_map = _build_dependency_map(
+            blueprints_dir, list(target_map),
+        )
     except Exception as exc:  # noqa: BLE001 — report and continue
         _print_error(f"Error collecting watch paths: {exc}")
-        watched_paths = []
+        dep_map = {}
+    watched_paths = list(dep_map)
     mtimes = _record_mtimes(watched_paths)
 
     try:
         while True:
             time.sleep(1)
-            if not _any_file_changed(watched_paths, mtimes):
+            changed = _find_changed_paths(watched_paths, mtimes)
+            if not changed:
                 continue
 
-            print("Regenerating...")
-            for blueprint_id, output_path in targets:
+            affected_ids: set[str] = set()
+            for path in changed:
+                affected_ids.update(dep_map.get(path, set()))
+
+            affected_targets = [
+                (bid, target_map[bid]) for bid in sorted(affected_ids)
+            ]
+            names = ", ".join(bid for bid, _ in affected_targets)
+            print(f"Regenerating {names}...")
+
+            for blueprint_id, output_path in affected_targets:
                 try:
                     run_single_layout(
                         blueprints_dir, blueprint_id, output_path,
                     )
                 except Exception as exc:  # noqa: BLE001 — report and continue
                     _print_error(f"Error ({blueprint_id}): {exc}")
+
             try:
-                watched_paths = _collect_watched_paths(
-                    blueprints_dir, blueprint_ids,
+                dep_map = _build_dependency_map(
+                    blueprints_dir, list(target_map),
                 )
-            except Exception as exc:  # noqa: BLE001 — keep previous paths
+            except Exception as exc:  # noqa: BLE001 — keep previous map
                 _print_error(f"Error collecting watch paths: {exc}")
 
+            watched_paths = list(dep_map)
             mtimes = _record_mtimes(watched_paths)
     except KeyboardInterrupt:
         print("Stopped.")
