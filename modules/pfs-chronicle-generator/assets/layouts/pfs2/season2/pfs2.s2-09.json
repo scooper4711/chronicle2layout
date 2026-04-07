@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s2-09",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-09 The Seven Secrets of Dacilane Academy",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-09-TheSevenSecretsofDacilaneAcademyChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "book of translation (Mahwek; item 2, 25 gp; Pathfinder Lost Omens: Pathfinder Society Guide 93)",
+          "book of translation, advanced (Mahwek; item 5, 125 gp; Pathfinder Lost Omens: Pathfinder Society Guide 93)"
+        ],
+        "example": "book of translation (Mahwek; item 2, 25 gp; Pathfinder Lost Omens: Pathfinder Society Guide 93)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.book_of_translation_Mahwek;_item_2_25_gp;_Pathfind": {
+      "y": 1.5,
+      "y2": 11.5
+    },
+    "item.line.book_of_translation_advanced_Mahwek;_item_5_125_gp": {
+      "y": 12.1,
+      "y2": 22.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "book of translation (Mahwek; item 2, 25 gp; Pathfinder Lost Omens: Pathfinder Society Guide 93)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.book_of_translation_Mahwek;_item_2_25_gp;_Pathfind"
+            ]
+          }
+        ],
+        "book of translation, advanced (Mahwek; item 5, 125 gp; Pathfinder Lost Omens: Pathfinder Society Guide 93)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.book_of_translation_advanced_Mahwek;_item_5_125_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

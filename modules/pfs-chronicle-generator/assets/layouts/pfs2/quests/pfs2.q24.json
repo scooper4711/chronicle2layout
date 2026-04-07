@@ -44,39 +44,39 @@
     },
     "checkbox.had_a_position_of_honor": {
       "x": 21.172,
-      "y": 25.69,
+      "y": 19.665,
       "x2": 22.873,
-      "y2": 32.686
+      "y2": 27.228
     },
     "checkbox.were_a_guest_of_dishonor": {
       "x": 41.575,
-      "y": 25.69,
+      "y": 19.665,
       "x2": 43.277,
-      "y2": 32.686
+      "y2": 27.228
     },
     "checkbox.prevented_a_fire_from_spreading": {
       "x": 73.187,
-      "y": 25.69,
+      "y": 19.665,
       "x2": 74.889,
-      "y2": 32.686
+      "y2": 27.228
     },
     "checkbox.were_not_able_to_control_a_fire_that_broke_out": {
       "x": 1.373,
-      "y": 33.292,
+      "y": 27.883,
       "x2": 3.075,
-      "y2": 40.288
+      "y2": 35.446
     },
     "item.line.\u014dmukade": {
-      "y": 11.4,
-      "y2": 17.8
+      "y": 6.5,
+      "y2": 13.3
     },
     "item.line.venom_black_adder_venom_level_2_6gp;_Pathfinder_GM": {
-      "y": 12.4,
-      "y2": 22.4
+      "y": 7.6,
+      "y2": 18.1
     },
     "item.line.healing_berry_minor_healing_potion_level_1_4gp;_GM": {
-      "y": 17.7,
-      "y2": 33.0
+      "y": 13.2,
+      "y2": 29.3
     }
   },
   "content": [

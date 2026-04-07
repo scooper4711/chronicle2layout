@@ -120,14 +120,42 @@ default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/
 # =========================================================================
 # Seasons 2–7
 # =========================================================================
-# No parent layout breakpoints known yet — each season uses a single
-# parent. Create parent layouts before running, and split rules here
-# if the chronicle format changes mid-season.
+# Season 2 has layout breakpoints at s2-07, s2-17, and s2-22.
+# Seasons 3–7 use a single parent each. Create parent layouts before
+# running, and split rules here if the chronicle format changes mid-season.
+
+[[rules]]
+pattern = 'pfs2/season2/2-(0[0-4])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s2-$1"
+parent = "pfs2.season2-layout-s2-00"
+description = "2-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season2/2-07-(\S+)Chronicle\.pdf$'
+id = "pfs2.s2-07"
+parent = "pfs2.season2-layout-s2-07"
+description = "2-07 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-07-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season2/2-17-(\S+)Chronicle\.pdf$'
+id = "pfs2.s2-17"
+parent = "pfs2.season2-layout-s2-17"
+description = "2-17 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-17-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season2/2-(2[2-4])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s2-$1"
+parent = "pfs2.season2-layout-s2-22"
+description = "2-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-$1-$2Chronicle.pdf"
 
 [[rules]]
 pattern = 'pfs2/season2/2-(\d+)-(\S+)Chronicle\.pdf$'
 id = "pfs2.s2-$1"
-parent = "pfs2.season2-layout-s2-00"
+parent = "pfs2.season2-layout-s2-05"
 description = "2-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-$1-$2Chronicle.pdf"
 

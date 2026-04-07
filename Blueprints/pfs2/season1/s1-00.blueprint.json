@@ -192,9 +192,9 @@
     {
       "name": "rewards",
       "parent": "main",
-      "left": "v_bar[1]",
+      "left": "v_bar[1].right",
       "right": "main.right",
-      "top": "h_bar[1]",
+      "top": "h_bar[1].bottom",
       "bottom": "h_thin[7]"
     },
     {

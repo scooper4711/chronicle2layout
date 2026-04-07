@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s2-11",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-11 The Pathfinder Trials",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-11-ThePathfinderTrialsChronicle.pdf"
+}

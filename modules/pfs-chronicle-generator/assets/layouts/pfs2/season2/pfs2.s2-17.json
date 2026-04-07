@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s2-17",
+  "parent": "pfs2.season2-layout-s2-17",
+  "description": "2-17 Lost Maid of Anactoria",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-17-LostMaidofAnactoriaChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "skeleton key (item 5, 125 gp)"
+        ],
+        "example": "skeleton key (item 5, 125 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.skeleton_key_item_5_125_gp": {
+      "y": 1.5,
+      "y2": 6.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "skeleton key (item 5, 125 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.skeleton_key_item_5_125_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

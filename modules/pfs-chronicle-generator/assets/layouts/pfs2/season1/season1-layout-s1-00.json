@@ -94,7 +94,7 @@
       },
       "total_gp": {
         "type": "text",
-        "description": "Total GP",
+        "description": "Total GP from treasure bundles and income",
         "example": "3gp 7sp 1cp"
       }
     },
@@ -180,8 +180,8 @@
       "parent": "main"
     },
     "rewards": {
-      "x": 80.0,
-      "y": 26.4,
+      "x": 82.2,
+      "y": 28.2,
       "x2": 100.0,
       "y2": 94.5,
       "parent": "main"
@@ -293,10 +293,10 @@
       "value": "param:xp_gained",
       "type": "text",
       "canvas": "rewards",
-      "x": 14.2,
-      "y": 10.7,
-      "x2": 98.9,
-      "y2": 16.4,
+      "x": 3.2,
+      "y": 8.3,
+      "x2": 98.7,
+      "y2": 14.2,
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"
@@ -305,10 +305,10 @@
       "value": "param:gp_gained",
       "type": "text",
       "canvas": "rewards",
-      "x": 14.2,
-      "y": 34.4,
-      "x2": 98.9,
-      "y2": 41.1,
+      "x": 3.2,
+      "y": 32.7,
+      "x2": 98.7,
+      "y2": 39.5,
       "font": "Helvetica",
       "fontsize": 14,
       "align": "CM"

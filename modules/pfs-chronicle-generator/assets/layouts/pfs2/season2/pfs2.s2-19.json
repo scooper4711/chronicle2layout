@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s2-19",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-19 Enter the Pallid Peak",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-19-EnterthePallidPeakChronicle.pdf"
+}

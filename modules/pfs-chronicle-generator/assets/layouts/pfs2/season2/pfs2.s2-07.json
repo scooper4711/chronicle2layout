@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s2-07",
+  "parent": "pfs2.season2-layout-s2-07",
+  "description": "2-07 The Blakros Deception",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-07-TheBlakrosDeceptionChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bag of holding type II (item 7, 300 gp)",
+          "moderate healing potion (item 6, 50 gp)",
+          "shifting runestone (item 6, 225 gp)"
+        ],
+        "example": "bag of holding type II (item 7, 300 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.bag_of_holding_type_II_item_7_300_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.moderate_healing_potion_item_6_50_gp": {
+      "y": 12.3,
+      "y2": 16.7
+    },
+    "item.line.shifting_runestone_item_6_225_gp": {
+      "y": 17.6,
+      "y2": 22.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bag of holding type II (item 7, 300 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bag_of_holding_type_II_item_7_300_gp"
+            ]
+          }
+        ],
+        "moderate healing potion (item 6, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_item_6_50_gp"
+            ]
+          }
+        ],
+        "shifting runestone (item 6, 225 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.shifting_runestone_item_6_225_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

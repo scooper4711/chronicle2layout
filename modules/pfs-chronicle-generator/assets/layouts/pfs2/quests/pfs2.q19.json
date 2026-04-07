@@ -25,21 +25,21 @@
     },
     "checkbox.the_awakened_rabbit_Summer_Storm": {
       "x": 16.792,
-      "y": 33.292,
+      "y": 27.883,
       "x2": 18.494,
-      "y2": 40.288
+      "y2": 35.446
     },
     "checkbox.the_missing_Voll_family_members": {
       "x": 45.91,
-      "y": 33.292,
+      "y": 27.883,
       "x2": 47.612,
-      "y2": 40.288
+      "y2": 35.446
     },
     "checkbox.no_one_else": {
       "x": 72.36,
-      "y": 33.292,
+      "y": 27.883,
       "x2": 74.062,
-      "y2": 40.288
+      "y2": 35.446
     }
   },
   "content": [

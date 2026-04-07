@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s2-14",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-14 Lostin Flames",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-14-LostinFlamesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "animal staff (item 4, 90 gp)"
+        ],
+        "example": "animal staff (item 4, 90 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.animal_staff_item_4_90_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "animal staff (item 4, 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.animal_staff_item_4_90_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

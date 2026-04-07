@@ -1,0 +1,147 @@
+{
+  "id": "pfs2.s2-10",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-10 In Burning Dawn",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-10-InBurningDawnChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 striking orc neck splitter (item 4, 100 gp)"
+        ],
+        "example": "+1 striking orc neck splitter (item 4, 100 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "saved the Burning Sun orcs /",
+          "failed to save them",
+          "convince the Burning Sun to ally with the Society and",
+          "even received promise of an introduction to Belkzen\u2019s leader",
+          "managed to stop the Scorched Earth from opening an easy passage to raid the Burning Sun"
+        ],
+        "example": "saved the Burning Sun orcs /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.saved_the_Burning_Sun_orcs_/": {
+      "x": 17.791,
+      "y": 17.608,
+      "x2": 19.229,
+      "y2": 32.143
+    },
+    "checkbox.failed_to_save_them": {
+      "x": 40.51,
+      "y": 17.608,
+      "x2": 41.948,
+      "y2": 32.143
+    },
+    "checkbox.convince_the_Burning_Sun_to_ally_with_the_Society_": {
+      "x": 52.454,
+      "y": 31.97,
+      "x2": 53.892,
+      "y2": 46.505
+    },
+    "checkbox.even_received_promise_of_an_introduction_to_Belkze": {
+      "x": 93.738,
+      "y": 31.97,
+      "x2": 95.176,
+      "y2": 46.505
+    },
+    "checkbox.managed_to_stop_the_Scorched_Earth_from_opening_an": {
+      "x": 57.389,
+      "y": 46.333,
+      "x2": 58.827,
+      "y2": 60.867
+    },
+    "item.line.+1_striking_orc_neck_splitter_item_4_100_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 striking orc neck splitter (item 4, 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_orc_neck_splitter_item_4_100_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "saved the Burning Sun orcs /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.saved_the_Burning_Sun_orcs_/"
+            ]
+          }
+        ],
+        "failed to save them": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_save_them"
+            ]
+          }
+        ],
+        "convince the Burning Sun to ally with the Society and": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convince_the_Burning_Sun_to_ally_with_the_Society_"
+            ]
+          }
+        ],
+        "even received promise of an introduction to Belkzen\u2019s leader": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.even_received_promise_of_an_introduction_to_Belkze"
+            ]
+          }
+        ],
+        "managed to stop the Scorched Earth from opening an easy passage to raid the Burning Sun": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_stop_the_Scorched_Earth_from_opening_an"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

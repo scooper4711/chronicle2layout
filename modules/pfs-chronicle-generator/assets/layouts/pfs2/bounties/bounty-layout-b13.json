@@ -50,38 +50,8 @@
       },
       "total_gp": {
         "type": "text",
-        "description": "Total GP",
+        "description": "Total GP from treasure bundles and income",
         "example": "3gp 7sp 1cp"
-      }
-    },
-    "Notes": {
-      "notes": {
-        "type": "multiline",
-        "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
-        "lines": 6
-      }
-    },
-    "Event Info": {
-      "event": {
-        "type": "text",
-        "description": "Event name",
-        "example": "PaizoCon"
-      },
-      "eventcode": {
-        "type": "text",
-        "description": "Event code",
-        "example": 1234
-      },
-      "date": {
-        "type": "text",
-        "description": "The date on which the game session took place",
-        "example": "27.06.2020"
-      },
-      "gmid": {
-        "type": "text",
-        "description": "Gamemasters PFS ID",
-        "example": 654321
       }
     },
     "Player Info": {
@@ -140,6 +110,36 @@
           9
         ],
         "example": "1,2,3,4,5,6,7,8,9"
+      }
+    },
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 6
+      }
+    },
+    "Event Info": {
+      "event": {
+        "type": "text",
+        "description": "Event name",
+        "example": "PaizoCon"
+      },
+      "eventcode": {
+        "type": "text",
+        "description": "Event code",
+        "example": 1234
+      },
+      "date": {
+        "type": "text",
+        "description": "The date on which the game session took place",
+        "example": "27.06.2020"
+      },
+      "gmid": {
+        "type": "text",
+        "description": "Gamemasters PFS ID",
+        "example": 654321
       }
     }
   },

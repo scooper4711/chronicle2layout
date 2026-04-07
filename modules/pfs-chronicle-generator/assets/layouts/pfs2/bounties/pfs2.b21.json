@@ -25,16 +25,16 @@
       "x2": 95
     },
     "item.line.Society_characters_visit_https://paizocom/pathfind": {
-      "y": 16.2,
-      "y2": 21.2
+      "y": 11.8,
+      "y2": 17.1
     },
     "item.line.to_their_character_level_Chronicle_Sheets_for_Path": {
-      "y": 26.6,
-      "y2": 31.1
+      "y": 22.8,
+      "y2": 27.4
     },
     "item.line.their_character_level_+2": {
-      "y": 36.7,
-      "y2": 41.2
+      "y": 33.4,
+      "y2": 38.1
     }
   },
   "content": [

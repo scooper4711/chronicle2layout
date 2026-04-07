@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s2-04",
+  "parent": "pfs2.season2-layout-s2-00",
+  "description": "2-04 Path of Kings",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-04-PathofKingsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "clandestine cloak (level 6; 230 gp)"
+        ],
+        "example": "clandestine cloak (level 6; 230 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.clandestine_cloak_level_6;_230_gp": {
+      "y": 3.0,
+      "y2": 7.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "clandestine cloak (level 6; 230 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clandestine_cloak_level_6;_230_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

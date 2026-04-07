@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s2-06",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-06 The Crashing Wave",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-06-TheCrashingWaveChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "animal staff (item 4, 90 gp)",
+          "brine shark elemental gem (100 gp; item 8, as elemental gem, except it summons a brine shark)",
+          "dragon turtle scale (item 4, 13 gp)"
+        ],
+        "example": "animal staff (item 4, 90 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.animal_staff_item_4_90_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.brine_shark_elemental_gem_100_gp;_item_8_as_elemen": {
+      "y": 12.3,
+      "y2": 22.0
+    },
+    "item.line.dragon_turtle_scale_item_4_13_gp": {
+      "y": 22.9,
+      "y2": 27.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "animal staff (item 4, 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.animal_staff_item_4_90_gp"
+            ]
+          }
+        ],
+        "brine shark elemental gem (100 gp; item 8, as elemental gem, except it summons a brine shark)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brine_shark_elemental_gem_100_gp;_item_8_as_elemen"
+            ]
+          }
+        ],
+        "dragon turtle scale (item 4, 13 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon_turtle_scale_item_4_13_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

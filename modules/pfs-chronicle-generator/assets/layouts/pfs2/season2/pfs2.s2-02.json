@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s2-02",
+  "parent": "pfs2.season2-layout-s2-00",
+  "description": "2-02 Mountain of Sea and Sky",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-02-MountainofSeaandSkyChronicle.pdf"
+}

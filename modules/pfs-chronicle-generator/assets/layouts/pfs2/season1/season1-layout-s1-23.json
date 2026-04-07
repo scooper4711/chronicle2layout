@@ -94,7 +94,7 @@
       },
       "total_gp": {
         "type": "text",
-        "description": "Total GP",
+        "description": "Total GP from treasure bundles and income",
         "example": "3gp 7sp 1cp"
       }
     },

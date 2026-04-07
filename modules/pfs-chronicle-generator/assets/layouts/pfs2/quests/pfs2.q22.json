@@ -32,63 +32,63 @@
     },
     "checkbox.were_king_of_the_hill": {
       "x": 85.002,
-      "y": 33.292,
+      "y": 27.883,
       "x2": 86.704,
-      "y2": 40.288
+      "y2": 35.446
     },
     "checkbox.helped_with_crafting": {
       "x": 4.63,
-      "y": 40.894,
+      "y": 36.102,
       "x2": 6.332,
-      "y2": 47.89
+      "y2": 43.665
     },
     "checkbox.played_trivia": {
       "x": 22.473,
-      "y": 40.894,
+      "y": 36.102,
       "x2": 24.175,
-      "y2": 47.89
+      "y2": 43.665
     },
     "checkbox.participated_in_a_prank_war": {
       "x": 34.729,
-      "y": 40.894,
+      "y": 36.102,
       "x2": 36.431,
-      "y2": 47.89
+      "y2": 43.665
     },
     "checkbox.stopping_scamps_from_placing_hazardous_traps": {
       "x": 15.465,
-      "y": 48.496,
+      "y": 44.32,
       "x2": 17.167,
-      "y2": 55.492
+      "y2": 51.883
     },
     "checkbox.broke_up_a_fight_between_a_swarm_of_scamps": {
       "x": 52.226,
-      "y": 48.496,
+      "y": 44.32,
       "x2": 53.928,
-      "y2": 55.492
+      "y2": 51.883
     },
     "checkbox.defended_the_fan_from_attacking_elementals": {
       "x": 87.378,
-      "y": 48.496,
+      "y": 44.32,
       "x2": 89.079,
-      "y2": 55.492
+      "y2": 51.883
     },
     "checkbox.able_to_help_broker_a_peace_between_the_scamps_and": {
       "x": 40.029,
-      "y": 56.098,
+      "y": 52.538,
       "x2": 41.731,
-      "y2": 63.094
+      "y2": 60.101
     },
     "checkbox.convinced_the_scamps_to_just_stay_away_from_the_en": {
       "x": 86.401,
-      "y": 56.098,
+      "y": 52.538,
       "x2": 88.102,
-      "y2": 63.094
+      "y2": 60.101
     },
     "checkbox.unable_to_help": {
       "x": 35.133,
-      "y": 63.7,
+      "y": 60.757,
       "x2": 36.835,
-      "y2": 70.696
+      "y2": 68.32
     }
   },
   "content": [

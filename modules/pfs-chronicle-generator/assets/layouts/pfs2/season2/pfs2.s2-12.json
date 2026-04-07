@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s2-12",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-12 Snakesin the Grass",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-12-SnakesintheGrassChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "greater hat of disguise (item 7, 340 gp)"
+        ],
+        "example": "greater hat of disguise (item 7, 340 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.greater_hat_of_disguise_item_7_340_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "greater hat of disguise (item 7, 340 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_hat_of_disguise_item_7_340_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
