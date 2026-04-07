@@ -2,5 +2,88 @@
   "id": "pfs2.s5-11",
   "parent": "pfs2.season5-layout-s5-00",
   "description": "5-11 Equal Exchanges-The Hidden Current",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-11-EqualExchanges-TheHiddenCurrentChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-11-EqualExchanges-TheHiddenCurrentChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 striking battleaxe (level 4, 100 gp)",
+          "lesser retaliation rune (level 6, 250 gp; Path- finder Treasure Vault 144)",
+          "wine of the bloodR (level 5, 30 gp; Pathfinder Dark Archive 114)",
+          "ghost oil (level 4, 18 gp; Pathfinder Lost Omens Knights of Lastwall 90)"
+        ],
+        "example": "+1 striking battleaxe (level 4, 100 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_striking_battleaxe_level_4_100_gp": {
+      "y": 3.9,
+      "y2": 10.1
+    },
+    "item.line.lesser_retaliation_rune_level_6_250_gp;_Path-_find": {
+      "y": 9.5,
+      "y2": 21.3
+    },
+    "item.line.wine_of_the_bloodR_level_5_30_gp;_Pathfinder_Dark_": {
+      "y": 20.7,
+      "y2": 32.5
+    },
+    "item.line.ghost_oil_level_4_18_gp;_Pathfinder_Lost_Omens_Kni": {
+      "y": 31.9,
+      "y2": 43.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 striking battleaxe (level 4, 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_battleaxe_level_4_100_gp"
+            ]
+          }
+        ],
+        "lesser retaliation rune (level 6, 250 gp; Path- finder Treasure Vault 144)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_retaliation_rune_level_6_250_gp;_Path-_find"
+            ]
+          }
+        ],
+        "wine of the bloodR (level 5, 30 gp; Pathfinder Dark Archive 114)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wine_of_the_bloodR_level_5_30_gp;_Pathfinder_Dark_"
+            ]
+          }
+        ],
+        "ghost oil (level 4, 18 gp; Pathfinder Lost Omens Knights of Lastwall 90)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ghost_oil_level_4_18_gp;_Pathfinder_Lost_Omens_Kni"
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

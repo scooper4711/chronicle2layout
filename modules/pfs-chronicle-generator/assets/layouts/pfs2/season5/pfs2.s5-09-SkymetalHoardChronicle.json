@@ -2,5 +2,102 @@
   "id": "pfs2.s5-09",
   "parent": "pfs2.season5-layout-s5-00",
   "description": "5-09 Equal Exchanges-Skymetal Hoard",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-09-EqualExchanges-SkymetalHoardChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-09-EqualExchanges-SkymetalHoardChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "crafting materials for a druid\u2019s crown (level 6, 110 gp; Pathfinder Treasure Vault 151)",
+          "lesser mirror goggles (level 5, 135 gp; Pathfinder Treasure Vault 147)",
+          "moderate healing potion (level 6, 50 gp)",
+          "noqual (40+ gp; Pathfinder Lost Omens Grand Bazaar 99)",
+          "wounding rune (level 7, 340 gp)"
+        ],
+        "example": "crafting materials for a druid\u2019s crown (level 6, 110 gp; Pathfinder Treasure Vault 151)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.crafting_materials_for_a_druid\u2019s_crown_level_6_110": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.lesser_mirror_goggles_level_5_135_gp;_Pathfinder_T": {
+      "y": 18.8,
+      "y2": 29.3
+    },
+    "item.line.moderate_healing_potion_level_6_50_gp": {
+      "y": 30.0,
+      "y2": 34.9
+    },
+    "item.line.noqual_40+_gp;_Pathfinder_Lost_Omens_Grand_Bazaar_": {
+      "y": 35.6,
+      "y2": 46.1
+    },
+    "item.line.wounding_rune_level_7_340_gp": {
+      "y": 46.8,
+      "y2": 51.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "crafting materials for a druid\u2019s crown (level 6, 110 gp; Pathfinder Treasure Vault 151)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.crafting_materials_for_a_druid\u2019s_crown_level_6_110"
+            ]
+          }
+        ],
+        "lesser mirror goggles (level 5, 135 gp; Pathfinder Treasure Vault 147)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_mirror_goggles_level_5_135_gp;_Pathfinder_T"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_50_gp"
+            ]
+          }
+        ],
+        "noqual (40+ gp; Pathfinder Lost Omens Grand Bazaar 99)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.noqual_40+_gp;_Pathfinder_Lost_Omens_Grand_Bazaar_"
+            ]
+          }
+        ],
+        "wounding rune (level 7, 340 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wounding_rune_level_7_340_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
