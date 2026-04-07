@@ -147,6 +147,22 @@
       "right": "notes.right",
       "top": "notes.top",
       "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 3,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [
@@ -202,7 +218,7 @@
       "name": "notes",
       "parent": "main",
       "left": "main.left",
-      "right": "v_thin[1]",
+      "right": "main.right",
       "top": "h_bar[4].bottom",
       "bottom": "h_thin[4].top"
     },

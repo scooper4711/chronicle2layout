@@ -189,7 +189,7 @@
     "notes": {
       "x": 0.0,
       "y": 86.3,
-      "x2": 51.8,
+      "x2": 100.0,
       "y2": 94.6,
       "parent": "main"
     },
@@ -325,6 +325,19 @@
       "fontsize": 11,
       "align": "LB",
       "lines": 6
+    },
+    {
+      "value": "param:reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "x": 2.6,
+      "y": 0.0,
+      "x2": 97.4,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 3
     }
   ]
 }
