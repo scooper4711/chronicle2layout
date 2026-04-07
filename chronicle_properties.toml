@@ -118,11 +118,9 @@ description = "1-25 ${~1}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-25-$1Chronicle.pdf"
 
 # =========================================================================
-# Seasons 2–7
+# Season 2
 # =========================================================================
 # Season 2 has layout breakpoints at s2-07, s2-17, and s2-22.
-# Seasons 3–7 use a single parent each. Create parent layouts before
-# running, and split rules here if the chronicle format changes mid-season.
 
 [[rules]]
 pattern = 'pfs2/season2/2-(0[0-4])-(\S+)Chronicle\.pdf$'
@@ -159,12 +157,80 @@ parent = "pfs2.season2-layout-s2-05"
 description = "2-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-$1-$2Chronicle.pdf"
 
+# =========================================================================
+# Season 3
+# =========================================================================
+# Season 3 layout changes at s3-04; s3-08, s3-10, and s3-16 are
+# single-chronicle overrides.
+
 [[rules]]
-pattern = 'pfs2/season3/3-(\d+)-(\S+)Chronicle\.pdf$'
+pattern = 'pfs2/season3/3-(0[0-3])-(\S+)Chronicle\.pdf$'
 id = "pfs2.s3-$1"
 parent = "pfs2.season3-layout-s3-00"
 description = "3-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season3/3-08-(\S+)Chronicle\.pdf$'
+id = "pfs2.s3-08"
+parent = "pfs2.season3-layout-s3-08"
+description = "3-08 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-08-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season3/3-10-(\S+)Chronicle\.pdf$'
+id = "pfs2.s3-10"
+parent = "pfs2.season3-layout-s3-10"
+description = "3-10 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-10-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season3/3-16-(\S+)Chronicle\.pdf$'
+id = "pfs2.s3-16"
+parent = "pfs2.season3-layout-s3-16"
+description = "3-16 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-16-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season3/3-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s3-$1"
+parent = "pfs2.season3-layout-s3-04"
+description = "3-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-$1-$2Chronicle.pdf"
+
+# =========================================================================
+# Season 4
+# =========================================================================
+# Season 4 layout changes at s4-02, s4-04, s4-06, and s4-07;
+# s4-00 is the default for 01 and 09+.
+
+[[rules]]
+pattern = 'pfs2/season4/4-(0[23])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s4-$1"
+parent = "pfs2.season4-layout-s4-02"
+description = "4-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season4/4-(0[45])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s4-$1"
+parent = "pfs2.season4-layout-s4-04"
+description = "4-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season4/4-06-(\S+)Chronicle\.pdf$'
+id = "pfs2.s4-06"
+parent = "pfs2.season4-layout-s4-06"
+description = "4-06 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-06-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/season4/4-(0[78])-(\S+)Chronicle\.pdf$'
+id = "pfs2.s4-$1"
+parent = "pfs2.season4-layout-s4-07"
+description = "4-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-$1-$2Chronicle.pdf"
 
 [[rules]]
 pattern = 'pfs2/season4/4-(\d+)-(\S+)Chronicle\.pdf$'
@@ -173,6 +239,11 @@ parent = "pfs2.season4-layout-s4-00"
 description = "4-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-$1-$2Chronicle.pdf"
 
+# =========================================================================
+# Season 5
+# =========================================================================
+# All Season 5 chronicles share a single layout.
+
 [[rules]]
 pattern = 'pfs2/season5/5-(\d+)-(\S+)Chronicle\.pdf$'
 id = "pfs2.s5-$1"
@@ -180,12 +251,30 @@ parent = "pfs2.season5-layout-s5-00"
 description = "5-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-$1-$2Chronicle.pdf"
 
+# =========================================================================
+# Season 6
+# =========================================================================
+# Season 6 layout changes at s6-02 (bar[0] shifts); s6-00 covers 01
+# and 11+.
+
+[[rules]]
+pattern = 'pfs2/season6/6-(0[2-9]|10)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s6-$1"
+parent = "pfs2.season6-layout-s6-02"
+description = "6-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-$1-$2Chronicle.pdf"
+
 [[rules]]
 pattern = 'pfs2/season6/6-(\d+)-(\S+)Chronicle\.pdf$'
 id = "pfs2.s6-$1"
 parent = "pfs2.season6-layout-s6-00"
 description = "6-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-$1-$2Chronicle.pdf"
+
+# =========================================================================
+# Season 7
+# =========================================================================
+# All Season 7 chronicles share a single layout.
 
 [[rules]]
 pattern = 'pfs2/season7/7-(\d+)-(\S+)Chronicle\.pdf$'

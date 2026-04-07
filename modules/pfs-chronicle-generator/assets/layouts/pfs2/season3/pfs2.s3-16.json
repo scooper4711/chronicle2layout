@@ -1,0 +1,113 @@
+{
+  "id": "pfs2.s3-16",
+  "parent": "pfs2.season3-layout-s3-16",
+  "description": "3-16 Escapefrom Oppara",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-16-EscapefromOpparaChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Bag of holding type I (item 4, discounted to 68 gp, limit 1)",
+          "Bag of holding type II (item 7, 300 gp)"
+        ],
+        "example": "Bag of holding type I (item 4, discounted to 68 gp, limit 1)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "pursue the study of Stasian coils",
+          "pursue the study of black powder"
+        ],
+        "example": "pursue the study of Stasian coils"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.pursue_the_study_of_Stasian_coils": {
+      "x": 70.351,
+      "y": 69.174,
+      "x2": 72.24,
+      "y2": 80.549
+    },
+    "checkbox.pursue_the_study_of_black_powder": {
+      "x": 96.508,
+      "y": 69.174,
+      "x2": 98.397,
+      "y2": 80.549
+    },
+    "item.line.Bag_of_holding_type_I_item_4_discounted_to_68_gp_l": {
+      "y": 2.3,
+      "y2": 7.3
+    },
+    "item.line.Bag_of_holding_type_II_item_7_300_gp": {
+      "y": 8.2,
+      "y2": 13.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Bag of holding type I (item 4, discounted to 68 gp, limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Bag_of_holding_type_I_item_4_discounted_to_68_gp_l"
+            ]
+          }
+        ],
+        "Bag of holding type II (item 7, 300 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Bag_of_holding_type_II_item_7_300_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "pursue the study of Stasian coils": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.pursue_the_study_of_Stasian_coils"
+            ]
+          }
+        ],
+        "pursue the study of black powder": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.pursue_the_study_of_black_powder"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

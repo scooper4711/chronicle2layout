@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s3-08",
+  "parent": "pfs2.season3-layout-s3-08",
+  "description": "3-08 Foundations Price",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-08-FoundationsPriceChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bird feather token (item 3, discounted to 6 gp; limit 1)",
+          "chest feather token (item 3, discounted to 8 gp; limit 1)"
+        ],
+        "example": "bird feather token (item 3, discounted to 6 gp; limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.bird_feather_token_item_3_discounted_to_6_gp;_limi": {
+      "y": 1.5,
+      "y2": 6.2
+    },
+    "item.line.chest_feather_token_item_3_discounted_to_8_gp;_lim": {
+      "y": 6.8,
+      "y2": 11.5
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bird feather token (item 3, discounted to 6 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bird_feather_token_item_3_discounted_to_6_gp;_limi"
+            ]
+          }
+        ],
+        "chest feather token (item 3, discounted to 8 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.chest_feather_token_item_3_discounted_to_8_gp;_lim"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

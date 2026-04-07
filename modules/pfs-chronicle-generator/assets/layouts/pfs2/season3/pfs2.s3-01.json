@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s3-01",
+  "parent": "pfs2.season3-layout-s3-00",
+  "description": "3-01 Intro Year of Shattered Sanctuaries",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-01-IntroYearofShatteredSanctuariesChronicle.pdf"
+}

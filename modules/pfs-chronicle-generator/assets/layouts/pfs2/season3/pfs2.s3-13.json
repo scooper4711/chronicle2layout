@@ -1,0 +1,191 @@
+{
+  "id": "pfs2.s3-13",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-13 Guardians Covenant",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-13-GuardiansCovenantChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "diplomat\u2019s badge (item 5; 150 gp)",
+          "goggles of night (item 5; 150 gp)",
+          "ring of the ram (item 6; 220 gp)"
+        ],
+        "example": "diplomat\u2019s badge (item 5; 150 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "told legendary tales",
+          "forged a mighty object",
+          "charted a path through the forest",
+          "recovered a lost hero",
+          "motivated local young people to become heroes",
+          "eliminated malevolent creatures hiding in an abandoned village nearby"
+        ],
+        "example": "told legendary tales"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.told_legendary_tales": {
+      "x": 5.031,
+      "y": 31.862,
+      "x2": 6.919,
+      "y2": 46.552
+    },
+    "checkbox.forged_a_mighty_object": {
+      "x": 22.675,
+      "y": 31.862,
+      "x2": 24.564,
+      "y2": 46.552
+    },
+    "checkbox.charted_a_path_through_the_forest": {
+      "x": 42.618,
+      "y": 31.862,
+      "x2": 44.507,
+      "y2": 46.552
+    },
+    "checkbox.recovered_a_lost_hero": {
+      "x": 70.379,
+      "y": 31.862,
+      "x2": 72.267,
+      "y2": 46.552
+    },
+    "checkbox.motivated_local_young_people_to_become_heroes": {
+      "x": 89.096,
+      "y": 31.862,
+      "x2": 90.985,
+      "y2": 46.552
+    },
+    "checkbox.eliminated_malevolent_creatures_hiding_in_an_aband": {
+      "x": 32.66,
+      "y": 46.228,
+      "x2": 34.549,
+      "y2": 60.918
+    },
+    "item.line.diplomat\u2019s_badge_item_5;_150_gp": {
+      "y": 1.5,
+      "y2": 6.2
+    },
+    "item.line.goggles_of_night_item_5;_150_gp": {
+      "y": 6.8,
+      "y2": 11.5
+    },
+    "item.line.ring_of_the_ram_item_6;_220_gp": {
+      "y": 12.1,
+      "y2": 16.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "diplomat\u2019s badge (item 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.diplomat\u2019s_badge_item_5;_150_gp"
+            ]
+          }
+        ],
+        "goggles of night (item 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.goggles_of_night_item_5;_150_gp"
+            ]
+          }
+        ],
+        "ring of the ram (item 6; 220 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_the_ram_item_6;_220_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "told legendary tales": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.told_legendary_tales"
+            ]
+          }
+        ],
+        "forged a mighty object": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.forged_a_mighty_object"
+            ]
+          }
+        ],
+        "charted a path through the forest": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.charted_a_path_through_the_forest"
+            ]
+          }
+        ],
+        "recovered a lost hero": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.recovered_a_lost_hero"
+            ]
+          }
+        ],
+        "motivated local young people to become heroes": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.motivated_local_young_people_to_become_heroes"
+            ]
+          }
+        ],
+        "eliminated malevolent creatures hiding in an abandoned village nearby": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.eliminated_malevolent_creatures_hiding_in_an_aband"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.s3-07",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-07 The Locked Lodge",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-07-TheLockedLodgeChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "slew Aydrian in combat",
+          "captured Aydrian to be brought before House Thrune"
+        ],
+        "example": "slew Aydrian in combat"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.slew_Aydrian_in_combat": {
+      "x": 69.71,
+      "y": 46.228,
+      "x2": 71.41,
+      "y2": 59.449
+    },
+    "checkbox.captured_Aydrian_to_be_brought_before_House_Thrune": {
+      "x": 90.157,
+      "y": 46.228,
+      "x2": 91.857,
+      "y2": 59.449
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "slew Aydrian in combat": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.slew_Aydrian_in_combat"
+            ]
+          }
+        ],
+        "captured Aydrian to be brought before House Thrune": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.captured_Aydrian_to_be_brought_before_House_Thrune"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
