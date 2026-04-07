@@ -13,6 +13,18 @@
         ],
         "example": "greater hat of disguise (item 7, 340 gp)"
       }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "you uncovered that Artennod was responsible for a sudden attack on the hobgoblin camp",
+          "managed to secure an agreement with Oprak for the Society but perhaps",
+          "Artennod Raike vowed revenge on behalf of the Aspis Consortium before departing the camp"
+        ],
+        "example": "you uncovered that Artennod was responsible for a sudden attack on the hobgoblin camp"
+      }
     }
   },
   "presets": {
@@ -21,6 +33,29 @@
       "color": "black",
       "x": 0.5,
       "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.you_uncovered_that_Artennod_was_responsible_for_a_": {
+      "x": 35.265,
+      "y": 32.207,
+      "x2": 36.767,
+      "y2": 45.708
+    },
+    "checkbox.managed_to_secure_an_agreement_with_Oprak_for_the_": {
+      "x": 9.78,
+      "y": 46.573,
+      "x2": 11.282,
+      "y2": 60.074
+    },
+    "checkbox.Artennod_Raike_vowed_revenge_on_behalf_of_the_Aspi": {
+      "x": 65.351,
+      "y": 46.573,
+      "x2": 66.854,
+      "y2": 60.074
     },
     "item.line.greater_hat_of_disguise_item_7_340_gp": {
       "y": 7.0,
@@ -38,6 +73,39 @@
             "presets": [
               "strikeout_item",
               "item.line.greater_hat_of_disguise_item_7_340_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "you uncovered that Artennod was responsible for a sudden attack on the hobgoblin camp": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_uncovered_that_Artennod_was_responsible_for_a_"
+            ]
+          }
+        ],
+        "managed to secure an agreement with Oprak for the Society but perhaps": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_secure_an_agreement_with_Oprak_for_the_"
+            ]
+          }
+        ],
+        "Artennod Raike vowed revenge on behalf of the Aspis Consortium before departing the camp": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Artennod_Raike_vowed_revenge_on_behalf_of_the_Aspi"
             ]
           }
         ]

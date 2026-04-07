@@ -19,6 +19,19 @@
         ],
         "example": "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)"
       }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "failed",
+          "managed to steal critical war plans from the army commander",
+          "the Shelynite dissident Vali",
+          "the Kuthite zealot Mara to bring back to her agents in Nidal"
+        ],
+        "example": "failed"
+      }
     }
   },
   "presets": {
@@ -27,6 +40,35 @@
       "color": "black",
       "x": 0.5,
       "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.failed": {
+      "x": 96.811,
+      "y": 19.862,
+      "x2": 98.316,
+      "y2": 27.585
+    },
+    "checkbox.managed_to_steal_critical_war_plans_from_the_army_": {
+      "x": 8.867,
+      "y": 28.08,
+      "x2": 10.372,
+      "y2": 35.804
+    },
+    "checkbox.the_Shelynite_dissident_Vali": {
+      "x": 24.363,
+      "y": 36.299,
+      "x2": 25.868,
+      "y2": 44.022
+    },
+    "checkbox.the_Kuthite_zealot_Mara_to_bring_back_to_her_agent": {
+      "x": 48.451,
+      "y": 36.299,
+      "x2": 49.956,
+      "y2": 44.022
     },
     "item.line.moderate_potion_of_retaliation_cold_level_6_12_gp;": {
       "y": 7.8,
@@ -122,6 +164,48 @@
             "presets": [
               "strikeout_item",
               "item.line.+1_striking_returning_unholy_trident_level_11_1500"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "failed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed"
+            ]
+          }
+        ],
+        "managed to steal critical war plans from the army commander": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_steal_critical_war_plans_from_the_army_"
+            ]
+          }
+        ],
+        "the Shelynite dissident Vali": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Shelynite_dissident_Vali"
+            ]
+          }
+        ],
+        "the Kuthite zealot Mara to bring back to her agents in Nidal": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Kuthite_zealot_Mara_to_bring_back_to_her_agent"
             ]
           }
         ]

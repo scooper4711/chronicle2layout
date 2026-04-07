@@ -1,0 +1,80 @@
+{
+  "id": "pfs2.s2-03",
+  "parent": "pfs2.season2-layout-s2-00",
+  "description": "2-03 Catastrophes Spark",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-03-CatastrophesSparkChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "left the jewel behind /",
+          "taken the jewel with you /",
+          "destroyed the jewel) than the will of Urxehl bore down on the facility"
+        ],
+        "example": "left the jewel behind /"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.left_the_jewel_behind_/": {
+      "x": 73.93,
+      "y": 45.083,
+      "x2": 75.98,
+      "y2": 56.989
+    },
+    "checkbox.taken_the_jewel_with_you_/": {
+      "x": 92.814,
+      "y": 45.083,
+      "x2": 94.317,
+      "y2": 56.989
+    },
+    "checkbox.destroyed_the_jewel_than_the_will_of_Urxehl_bore_d": {
+      "x": 16.116,
+      "y": 57.753,
+      "x2": 17.619,
+      "y2": 69.659
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "left the jewel behind /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.left_the_jewel_behind_/"
+            ]
+          }
+        ],
+        "taken the jewel with you /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.taken_the_jewel_with_you_/"
+            ]
+          }
+        ],
+        "destroyed the jewel) than the will of Urxehl bore down on the facility": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.destroyed_the_jewel_than_the_will_of_Urxehl_bore_d"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -14,7 +14,7 @@ from pathlib import Path
 
 import fitz
 
-CHECKBOX_CHARS: list[str] = ['□', '☐', '☑', '☒']
+CHECKBOX_CHARS: list[str] = ['□', '☐', '☑', '☒', '▫']
 """Unicode characters recognized as checkboxes."""
 
 

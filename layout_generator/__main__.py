@@ -213,15 +213,19 @@ def _extract_chronicle_suffix(default_chronicle_location: str | None) -> str:
 
     Parses the PDF filename to find the trailing ``{Name}Chronicle``
     segment and returns it prefixed with a hyphen, e.g.
-    ``-CitadelofCorruptionChronicle``.  Returns an empty string when
-    the location is *None* or the filename doesn't match the expected
+    ``-CitadelofCorruptionChronicle``.  Non-alphanumeric characters
+    are stripped from the name.  Returns an empty string when the
+    location is *None* or the filename doesn't match the expected
     pattern.
     """
     if default_chronicle_location is None:
         return ""
     stem = Path(default_chronicle_location).stem
-    m = re.search(r"-([A-Z][A-Za-z]*Chronicle)$", stem)
-    return f"-{m.group(1)}" if m else ""
+    m = re.search(r"-([A-Z].+Chronicle)$", stem)
+    if not m:
+        return ""
+    sanitized = re.sub(r"[^A-Za-z0-9]", "", m.group(1))
+    return f"-{sanitized}"
 
 
 def _derive_output_file(

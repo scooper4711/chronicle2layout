@@ -23,6 +23,17 @@
         ],
         "example": "brazier of harmony (level 5, 150 gp; Rage of Elements 122)"
       }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "talked down",
+          "fought an angry jann shuyookh who was determined to get his revenge on Gedun and Yeyacha"
+        ],
+        "example": "talked down"
+      }
     }
   },
   "presets": {
@@ -31,6 +42,23 @@
       "color": "black",
       "x": 0.5,
       "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.talked_down": {
+      "x": 59.803,
+      "y": 36.299,
+      "x2": 61.307,
+      "y2": 44.022
+    },
+    "checkbox.fought_an_angry_jann_shuyookh_who_was_determined_t": {
+      "x": 73.398,
+      "y": 36.299,
+      "x2": 74.902,
+      "y2": 44.022
     },
     "item.line.brazier_of_harmony_level_5_150_gp;_Rage_of_Element": {
       "y": 3.9,
@@ -178,6 +206,30 @@
             "presets": [
               "strikeout_item",
               "item.line.limestone_shield_level_7_350_gp;_Rage_of_Elements_"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "talked down": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.talked_down"
+            ]
+          }
+        ],
+        "fought an angry jann shuyookh who was determined to get his revenge on Gedun and Yeyacha": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fought_an_angry_jann_shuyookh_who_was_determined_t"
             ]
           }
         ]

@@ -16,6 +16,18 @@
         ],
         "example": "bola (5 sp, Lost Omens Gods & Magic 120)"
       }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "possessed cat /",
+          "halfling druid /",
+          "angry awakened lion riling the creatures of Katapesh to violence"
+        ],
+        "example": "possessed cat /"
+      }
     }
   },
   "presets": {
@@ -24,6 +36,29 @@
       "color": "black",
       "x": 0.5,
       "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.possessed_cat_/": {
+      "x": 67.523,
+      "y": 29.95,
+      "x2": 75.921,
+      "y2": 41.196
+    },
+    "checkbox.halfling_druid_/": {
+      "x": 79.804,
+      "y": 29.95,
+      "x2": 81.224,
+      "y2": 41.196
+    },
+    "checkbox.angry_awakened_lion_riling_the_creatures_of_Katape": {
+      "x": 93.044,
+      "y": 29.95,
+      "x2": 94.463,
+      "y2": 41.196
     },
     "item.line.bola_5_sp_Lost_Omens_Gods_&_Magic_120": {
       "y": 55.4,
@@ -80,6 +115,39 @@
             "presets": [
               "strikeout_item",
               "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "possessed cat /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.possessed_cat_/"
+            ]
+          }
+        ],
+        "halfling druid /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.halfling_druid_/"
+            ]
+          }
+        ],
+        "angry awakened lion riling the creatures of Katapesh to violence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.angry_awakened_lion_riling_the_creatures_of_Katape"
             ]
           }
         ]
