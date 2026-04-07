@@ -2,5 +2,88 @@
   "id": "pfs2.s7-02",
   "parent": "pfs2.season7-layout-s7-00",
   "description": "7-02 Shipyard Sabotage",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-02-ShipyardSabotageChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-02-ShipyardSabotageChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "choker of elocution (level 6, 200 gp; Pathfinder GM Core 287)",
+          "dragon turtle scale (level 4, 13 gp; GM Core 264)",
+          "effervescent ampoule (level 2, 7gp; GM Core 264)",
+          "moderate blast boots (level 3, 11 gp; Pathfinder Guns and Gears 67)"
+        ],
+        "example": "choker of elocution (level 6, 200 gp; Pathfinder GM Core 287)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.choker_of_elocution_level_6_200_gp;_Pathfinder_GM_": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.dragon_turtle_scale_level_4_13_gp;_GM_Core_264": {
+      "y": 19.0,
+      "y2": 23.6
+    },
+    "item.line.effervescent_ampoule_level_2_7gp;_GM_Core_264": {
+      "y": 24.6,
+      "y2": 29.2
+    },
+    "item.line.moderate_blast_boots_level_3_11_gp;_Pathfinder_Gun": {
+      "y": 30.2,
+      "y2": 40.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "choker of elocution (level 6, 200 gp; Pathfinder GM Core 287)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.choker_of_elocution_level_6_200_gp;_Pathfinder_GM_"
+            ]
+          }
+        ],
+        "dragon turtle scale (level 4, 13 gp; GM Core 264)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon_turtle_scale_level_4_13_gp;_GM_Core_264"
+            ]
+          }
+        ],
+        "effervescent ampoule (level 2, 7gp; GM Core 264)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.effervescent_ampoule_level_2_7gp;_GM_Core_264"
+            ]
+          }
+        ],
+        "moderate blast boots (level 3, 11 gp; Pathfinder Guns and Gears 67)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_blast_boots_level_3_11_gp;_Pathfinder_Gun"
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

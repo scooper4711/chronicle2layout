@@ -2,5 +2,130 @@
   "id": "pfs2.s7-05",
   "parent": "pfs2.season7-layout-s7-00",
   "description": "7-05 Battle of the Thorns",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-05-BattleoftheThornsChronicle.pdf"
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-05-BattleoftheThornsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)",
+          "murderer\u2019s knot (level 7, 66 gp)",
+          "moderate healing potion (level 6, 12 gp)",
+          "lesser energy breath potion (level 7, 70 gp)",
+          "+2 striking composite shortbow (level 10, 1,000 gp)",
+          "+2 striking lance (level 10, 1,000 gp)",
+          "+1 striking returning unholy trident (level 11, 1,500 gp)"
+        ],
+        "example": "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.moderate_potion_of_retaliation_cold_level_6_12_gp;": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.murderer\u2019s_knot_level_7_66_gp": {
+      "y": 13.4,
+      "y2": 23.6
+    },
+    "item.line.moderate_healing_potion_level_6_12_gp": {
+      "y": 24.6,
+      "y2": 29.2
+    },
+    "item.line.lesser_energy_breath_potion_level_7_70_gp": {
+      "y": 30.2,
+      "y2": 34.8
+    },
+    "item.line.+2_striking_composite_shortbow_level_10_1000_gp": {
+      "y": 35.8,
+      "y2": 40.4
+    },
+    "item.line.+2_striking_lance_level_10_1000_gp": {
+      "y": 41.4,
+      "y2": 46.0
+    },
+    "item.line.+1_striking_returning_unholy_trident_level_11_1500": {
+      "y": 47.0,
+      "y2": 51.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_potion_of_retaliation_cold_level_6_12_gp;"
+            ]
+          }
+        ],
+        "murderer\u2019s knot (level 7, 66 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.murderer\u2019s_knot_level_7_66_gp"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_12_gp"
+            ]
+          }
+        ],
+        "lesser energy breath potion (level 7, 70 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_energy_breath_potion_level_7_70_gp"
+            ]
+          }
+        ],
+        "+2 striking composite shortbow (level 10, 1,000 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_composite_shortbow_level_10_1000_gp"
+            ]
+          }
+        ],
+        "+2 striking lance (level 10, 1,000 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_lance_level_10_1000_gp"
+            ]
+          }
+        ],
+        "+1 striking returning unholy trident (level 11, 1,500 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_returning_unholy_trident_level_11_1500"
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
