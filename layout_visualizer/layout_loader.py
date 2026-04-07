@@ -14,7 +14,7 @@ from shared.layout_index import build_json_index, collect_inheritance_chain
 logger = logging.getLogger(__name__)
 
 _TEXT_TYPES = {"text", "multiline"}
-_SKIP_TYPES = {"checkbox", "strikeout", "line", "rectangle"}
+_SKIP_TYPES = {"line", "rectangle"}
 
 
 def build_layout_index(layouts_dir: Path) -> dict[str, Path]:
@@ -97,6 +97,8 @@ def _extract_fields_from_content(
     content: list[dict],
     fields: list[CanvasRegion],
     counter: list[int],
+    presets: dict[str, dict] | None = None,
+    label: str | None = None,
 ) -> None:
     """Recursively extract positioned fields from a content array.
 
@@ -108,11 +110,34 @@ def _extract_fields_from_content(
         content: The content array (or nested content).
         fields: Accumulator list to append extracted fields to.
         counter: Single-element list used as a mutable counter for naming.
+        presets: Merged preset definitions for resolving preset-based entries.
+        label: Optional label propagated from a parent choice key.
     """
+    if presets is None:
+        presets = {}
+
     for entry in content:
-        nested = _get_nested_content(entry)
-        if nested:
-            _extract_fields_from_content(nested, fields, counter)
+        entry_type = entry.get("type")
+
+        if entry_type == "choice":
+            choices = entry.get("content", {})
+            if isinstance(choices, dict):
+                for key, key_content in choices.items():
+                    if isinstance(key_content, list):
+                        _extract_fields_from_content(
+                            key_content, fields, counter, presets, label=key,
+                        )
+            continue
+
+        if entry_type == "trigger":
+            nested = entry.get("content", [])
+            _extract_fields_from_content(nested, fields, counter, presets, label)
+            continue
+
+        if entry_type in ("strikeout", "checkbox"):
+            field = _extract_preset_based_field(entry, presets, label, counter)
+            if field is not None:
+                fields.append(field)
             continue
 
         field = _try_parse_field(entry, counter)
@@ -158,6 +183,50 @@ def _try_parse_field(entry: dict, counter: list[int]) -> CanvasRegion | None:
         y=float(entry["y"]),
         x2=float(entry["x2"]),
         y2=float(entry["y2"]),
+        parent=canvas,
+    )
+
+
+def _extract_preset_based_field(
+    entry: dict,
+    presets: dict[str, dict],
+    label: str | None,
+    counter: list[int],
+) -> CanvasRegion | None:
+    """Resolve presets on a strikeout or checkbox entry and return a field.
+
+    Merges preset properties into the entry, checks for required
+    positioning coordinates, and returns a CanvasRegion. Returns None
+    if the resolved entry lacks any required coordinate.
+
+    Args:
+        entry: Raw content entry dict (strikeout or checkbox).
+        presets: Merged preset definitions.
+        label: Optional label from a parent choice key.
+        counter: Single-element mutable counter for fallback naming.
+
+    Returns:
+        A CanvasRegion with resolved coordinates, or None.
+
+    Requirements: 1.1, 1.2, 1.3, 1.4, 5.1, 5.2
+    """
+    resolved = resolve_entry_presets(entry, presets)
+
+    canvas = resolved.get("canvas")
+    if not canvas:
+        return None
+    if not all(k in resolved for k in ("x", "y", "x2", "y2")):
+        return None
+
+    name = label if label else f"field_{counter[0]}"
+    counter[0] += 1
+
+    return CanvasRegion(
+        name=name,
+        x=float(resolved["x"]),
+        y=float(resolved["y"]),
+        x2=float(resolved["x2"]),
+        y2=float(resolved["y2"]),
         parent=canvas,
     )
 
@@ -216,8 +285,10 @@ def load_content_fields(
         content = data.get("content", [])
         merged_content.extend(content)
 
+    presets = merge_presets(chain)
+
     fields: list[CanvasRegion] = []
-    _extract_fields_from_content(merged_content, fields, [0])
+    _extract_fields_from_content(merged_content, fields, [0], presets)
 
     return fields, merged_canvases, file_paths
 
