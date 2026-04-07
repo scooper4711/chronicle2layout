@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -207,6 +208,22 @@ def _relative_path_for_matching(
     return pdf_file.name
 
 
+def _extract_chronicle_suffix(default_chronicle_location: str | None) -> str:
+    """Extract the chronicle name suffix from a defaultChronicleLocation path.
+
+    Parses the PDF filename to find the trailing ``{Name}Chronicle``
+    segment and returns it prefixed with a hyphen, e.g.
+    ``-CitadelofCorruptionChronicle``.  Returns an empty string when
+    the location is *None* or the filename doesn't match the expected
+    pattern.
+    """
+    if default_chronicle_location is None:
+        return ""
+    stem = Path(default_chronicle_location).stem
+    m = re.search(r"-([A-Z][A-Za-z]*Chronicle)$", stem)
+    return f"-{m.group(1)}" if m else ""
+
+
 def _derive_output_file(
     pdf_file: Path,
     pdf_base: Path,
@@ -217,12 +234,17 @@ def _derive_output_file(
 
     For directory mode the PDF's relative subdirectory is preserved under
     output_dir.  For single-file mode the file lands directly in output_dir.
+
+    The filename is ``{id}{chronicle_suffix}.json`` where the suffix
+    is derived from the chronicle PDF name (e.g.
+    ``pfs2.s2-01-CitadelofCorruptionChronicle.json``).
     """
     if pdf_base.is_dir():
         relative_parent = pdf_file.relative_to(pdf_base).parent
     else:
         relative_parent = Path(".")
-    return output_dir / relative_parent / f"{metadata.id}.json"
+    suffix = _extract_chronicle_suffix(metadata.default_chronicle_location)
+    return output_dir / relative_parent / f"{metadata.id}{suffix}.json"
 
 
 def _process_single_pdf(
