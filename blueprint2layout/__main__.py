@@ -155,8 +155,8 @@ def derive_output_path(
 
     Requirements: blueprint-batch-watch 4.1, 4.2, 4.3
     """
-    dot_index = blueprint_id.index(".")
-    filename = blueprint_id[dot_index + 1:] + ".json"
+    dot_index = blueprint_id.find(".")
+    filename = (blueprint_id[dot_index + 1:] if dot_index >= 0 else blueprint_id) + ".json"
     relative_subdir = blueprint_path.parent.relative_to(blueprints_dir)
     return output_dir / relative_subdir / filename
 
