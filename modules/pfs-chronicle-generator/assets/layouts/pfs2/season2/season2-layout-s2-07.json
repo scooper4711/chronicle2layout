@@ -254,9 +254,9 @@
       "value": "param:char",
       "type": "text",
       "canvas": "character_info",
-      "x": 67.3,
+      "x": 1.6,
       "y": 18.1,
-      "x2": 87.4,
+      "x2": 63.6,
       "y2": 50.0,
       "font": "Helvetica",
       "fontsize": 14,
@@ -267,9 +267,9 @@
       "value": "param:societyid",
       "type": "text",
       "canvas": "character_info",
-      "x": 89.4,
+      "x": 67.3,
       "y": 23.3,
-      "x2": 97.5,
+      "x2": 87.4,
       "y2": 43.8,
       "font": "Helvetica",
       "fontsize": 9,
@@ -325,6 +325,19 @@
       "fontsize": 11,
       "align": "LB",
       "lines": 6
+    },
+    {
+      "value": "param:reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "x": 2.6,
+      "y": 0.0,
+      "x2": 97.4,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 3
     }
   ]
 }

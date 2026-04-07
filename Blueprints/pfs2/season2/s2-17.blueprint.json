@@ -69,9 +69,9 @@
       ],
       "fontweight": "bold",
       "align": "LB",
-      "left": "@h_rule[1].left",
-      "right": "@h_rule[1].right",
-      "bottom": "@h_rule[1]"
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
     },
     {
       "name": "societyid_player",
@@ -84,9 +84,9 @@
       "fontsize": 9,
       "fontweight": "bold",
       "align": "RM",
-      "left": "@h_rule[2].left",
-      "right": "@h_rule[2].right",
-      "bottom": "@h_rule[2] - 0.3em"
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1] - 0.3em"
     },
     {
       "name": "societyid_char",
@@ -114,8 +114,8 @@
       "align": "CM",
       "left": "@grey_box[0].left",
       "right": "@grey_box[0].right",
-      "top": "@grey_box[0].bottom",
-      "bottom": "@grey_box[1].top"
+      "top": "@grey_box[0].top",
+      "bottom": "@grey_box[0].bottom"
     },
     {
       "name": "gp_gained",
@@ -128,8 +128,8 @@
       "align": "CM",
       "left": "@grey_box[1].left",
       "right": "@grey_box[1].right",
-      "top": "@grey_box[1].bottom",
-      "bottom": "h_bar[3].top"
+      "top": "@grey_box[1].top",
+      "bottom": "@grey_box[1].bottom"
     },
     {
       "name": "notes",
@@ -146,6 +146,22 @@
       "right": "notes.right",
       "top": "notes.top",
       "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 3,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [

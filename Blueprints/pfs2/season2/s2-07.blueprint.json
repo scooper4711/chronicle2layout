@@ -69,9 +69,9 @@
       ],
       "fontweight": "bold",
       "align": "LB",
-      "left": "@h_rule[1].left",
-      "right": "@h_rule[1].right",
-      "bottom": "@h_rule[1]"
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
     },
     {
       "name": "societyid_player",
@@ -84,9 +84,9 @@
       "fontsize": 9,
       "fontweight": "bold",
       "align": "RM",
-      "left": "@h_rule[2].left",
-      "right": "@h_rule[2].right",
-      "bottom": "@h_rule[2] - 0.3em"
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1] - 0.3em"
     },
     {
       "name": "societyid_char",
@@ -146,6 +146,22 @@
       "right": "notes.right",
       "top": "notes.top",
       "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 3,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [
