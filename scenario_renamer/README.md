@@ -1,16 +1,26 @@
 # Scenario Renamer
 
-Copies and renames Pathfinder Society (PFS) scenario PDFs and associated image files (maps, handouts) into an organized directory structure with descriptive filenames.
+Copies and renames Pathfinder Society (PFS) scenario PDFs and associated
+image files (maps, handouts) into an organized directory structure with
+descriptive filenames.
 
 ## How It Works
 
 The utility uses a two-pass strategy:
 
-1. **Pass 1 — Scenario PDFs**: Opens each PDF, extracts the scenario number and name using the `chronicle_extractor` package, copies the full PDF with a descriptive filename (e.g., `1-01-TheAbsalomInitiation.pdf`), and builds a lookup table mapping (season, scenario) pairs to names.
+1. **Pass 1 — Scenario PDFs**: Opens each PDF, extracts the scenario number
+   and name using the `chronicle_extractor` package, copies the full PDF with
+   a descriptive filename (e.g., `1-01-TheAbsalomInitiation.pdf`), and builds
+   a lookup table mapping (season, scenario) pairs to names.
 
-2. **Pass 2 — Scenario Images**: Parses PZOPFS codes or season-number patterns from image filenames, resolves the scenario name from the lookup table, and copies with a descriptive filename preserving the original suffix (e.g., `PZOPFS0409 A-Nighttime Ambush.jpg` → `4-09-PerilousExperimentA-NighttimeAmbush.jpg`).
+2. **Pass 2 — Scenario Images**: Parses PZOPFS codes or season-number patterns
+   from image filenames, resolves the scenario name from the lookup table, and
+   copies with a descriptive filename preserving the original suffix
+   (e.g., `PZOPFS0409 A-Nighttime Ambush.jpg` →
+   `4-09-PerilousExperimentA-NighttimeAmbush.jpg`).
 
-Files that can't be attributed to a scenario are copied as-is, preserving their relative path.
+Files that can't be attributed to a scenario are copied as-is, preserving
+their relative path.
 
 ## Usage
 
@@ -22,7 +32,7 @@ python -m scenario_renamer --input-dir Scenarios --output-dir PFS
 
 | Argument | Description |
 |----------|-------------|
-| `--input-dir` | Directory containing scenario PDFs and images (traversed recursively) |
+| `--input-dir`  | Directory containing scenario PDFs and images (recursive) |
 | `--output-dir` | Base directory for renamed output files (created if missing) |
 
 ### Example
@@ -55,4 +65,11 @@ This utility depends on the `chronicle_extractor` package for:
 - `sanitize_name` — filename sanitization
 - `is_map_pdf` — map PDF detection
 
-Both packages must be available on the Python path (they share the same project root).
+Both packages must be available on the Python path (they share the same
+project root).
+
+## Testing
+
+```bash
+python -m pytest tests/scenario_renamer/ -v
+```

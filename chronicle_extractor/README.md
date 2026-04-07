@@ -1,6 +1,9 @@
 # Chronicle Extractor
 
-A Python CLI utility that extracts chronicle sheet pages from Pathfinder Society (PFS) scenario PDFs. It reads each PDF's first page to identify the scenario number and name, then extracts the last page (the chronicle sheet) as a separate PDF organized into season-based subdirectories.
+Extracts chronicle sheet pages from Pathfinder Society (PFS) scenario PDFs.
+Reads each PDF's first page to identify the scenario number and name, then
+extracts the last page (the chronicle sheet) as a separate PDF organized
+into season-based subdirectories.
 
 ## Usage
 
@@ -12,8 +15,8 @@ python -m chronicle_extractor --input-dir <path> --output-dir <path>
 
 | Argument       | Required | Description                                              |
 |----------------|----------|----------------------------------------------------------|
-| `--input-dir`  | Yes      | Directory containing PFS scenario PDFs to process.       |
-| `--output-dir` | Yes      | Base directory for saving extracted chronicle PDFs.       |
+| `--input-dir`  | Yes      | Directory containing PFS scenario PDFs to process. |
+| `--output-dir` | Yes      | Base directory for saving extracted chronicle PDFs. |
 
 - If `--input-dir` does not exist, the tool exits with code 1 and prints an error to stderr.
 - If `--output-dir` does not exist, it is created automatically (including parent directories).
@@ -24,7 +27,9 @@ python -m chronicle_extractor --input-dir <path> --output-dir <path>
 python -m chronicle_extractor --input-dir "Scenarios/season1" --output-dir chronicles
 ```
 
-This processes all scenario PDFs in `Scenarios/season1/`, extracts the last page from each, and saves them under `chronicles/season1/` with filenames like `1-07-FloodedKingsCourtChronicle.pdf`.
+This processes all scenario PDFs in `Scenarios/season1/`, extracts the last
+page from each, and saves them under `chronicles/season1/` with filenames
+like `1-07-FloodedKingsCourtChronicle.pdf`.
 
 ## How It Works
 
@@ -44,4 +49,10 @@ Install via:
 
 ```bash
 pip install -r requirements.txt
+```
+
+## Testing
+
+```bash
+python -m pytest tests/chronicle_extractor/ -v
 ```

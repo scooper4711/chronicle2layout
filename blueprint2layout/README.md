@@ -1,6 +1,10 @@
 # Blueprint to Layout
 
-Converts declarative Blueprint JSON files into layout.json files conforming to [LAYOUT_FORMAT.md](../LAYOUT_FORMAT.md). Takes a Blueprint and its associated chronicle PDF, detects structural elements (lines, bars, grey boxes) via pixel analysis, resolves canvas edge references, and outputs parent-relative percentage coordinates.
+Converts declarative Blueprint JSON files into layout.json files conforming
+to [LAYOUT_FORMAT.md](../LAYOUT_FORMAT.md). Takes a Blueprint and its
+associated chronicle PDF, detects structural elements (lines, bars, grey
+boxes) via pixel analysis, resolves canvas edge references, and outputs
+parent-relative percentage coordinates.
 
 ## Usage
 
@@ -14,12 +18,13 @@ python -m blueprint2layout --blueprints-dir <dir> --blueprint-id <id-or-pattern>
 
 | Argument | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `--blueprints-dir` | Yes | — | Root directory containing `.blueprint.json` files (scanned recursively). |
-| `--blueprint-id` | Yes | — | Blueprint id or shell-style wildcard pattern (e.g. `pfs2.*`, `pfs2.bounty*`). |
-| `--output-dir` | No | `.` (current directory) | Directory for generated layout JSON files. Subdirectory structure mirrors `--blueprints-dir`. |
-| `--watch` | No | off | Watch blueprint files for changes and auto-regenerate layouts. |
+| `--blueprints-dir` | Yes | — | Root directory containing `.blueprint.json` files (recursive). |
+| `--blueprint-id` | Yes | — | Blueprint id or shell-style wildcard (e.g. `pfs2.*`). |
+| `--output-dir` | No | `.` | Directory for generated layout JSON files. |
+| `--watch` | No | off | Watch blueprint files for changes and auto-regenerate. |
 
-The chronicle PDF is resolved automatically from the `defaultChronicleLocation` field in the blueprint's inheritance chain — no need to specify it manually.
+The chronicle PDF is resolved automatically from the
+`defaultChronicleLocation` field in the blueprint's inheritance chain.
 
 #### Examples
 
@@ -41,7 +46,8 @@ Write output to a specific directory:
 python -m blueprint2layout --blueprints-dir Blueprints --blueprint-id "pfs2.*" --output-dir out/layouts
 ```
 
-Watch mode — regenerate layouts automatically when any blueprint in the inheritance chain changes:
+Watch mode — regenerate layouts automatically when any blueprint in the
+inheritance chain changes:
 
 ```bash
 python -m blueprint2layout --blueprints-dir Blueprints --blueprint-id "pfs2.*" --output-dir out/layouts --watch
@@ -84,8 +90,10 @@ Blueprint files use the `.blueprint.json` extension and contain:
 Each canvas edge can be:
 
 - A numeric literal: `0`, `100`, `5.9`
-- A line reference: `"h_bar[0]"`, `"v_thin[2]"` — resolves to the detected line's position
-- A canvas reference: `"main.left"`, `"summary.bottom"` — resolves to an already-defined canvas edge
+- A line reference: `"h_bar[0]"`, `"v_thin[2]"` — resolves to the detected
+  line's position
+- A canvas reference: `"main.left"`, `"summary.bottom"` — resolves to an
+  already-defined canvas edge
 
 ### Detection Categories
 
@@ -100,11 +108,14 @@ Each canvas edge can be:
 
 ### Inheritance
 
-Blueprints support inheritance via the `parent` property. A child Blueprint inherits all canvases from its parent chain and can reference them in its own canvas definitions.
+Blueprints support inheritance via the `parent` property. A child Blueprint
+inherits all canvases from its parent chain and can reference them in its
+own canvas definitions.
 
 ### Pass-through Properties
 
-These Blueprint properties are copied directly to the output layout: `id`, `parent`, `description`, `flags`, `aspectratio`.
+These Blueprint properties are copied directly to the output layout:
+`id`, `parent`, `description`, `flags`, `aspectratio`.
 
 ## Pipeline
 

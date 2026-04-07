@@ -12,15 +12,18 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
 
-A collection of utilities for Pathfinder Society (PFS) organized play. Each tool lives in its own Python package directory with dedicated documentation.
+A collection of utilities for Pathfinder Society (PFS) organized play.
+Each tool lives in its own Python package with dedicated documentation.
 
 ## Utilities
 
 | Utility | Description |
 |---------|-------------|
-| [Chronicle Extractor](chronicle_extractor/README.md) | Extracts chronicle sheet pages from PFS scenario PDFs into organized, per-season directories. |
-| [Scenario Renamer](scenario_renamer/README.md) | Copies and renames PFS scenario PDFs and images into organized, per-season directories with descriptive filenames. |
-| [Blueprint to Layout](blueprint2layout/README.md) | Converts declarative Blueprint JSON files + chronicle PDFs into layout.json files via pixel-based structural detection. |
+| [Chronicle Extractor](chronicle_extractor/README.md) | Extracts chronicle sheets from scenario PDFs by season. |
+| [Scenario Renamer](scenario_renamer/README.md) | Copies and renames scenario PDFs and images. |
+| [Blueprint to Layout](blueprint2layout/README.md) | Converts Blueprint JSON into layout JSON via pixel detection. |
+| [Layout Generator](layout_generator/README.md) | Generates filled chronicle PDFs from layouts and player data. |
+| [Layout Visualizer](layout_visualizer/README.md) | Renders canvas overlays on chronicle PDFs for debugging. |
 
 ## Setup
 
@@ -29,3 +32,50 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## Suggested Workflow
+
+When working on blueprint layouts, run these in separate terminals:
+
+1. **Blueprint → Layout** (watch mode) — regenerates layout JSON
+   whenever a blueprint file changes:
+
+   ```bash
+   python -m blueprint2layout \
+     --blueprints-dir Blueprints \
+     --blueprint-id 'pfs2.*' \
+     --watch \
+     --output-dir modules/pfs-chronicle-generator/assets/layouts/
+   ```
+
+2. **Layout Visualizer** (watch mode) — re-renders debug PNGs
+   whenever a layout file changes. Valid modes are `fields`, `canvases`, and `data`.
+
+   ```bash
+   python -m layout_visualizer \
+     --watch \
+     --mode fields \
+     --layout-root modules/pfs-chronicle-generator/assets/layouts \
+     --layout-id 'pfs2.*' \
+     --output-dir debug_clips/layout_visualizer
+   ```
+
+3. **Layout Generator** — run as needed to produce the leaf layout
+   files from chronicle PDFs and the TOML metadata:
+
+   ```bash
+   python -m layout_generator \
+     --metadata-file chronicle_properties.toml \
+     modules/pfs-chronicle-generator/assets/chronicles
+   ```
+
+## Testing
+
+```bash
+python -m pytest tests/ -v
+```
+
+## Pre-Push Checklist
+
+1. Run the linter — no errors
+2. Run the full test suite — all tests pass
