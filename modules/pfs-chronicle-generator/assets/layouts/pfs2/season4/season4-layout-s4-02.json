@@ -200,5 +200,131 @@
       "y2": 100.0,
       "parent": "main"
     }
-  }
+  },
+  "content": [
+    {
+      "value": "param:event",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 2.4,
+      "y": 22.5,
+      "x2": 45.6,
+      "y2": 62.2,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 64.1,
+      "y": 22.5,
+      "x2": 78.5,
+      "y2": 62.2,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:date",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 80.2,
+      "y": 22.5,
+      "x2": 99.4,
+      "y2": 62.2,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
+      "value": "param:gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 47.5,
+      "y": 22.5,
+      "x2": 62.4,
+      "y2": 62.2,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
+      "value": "param:char",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 1.6,
+      "y": 18.1,
+      "x2": 63.6,
+      "y2": 50.0,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "fontweight": "bold",
+      "align": "LB"
+    },
+    {
+      "value": "param:societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 67.3,
+      "y": 23.3,
+      "x2": 87.4,
+      "y2": 43.8,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM"
+    },
+    {
+      "value": "param:char_number_short",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 90.3,
+      "y": 23.3,
+      "x2": 97.5,
+      "y2": 43.8,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM"
+    },
+    {
+      "value": "param:xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "x": 3.2,
+      "y": 16.7,
+      "x2": 98.7,
+      "y2": 24.3,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CM"
+    },
+    {
+      "value": "param:gp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "x": 3.2,
+      "y": 54.5,
+      "x2": 98.7,
+      "y2": 61.6,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CM"
+    },
+    {
+      "value": "param:notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 6
+    }
+  ]
 }
