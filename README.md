@@ -1,5 +1,9 @@
 # PFS Tools
 
+[![CI](https://github.com/scooper4711/chronicle2layout/actions/workflows/ci.yml/badge.svg)](https://github.com/scooper4711/chronicle2layout/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/scooper4711/chronicle2layout)](https://github.com/scooper4711/chronicle2layout/blob/main/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/scooper4711/chronicle2layout)](https://github.com/scooper4711/chronicle2layout/commits/main)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=scooper4711_chronicle2layout&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=scooper4711_chronicle2layout)
