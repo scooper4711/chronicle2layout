@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-08",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-08 The Haunted Corridor",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-08-TheHauntedCorridorChronicle.pdf"
+}

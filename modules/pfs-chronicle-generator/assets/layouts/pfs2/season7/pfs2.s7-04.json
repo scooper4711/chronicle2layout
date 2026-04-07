@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-04",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-04 Sulfuric Negotiations",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-04-SulfuricNegotiationsChronicle.pdf"
+}

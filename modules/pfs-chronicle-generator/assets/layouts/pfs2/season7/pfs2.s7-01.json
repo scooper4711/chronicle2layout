@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-01",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-01 Enoughis Enough",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-01-EnoughisEnoughChronicle.pdf"
+}

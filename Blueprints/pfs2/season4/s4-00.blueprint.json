@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2",
+  "description": "Layout for Season 4 Chronicles Scenarios 01, 09-17",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-01-IntroYearofBoundlessWonderChronicle.pdf",
+  "flags": [
+    "hidden"
+  ],
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_thin[0]",
+      "right": "v_thin[2]",
+      "top": "h_thin[0]",
+      "bottom": "h_thin[2]"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "main.top",
+      "bottom": "h_bar[0].top"
+    },
+    {
+      "name": "reputation",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[3].bottom",
+      "bottom": "h_thin[1].top"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[0].bottom",
+      "bottom": "h_bar[1].top"
+    },
+    {
+      "name": "items",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[1]",
+      "top": "h_bar[2].bottom",
+      "bottom": "h_bar[3].top"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[0].right",
+      "right": "main.right",
+      "top": "h_bar[1].bottom",
+      "bottom": "h_bar[3].top"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "v_thin[1]",
+      "right": "v_bar[0]",
+      "top": "h_bar[2].bottom",
+      "bottom": "h_bar[3].top"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_thin[1]",
+      "bottom": "main.bottom"
+    }
+  ]
+}

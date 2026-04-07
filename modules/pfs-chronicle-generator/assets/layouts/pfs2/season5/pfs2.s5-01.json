@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s5-01",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-01 Intro Year of Unfettered Exploration",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-01-IntroYearofUnfetteredExplorationChronicle.pdf"
+}

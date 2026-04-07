@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-10",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-10 Shattered Blades",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-10-ShatteredBladesChronicle.pdf"
+}

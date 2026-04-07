@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s4-15",
+  "parent": "pfs2.season4-layout-s4-00",
+  "description": "4-15 In Glorious Battle",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-15-InGloriousBattleChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "standard grade adamantine shield (item 8, 440 gp)"
+        ],
+        "example": "standard grade adamantine shield (item 8, 440 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.standard_grade_adamantine_shield_item_8_440_gp": {
+      "y": 7.2,
+      "y2": 12.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "standard grade adamantine shield (item 8, 440 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.standard_grade_adamantine_shield_item_8_440_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "pfs2.season7-layout-s7-00",
+  "parent": "pfs2",
+  "description": "Layout for Season 7 Chronicles",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-01-EnoughisEnoughChronicle.pdf",
+  "flags": [
+    "hidden"
+  ],
+  "canvases": []
+}

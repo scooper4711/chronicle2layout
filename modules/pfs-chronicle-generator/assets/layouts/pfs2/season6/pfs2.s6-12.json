@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s6-12",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-12 The Burning of Greensteeples",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-12-TheBurningofGreensteeplesChronicle.pdf"
+}

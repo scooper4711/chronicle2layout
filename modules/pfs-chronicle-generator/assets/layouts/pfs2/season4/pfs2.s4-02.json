@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s4-02",
+  "parent": "pfs2.season4-layout-s4-02",
+  "description": "4-02 Return to the Grave",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-02-ReturntotheGraveChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bag of holding type I (item 4, discounted to 68 gp, limit 1)",
+          "grim ring (item 5, 150 gp, Pathfinder Book of the Dead 19)"
+        ],
+        "example": "bag of holding type I (item 4, discounted to 68 gp, limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.bag_of_holding_type_I_item_4_discounted_to_68_gp_l": {
+      "y": 6.1,
+      "y2": 10.1
+    },
+    "item.line.grim_ring_item_5_150_gp_Pathfinder_Book_of_the_Dea": {
+      "y": 10.7,
+      "y2": 14.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bag of holding type I (item 4, discounted to 68 gp, limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bag_of_holding_type_I_item_4_discounted_to_68_gp_l"
+            ]
+          }
+        ],
+        "grim ring (item 5, 150 gp, Pathfinder Book of the Dead 19)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.grim_ring_item_5_150_gp_Pathfinder_Book_of_the_Dea"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s5-02",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-02 The Blackwood Lost",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-02-TheBlackwoodLostChronicle.pdf"
+}

@@ -1,0 +1,144 @@
+{
+  "id": "pfs2.s4-12",
+  "parent": "pfs2.season4-layout-s4-00",
+  "description": "4-12 Negotiations for the Star Gun",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-12-NegotiationsfortheStarGunChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "were able to calm them down and convince them of your good intentions",
+          "you escaped from their anger to get to your meeting",
+          "held her off",
+          "you were unable to withstand her magic",
+          "unanimous",
+          "partial consent from the council to travel the interior of Arcadia",
+          "failed to secure the council\u2019s approval"
+        ],
+        "example": "were able to calm them down and convince them of your good intentions"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.were_able_to_calm_them_down_and_convince_them_of_y": {
+      "x": 56.243,
+      "y": 16.74,
+      "x2": 57.943,
+      "y2": 26.934
+    },
+    "checkbox.you_escaped_from_their_anger_to_get_to_your_meetin": {
+      "x": 20.067,
+      "y": 25.031,
+      "x2": 21.767,
+      "y2": 35.225
+    },
+    "checkbox.held_her_off": {
+      "x": 50.38,
+      "y": 33.322,
+      "x2": 52.08,
+      "y2": 43.516
+    },
+    "checkbox.you_were_unable_to_withstand_her_magic": {
+      "x": 70.949,
+      "y": 33.322,
+      "x2": 72.649,
+      "y2": 43.516
+    },
+    "checkbox.unanimous": {
+      "x": 25.415,
+      "y": 41.613,
+      "x2": 27.115,
+      "y2": 51.808
+    },
+    "checkbox.partial_consent_from_the_council_to_travel_the_int": {
+      "x": 38.562,
+      "y": 41.613,
+      "x2": 40.262,
+      "y2": 51.808
+    },
+    "checkbox.failed_to_secure_the_council\u2019s_approval": {
+      "x": 92.263,
+      "y": 41.613,
+      "x2": 93.963,
+      "y2": 51.808
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "were able to calm them down and convince them of your good intentions": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_able_to_calm_them_down_and_convince_them_of_y"
+            ]
+          }
+        ],
+        "you escaped from their anger to get to your meeting": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_escaped_from_their_anger_to_get_to_your_meetin"
+            ]
+          }
+        ],
+        "held her off": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.held_her_off"
+            ]
+          }
+        ],
+        "you were unable to withstand her magic": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_were_unable_to_withstand_her_magic"
+            ]
+          }
+        ],
+        "unanimous": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.unanimous"
+            ]
+          }
+        ],
+        "partial consent from the council to travel the interior of Arcadia": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.partial_consent_from_the_council_to_travel_the_int"
+            ]
+          }
+        ],
+        "failed to secure the council\u2019s approval": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_secure_the_council\u2019s_approval"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

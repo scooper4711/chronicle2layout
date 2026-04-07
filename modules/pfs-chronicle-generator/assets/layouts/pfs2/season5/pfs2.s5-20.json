@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s5-20",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-20 The Rakshasas Court",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-20-TheRakshasasCourtChronicle.pdf"
+}

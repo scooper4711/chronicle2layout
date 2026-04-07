@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s6-20",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-20 The Overthrow of Ambition",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-20-TheOverthrowofAmbitionChronicle.pdf"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s6-16",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-16 The Heart of the City",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-16-TheHeartoftheCityChronicle.pdf"
+}

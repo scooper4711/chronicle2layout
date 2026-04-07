@@ -1,0 +1,10 @@
+{
+  "id": "pfs2.season6-layout-s6-02",
+  "parent": "pfs2",
+  "description": "Layout for Season 6 Chronicles Scenarios 02-10",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-02-RainFallsontheMountainofSeaandSkyChronicle.pdf",
+  "flags": [
+    "hidden"
+  ],
+  "canvases": []
+}

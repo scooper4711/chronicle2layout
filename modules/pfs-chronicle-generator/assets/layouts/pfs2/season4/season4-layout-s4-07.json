@@ -1,11 +1,11 @@
 {
-  "id": "pfs2.bounty-layout-b13",
+  "id": "pfs2.season4-layout-s4-07",
   "parent": "pfs2",
-  "description": "Layout for Bounty Chronicles starting with B13",
+  "description": "Layout for Season 4 Chronicles Scenarios 07-08",
   "flags": [
     "hidden"
   ],
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-07-AMostWondrousExchange!Chronicle.pdf",
   "parameters": {
     "Event Info": {
       "event": {
@@ -27,42 +27,6 @@
         "type": "text",
         "description": "Gamemasters PFS ID",
         "example": 654321
-      }
-    },
-    "Checkboxes, Reputation and Items": {
-      "summary_checkbox": {
-        "type": "choice",
-        "description": "Checkboxes in the adventure summary that should be selected",
-        "choices": [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
-        "example": "1,2,3,4,5"
-      },
-      "reputation": {
-        "type": "multiline",
-        "description": "Reputation Gained",
-        "example": "Grand Archive: +4",
-        "lines": 4
-      },
-      "strikeout_item_lines": {
-        "type": "choice",
-        "description": "Item line numbers that should be struk out",
-        "choices": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9
-        ],
-        "example": "1,2,3,4,5,6,7,8,9"
       }
     },
     "Player Info": {
@@ -134,12 +98,48 @@
         "example": "3gp 7sp 1cp"
       }
     },
+    "Checkboxes, Reputation and Items": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "example": "1,2,3,4,5"
+      },
+      "reputation": {
+        "type": "multiline",
+        "description": "Reputation Gained",
+        "example": "Grand Archive: +4",
+        "lines": 3
+      },
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line numbers that should be struk out",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "example": "1,2,3,4,5,6,7,8,9"
+      }
+    },
     "Notes": {
       "notes": {
         "type": "multiline",
         "description": "Notes on the chronicle sheet",
         "example": "This is a player note",
-        "lines": 6
+        "lines": 12
       }
     }
   },
@@ -158,20 +158,6 @@
       "y2": 6.7,
       "parent": "main"
     },
-    "summary": {
-      "x": 0.0,
-      "y": 8.5,
-      "x2": 100.0,
-      "y2": 21.2,
-      "parent": "main"
-    },
-    "boons": {
-      "x": 0.0,
-      "y": 23.0,
-      "x2": 80.0,
-      "y2": 38.1,
-      "parent": "main"
-    },
     "reputation": {
       "x": 0.0,
       "y": 40.0,
@@ -179,11 +165,11 @@
       "y2": 46.8,
       "parent": "main"
     },
-    "rewards": {
-      "x": 82.2,
-      "y": 23.0,
+    "summary": {
+      "x": 0.0,
+      "y": 8.5,
       "x2": 100.0,
-      "y2": 46.8,
+      "y2": 21.2,
       "parent": "main"
     },
     "items": {
@@ -193,22 +179,77 @@
       "y2": 82.9,
       "parent": "main"
     },
+    "rewards": {
+      "x": 82.2,
+      "y": 23.0,
+      "x2": 100.0,
+      "y2": 46.8,
+      "parent": "main"
+    },
     "notes": {
       "x": 0.0,
       "y": 84.8,
-      "x2": 100.0,
-      "y2": 94.5,
+      "x2": 51.8,
+      "y2": 94.6,
       "parent": "main"
     },
     "session_info": {
       "x": 0.0,
-      "y": 94.5,
+      "y": 94.8,
       "x2": 100.0,
       "y2": 100.0,
       "parent": "main"
     }
   },
   "content": [
+    {
+      "value": "param:event",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 2.4,
+      "y": 20.7,
+      "x2": 50.1,
+      "y2": 61.4,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 64.1,
+      "y": 20.7,
+      "x2": 78.5,
+      "y2": 61.4,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:date",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 80.2,
+      "y": 20.7,
+      "x2": 99.4,
+      "y2": 61.4,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
+      "value": "param:gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 52.3,
+      "y": 20.7,
+      "x2": 62.4,
+      "y2": 61.4,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
     {
       "value": "param:char",
       "type": "text",
@@ -273,19 +314,6 @@
       "align": "CM"
     },
     {
-      "value": "param:reputation",
-      "type": "multiline",
-      "canvas": "reputation",
-      "x": 2.6,
-      "y": 126.3,
-      "x2": 100.0,
-      "y2": 100.0,
-      "font": "Helvetica",
-      "fontsize": 11,
-      "align": "LB",
-      "lines": 4
-    },
-    {
       "value": "param:notes",
       "type": "multiline",
       "canvas": "notes",
@@ -297,54 +325,6 @@
       "fontsize": 11,
       "align": "LB",
       "lines": 6
-    },
-    {
-      "value": "param:event",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 2.4,
-      "y": 24.2,
-      "x2": 50.1,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "LB"
-    },
-    {
-      "value": "param:eventcode",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 52.3,
-      "y": 24.2,
-      "x2": 62.4,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "LB"
-    },
-    {
-      "value": "param:date",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 64.1,
-      "y": 24.2,
-      "x2": 78.5,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "CB"
-    },
-    {
-      "value": "param:gmid",
-      "type": "text",
-      "canvas": "session_info",
-      "x": 80.2,
-      "y": 24.2,
-      "x2": 99.4,
-      "y2": 63.0,
-      "font": "Helvetica",
-      "fontsize": 14,
-      "align": "CB"
     }
   ]
 }

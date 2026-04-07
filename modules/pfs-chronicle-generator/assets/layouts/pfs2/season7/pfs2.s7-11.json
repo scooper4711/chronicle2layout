@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-11",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-11 The Darkness Within",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-11-TheDarknessWithinChronicle.pdf"
+}

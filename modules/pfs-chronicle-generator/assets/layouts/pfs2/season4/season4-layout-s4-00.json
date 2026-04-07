@@ -1,0 +1,204 @@
+{
+  "id": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2",
+  "description": "Layout for Season 4 Chronicles Scenarios 01, 09-17",
+  "flags": [
+    "hidden"
+  ],
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-01-IntroYearofBoundlessWonderChronicle.pdf",
+  "parameters": {
+    "Event Info": {
+      "event": {
+        "type": "text",
+        "description": "Event name",
+        "example": "PaizoCon"
+      },
+      "eventcode": {
+        "type": "text",
+        "description": "Event code",
+        "example": 1234
+      },
+      "date": {
+        "type": "text",
+        "description": "The date on which the game session took place",
+        "example": "27.06.2020"
+      },
+      "gmid": {
+        "type": "text",
+        "description": "Gamemasters PFS ID",
+        "example": 654321
+      }
+    },
+    "Player Info": {
+      "char": {
+        "type": "text",
+        "description": "Players character name",
+        "example": "Stormageddon"
+      },
+      "societyid": {
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
+      },
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
+      }
+    },
+    "Rewards": {
+      "starting_xp": {
+        "type": "text",
+        "description": "Starting XP",
+        "example": 2
+      },
+      "xp_gained": {
+        "type": "text",
+        "description": "XP Gained",
+        "example": 4
+      },
+      "total_xp": {
+        "type": "text",
+        "description": "Total XP",
+        "example": 6
+      },
+      "starting_gp": {
+        "type": "text",
+        "description": "Starting GP",
+        "example": "1cp"
+      },
+      "treasure_bundles_gp": {
+        "type": "text",
+        "description": "Gold from treasure bundles",
+        "example": 23
+      },
+      "income_earned": {
+        "type": "text",
+        "description": "Income earned (gp)",
+        "example": 1.8
+      },
+      "gp_gained": {
+        "type": "text",
+        "description": "GP Gained",
+        "example": "4gp 2sp"
+      },
+      "gp_spent": {
+        "type": "text",
+        "description": "GP Spent",
+        "example": "5sp"
+      },
+      "total_gp": {
+        "type": "text",
+        "description": "Total GP from treasure bundles and income",
+        "example": "3gp 7sp 1cp"
+      }
+    },
+    "Checkboxes, Reputation and Items": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "example": "1,2,3,4,5"
+      },
+      "reputation": {
+        "type": "multiline",
+        "description": "Reputation Gained",
+        "example": "Grand Archive: +4",
+        "lines": 3
+      },
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line numbers that should be struk out",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "example": "1,2,3,4,5,6,7,8,9"
+      }
+    },
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 12
+      }
+    }
+  },
+  "canvas": {
+    "main": {
+      "x": 6.1,
+      "y": 11.3,
+      "x2": 93.9,
+      "y2": 95.3,
+      "parent": "page"
+    },
+    "character_info": {
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
+      "y2": 6.7,
+      "parent": "main"
+    },
+    "reputation": {
+      "x": 0.0,
+      "y": 84.8,
+      "x2": 100.0,
+      "y2": 94.6,
+      "parent": "main"
+    },
+    "summary": {
+      "x": 0.0,
+      "y": 8.5,
+      "x2": 100.0,
+      "y2": 30.5,
+      "parent": "main"
+    },
+    "items": {
+      "x": 0.0,
+      "y": 50.4,
+      "x2": 40.0,
+      "y2": 83.0,
+      "parent": "main"
+    },
+    "rewards": {
+      "x": 82.2,
+      "y": 32.4,
+      "x2": 100.0,
+      "y2": 83.0,
+      "parent": "main"
+    },
+    "notes": {
+      "x": 40.0,
+      "y": 50.4,
+      "x2": 80.0,
+      "y2": 83.0,
+      "parent": "main"
+    },
+    "session_info": {
+      "x": 0.0,
+      "y": 94.6,
+      "x2": 100.0,
+      "y2": 100.0,
+      "parent": "main"
+    }
+  }
+}
