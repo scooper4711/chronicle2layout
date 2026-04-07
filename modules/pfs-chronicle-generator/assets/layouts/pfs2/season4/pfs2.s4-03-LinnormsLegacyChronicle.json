@@ -1,0 +1,295 @@
+{
+  "id": "pfs2.s4-03",
+  "parent": "pfs2.season4-layout-s4-02",
+  "description": "4-03 Linnorms Legacy",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-03-LinnormsLegacyChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Once you have made these purchases, the other options become",
+          "unavailable for purchase from this Chronicle Sheet, though you",
+          "can still purchase them normally if you otherwise have access",
+          "to them.",
+          "binding coil (item 6, discounted to 35 gp, Secrets of Magic 173)",
+          "dragon turtle scale (item 4, discounted to 7 gp)",
+          "eye of enlightenment (item 5, discounted to 15 gp, Secrets of Magic 173)",
+          "grim trophy (item 7, discounted to 33 gp)",
+          "moderate thunderbird tuft (item 5, discounted to 15 gp, Secrets of Magic 169)",
+          "orchestral brooch (item 8, discounted to 70 gp, Secrets of Magic 174)",
+          "traveler\u2019s any-tool (item 6, discounted to 185 gp)",
+          "greater staff of healing (item 8, discounted to 440 gp)",
+          "scroll of rebounding barrierR (item 7, 70 gp, Lost Omens Legends 37)",
+          "wand of continuation (1st-level spells; item 5, discounted to 150 gp)",
+          "wand of continuation (2nd-level spells; item 7, discounted to 338 gp)"
+        ],
+        "example": "Once you have made these purchases, the other options become"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "earned the right for the Society to explore the Island of the Ancestors",
+          "lost the right to explore the Island of the Ancestors"
+        ],
+        "example": "earned the right for the Society to explore the Island of the Ancestors"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.earned_the_right_for_the_Society_to_explore_the_Is": {
+      "x": 73.948,
+      "y": 65.655,
+      "x2": 75.648,
+      "y2": 77.234
+    },
+    "checkbox.lost_the_right_to_explore_the_Island_of_the_Ancest": {
+      "x": 31.523,
+      "y": 78.238,
+      "x2": 33.223,
+      "y2": 89.817
+    },
+    "item.line.Once_you_have_made_these_purchases_the_other_optio": {
+      "y": 10.7,
+      "y2": 14.7
+    },
+    "item.line.unavailable_for_purchase_from_this_Chronicle_Sheet": {
+      "y": 15.2,
+      "y2": 19.2
+    },
+    "item.line.can_still_purchase_them_normally_if_you_otherwise_": {
+      "y": 19.7,
+      "y2": 23.7
+    },
+    "item.line.to_them": {
+      "y": 24.3,
+      "y2": 28.3
+    },
+    "item.line.binding_coil_item_6_discounted_to_35_gp_Secrets_of": {
+      "y": 29.0,
+      "y2": 32.7
+    },
+    "item.line.dragon_turtle_scale_item_4_discounted_to_7_gp": {
+      "y": 33.5,
+      "y2": 37.3
+    },
+    "item.line.eye_of_enlightenment_item_5_discounted_to_15_gp_Se": {
+      "y": 38.0,
+      "y2": 46.4
+    },
+    "item.line.grim_trophy_item_7_discounted_to_33_gp": {
+      "y": 47.1,
+      "y2": 50.9
+    },
+    "item.line.moderate_thunderbird_tuft_item_5_discounted_to_15_": {
+      "y": 51.6,
+      "y2": 60.0
+    },
+    "item.line.orchestral_brooch_item_8_discounted_to_70_gp_Secre": {
+      "y": 60.7,
+      "y2": 64.5
+    },
+    "item.line.traveler\u2019s_any-tool_item_6_discounted_to_185_gp": {
+      "y": 65.3,
+      "y2": 69.1
+    },
+    "item.line.greater_staff_of_healing_item_8_discounted_to_440_": {
+      "y": 69.8,
+      "y2": 73.6
+    },
+    "item.line.scroll_of_rebounding_barrierR_item_7_70_gp_Lost_Om": {
+      "y": 74.3,
+      "y2": 78.1
+    },
+    "item.line.wand_of_continuation_1st-level_spells;_item_5_disc": {
+      "y": 78.9,
+      "y2": 82.7
+    },
+    "item.line.wand_of_continuation_2nd-level_spells;_item_7_disc": {
+      "y": 83.4,
+      "y2": 87.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Once you have made these purchases, the other options become": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Once_you_have_made_these_purchases_the_other_optio"
+            ]
+          }
+        ],
+        "unavailable for purchase from this Chronicle Sheet, though you": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.unavailable_for_purchase_from_this_Chronicle_Sheet"
+            ]
+          }
+        ],
+        "can still purchase them normally if you otherwise have access": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.can_still_purchase_them_normally_if_you_otherwise_"
+            ]
+          }
+        ],
+        "to them.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.to_them"
+            ]
+          }
+        ],
+        "binding coil (item 6, discounted to 35 gp, Secrets of Magic 173)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.binding_coil_item_6_discounted_to_35_gp_Secrets_of"
+            ]
+          }
+        ],
+        "dragon turtle scale (item 4, discounted to 7 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon_turtle_scale_item_4_discounted_to_7_gp"
+            ]
+          }
+        ],
+        "eye of enlightenment (item 5, discounted to 15 gp, Secrets of Magic 173)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.eye_of_enlightenment_item_5_discounted_to_15_gp_Se"
+            ]
+          }
+        ],
+        "grim trophy (item 7, discounted to 33 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.grim_trophy_item_7_discounted_to_33_gp"
+            ]
+          }
+        ],
+        "moderate thunderbird tuft (item 5, discounted to 15 gp, Secrets of Magic 169)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_thunderbird_tuft_item_5_discounted_to_15_"
+            ]
+          }
+        ],
+        "orchestral brooch (item 8, discounted to 70 gp, Secrets of Magic 174)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.orchestral_brooch_item_8_discounted_to_70_gp_Secre"
+            ]
+          }
+        ],
+        "traveler\u2019s any-tool (item 6, discounted to 185 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.traveler\u2019s_any-tool_item_6_discounted_to_185_gp"
+            ]
+          }
+        ],
+        "greater staff of healing (item 8, discounted to 440 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_staff_of_healing_item_8_discounted_to_440_"
+            ]
+          }
+        ],
+        "scroll of rebounding barrierR (item 7, 70 gp, Lost Omens Legends 37)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_rebounding_barrierR_item_7_70_gp_Lost_Om"
+            ]
+          }
+        ],
+        "wand of continuation (1st-level spells; item 5, discounted to 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_continuation_1st-level_spells;_item_5_disc"
+            ]
+          }
+        ],
+        "wand of continuation (2nd-level spells; item 7, discounted to 338 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_continuation_2nd-level_spells;_item_7_disc"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "earned the right for the Society to explore the Island of the Ancestors": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.earned_the_right_for_the_Society_to_explore_the_Is"
+            ]
+          }
+        ],
+        "lost the right to explore the Island of the Ancestors": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.lost_the_right_to_explore_the_Island_of_the_Ancest"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

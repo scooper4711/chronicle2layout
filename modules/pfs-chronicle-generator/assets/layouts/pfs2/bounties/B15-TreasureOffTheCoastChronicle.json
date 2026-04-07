@@ -1,6 +1,0 @@
-{
-  "id": "pfs2.b15",
-  "description": "Bounty #15: Treasure Off The Coast",
-  "parent": "pfs2.bounty-layout-b13",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B15-TreasureOffTheCoastChronicle.pdf"
-}

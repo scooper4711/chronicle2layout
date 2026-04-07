@@ -1,6 +1,0 @@
-{
-  "id": "pfs2.q24",
-  "description": "Quest #24: Tanuki Trouble",
-  "parent": "pfs2.quest-layout-q14",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q24-TanukiTroubleChronicle.pdf"
-}

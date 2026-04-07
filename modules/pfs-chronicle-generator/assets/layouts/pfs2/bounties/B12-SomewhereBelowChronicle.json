@@ -1,6 +1,0 @@
-{
-  "id": "pfs2.b12",
-  "description": "Bounty #12: Somewhere Below",
-  "parent": "pfs2.bounty-layout-b1",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B12-SomewhereBelowChronicle.pdf"
-}

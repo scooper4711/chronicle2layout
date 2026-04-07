@@ -1,6 +1,0 @@
-{
-  "id": "pfs2.b19",
-  "description": "Bounty #19: Grim Tidings",
-  "parent": "pfs2.bounty-layout-b13",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B19-GrimTidingsChronicle.pdf"
-}

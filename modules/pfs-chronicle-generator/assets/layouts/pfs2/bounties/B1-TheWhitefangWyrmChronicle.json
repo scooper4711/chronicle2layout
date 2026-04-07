@@ -1,6 +1,0 @@
-{
-  "id": "pfs2.b01",
-  "description": "Bounty #1: The Whitefang Wyrm",
-  "parent": "pfs2.bounty-layout-b1",
-  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B1-TheWhitefangWyrmChronicle.pdf"
-}

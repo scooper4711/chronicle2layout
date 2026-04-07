@@ -7,28 +7,6 @@
   ],
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
   "parameters": {
-    "Event Info": {
-      "event": {
-        "type": "text",
-        "description": "Event name",
-        "example": "PaizoCon"
-      },
-      "eventcode": {
-        "type": "text",
-        "description": "Event code",
-        "example": 1234
-      },
-      "date": {
-        "type": "text",
-        "description": "The date on which the game session took place",
-        "example": "27.06.2020"
-      },
-      "gmid": {
-        "type": "text",
-        "description": "Gamemasters PFS ID",
-        "example": 654321
-      }
-    },
     "Checkboxes, Reputation and Items": {
       "summary_checkbox": {
         "type": "choice",
@@ -132,6 +110,28 @@
         "type": "text",
         "description": "Total GP from treasure bundles and income",
         "example": "3gp 7sp 1cp"
+      }
+    },
+    "Event Info": {
+      "event": {
+        "type": "text",
+        "description": "Event name",
+        "example": "PaizoCon"
+      },
+      "eventcode": {
+        "type": "text",
+        "description": "Event code",
+        "example": 1234
+      },
+      "date": {
+        "type": "text",
+        "description": "The date on which the game session took place",
+        "example": "27.06.2020"
+      },
+      "gmid": {
+        "type": "text",
+        "description": "Gamemasters PFS ID",
+        "example": 654321
       }
     },
     "Notes": {

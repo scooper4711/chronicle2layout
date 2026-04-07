@@ -33,9 +33,19 @@
         "example": "Stormageddon"
       },
       "societyid": {
-        "type": "societyid",
-        "description": "Pathfinder Society ID",
-        "example": "123456-2001"
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
+      },
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
       }
     },
     "Rewards": {
@@ -81,7 +91,7 @@
       },
       "total_gp": {
         "type": "text",
-        "description": "Total GP",
+        "description": "Total GP from treasure bundles and income",
         "example": "3gp 7sp 1cp"
       }
     },

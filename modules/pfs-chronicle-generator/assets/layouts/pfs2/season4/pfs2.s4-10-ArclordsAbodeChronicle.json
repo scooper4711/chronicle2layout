@@ -1,0 +1,145 @@
+{
+  "id": "pfs2.s4-10",
+  "parent": "pfs2.season4-layout-s4-00",
+  "description": "4-10 Arclords Abode",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-10-ArclordsAbodeChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Ganjay book (Item 1, 10 gp, Pathfinder Lost Omens Pathfinder Society Guide 96)",
+          "oxygen ooze (Item 4, 15 gp, Pathfinder Lost Omens Impossible Lands 306)"
+        ],
+        "example": "Ganjay book (Item 1, 10 gp, Pathfinder Lost Omens Pathfinder Society Guide 96)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "successfully gathered all the research fragments",
+          "did not gather all of the fragments of her research",
+          "successfully convinced her to store her research at Skyreach",
+          "failed to convince her"
+        ],
+        "example": "successfully gathered all the research fragments"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.successfully_gathered_all_the_research_fragments": {
+      "x": 4.582,
+      "y": 49.904,
+      "x2": 6.282,
+      "y2": 60.099
+    },
+    "checkbox.did_not_gather_all_of_the_fragments_of_her_researc": {
+      "x": 58.691,
+      "y": 49.904,
+      "x2": 60.391,
+      "y2": 60.099
+    },
+    "checkbox.successfully_convinced_her_to_store_her_research_a": {
+      "x": 7.814,
+      "y": 58.195,
+      "x2": 9.514,
+      "y2": 68.39
+    },
+    "checkbox.failed_to_convince_her": {
+      "x": 53.773,
+      "y": 58.195,
+      "x2": 55.473,
+      "y2": 68.39
+    },
+    "item.line.Ganjay_book_Item_1_10_gp_Pathfinder_Lost_Omens_Pat": {
+      "y": 7.2,
+      "y2": 17.8
+    },
+    "item.line.oxygen_ooze_Item_4_15_gp_Pathfinder_Lost_Omens_Imp": {
+      "y": 18.4,
+      "y2": 29.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Ganjay book (Item 1, 10 gp, Pathfinder Lost Omens Pathfinder Society Guide 96)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Ganjay_book_Item_1_10_gp_Pathfinder_Lost_Omens_Pat"
+            ]
+          }
+        ],
+        "oxygen ooze (Item 4, 15 gp, Pathfinder Lost Omens Impossible Lands 306)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.oxygen_ooze_Item_4_15_gp_Pathfinder_Lost_Omens_Imp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "successfully gathered all the research fragments": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.successfully_gathered_all_the_research_fragments"
+            ]
+          }
+        ],
+        "did not gather all of the fragments of her research": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did_not_gather_all_of_the_fragments_of_her_researc"
+            ]
+          }
+        ],
+        "successfully convinced her to store her research at Skyreach": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.successfully_convinced_her_to_store_her_research_a"
+            ]
+          }
+        ],
+        "failed to convince her": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_convince_her"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
