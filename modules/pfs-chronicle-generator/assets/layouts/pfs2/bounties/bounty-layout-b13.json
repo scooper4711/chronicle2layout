@@ -7,6 +7,36 @@
   ],
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
   "parameters": {
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 6
+      }
+    },
+    "Event Info": {
+      "event": {
+        "type": "text",
+        "description": "Event name",
+        "example": "PaizoCon"
+      },
+      "eventcode": {
+        "type": "text",
+        "description": "Event code",
+        "example": 1234
+      },
+      "date": {
+        "type": "text",
+        "description": "The date on which the game session took place",
+        "example": "27.06.2020"
+      },
+      "gmid": {
+        "type": "text",
+        "description": "Gamemasters PFS ID",
+        "example": 654321
+      }
+    },
     "Checkboxes, Reputation and Items": {
       "summary_checkbox": {
         "type": "choice",
@@ -41,28 +71,6 @@
           9
         ],
         "example": "1,2,3,4,5,6,7,8,9"
-      }
-    },
-    "Player Info": {
-      "char": {
-        "type": "text",
-        "description": "Players character name",
-        "example": "Stormageddon"
-      },
-      "societyid": {
-        "type": "text",
-        "description": "Organized Play ID",
-        "example": "123456"
-      },
-      "char_number": {
-        "type": "text",
-        "description": "Character number",
-        "example": "2001"
-      },
-      "char_number_short": {
-        "type": "text",
-        "description": "Character number without leading digit",
-        "example": "001"
       }
     },
     "Rewards": {
@@ -112,34 +120,26 @@
         "example": "3gp 7sp 1cp"
       }
     },
-    "Event Info": {
-      "event": {
+    "Player Info": {
+      "char": {
         "type": "text",
-        "description": "Event name",
-        "example": "PaizoCon"
+        "description": "Players character name",
+        "example": "Stormageddon"
       },
-      "eventcode": {
+      "societyid": {
         "type": "text",
-        "description": "Event code",
-        "example": 1234
+        "description": "Organized Play ID",
+        "example": "123456"
       },
-      "date": {
+      "char_number": {
         "type": "text",
-        "description": "The date on which the game session took place",
-        "example": "27.06.2020"
+        "description": "Character number",
+        "example": "2001"
       },
-      "gmid": {
+      "char_number_short": {
         "type": "text",
-        "description": "Gamemasters PFS ID",
-        "example": 654321
-      }
-    },
-    "Notes": {
-      "notes": {
-        "type": "multiline",
-        "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
-        "lines": 6
+        "description": "Character number without leading digit",
+        "example": "001"
       }
     }
   },

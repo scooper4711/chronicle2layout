@@ -143,5 +143,201 @@
       }
     }
   },
-  "canvas": {}
+  "canvas": {
+    "main": {
+      "x": 5.9,
+      "y": 11.2,
+      "x2": 93.6,
+      "y2": 95.2,
+      "parent": "page"
+    },
+    "character_info": {
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 100.0,
+      "y2": 6.5,
+      "parent": "main"
+    },
+    "reputation": {
+      "x": 0.0,
+      "y": 84.8,
+      "x2": 100.0,
+      "y2": 94.5,
+      "parent": "main"
+    },
+    "summary": {
+      "x": 0.0,
+      "y": 8.3,
+      "x2": 100.0,
+      "y2": 30.5,
+      "parent": "main"
+    },
+    "items": {
+      "x": 0.0,
+      "y": 50.4,
+      "x2": 40.1,
+      "y2": 83.0,
+      "parent": "main"
+    },
+    "rewards": {
+      "x": 82.2,
+      "y": 32.4,
+      "x2": 100.0,
+      "y2": 83.0,
+      "parent": "main"
+    },
+    "notes": {
+      "x": 40.1,
+      "y": 50.4,
+      "x2": 80.0,
+      "y2": 83.0,
+      "parent": "main"
+    },
+    "session_info": {
+      "x": 0.0,
+      "y": 94.5,
+      "x2": 100.0,
+      "y2": 100.0,
+      "parent": "main"
+    }
+  },
+  "content": [
+    {
+      "value": "param:event",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 2.4,
+      "y": 22.0,
+      "x2": 45.7,
+      "y2": 60.9,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 80.3,
+      "y": 22.0,
+      "x2": 99.5,
+      "y2": 60.9,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "LB"
+    },
+    {
+      "value": "param:date",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 64.1,
+      "y": 24.2,
+      "x2": 78.6,
+      "y2": 63.0,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
+      "value": "param:gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 47.5,
+      "y": 22.0,
+      "x2": 62.5,
+      "y2": 60.9,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CB"
+    },
+    {
+      "value": "param:char",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 1.5,
+      "y": 18.4,
+      "x2": 63.6,
+      "y2": 50.9,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "fontweight": "bold",
+      "align": "LB"
+    },
+    {
+      "value": "param:societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 67.3,
+      "y": 23.7,
+      "x2": 87.5,
+      "y2": 44.6,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM"
+    },
+    {
+      "value": "param:char_number_short",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 90.2,
+      "y": 23.7,
+      "x2": 97.7,
+      "y2": 44.6,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM"
+    },
+    {
+      "value": "param:xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "x": 0.6,
+      "y": 19.3,
+      "x2": 99.4,
+      "y2": 27.8,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CM"
+    },
+    {
+      "value": "param:gp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "x": 0.6,
+      "y": 62.8,
+      "x2": 100.0,
+      "y2": 71.1,
+      "font": "Helvetica",
+      "fontsize": 14,
+      "align": "CM"
+    },
+    {
+      "value": "param:notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "x": 5.2,
+      "y": 2.6,
+      "x2": 94.8,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 6
+    },
+    {
+      "value": "param:reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "x": 2.1,
+      "y": 0.0,
+      "x2": 97.9,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 3
+    }
+  ]
 }
