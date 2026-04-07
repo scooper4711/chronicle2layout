@@ -317,14 +317,27 @@
       "value": "param:notes",
       "type": "multiline",
       "canvas": "notes",
-      "x": 0.0,
-      "y": 0.0,
-      "x2": 100.0,
+      "x": 6.5,
+      "y": 4.7,
+      "x2": 92.7,
       "y2": 100.0,
       "font": "Helvetica",
       "fontsize": 11,
       "align": "LB",
-      "lines": 6
+      "lines": 20
+    },
+    {
+      "value": "param:reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "x": 1.8,
+      "y": 2.4,
+      "x2": 97.5,
+      "y2": 100.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB",
+      "lines": 5
     }
   ]
 }

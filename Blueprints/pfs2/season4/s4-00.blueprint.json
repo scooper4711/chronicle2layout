@@ -140,12 +140,28 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 6,
+      "lines": 16,
       "align": "LB",
-      "left": "notes.left",
-      "right": "notes.right",
-      "top": "notes.top",
-      "bottom": "notes.bottom"
+      "left": "notes.left+1em",
+      "right": "notes.right-1em",
+      "top": "notes.top+0.5em",
+      "bottom": "notes.bottom-0.75em"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 5,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [

@@ -140,12 +140,28 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 6,
+      "lines": 20,
       "align": "LB",
-      "left": "notes.left",
-      "right": "notes.right",
-      "top": "notes.top",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "top": "@h_rule[0] - 1em",
       "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 10,
+      "lines": 5,
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "top": "@h_rule[1]-1em",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [
@@ -201,7 +217,7 @@
       "name": "notes",
       "parent": "main",
       "left": "main.left",
-      "right": "v_thin[1]",
+      "right": "main.right",
       "top": "h_bar[4].bottom",
       "bottom": "h_thin[4].top"
     },

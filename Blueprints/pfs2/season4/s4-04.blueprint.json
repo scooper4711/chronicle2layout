@@ -146,6 +146,22 @@
       "right": "notes.right",
       "top": "notes.top",
       "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 5,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [
