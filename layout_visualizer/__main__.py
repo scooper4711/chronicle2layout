@@ -12,6 +12,7 @@ generate PNGs for multiple layouts in one invocation.
 from __future__ import annotations
 
 import argparse
+import difflib
 import fnmatch
 import os
 import sys
@@ -25,6 +26,26 @@ _RESET = "\033[0m"
 def _print_error(message: str) -> None:
     """Print a red-highlighted error message to stderr."""
     print(f"{_RED}{message}{_RESET}", file=sys.stderr)
+
+
+def _suggest_layout_ids(unknown_id: str, layout_index: dict[str, Path]) -> str:
+    """Build a suggestion string for an unrecognised layout id.
+
+    Returns a human-readable hint containing close matches (if any)
+    and the total number of known ids so the user knows where to look.
+    """
+    available = sorted(layout_index)
+    close = difflib.get_close_matches(unknown_id, available, n=5, cutoff=0.4)
+    parts: list[str] = []
+    if close:
+        parts.append("Did you mean one of these?")
+        for match in close:
+            parts.append(f"  - {match}")
+    parts.append(
+        f"Run with '--layout-id \"*\"' to list all "
+        f"{len(available)} known layout ids."
+    )
+    return "\n".join(parts)
 
 
 from layout_visualizer.coordinate_resolver import (
@@ -86,7 +107,10 @@ def match_layout_ids(
         )
     else:
         if pattern not in layout_index:
-            raise ValueError(f"Layout id '{pattern}' not found")
+            hint = _suggest_layout_ids(pattern, layout_index)
+            raise ValueError(
+                f"--layout-id '{pattern}' not found\n{hint}"
+            )
         matched = [pattern]
 
     if not matched:
@@ -220,8 +244,9 @@ def run_visualizer(
     layout_index = build_layout_index(layout_root)
 
     if layout_id not in layout_index:
+        hint = _suggest_layout_ids(layout_id, layout_index)
         raise ValueError(
-            f"Layout id '{layout_id}' not found in {layout_root}"
+            f"--layout-id '{layout_id}' not found in {layout_root}\n{hint}"
         )
 
     layout_path = layout_index[layout_id]
