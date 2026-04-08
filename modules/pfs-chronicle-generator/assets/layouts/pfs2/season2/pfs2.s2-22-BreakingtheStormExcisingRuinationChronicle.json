@@ -1,0 +1,131 @@
+{
+  "id": "pfs2.s2-22",
+  "parent": "pfs2.season2-layout-s2-22",
+  "description": "2-22 Breaking the Storm Excising Ruination",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-22-BreakingtheStormExcisingRuinationChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "ring of sustenance (item 7, 325 gp)"
+        ],
+        "example": "ring of sustenance (item 7, 325 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "managed to free him from the influence of the spirit",
+          "were forced to kill him to end the spirit\u2019s control",
+          "used the last of the ritual\u2019s energy to save Dolok Darkfur from being stranded on the Ethereal Plane",
+          "you lacked the energy to summon Dolok back"
+        ],
+        "example": "managed to free him from the influence of the spirit"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.managed_to_free_him_from_the_influence_of_the_spir": {
+      "x": 24.617,
+      "y": 36.726,
+      "x2": 26.128,
+      "y2": 45.826
+    },
+    "checkbox.were_forced_to_kill_him_to_end_the_spirit\u2019s_contro": {
+      "x": 67.217,
+      "y": 36.726,
+      "x2": 68.728,
+      "y2": 45.826
+    },
+    "checkbox.used_the_last_of_the_ritual\u2019s_energy_to_save_Dolok": {
+      "x": 34.24,
+      "y": 47.851,
+      "x2": 35.751,
+      "y2": 56.951
+    },
+    "checkbox.you_lacked_the_energy_to_summon_Dolok_back": {
+      "x": 14.994,
+      "y": 58.976,
+      "x2": 16.505,
+      "y2": 68.076
+    },
+    "item.line.ring_of_sustenance_item_7_325_gp": {
+      "y": 1.5,
+      "y2": 6.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "ring of sustenance (item 7, 325 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_sustenance_item_7_325_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "managed to free him from the influence of the spirit": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_free_him_from_the_influence_of_the_spir"
+            ]
+          }
+        ],
+        "were forced to kill him to end the spirit\u2019s control": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_forced_to_kill_him_to_end_the_spirit\u2019s_contro"
+            ]
+          }
+        ],
+        "used the last of the ritual\u2019s energy to save Dolok Darkfur from being stranded on the Ethereal Plane": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.used_the_last_of_the_ritual\u2019s_energy_to_save_Dolok"
+            ]
+          }
+        ],
+        "you lacked the energy to summon Dolok back": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_lacked_the_energy_to_summon_Dolok_back"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

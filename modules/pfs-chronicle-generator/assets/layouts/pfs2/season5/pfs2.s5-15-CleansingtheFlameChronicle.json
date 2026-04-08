@@ -1,0 +1,239 @@
+{
+  "id": "pfs2.s5-15",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-15 Cleansing the Flame",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-15-CleansingtheFlameChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "brazier of harmony (level 5, 150 gp; Pathfinder Rage of Elements 122)",
+          "messenger\u2019s ring (level 9, 700 gp)",
+          "moderate healing potion (level 6, 50 gp)",
+          "spellstrike ammunition (type III) (level 7, 70 gp)",
+          "crafter\u2019s eyepiece (level 3, 60 gp)",
+          "+1 mace (level 3, 36 gp)",
+          "+1 striking mace (level 4, 101 gp)",
+          "+1 striking called shears (level 7, 450 gp; Pathfinder Bestiary 2 184, Lost Omens Knights of Lastwall 89)",
+          "+2 striking called shears (level 10, 1,350 gp; Pathfinder Bestiary 2 184, Lost Omens Knights of Lastwall 89)",
+          "Players with this chronicle sheet have access to",
+          "the shears weapon for all characters"
+        ],
+        "example": "brazier of harmony (level 5, 150 gp; Pathfinder Rage of Elements 122)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "acquiesced and fought him honorably",
+          "you refused this tradition"
+        ],
+        "example": "acquiesced and fought him honorably"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.acquiesced_and_fought_him_honorably": {
+      "x": 13.303,
+      "y": 54.117,
+      "x2": 14.816,
+      "y2": 63.097
+    },
+    "checkbox.you_refused_this_tradition": {
+      "x": 46.216,
+      "y": 54.117,
+      "x2": 47.729,
+      "y2": 63.097
+    },
+    "item.line.brazier_of_harmony_level_5_150_gp;_Pathfinder_Rage": {
+      "y": 3.9,
+      "y2": 15.7
+    },
+    "item.line.messenger\u2019s_ring_level_9_700_gp": {
+      "y": 15.1,
+      "y2": 21.3
+    },
+    "item.line.moderate_healing_potion_level_6_50_gp": {
+      "y": 20.7,
+      "y2": 26.9
+    },
+    "item.line.spellstrike_ammunition_type_III_level_7_70_gp": {
+      "y": 26.3,
+      "y2": 32.5
+    },
+    "item.line.crafter\u2019s_eyepiece_level_3_60_gp": {
+      "y": 26.3,
+      "y2": 38.1
+    },
+    "item.line.+1_mace_level_3_36_gp": {
+      "y": 37.5,
+      "y2": 43.7
+    },
+    "item.line.+1_striking_mace_level_4_101_gp": {
+      "y": 43.1,
+      "y2": 49.3
+    },
+    "item.line.+1_striking_called_shears_level_7_450_gp;_Pathfind": {
+      "y": 48.7,
+      "y2": 66.1
+    },
+    "item.line.+2_striking_called_shears_level_10_1350_gp;_Pathfi": {
+      "y": 65.5,
+      "y2": 82.9
+    },
+    "item.line.Players_with_this_chronicle_sheet_have_access_to": {
+      "y": 82.4,
+      "y2": 88.5
+    },
+    "item.line.the_shears_weapon_for_all_characters": {
+      "y": 88.0,
+      "y2": 94.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "brazier of harmony (level 5, 150 gp; Pathfinder Rage of Elements 122)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brazier_of_harmony_level_5_150_gp;_Pathfinder_Rage"
+            ]
+          }
+        ],
+        "messenger\u2019s ring (level 9, 700 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.messenger\u2019s_ring_level_9_700_gp"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_50_gp"
+            ]
+          }
+        ],
+        "spellstrike ammunition (type III) (level 7, 70 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.spellstrike_ammunition_type_III_level_7_70_gp"
+            ]
+          }
+        ],
+        "crafter\u2019s eyepiece (level 3, 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.crafter\u2019s_eyepiece_level_3_60_gp"
+            ]
+          }
+        ],
+        "+1 mace (level 3, 36 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_mace_level_3_36_gp"
+            ]
+          }
+        ],
+        "+1 striking mace (level 4, 101 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_mace_level_4_101_gp"
+            ]
+          }
+        ],
+        "+1 striking called shears (level 7, 450 gp; Pathfinder Bestiary 2 184, Lost Omens Knights of Lastwall 89)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_called_shears_level_7_450_gp;_Pathfind"
+            ]
+          }
+        ],
+        "+2 striking called shears (level 10, 1,350 gp; Pathfinder Bestiary 2 184, Lost Omens Knights of Lastwall 89)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_called_shears_level_10_1350_gp;_Pathfi"
+            ]
+          }
+        ],
+        "Players with this chronicle sheet have access to": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Players_with_this_chronicle_sheet_have_access_to"
+            ]
+          }
+        ],
+        "the shears weapon for all characters": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.the_shears_weapon_for_all_characters"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "acquiesced and fought him honorably": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.acquiesced_and_fought_him_honorably"
+            ]
+          }
+        ],
+        "you refused this tradition": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_refused_this_tradition"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

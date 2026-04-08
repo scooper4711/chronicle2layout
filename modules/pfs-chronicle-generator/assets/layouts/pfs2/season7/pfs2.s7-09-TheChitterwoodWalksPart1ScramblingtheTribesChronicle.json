@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s7-09",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-09 The Chitterwood Walks Part 1 Scrambling the Tribes",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-09-TheChitterwoodWalksPart1ScramblingtheTribesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 striking morningstar (level 4, 101 gp)"
+        ],
+        "example": "+1 striking morningstar (level 4, 101 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_striking_morningstar_level_4_101_gp": {
+      "y": 7.8,
+      "y2": 12.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 striking morningstar (level 4, 101 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_morningstar_level_4_101_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

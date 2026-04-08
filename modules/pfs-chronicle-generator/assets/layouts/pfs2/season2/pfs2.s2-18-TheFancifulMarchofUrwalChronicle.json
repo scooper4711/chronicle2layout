@@ -1,0 +1,113 @@
+{
+  "id": "pfs2.s2-18",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-18 The Fanciful March of Urwal",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-18-TheFancifulMarchofUrwalChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "demon mask (level 4; 85 gp)",
+          "greater rope of climbing (level 7; 300 gp; Advanced Player\u2019s Guide 258)"
+        ],
+        "example": "demon mask (level 4; 85 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "listened to the dragon\u2019s dying words without risking your life to save it",
+          "helped Urwal enact a ritual to save Jadirahx by battling the rot that consumed her"
+        ],
+        "example": "listened to the dragon\u2019s dying words without risking your life to save it"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.listened_to_the_dragon\u2019s_dying_words_without_riski": {
+      "x": 75.248,
+      "y": 46.573,
+      "x2": 76.261,
+      "y2": 60.074
+    },
+    "checkbox.helped_Urwal_enact_a_ritual_to_save_Jadirahx_by_ba": {
+      "x": 37.396,
+      "y": 60.939,
+      "x2": 38.41,
+      "y2": 74.44
+    },
+    "item.line.demon_mask_level_4;_85_gp": {
+      "y": 1.7,
+      "y2": 6.1
+    },
+    "item.line.greater_rope_of_climbing_level_7;_300_gp;_Advanced": {
+      "y": 6.5,
+      "y2": 10.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "demon mask (level 4; 85 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.demon_mask_level_4;_85_gp"
+            ]
+          }
+        ],
+        "greater rope of climbing (level 7; 300 gp; Advanced Player\u2019s Guide 258)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_rope_of_climbing_level_7;_300_gp;_Advanced"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "listened to the dragon\u2019s dying words without risking your life to save it": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.listened_to_the_dragon\u2019s_dying_words_without_riski"
+            ]
+          }
+        ],
+        "helped Urwal enact a ritual to save Jadirahx by battling the rot that consumed her": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.helped_Urwal_enact_a_ritual_to_save_Jadirahx_by_ba"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

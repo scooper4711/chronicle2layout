@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b8",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B8 The Tireless Path",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B8-TheTirelessPathChronicle.pdf"
+}

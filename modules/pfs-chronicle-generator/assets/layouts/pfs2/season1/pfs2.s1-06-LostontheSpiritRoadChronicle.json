@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s1-06",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-06 Lost on the Spirit Road",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-06-LostontheSpiritRoadChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "katana (2 gp)",
+          "+1 katana (level 2; 35 gp)"
+        ],
+        "example": "katana (2 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.katana_2_gp": {
+      "y": 1.8,
+      "y2": 5.3
+    },
+    "item.line.+1_katana_level_2;_35_gp": {
+      "y": 51.8,
+      "y2": 55.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "katana (2 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.katana_2_gp"
+            ]
+          }
+        ],
+        "+1 katana (level 2; 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_katana_level_2;_35_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

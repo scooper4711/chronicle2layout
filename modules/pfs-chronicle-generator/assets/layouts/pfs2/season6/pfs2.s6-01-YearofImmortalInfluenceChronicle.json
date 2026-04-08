@@ -1,0 +1,195 @@
+{
+  "id": "pfs2.s6-01",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-01 Year of Immortal Influence",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-01-YearofImmortalInfluenceChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "3rd-rank scroll of dispel magic (level 3, 30 gp; Player Core 325, GM Core 262)"
+        ],
+        "example": "3rd-rank scroll of dispel magic (level 3, 30 gp; Player Core 325, GM Core 262)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "stopped",
+          "failed to stop a murder plot to seek vengeance on",
+          "Danbry of House Avenstar",
+          "Teritha for House Madinani",
+          "Gnethe Eraseen",
+          "Wyles Thall for unknown reasons",
+          "managed to convince the other guests of the Society\u2019s innocence",
+          "failed to convince the other guests of the Society\u2019s innocence"
+        ],
+        "example": "stopped"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.stopped": {
+      "x": 76.442,
+      "y": 9.807,
+      "x2": 78.144,
+      "y2": 19.909
+    },
+    "checkbox.failed_to_stop_a_murder_plot_to_seek_vengeance_on": {
+      "x": 84.944,
+      "y": 9.807,
+      "x2": 86.646,
+      "y2": 19.909
+    },
+    "checkbox.Danbry_of_House_Avenstar": {
+      "x": 27.515,
+      "y": 18.025,
+      "x2": 29.216,
+      "y2": 28.128
+    },
+    "checkbox.Teritha_for_House_Madinani": {
+      "x": 49.862,
+      "y": 18.025,
+      "x2": 51.564,
+      "y2": 28.128
+    },
+    "checkbox.Gnethe_Eraseen": {
+      "x": 73.359,
+      "y": 18.025,
+      "x2": 75.061,
+      "y2": 28.128
+    },
+    "checkbox.Wyles_Thall_for_unknown_reasons": {
+      "x": 87.504,
+      "y": 18.025,
+      "x2": 89.206,
+      "y2": 28.128
+    },
+    "checkbox.managed_to_convince_the_other_guests_of_the_Societ": {
+      "x": 24.698,
+      "y": 34.462,
+      "x2": 26.4,
+      "y2": 44.564
+    },
+    "checkbox.failed_to_convince_the_other_guests_of_the_Society": {
+      "x": 75.467,
+      "y": 34.462,
+      "x2": 77.169,
+      "y2": 44.564
+    },
+    "item.line.3rd-rank_scroll_of_dispel_magic_level_3_30_gp;_Pla": {
+      "y": 4.6,
+      "y2": 15.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "3rd-rank scroll of dispel magic (level 3, 30 gp; Player Core 325, GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.3rd-rank_scroll_of_dispel_magic_level_3_30_gp;_Pla"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "stopped": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.stopped"
+            ]
+          }
+        ],
+        "failed to stop a murder plot to seek vengeance on": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_stop_a_murder_plot_to_seek_vengeance_on"
+            ]
+          }
+        ],
+        "Danbry of House Avenstar": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Danbry_of_House_Avenstar"
+            ]
+          }
+        ],
+        "Teritha for House Madinani": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Teritha_for_House_Madinani"
+            ]
+          }
+        ],
+        "Gnethe Eraseen": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Gnethe_Eraseen"
+            ]
+          }
+        ],
+        "Wyles Thall for unknown reasons": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Wyles_Thall_for_unknown_reasons"
+            ]
+          }
+        ],
+        "managed to convince the other guests of the Society\u2019s innocence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_convince_the_other_guests_of_the_Societ"
+            ]
+          }
+        ],
+        "failed to convince the other guests of the Society\u2019s innocence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_convince_the_other_guests_of_the_Society"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

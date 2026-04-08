@@ -1,0 +1,157 @@
+{
+  "id": "pfs2.s1-14",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-14 Lions of Katapesh",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-14-LionsofKatapeshChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bola (5 sp, Lost Omens Gods & Magic 120)",
+          "fighting fan (11 sp, Lost Omens Gods & Magic 120)",
+          "khopesh (2 gp, Lost Omens Gods & Magic 120)",
+          "+1 khopesh (35 gp, Lost Omens Gods & Magic 120)"
+        ],
+        "example": "bola (5 sp, Lost Omens Gods & Magic 120)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "possessed cat /",
+          "halfling druid /",
+          "angry awakened lion riling the creatures of Katapesh to violence"
+        ],
+        "example": "possessed cat /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.possessed_cat_/": {
+      "x": 67.523,
+      "y": 29.95,
+      "x2": 75.921,
+      "y2": 41.196
+    },
+    "checkbox.halfling_druid_/": {
+      "x": 79.804,
+      "y": 29.95,
+      "x2": 81.224,
+      "y2": 41.196
+    },
+    "checkbox.angry_awakened_lion_riling_the_creatures_of_Katape": {
+      "x": 93.044,
+      "y": 29.95,
+      "x2": 94.463,
+      "y2": 41.196
+    },
+    "item.line.bola_5_sp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 55.4,
+      "y2": 58.9
+    },
+    "item.line.fighting_fan_11_sp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 60.1,
+      "y2": 68.3
+    },
+    "item.line.khopesh_2_gp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 17.6,
+      "y2": 21.1
+    },
+    "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_120": {
+      "y": 69.5,
+      "y2": 77.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bola (5 sp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bola_5_sp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ],
+        "fighting fan (11 sp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.fighting_fan_11_sp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ],
+        "khopesh (2 gp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.khopesh_2_gp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ],
+        "+1 khopesh (35 gp, Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_khopesh_35_gp_Lost_Omens_Gods_&_Magic_120"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "possessed cat /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.possessed_cat_/"
+            ]
+          }
+        ],
+        "halfling druid /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.halfling_druid_/"
+            ]
+          }
+        ],
+        "angry awakened lion riling the creatures of Katapesh to violence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.angry_awakened_lion_riling_the_creatures_of_Katape"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

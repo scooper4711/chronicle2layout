@@ -1,0 +1,117 @@
+{
+  "id": "pfs2.s6-14",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-14 Twicein Steel",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-14-TwiceinSteelChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "cartographer\u2019s kit (level 3; 42 gp; Pathfinder Lost Omens Pathfinder Society Guide 34)",
+          "energizing pill (level 10; 180 gp; Pathfinder Adventure Path #199: To Bloom Below the Web 73)",
+          "fortune\u2019s coin (level 8; 450 gp; Pathfinder Treasure Vault 117)",
+          "horrid figurine (level 8; 450 gp; Pathfinder Treasure Vault 115)",
+          "greater symbol of conflict (level 10; 900 gp; Pathfinder GM Core 296)",
+          "urn of ashes (level 9; 700 gp; Pathfinder Player Core 2 307)"
+        ],
+        "example": "cartographer\u2019s kit (level 3; 42 gp; Pathfinder Lost Omens Pathfinder Society Guide 34)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.cartographer\u2019s_kit_level_3;_42_gp;_Pathfinder_Lost": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.energizing_pill_level_10;_180_gp;_Pathfinder_Adven": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.fortune\u2019s_coin_level_8;_450_gp;_Pathfinder_Treasur": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.horrid_figurine_level_8;_450_gp;_Pathfinder_Treasu": {
+      "y": 41.4,
+      "y2": 51.6
+    },
+    "item.line.greater_symbol_of_conflict_level_10;_900_gp;_Pathf": {
+      "y": 52.6,
+      "y2": 62.8
+    },
+    "item.line.urn_of_ashes_level_9;_700_gp;_Pathfinder_Player_Co": {
+      "y": 63.7,
+      "y2": 74.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "cartographer\u2019s kit (level 3; 42 gp; Pathfinder Lost Omens Pathfinder Society Guide 34)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.cartographer\u2019s_kit_level_3;_42_gp;_Pathfinder_Lost"
+            ]
+          }
+        ],
+        "energizing pill (level 10; 180 gp; Pathfinder Adventure Path #199: To Bloom Below the Web 73)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.energizing_pill_level_10;_180_gp;_Pathfinder_Adven"
+            ]
+          }
+        ],
+        "fortune\u2019s coin (level 8; 450 gp; Pathfinder Treasure Vault 117)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.fortune\u2019s_coin_level_8;_450_gp;_Pathfinder_Treasur"
+            ]
+          }
+        ],
+        "horrid figurine (level 8; 450 gp; Pathfinder Treasure Vault 115)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.horrid_figurine_level_8;_450_gp;_Pathfinder_Treasu"
+            ]
+          }
+        ],
+        "greater symbol of conflict (level 10; 900 gp; Pathfinder GM Core 296)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_symbol_of_conflict_level_10;_900_gp;_Pathf"
+            ]
+          }
+        ],
+        "urn of ashes (level 9; 700 gp; Pathfinder Player Core 2 307)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.urn_of_ashes_level_9;_700_gp;_Pathfinder_Player_Co"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

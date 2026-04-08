@@ -1,0 +1,117 @@
+{
+  "id": "pfs2.s1-04",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-04 Bandits of Immenwood",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-04-BanditsofImmenwoodChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "dull gray aeon stone (level 1; 9 gp)",
+          "scroll of wall of wind (level 5; 30 gp)",
+          "silver buckler, low-grade (level 2; 30 gp)",
+          "tracker\u2019s goggles (level 3; 60 gp)",
+          "+1 armor potency rune (level 5; 160 gp)",
+          "dragonhide buckler, standard grade (level 8; 400 gp)"
+        ],
+        "example": "dull gray aeon stone (level 1; 9 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.dull_gray_aeon_stone_level_1;_9_gp": {
+      "y": 3.5,
+      "y2": 7.0
+    },
+    "item.line.scroll_of_wall_of_wind_level_5;_30_gp": {
+      "y": 69.5,
+      "y2": 73.0
+    },
+    "item.line.silver_buckler_low-grade_level_2;_30_gp": {
+      "y": 12.9,
+      "y2": 16.4
+    },
+    "item.line.tracker\u2019s_goggles_level_3;_60_gp": {
+      "y": 74.2,
+      "y2": 77.7
+    },
+    "item.line.+1_armor_potency_rune_level_5;_160_gp": {
+      "y": 55.4,
+      "y2": 58.9
+    },
+    "item.line.dragonhide_buckler_standard_grade_level_8;_400_gp": {
+      "y": 60.1,
+      "y2": 68.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "dull gray aeon stone (level 1; 9 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dull_gray_aeon_stone_level_1;_9_gp"
+            ]
+          }
+        ],
+        "scroll of wall of wind (level 5; 30 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_wall_of_wind_level_5;_30_gp"
+            ]
+          }
+        ],
+        "silver buckler, low-grade (level 2; 30 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.silver_buckler_low-grade_level_2;_30_gp"
+            ]
+          }
+        ],
+        "tracker\u2019s goggles (level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.tracker\u2019s_goggles_level_3;_60_gp"
+            ]
+          }
+        ],
+        "+1 armor potency rune (level 5; 160 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_armor_potency_rune_level_5;_160_gp"
+            ]
+          }
+        ],
+        "dragonhide buckler, standard grade (level 8; 400 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragonhide_buckler_standard_grade_level_8;_400_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

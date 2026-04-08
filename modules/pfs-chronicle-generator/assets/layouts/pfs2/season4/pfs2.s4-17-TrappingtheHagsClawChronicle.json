@@ -1,0 +1,193 @@
+{
+  "id": "pfs2.s4-17",
+  "parent": "pfs2.season4-layout-s4-00",
+  "description": "4-17 Trapping the Hags Claw",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-17-TrappingtheHagsClawChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bag of holding, type III (level 11, 1,200 gp)",
+          "bring me near (level 12, 1,800 gp; Pathfinder Treasure Vault 114)"
+        ],
+        "example": "bag of holding, type III (level 11, 1,200 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "Narcela",
+          "Revecka",
+          "Star",
+          "Star launched themself at ship",
+          "Revecka activated her science experiment",
+          "you took on the airship and/or",
+          "just Aslynn before defeating her and ending her terrible plans!"
+        ],
+        "example": "Narcela"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.Narcela": {
+      "x": 50.621,
+      "y": 25.031,
+      "x2": 52.321,
+      "y2": 35.225
+    },
+    "checkbox.Revecka": {
+      "x": 59.396,
+      "y": 25.031,
+      "x2": 61.096,
+      "y2": 35.225
+    },
+    "checkbox.Star": {
+      "x": 73.82,
+      "y": 25.031,
+      "x2": 75.52,
+      "y2": 35.225
+    },
+    "checkbox.Star_launched_themself_at_ship": {
+      "x": 25.863,
+      "y": 58.195,
+      "x2": 27.563,
+      "y2": 68.39
+    },
+    "checkbox.Revecka_activated_her_science_experiment": {
+      "x": 52.022,
+      "y": 58.195,
+      "x2": 53.722,
+      "y2": 68.39
+    },
+    "checkbox.you_took_on_the_airship_and/or": {
+      "x": 13.33,
+      "y": 66.486,
+      "x2": 15.03,
+      "y2": 76.681
+    },
+    "checkbox.just_Aslynn_before_defeating_her_and_ending_her_te": {
+      "x": 38.463,
+      "y": 66.486,
+      "x2": 40.163,
+      "y2": 76.681
+    },
+    "item.line.bag_of_holding_type_III_level_11_1200_gp": {
+      "y": 7.2,
+      "y2": 12.2
+    },
+    "item.line.bring_me_near_level_12_1800_gp;_Pathfinder_Treasur": {
+      "y": 12.8,
+      "y2": 23.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bag of holding, type III (level 11, 1,200 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bag_of_holding_type_III_level_11_1200_gp"
+            ]
+          }
+        ],
+        "bring me near (level 12, 1,800 gp; Pathfinder Treasure Vault 114)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bring_me_near_level_12_1800_gp;_Pathfinder_Treasur"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "Narcela": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Narcela"
+            ]
+          }
+        ],
+        "Revecka": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Revecka"
+            ]
+          }
+        ],
+        "Star": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Star"
+            ]
+          }
+        ],
+        "Star launched themself at ship": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Star_launched_themself_at_ship"
+            ]
+          }
+        ],
+        "Revecka activated her science experiment": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Revecka_activated_her_science_experiment"
+            ]
+          }
+        ],
+        "you took on the airship and/or": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_took_on_the_airship_and/or"
+            ]
+          }
+        ],
+        "just Aslynn before defeating her and ending her terrible plans!": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.just_Aslynn_before_defeating_her_and_ending_her_te"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

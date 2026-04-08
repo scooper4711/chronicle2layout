@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b14",
+  "parent": "pfs2.bounty-layout-b13",
+  "description": "B14 The Blackwood Truce",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B14-TheBlackwoodTruceChronicle.pdf"
+}

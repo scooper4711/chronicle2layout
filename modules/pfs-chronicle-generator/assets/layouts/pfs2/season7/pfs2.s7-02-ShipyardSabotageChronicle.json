@@ -1,0 +1,157 @@
+{
+  "id": "pfs2.s7-02",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-02 Shipyard Sabotage",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-02-ShipyardSabotageChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "choker of elocution (level 6, 200 gp; Pathfinder GM Core 287)",
+          "dragon turtle scale (level 4, 13 gp; GM Core 264)",
+          "effervescent ampoule (level 2, 7gp; GM Core 264)",
+          "moderate blast boots (level 3, 11 gp; Pathfinder Guns and Gears 67)"
+        ],
+        "example": "choker of elocution (level 6, 200 gp; Pathfinder GM Core 287)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "slew her",
+          "defeated her and captured her alive",
+          "recruited her to help in the fight against Cheliax"
+        ],
+        "example": "slew her"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.slew_her": {
+      "x": 88.096,
+      "y": 19.862,
+      "x2": 89.6,
+      "y2": 27.585
+    },
+    "checkbox.defeated_her_and_captured_her_alive": {
+      "x": 96.811,
+      "y": 19.862,
+      "x2": 98.316,
+      "y2": 27.585
+    },
+    "checkbox.recruited_her_to_help_in_the_fight_against_Cheliax": {
+      "x": 30.919,
+      "y": 28.08,
+      "x2": 32.423,
+      "y2": 35.804
+    },
+    "item.line.choker_of_elocution_level_6_200_gp;_Pathfinder_GM_": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.dragon_turtle_scale_level_4_13_gp;_GM_Core_264": {
+      "y": 19.0,
+      "y2": 23.6
+    },
+    "item.line.effervescent_ampoule_level_2_7gp;_GM_Core_264": {
+      "y": 24.6,
+      "y2": 29.2
+    },
+    "item.line.moderate_blast_boots_level_3_11_gp;_Pathfinder_Gun": {
+      "y": 30.2,
+      "y2": 40.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "choker of elocution (level 6, 200 gp; Pathfinder GM Core 287)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.choker_of_elocution_level_6_200_gp;_Pathfinder_GM_"
+            ]
+          }
+        ],
+        "dragon turtle scale (level 4, 13 gp; GM Core 264)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon_turtle_scale_level_4_13_gp;_GM_Core_264"
+            ]
+          }
+        ],
+        "effervescent ampoule (level 2, 7gp; GM Core 264)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.effervescent_ampoule_level_2_7gp;_GM_Core_264"
+            ]
+          }
+        ],
+        "moderate blast boots (level 3, 11 gp; Pathfinder Guns and Gears 67)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_blast_boots_level_3_11_gp;_Pathfinder_Gun"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "slew her": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.slew_her"
+            ]
+          }
+        ],
+        "defeated her and captured her alive": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.defeated_her_and_captured_her_alive"
+            ]
+          }
+        ],
+        "recruited her to help in the fight against Cheliax": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.recruited_her_to_help_in_the_fight_against_Cheliax"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

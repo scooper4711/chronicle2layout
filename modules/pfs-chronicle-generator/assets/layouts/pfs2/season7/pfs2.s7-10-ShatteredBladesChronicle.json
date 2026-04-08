@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s7-10",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-10 Shattered Blades",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-10-ShatteredBladesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "greater reinforcing buckler (level 13, 2,500 gp; Pathfinder GM Core 232)",
+          "+2 greater striking shield boss (level 12, 2,000 gp; Pathfinder GM Core 240)",
+          "greater bravo\u2019s brew (level 15, 700 gp; Pathfinder GM Core 246)"
+        ],
+        "example": "greater reinforcing buckler (level 13, 2,500 gp; Pathfinder GM Core 232)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.greater_reinforcing_buckler_level_13_2500_gp;_Path": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.+2_greater_striking_shield_boss_level_12_2000_gp;_": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.greater_bravo\u2019s_brew_level_15_700_gp;_Pathfinder_G": {
+      "y": 30.2,
+      "y2": 40.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "greater reinforcing buckler (level 13, 2,500 gp; Pathfinder GM Core 232)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_reinforcing_buckler_level_13_2500_gp;_Path"
+            ]
+          }
+        ],
+        "+2 greater striking shield boss (level 12, 2,000 gp; Pathfinder GM Core 240)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_greater_striking_shield_boss_level_12_2000_gp;_"
+            ]
+          }
+        ],
+        "greater bravo\u2019s brew (level 15, 700 gp; Pathfinder GM Core 246)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_bravo\u2019s_brew_level_15_700_gp;_Pathfinder_G"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

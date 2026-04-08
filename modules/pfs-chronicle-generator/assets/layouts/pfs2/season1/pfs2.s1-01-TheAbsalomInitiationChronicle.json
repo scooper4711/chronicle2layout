@@ -1,0 +1,287 @@
+{
+  "id": "pfs2.s1-01",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-01 The Absalom Initiation",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-01-TheAbsalomInitiationChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "crying angel pendant (level 2; 7 gp)",
+          "lesser healing potion (level 3; 12 gp)",
+          "lesser mistform elixir (level 4; 18 gp)",
+          "greater salve of antiparalysis (level 12; 325 gp)",
+          "bloodseeker beak (level 4; 20 gp)",
+          "moderate mistform elixir (level 6; 56 gp)",
+          "scroll of false life (level 3; 12 gp)",
+          "scroll of sound burst (level 3; 12 gp)",
+          "scroll of web (level 3; 12 gp)",
+          "moderate silvertongue mutagen (level 3; 12 gp)",
+          "wand of heal (level 3; 60 gp)"
+        ],
+        "example": "crying angel pendant (level 2; 7 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "killed",
+          "pacified) a strange fleshforged creature",
+          "recruited",
+          "saved but did not recruit",
+          "failed to save) the ritual\u2019s inquisitive caster"
+        ],
+        "example": "killed"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.killed": {
+      "x": 59.079,
+      "y": 45.306,
+      "x2": 61.25,
+      "y2": 56.448
+    },
+    "checkbox.pacified_a_strange_fleshforged_creature": {
+      "x": 66.231,
+      "y": 45.306,
+      "x2": 67.837,
+      "y2": 56.318
+    },
+    "checkbox.recruited": {
+      "x": 11.373,
+      "y": 70.647,
+      "x2": 13.544,
+      "y2": 81.788
+    },
+    "checkbox.saved_but_did_not_recruit": {
+      "x": 21.005,
+      "y": 70.647,
+      "x2": 22.61,
+      "y2": 81.658
+    },
+    "checkbox.failed_to_save_the_ritual\u2019s_inquisitive_caster": {
+      "x": 41.598,
+      "y": 70.647,
+      "x2": 43.204,
+      "y2": 81.658
+    },
+    "item.line.crying_angel_pendant_level_2;_7_gp": {
+      "y": 3.5,
+      "y2": 7.0
+    },
+    "item.line.lesser_healing_potion_level_3;_12_gp": {
+      "y": 60.1,
+      "y2": 63.6
+    },
+    "item.line.lesser_mistform_elixir_level_4;_18_gp": {
+      "y": 12.9,
+      "y2": 16.4
+    },
+    "item.line.greater_salve_of_antiparalysis_level_12;_325_gp": {
+      "y": 69.5,
+      "y2": 73.0
+    },
+    "item.line.bloodseeker_beak_level_4;_20_gp": {
+      "y": 55.4,
+      "y2": 58.9
+    },
+    "item.line.moderate_mistform_elixir_level_6;_56_gp": {
+      "y": 64.8,
+      "y2": 68.3
+    },
+    "item.line.scroll_of_false_life_level_3;_12_gp": {
+      "y": 74.2,
+      "y2": 77.7
+    },
+    "item.line.scroll_of_sound_burst_level_3;_12_gp": {
+      "y": 78.9,
+      "y2": 82.4
+    },
+    "item.line.scroll_of_web_level_3;_12_gp": {
+      "y": 83.6,
+      "y2": 87.1
+    },
+    "item.line.moderate_silvertongue_mutagen_level_3;_12_gp": {
+      "y": 88.4,
+      "y2": 91.9
+    },
+    "item.line.wand_of_heal_level_3;_60_gp": {
+      "y": 93.1,
+      "y2": 96.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "crying angel pendant (level 2; 7 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.crying_angel_pendant_level_2;_7_gp"
+            ]
+          }
+        ],
+        "lesser healing potion (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_healing_potion_level_3;_12_gp"
+            ]
+          }
+        ],
+        "lesser mistform elixir (level 4; 18 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_mistform_elixir_level_4;_18_gp"
+            ]
+          }
+        ],
+        "greater salve of antiparalysis (level 12; 325 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_salve_of_antiparalysis_level_12;_325_gp"
+            ]
+          }
+        ],
+        "bloodseeker beak (level 4; 20 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bloodseeker_beak_level_4;_20_gp"
+            ]
+          }
+        ],
+        "moderate mistform elixir (level 6; 56 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_mistform_elixir_level_6;_56_gp"
+            ]
+          }
+        ],
+        "scroll of false life (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_false_life_level_3;_12_gp"
+            ]
+          }
+        ],
+        "scroll of sound burst (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_sound_burst_level_3;_12_gp"
+            ]
+          }
+        ],
+        "scroll of web (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_web_level_3;_12_gp"
+            ]
+          }
+        ],
+        "moderate silvertongue mutagen (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_silvertongue_mutagen_level_3;_12_gp"
+            ]
+          }
+        ],
+        "wand of heal (level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_heal_level_3;_60_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "killed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.killed"
+            ]
+          }
+        ],
+        "pacified) a strange fleshforged creature": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.pacified_a_strange_fleshforged_creature"
+            ]
+          }
+        ],
+        "recruited": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.recruited"
+            ]
+          }
+        ],
+        "saved but did not recruit": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.saved_but_did_not_recruit"
+            ]
+          }
+        ],
+        "failed to save) the ritual\u2019s inquisitive caster": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_save_the_ritual\u2019s_inquisitive_caster"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

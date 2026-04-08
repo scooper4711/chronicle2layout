@@ -1,0 +1,96 @@
+{
+  "id": "pfs2.s6-03",
+  "parent": "pfs2.season6-layout-s6-02",
+  "description": "6-03 Godsrainina Godless Land",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-03-GodsraininaGodlessLandChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "convinced Kassi\u2019s students to revive him",
+          "couldn\u2019t convince them to perform their ritual again and left the rainblessed remaining in Rahadoum to an uncertain future",
+          "managed to convince her of the Regiment\u2019s impending threat to",
+          "failed to convince her"
+        ],
+        "example": "convinced Kassi\u2019s students to revive him"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.convinced_Kassi\u2019s_students_to_revive_him": {
+      "x": 83.23,
+      "y": 50.899,
+      "x2": 84.932,
+      "y2": 61.001
+    },
+    "checkbox.couldn\u2019t_convince_them_to_perform_their_ritual_aga": {
+      "x": 21.079,
+      "y": 59.117,
+      "x2": 22.781,
+      "y2": 69.22
+    },
+    "checkbox.managed_to_convince_her_of_the_Regiment\u2019s_impendin": {
+      "x": 72.801,
+      "y": 67.336,
+      "x2": 74.503,
+      "y2": 77.438
+    },
+    "checkbox.failed_to_convince_her": {
+      "x": 28.71,
+      "y": 75.554,
+      "x2": 30.411,
+      "y2": 85.656
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "convinced Kassi\u2019s students to revive him": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_Kassi\u2019s_students_to_revive_him"
+            ]
+          }
+        ],
+        "couldn\u2019t convince them to perform their ritual again and left the rainblessed remaining in Rahadoum to an uncertain future": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.couldn\u2019t_convince_them_to_perform_their_ritual_aga"
+            ]
+          }
+        ],
+        "managed to convince her of the Regiment\u2019s impending threat to": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_convince_her_of_the_Regiment\u2019s_impendin"
+            ]
+          }
+        ],
+        "failed to convince her": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_convince_her"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "id": "pfs2.s4-04",
+  "parent": "pfs2.season4-layout-s4-04",
+  "description": "4-04 To Seek the Heart of Calamity",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-04-ToSeektheHeartofCalamityChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bracers of missile deflection (level 3, 52 gp)",
+          "diplomat\u2019s badge (item 5, 125 gp)",
+          "+1 striking flintlock musket (item 4; 100 gp; Pathfinder Guns & Gears 153)"
+        ],
+        "example": "bracers of missile deflection (level 3, 52 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "convinced them of your good intentions",
+          "failed to earn their trust"
+        ],
+        "example": "convinced them of your good intentions"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.convinced_them_of_your_good_intentions": {
+      "x": 56.697,
+      "y": 60.55,
+      "x2": 58.208,
+      "y2": 67.334
+    },
+    "checkbox.failed_to_earn_their_trust": {
+      "x": 90.8,
+      "y": 60.55,
+      "x2": 92.311,
+      "y2": 67.334
+    },
+    "item.line.bracers_of_missile_deflection_level_3_52_gp": {
+      "y": 18.6,
+      "y2": 31.5
+    },
+    "item.line.diplomat\u2019s_badge_item_5_125_gp": {
+      "y": 33.2,
+      "y2": 46.1
+    },
+    "item.line.+1_striking_flintlock_musket_item_4;_100_gp;_Pathf": {
+      "y": 47.8,
+      "y2": 75.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bracers of missile deflection (level 3, 52 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bracers_of_missile_deflection_level_3_52_gp"
+            ]
+          }
+        ],
+        "diplomat\u2019s badge (item 5, 125 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.diplomat\u2019s_badge_item_5_125_gp"
+            ]
+          }
+        ],
+        "+1 striking flintlock musket (item 4; 100 gp; Pathfinder Guns & Gears 153)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_flintlock_musket_item_4;_100_gp;_Pathf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "convinced them of your good intentions": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_them_of_your_good_intentions"
+            ]
+          }
+        ],
+        "failed to earn their trust": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_earn_their_trust"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "id": "pfs2.s2-21",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-21 In Pursuit of Water",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-21-InPursuitofWaterChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "laid ancient spirits to rest",
+          "prevented the Usij from corrupting the Wellspring",
+          "defeated an aghash div that had been imprisoned in the Wellspring"
+        ],
+        "example": "laid ancient spirits to rest"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.laid_ancient_spirits_to_rest": {
+      "x": 34.079,
+      "y": 60.939,
+      "x2": 35.092,
+      "y2": 74.44
+    },
+    "checkbox.prevented_the_Usij_from_corrupting_the_Wellspring": {
+      "x": 55.298,
+      "y": 60.939,
+      "x2": 56.311,
+      "y2": 74.44
+    },
+    "checkbox.defeated_an_aghash_div_that_had_been_imprisoned_in": {
+      "x": 97.843,
+      "y": 60.939,
+      "x2": 98.856,
+      "y2": 74.44
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "laid ancient spirits to rest": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.laid_ancient_spirits_to_rest"
+            ]
+          }
+        ],
+        "prevented the Usij from corrupting the Wellspring": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.prevented_the_Usij_from_corrupting_the_Wellspring"
+            ]
+          }
+        ],
+        "defeated an aghash div that had been imprisoned in the Wellspring": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.defeated_an_aghash_div_that_had_been_imprisoned_in"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

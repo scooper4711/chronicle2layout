@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s6-12",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-12 The Burning of Greensteeples",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-12-TheBurningofGreensteeplesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "healer\u2019s gloves (level 4, 80 gp; GM Core 290)",
+          "cloak of illusions (level 7, 360 gp; GM Core 287)"
+        ],
+        "example": "healer\u2019s gloves (level 4, 80 gp; GM Core 290)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.healer\u2019s_gloves_level_4_80_gp;_GM_Core_290": {
+      "y": 7.8,
+      "y2": 12.4
+    },
+    "item.line.cloak_of_illusions_level_7_360_gp;_GM_Core_287": {
+      "y": 13.4,
+      "y2": 18.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "healer\u2019s gloves (level 4, 80 gp; GM Core 290)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.healer\u2019s_gloves_level_4_80_gp;_GM_Core_290"
+            ]
+          }
+        ],
+        "cloak of illusions (level 7, 360 gp; GM Core 287)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.cloak_of_illusions_level_7_360_gp;_GM_Core_287"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

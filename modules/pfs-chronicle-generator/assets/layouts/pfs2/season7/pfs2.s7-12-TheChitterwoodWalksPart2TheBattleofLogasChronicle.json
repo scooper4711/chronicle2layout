@@ -1,0 +1,131 @@
+{
+  "id": "pfs2.s7-12",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-12 The Chitterwood Walks Part 2 The Battle of Logas",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-12-TheChitterwoodWalksPart2TheBattleofLogasChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 decaying war flail (level 8, 537 gp)",
+          "+1 decaying warhammer (level 8, 536 gp)",
+          "+1 Hellknight plate (level 5, 195 gp; Pathfinder Treasure Vault 10)",
+          "moderate healing potion (level 6, 50 gp)",
+          "potion of quickness (level 8, 90 gp)",
+          "sneaky key (level 5, 22 gp)",
+          "swift block cabochon (level 7, 70 gp)"
+        ],
+        "example": "+1 decaying war flail (level 8, 537 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_decaying_war_flail_level_8_537_gp": {
+      "y": 2.0,
+      "y2": 6.9
+    },
+    "item.line.+1_decaying_warhammer_level_8_536_gp": {
+      "y": 7.6,
+      "y2": 12.5
+    },
+    "item.line.+1_Hellknight_plate_level_5_195_gp;_Pathfinder_Tre": {
+      "y": 13.2,
+      "y2": 23.7
+    },
+    "item.line.moderate_healing_potion_level_6_50_gp": {
+      "y": 24.4,
+      "y2": 29.3
+    },
+    "item.line.potion_of_quickness_level_8_90_gp": {
+      "y": 30.0,
+      "y2": 34.9
+    },
+    "item.line.sneaky_key_level_5_22_gp": {
+      "y": 35.6,
+      "y2": 40.5
+    },
+    "item.line.swift_block_cabochon_level_7_70_gp": {
+      "y": 41.2,
+      "y2": 46.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 decaying war flail (level 8, 537 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_decaying_war_flail_level_8_537_gp"
+            ]
+          }
+        ],
+        "+1 decaying warhammer (level 8, 536 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_decaying_warhammer_level_8_536_gp"
+            ]
+          }
+        ],
+        "+1 Hellknight plate (level 5, 195 gp; Pathfinder Treasure Vault 10)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_Hellknight_plate_level_5_195_gp;_Pathfinder_Tre"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_50_gp"
+            ]
+          }
+        ],
+        "potion of quickness (level 8, 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_quickness_level_8_90_gp"
+            ]
+          }
+        ],
+        "sneaky key (level 5, 22 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.sneaky_key_level_5_22_gp"
+            ]
+          }
+        ],
+        "swift block cabochon (level 7, 70 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.swift_block_cabochon_level_7_70_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

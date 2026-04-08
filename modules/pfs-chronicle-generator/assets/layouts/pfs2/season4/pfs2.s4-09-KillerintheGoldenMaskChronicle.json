@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s4-09",
+  "parent": "pfs2.season4-layout-s4-00",
+  "description": "4-09 Killerin the Golden Mask",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-09-KillerintheGoldenMaskChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser camp shroud (item 7; 65 gp; Pathfinder Lost Omens Knights of Lastwall 89)"
+        ],
+        "example": "lesser camp shroud (item 7; 65 gp; Pathfinder Lost Omens Knights of Lastwall 89)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_camp_shroud_item_7;_65_gp;_Pathfinder_Lost_": {
+      "y": 7.2,
+      "y2": 17.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser camp shroud (item 7; 65 gp; Pathfinder Lost Omens Knights of Lastwall 89)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_camp_shroud_item_7;_65_gp;_Pathfinder_Lost_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

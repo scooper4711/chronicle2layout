@@ -1,0 +1,113 @@
+{
+  "id": "pfs2.s6-09",
+  "parent": "pfs2.season6-layout-s6-02",
+  "description": "6-09 The Power of Legends",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-09-ThePowerofLegendsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "dawnsilver full plate (standard-grade; level 12, 2,240 gp; GM Core 228)",
+          "+2 striking dawnsilver longsword (standard-grade; level 11, 1,400 gp; GM Core 240)"
+        ],
+        "example": "dawnsilver full plate (standard-grade; level 12, 2,240 gp; GM Core 228)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "with the aid of some friendly shadow giants",
+          "without any external aid and entered the fortress\u2019s rocky grounds"
+        ],
+        "example": "with the aid of some friendly shadow giants"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.with_the_aid_of_some_friendly_shadow_giants": {
+      "x": 56.479,
+      "y": 26.237,
+      "x2": 58.181,
+      "y2": 36.339
+    },
+    "checkbox.without_any_external_aid_and_entered_the_fortress\u2019": {
+      "x": 90.484,
+      "y": 26.237,
+      "x2": 92.186,
+      "y2": 36.339
+    },
+    "item.line.dawnsilver_full_plate_standard-grade;_level_12_224": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.+2_striking_dawnsilver_longsword_standard-grade;_l": {
+      "y": 19.0,
+      "y2": 29.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "dawnsilver full plate (standard-grade; level 12, 2,240 gp; GM Core 228)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dawnsilver_full_plate_standard-grade;_level_12_224"
+            ]
+          }
+        ],
+        "+2 striking dawnsilver longsword (standard-grade; level 11, 1,400 gp; GM Core 240)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_dawnsilver_longsword_standard-grade;_l"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "with the aid of some friendly shadow giants": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.with_the_aid_of_some_friendly_shadow_giants"
+            ]
+          }
+        ],
+        "without any external aid and entered the fortress\u2019s rocky grounds": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.without_any_external_aid_and_entered_the_fortress\u2019"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

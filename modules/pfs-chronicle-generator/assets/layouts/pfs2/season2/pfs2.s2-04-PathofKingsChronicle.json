@@ -1,0 +1,131 @@
+{
+  "id": "pfs2.s2-04",
+  "parent": "pfs2.season2-layout-s2-00",
+  "description": "2-04 Path of Kings",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-04-PathofKingsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "clandestine cloak (level 6; 230 gp)"
+        ],
+        "example": "clandestine cloak (level 6; 230 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "befriended /",
+          "failed to impress the rancher Deishu Molwan",
+          "invited back /",
+          "ostracized by the rancher Balasz Yrmingar"
+        ],
+        "example": "befriended /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.befriended_/": {
+      "x": 73.579,
+      "y": 29.439,
+      "x2": 82.826,
+      "y2": 41.346
+    },
+    "checkbox.failed_to_impress_the_rancher_Deishu_Molwan": {
+      "x": 84.487,
+      "y": 29.439,
+      "x2": 85.99,
+      "y2": 41.346
+    },
+    "checkbox.invited_back_/": {
+      "x": 27.051,
+      "y": 42.109,
+      "x2": 28.554,
+      "y2": 54.016
+    },
+    "checkbox.ostracized_by_the_rancher_Balasz_Yrmingar": {
+      "x": 39.465,
+      "y": 42.109,
+      "x2": 48.333,
+      "y2": 54.016
+    },
+    "item.line.clandestine_cloak_level_6;_230_gp": {
+      "y": 3.0,
+      "y2": 7.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "clandestine cloak (level 6; 230 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clandestine_cloak_level_6;_230_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "befriended /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.befriended_/"
+            ]
+          }
+        ],
+        "failed to impress the rancher Deishu Molwan": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_impress_the_rancher_Deishu_Molwan"
+            ]
+          }
+        ],
+        "invited back /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.invited_back_/"
+            ]
+          }
+        ],
+        "ostracized by the rancher Balasz Yrmingar": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.ostracized_by_the_rancher_Balasz_Yrmingar"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

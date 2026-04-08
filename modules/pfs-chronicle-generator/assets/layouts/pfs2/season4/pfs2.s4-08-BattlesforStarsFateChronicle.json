@@ -1,0 +1,141 @@
+{
+  "id": "pfs2.s4-08",
+  "parent": "pfs2.season4-layout-s4-07",
+  "description": "4-08 Battles for Stars Fate",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-08-BattlesforStarsFateChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "crafter\u2019s eyepiece (level 3; 60 gp)",
+          "greater sealing chest (level 11; discounted to 1,125 gp; Pathfinder Lost Omens Pathfinder Society Guide 37)",
+          "potion of leaping (level 5; 21 gp)",
+          "emerald grasshopper (level 5; 30 gp)"
+        ],
+        "example": "crafter\u2019s eyepiece (level 3; 60 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "earned/",
+          "did not earn) Star\u2019s trust"
+        ],
+        "example": "earned/"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.earned/": {
+      "x": 65.904,
+      "y": 73.61,
+      "x2": 67.918,
+      "y2": 89.307
+    },
+    "checkbox.did_not_earn_Star\u2019s_trust": {
+      "x": 73.752,
+      "y": 73.61,
+      "x2": 75.263,
+      "y2": 89.307
+    },
+    "item.line.crafter\u2019s_eyepiece_level_3;_60_gp": {
+      "y": 1.5,
+      "y2": 6.2
+    },
+    "item.line.greater_sealing_chest_level_11;_discounted_to_1125": {
+      "y": 6.8,
+      "y2": 16.8
+    },
+    "item.line.potion_of_leaping_level_5;_21_gp": {
+      "y": 17.4,
+      "y2": 22.1
+    },
+    "item.line.emerald_grasshopper_level_5;_30_gp": {
+      "y": 22.8,
+      "y2": 27.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "crafter\u2019s eyepiece (level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.crafter\u2019s_eyepiece_level_3;_60_gp"
+            ]
+          }
+        ],
+        "greater sealing chest (level 11; discounted to 1,125 gp; Pathfinder Lost Omens Pathfinder Society Guide 37)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_sealing_chest_level_11;_discounted_to_1125"
+            ]
+          }
+        ],
+        "potion of leaping (level 5; 21 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_leaping_level_5;_21_gp"
+            ]
+          }
+        ],
+        "emerald grasshopper (level 5; 30 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.emerald_grasshopper_level_5;_30_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "earned/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.earned/"
+            ]
+          }
+        ],
+        "did not earn) Star\u2019s trust": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did_not_earn_Star\u2019s_trust"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

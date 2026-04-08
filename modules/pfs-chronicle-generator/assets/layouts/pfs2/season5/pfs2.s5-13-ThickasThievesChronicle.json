@@ -1,0 +1,239 @@
+{
+  "id": "pfs2.s5-13",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-13 Thickas Thieves",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-13-ThickasThievesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "brazier of harmony (level 5, 150 gp; Rage of Elements 122)",
+          "messenger\u2019s ring (level 9, 700 gp)",
+          "broadleaf shield (level 6, 225 gp; Rage of Elements 200)",
+          "brightbloom posy (level 8, 450 gp; Treasure Vault 125)",
+          "conduit shot, lesser (level 6, 50 gp; Treasure Vault 80)",
+          "meteor shot (level 7, 70 gp; Gun & Gears 171)",
+          "obsidian edge (level 6, 250 gp; Rage of Elements 123)",
+          "ash gown (level 7, 350 gp; Rage of Elements 122)",
+          "octopus potion, lesser (level 6, 50 gp; Rage of Elements 178)",
+          "brine dragon scale (level 8, 100 gp; Rage of Elements 176)",
+          "limestone shield (level 7, 350 gp; Rage of Elements 99)"
+        ],
+        "example": "brazier of harmony (level 5, 150 gp; Rage of Elements 122)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "talked down",
+          "fought an angry jann shuyookh who was determined to get his revenge on Gedun and Yeyacha"
+        ],
+        "example": "talked down"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.talked_down": {
+      "x": 59.803,
+      "y": 36.299,
+      "x2": 61.307,
+      "y2": 44.022
+    },
+    "checkbox.fought_an_angry_jann_shuyookh_who_was_determined_t": {
+      "x": 73.398,
+      "y": 36.299,
+      "x2": 74.902,
+      "y2": 44.022
+    },
+    "item.line.brazier_of_harmony_level_5_150_gp;_Rage_of_Element": {
+      "y": 3.9,
+      "y2": 15.7
+    },
+    "item.line.messenger\u2019s_ring_level_9_700_gp": {
+      "y": 15.1,
+      "y2": 21.3
+    },
+    "item.line.broadleaf_shield_level_6_225_gp;_Rage_of_Elements_": {
+      "y": 20.7,
+      "y2": 32.5
+    },
+    "item.line.brightbloom_posy_level_8_450_gp;_Treasure_Vault_12": {
+      "y": 31.9,
+      "y2": 38.1
+    },
+    "item.line.conduit_shot_lesser_level_6_50_gp;_Treasure_Vault_": {
+      "y": 37.5,
+      "y2": 43.7
+    },
+    "item.line.meteor_shot_level_7_70_gp;_Gun_&_Gears_171": {
+      "y": 43.1,
+      "y2": 49.3
+    },
+    "item.line.obsidian_edge_level_6_250_gp;_Rage_of_Elements_123": {
+      "y": 48.7,
+      "y2": 54.9
+    },
+    "item.line.ash_gown_level_7_350_gp;_Rage_of_Elements_122": {
+      "y": 54.3,
+      "y2": 60.5
+    },
+    "item.line.octopus_potion_lesser_level_6_50_gp;_Rage_of_Eleme": {
+      "y": 59.9,
+      "y2": 71.7
+    },
+    "item.line.brine_dragon_scale_level_8_100_gp;_Rage_of_Element": {
+      "y": 71.1,
+      "y2": 82.9
+    },
+    "item.line.limestone_shield_level_7_350_gp;_Rage_of_Elements_": {
+      "y": 82.3,
+      "y2": 94.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "brazier of harmony (level 5, 150 gp; Rage of Elements 122)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brazier_of_harmony_level_5_150_gp;_Rage_of_Element"
+            ]
+          }
+        ],
+        "messenger\u2019s ring (level 9, 700 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.messenger\u2019s_ring_level_9_700_gp"
+            ]
+          }
+        ],
+        "broadleaf shield (level 6, 225 gp; Rage of Elements 200)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.broadleaf_shield_level_6_225_gp;_Rage_of_Elements_"
+            ]
+          }
+        ],
+        "brightbloom posy (level 8, 450 gp; Treasure Vault 125)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brightbloom_posy_level_8_450_gp;_Treasure_Vault_12"
+            ]
+          }
+        ],
+        "conduit shot, lesser (level 6, 50 gp; Treasure Vault 80)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.conduit_shot_lesser_level_6_50_gp;_Treasure_Vault_"
+            ]
+          }
+        ],
+        "meteor shot (level 7, 70 gp; Gun & Gears 171)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.meteor_shot_level_7_70_gp;_Gun_&_Gears_171"
+            ]
+          }
+        ],
+        "obsidian edge (level 6, 250 gp; Rage of Elements 123)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.obsidian_edge_level_6_250_gp;_Rage_of_Elements_123"
+            ]
+          }
+        ],
+        "ash gown (level 7, 350 gp; Rage of Elements 122)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ash_gown_level_7_350_gp;_Rage_of_Elements_122"
+            ]
+          }
+        ],
+        "octopus potion, lesser (level 6, 50 gp; Rage of Elements 178)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.octopus_potion_lesser_level_6_50_gp;_Rage_of_Eleme"
+            ]
+          }
+        ],
+        "brine dragon scale (level 8, 100 gp; Rage of Elements 176)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brine_dragon_scale_level_8_100_gp;_Rage_of_Element"
+            ]
+          }
+        ],
+        "limestone shield (level 7, 350 gp; Rage of Elements 99)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.limestone_shield_level_7_350_gp;_Rage_of_Elements_"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "talked down": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.talked_down"
+            ]
+          }
+        ],
+        "fought an angry jann shuyookh who was determined to get his revenge on Gedun and Yeyacha": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fought_an_angry_jann_shuyookh_who_was_determined_t"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

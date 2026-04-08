@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b9",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B9 Fishingin Anthusis",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B9-FishinginAnthusisChronicle.pdf"
+}

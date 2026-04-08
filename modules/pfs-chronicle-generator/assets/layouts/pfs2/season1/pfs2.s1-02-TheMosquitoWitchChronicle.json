@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s1-02",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-02 The Mosquito Witch",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-02-TheMosquitoWitchChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "potion of invisibility (level 4; 20 gp)",
+          "animal staff (level 4; 90 gp)"
+        ],
+        "example": "potion of invisibility (level 4; 20 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.potion_of_invisibility_level_4;_20_gp": {
+      "y": 55.4,
+      "y2": 58.9
+    },
+    "item.line.animal_staff_level_4;_90_gp": {
+      "y": 60.1,
+      "y2": 63.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "potion of invisibility (level 4; 20 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_invisibility_level_4;_20_gp"
+            ]
+          }
+        ],
+        "animal staff (level 4; 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.animal_staff_level_4;_90_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

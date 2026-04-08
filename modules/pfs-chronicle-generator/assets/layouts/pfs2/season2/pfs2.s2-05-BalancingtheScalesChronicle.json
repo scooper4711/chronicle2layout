@@ -1,0 +1,117 @@
+{
+  "id": "pfs2.s2-05",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-05 Balancing the Scales",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-05-BalancingtheScalesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "barkskin potion (Level 4; 15 gp)",
+          "demon mask (Level 4; 85 gp)",
+          "fan feather token (Level 4; 14 gp)",
+          "healer\u2019s gloves (Level 4; 80 gp)",
+          "lesser potion of resistance (Level 6; 45 gp)",
+          "moderate tanglefoot bag (Level 3; 10 gp)"
+        ],
+        "example": "barkskin potion (Level 4; 15 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.barkskin_potion_Level_4;_15_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.demon_mask_Level_4;_85_gp": {
+      "y": 12.3,
+      "y2": 16.7
+    },
+    "item.line.fan_feather_token_Level_4;_14_gp": {
+      "y": 17.6,
+      "y2": 22.0
+    },
+    "item.line.healer\u2019s_gloves_Level_4;_80_gp": {
+      "y": 22.9,
+      "y2": 27.4
+    },
+    "item.line.lesser_potion_of_resistance_Level_6;_45_gp": {
+      "y": 28.3,
+      "y2": 32.7
+    },
+    "item.line.moderate_tanglefoot_bag_Level_3;_10_gp": {
+      "y": 33.6,
+      "y2": 38.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "barkskin potion (Level 4; 15 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.barkskin_potion_Level_4;_15_gp"
+            ]
+          }
+        ],
+        "demon mask (Level 4; 85 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.demon_mask_Level_4;_85_gp"
+            ]
+          }
+        ],
+        "fan feather token (Level 4; 14 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.fan_feather_token_Level_4;_14_gp"
+            ]
+          }
+        ],
+        "healer\u2019s gloves (Level 4; 80 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.healer\u2019s_gloves_Level_4;_80_gp"
+            ]
+          }
+        ],
+        "lesser potion of resistance (Level 6; 45 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_potion_of_resistance_Level_6;_45_gp"
+            ]
+          }
+        ],
+        "moderate tanglefoot bag (Level 3; 10 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_tanglefoot_bag_Level_3;_10_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

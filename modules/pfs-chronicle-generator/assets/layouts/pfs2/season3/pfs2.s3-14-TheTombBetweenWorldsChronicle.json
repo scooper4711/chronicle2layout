@@ -1,0 +1,225 @@
+{
+  "id": "pfs2.s3-14",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-14 The Tomb Between Worlds",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-14-TheTombBetweenWorldsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "you have made these purchases, the other options become unavailable",
+          "for purchase from this Chronicle Sheet, though you can still purchase",
+          "them normally if you otherwise have access to them.",
+          "brooch of inspiration (item 8, 425 gp; Pathfinder Grand Bazaar 110)",
+          "coin of comfort (item 3, 45 gp; Grand Bazaar 26)",
+          "deathless rune (item 7, 330 gp; Grand Bazaar 10)",
+          "goggles of night (item 5, discounted to 140 gp; limit 1)",
+          "magnifying glass of elucidation (item 5, 125 gp; Grand Bazaar 110)",
+          "ring of maniacal devices (item 11, discounted to 1,089 gp; limit 1)",
+          "stanching rune (item 5, 130 gp; Grand Bazaar 38)"
+        ],
+        "example": "you have made these purchases, the other options become unavailable"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "fought",
+          "befriended the fiend that helped the scholars escape"
+        ],
+        "example": "fought"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.fought": {
+      "x": 30.855,
+      "y": 68.227,
+      "x2": 32.744,
+      "y2": 82.917
+    },
+    "checkbox.befriended_the_fiend_that_helped_the_scholars_esca": {
+      "x": 40.917,
+      "y": 68.227,
+      "x2": 42.806,
+      "y2": 82.917
+    },
+    "item.line.you_have_made_these_purchases_the_other_options_be": {
+      "y": 6.4,
+      "y2": 11.1
+    },
+    "item.line.for_purchase_from_this_Chronicle_Sheet_though_you_": {
+      "y": 11.5,
+      "y2": 16.2
+    },
+    "item.line.them_normally_if_you_otherwise_have_access_to_them": {
+      "y": 16.6,
+      "y2": 21.3
+    },
+    "item.line.brooch_of_inspiration_item_8_425_gp;_Pathfinder_Gr": {
+      "y": 28.1,
+      "y2": 32.8
+    },
+    "item.line.coin_of_comfort_item_3_45_gp;_Grand_Bazaar_26": {
+      "y": 33.4,
+      "y2": 38.1
+    },
+    "item.line.deathless_rune_item_7_330_gp;_Grand_Bazaar_10": {
+      "y": 38.7,
+      "y2": 43.4
+    },
+    "item.line.goggles_of_night_item_5_discounted_to_140_gp;_limi": {
+      "y": 44.0,
+      "y2": 48.7
+    },
+    "item.line.magnifying_glass_of_elucidation_item_5_125_gp;_Gra": {
+      "y": 49.4,
+      "y2": 54.0
+    },
+    "item.line.ring_of_maniacal_devices_item_11_discounted_to_108": {
+      "y": 54.7,
+      "y2": 59.4
+    },
+    "item.line.stanching_rune_item_5_130_gp;_Grand_Bazaar_38": {
+      "y": 60.0,
+      "y2": 64.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "you have made these purchases, the other options become unavailable": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.you_have_made_these_purchases_the_other_options_be"
+            ]
+          }
+        ],
+        "for purchase from this Chronicle Sheet, though you can still purchase": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.for_purchase_from_this_Chronicle_Sheet_though_you_"
+            ]
+          }
+        ],
+        "them normally if you otherwise have access to them.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.them_normally_if_you_otherwise_have_access_to_them"
+            ]
+          }
+        ],
+        "brooch of inspiration (item 8, 425 gp; Pathfinder Grand Bazaar 110)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brooch_of_inspiration_item_8_425_gp;_Pathfinder_Gr"
+            ]
+          }
+        ],
+        "coin of comfort (item 3, 45 gp; Grand Bazaar 26)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.coin_of_comfort_item_3_45_gp;_Grand_Bazaar_26"
+            ]
+          }
+        ],
+        "deathless rune (item 7, 330 gp; Grand Bazaar 10)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.deathless_rune_item_7_330_gp;_Grand_Bazaar_10"
+            ]
+          }
+        ],
+        "goggles of night (item 5, discounted to 140 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.goggles_of_night_item_5_discounted_to_140_gp;_limi"
+            ]
+          }
+        ],
+        "magnifying glass of elucidation (item 5, 125 gp; Grand Bazaar 110)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.magnifying_glass_of_elucidation_item_5_125_gp;_Gra"
+            ]
+          }
+        ],
+        "ring of maniacal devices (item 11, discounted to 1,089 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_maniacal_devices_item_11_discounted_to_108"
+            ]
+          }
+        ],
+        "stanching rune (item 5, 130 gp; Grand Bazaar 38)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.stanching_rune_item_5_130_gp;_Grand_Bazaar_38"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "fought": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fought"
+            ]
+          }
+        ],
+        "befriended the fiend that helped the scholars escape": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.befriended_the_fiend_that_helped_the_scholars_esca"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

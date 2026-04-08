@@ -1,0 +1,215 @@
+{
+  "id": "pfs2.q17",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q17 Escortinga Mirage",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q17-EscortingaMirageChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Book of Thuvian History (Item 2, 25 gp)",
+          "Price 25 gp",
+          "Usage held in 1 hand",
+          "Bulk L",
+          "Description The book is leather-bound, and the cover is",
+          "embossed with representations of the sun and sun",
+          "orchid that often symbolizes the country. The heavy",
+          "paper and cover are designed to last a long time.",
+          "When working with a book of Thuvian history, you",
+          "can attempt Society Checks to Recall Knowledge or",
+          "Decipher Writing; Lore Checks to Recall Knowledge;",
+          "or Research Checks with a +2 item bonus if the",
+          "check is related to Thuvian history."
+        ],
+        "example": "Book of Thuvian History (Item 2, 25 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Book_of_Thuvian_History_Item_2_25_gp": {
+      "y": 7.6,
+      "y2": 12.5
+    },
+    "item.line.Price_25_gp": {
+      "y": 30.2,
+      "y2": 34.8
+    },
+    "item.line.Usage_held_in_1_hand": {
+      "y": 35.8,
+      "y2": 40.4
+    },
+    "item.line.Bulk_L": {
+      "y": 41.4,
+      "y2": 46.0
+    },
+    "item.line.Description_The_book_is_leather-bound_and_the_cove": {
+      "y": 47.0,
+      "y2": 51.6
+    },
+    "item.line.embossed_with_representations_of_the_sun_and_sun": {
+      "y": 52.6,
+      "y2": 57.2
+    },
+    "item.line.orchid_that_often_symbolizes_the_country_The_heavy": {
+      "y": 58.1,
+      "y2": 62.8
+    },
+    "item.line.paper_and_cover_are_designed_to_last_a_long_time": {
+      "y": 63.7,
+      "y2": 68.4
+    },
+    "item.line.When_working_with_a_book_of_Thuvian_history_you": {
+      "y": 69.3,
+      "y2": 74.0
+    },
+    "item.line.can_attempt_Society_Checks_to_Recall_Knowledge_or": {
+      "y": 74.9,
+      "y2": 79.6
+    },
+    "item.line.Decipher_Writing;_Lore_Checks_to_Recall_Knowledge;": {
+      "y": 80.5,
+      "y2": 85.2
+    },
+    "item.line.or_Research_Checks_with_a_+2_item_bonus_if_the": {
+      "y": 86.1,
+      "y2": 90.8
+    },
+    "item.line.check_is_related_to_Thuvian_history": {
+      "y": 91.7,
+      "y2": 96.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Book of Thuvian History (Item 2, 25 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Book_of_Thuvian_History_Item_2_25_gp"
+            ]
+          }
+        ],
+        "Price 25 gp": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Price_25_gp"
+            ]
+          }
+        ],
+        "Usage held in 1 hand": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Usage_held_in_1_hand"
+            ]
+          }
+        ],
+        "Bulk L": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Bulk_L"
+            ]
+          }
+        ],
+        "Description The book is leather-bound, and the cover is": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Description_The_book_is_leather-bound_and_the_cove"
+            ]
+          }
+        ],
+        "embossed with representations of the sun and sun": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.embossed_with_representations_of_the_sun_and_sun"
+            ]
+          }
+        ],
+        "orchid that often symbolizes the country. The heavy": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.orchid_that_often_symbolizes_the_country_The_heavy"
+            ]
+          }
+        ],
+        "paper and cover are designed to last a long time.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.paper_and_cover_are_designed_to_last_a_long_time"
+            ]
+          }
+        ],
+        "When working with a book of Thuvian history, you": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.When_working_with_a_book_of_Thuvian_history_you"
+            ]
+          }
+        ],
+        "can attempt Society Checks to Recall Knowledge or": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.can_attempt_Society_Checks_to_Recall_Knowledge_or"
+            ]
+          }
+        ],
+        "Decipher Writing; Lore Checks to Recall Knowledge;": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Decipher_Writing;_Lore_Checks_to_Recall_Knowledge;"
+            ]
+          }
+        ],
+        "or Research Checks with a +2 item bonus if the": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.or_Research_Checks_with_a_+2_item_bonus_if_the"
+            ]
+          }
+        ],
+        "check is related to Thuvian history.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.check_is_related_to_Thuvian_history"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

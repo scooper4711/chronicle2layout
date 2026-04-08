@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s5-03",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-03 Heidmarch Heist",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-03-HeidmarchHeistChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "boarding pike (item 1, 8 sp, Pathfinder Lost Omens Pathfinder Society Guide 81)",
+          "everyneed pack, greater (item 7, discounted to 75 gp, limit 1, Pathfinder Lost Omens Pathfinder Society Guide 85)",
+          "pearly white spindle (item 3, 60 gp, Pathfinder Lost Omens Pathfinder Society Guide 120)"
+        ],
+        "example": "boarding pike (item 1, 8 sp, Pathfinder Lost Omens Pathfinder Society Guide 81)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.boarding_pike_item_1_8_sp_Pathfinder_Lost_Omens_Pa": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.everyneed_pack_greater_item_7_discounted_to_75_gp_": {
+      "y": 18.8,
+      "y2": 34.9
+    },
+    "item.line.pearly_white_spindle_item_3_60_gp_Pathfinder_Lost_": {
+      "y": 35.6,
+      "y2": 46.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "boarding pike (item 1, 8 sp, Pathfinder Lost Omens Pathfinder Society Guide 81)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.boarding_pike_item_1_8_sp_Pathfinder_Lost_Omens_Pa"
+            ]
+          }
+        ],
+        "everyneed pack, greater (item 7, discounted to 75 gp, limit 1, Pathfinder Lost Omens Pathfinder Society Guide 85)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.everyneed_pack_greater_item_7_discounted_to_75_gp_"
+            ]
+          }
+        ],
+        "pearly white spindle (item 3, 60 gp, Pathfinder Lost Omens Pathfinder Society Guide 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.pearly_white_spindle_item_3_60_gp_Pathfinder_Lost_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "id": "pfs2.s2-16",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-16 Freedom for Wishes",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-16-FreedomforWishesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Corvius\u2019s spellbook (contains globe of invulnerability)"
+        ],
+        "example": "Corvius\u2019s spellbook (contains globe of invulnerability)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "defeated him in combat /",
+          "convinced him to surrender to the authorities for his transgressions"
+        ],
+        "example": "defeated him in combat /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.defeated_him_in_combat_/": {
+      "x": 24.27,
+      "y": 46.573,
+      "x2": 25.772,
+      "y2": 60.074
+    },
+    "checkbox.convinced_him_to_surrender_to_the_authorities_for_": {
+      "x": 44.755,
+      "y": 46.573,
+      "x2": 53.625,
+      "y2": 60.074
+    },
+    "item.line.Corvius\u2019s_spellbook_contains_globe_of_invulnerabil": {
+      "y": 1.5,
+      "y2": 6.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Corvius\u2019s spellbook (contains globe of invulnerability)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Corvius\u2019s_spellbook_contains_globe_of_invulnerabil"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "defeated him in combat /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.defeated_him_in_combat_/"
+            ]
+          }
+        ],
+        "convinced him to surrender to the authorities for his transgressions": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_him_to_surrender_to_the_authorities_for_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

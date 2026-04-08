@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s1-20",
+  "parent": "pfs2.season1-layout-s1-19",
+  "description": "1-20 The Lost Legend",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-20-TheLostLegendChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "animal staff (level 4; 90 gp)",
+          "jade serpent wondrous figurine (level 7; 340 gp)"
+        ],
+        "example": "animal staff (level 4; 90 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.animal_staff_level_4;_90_gp": {
+      "y": 55.0,
+      "y2": 58.9
+    },
+    "item.line.jade_serpent_wondrous_figurine_level_7;_340_gp": {
+      "y": 59.7,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "animal staff (level 4; 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.animal_staff_level_4;_90_gp"
+            ]
+          }
+        ],
+        "jade serpent wondrous figurine (level 7; 340 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.jade_serpent_wondrous_figurine_level_7;_340_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

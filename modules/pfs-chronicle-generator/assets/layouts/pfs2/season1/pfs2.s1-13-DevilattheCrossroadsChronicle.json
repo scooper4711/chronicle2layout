@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s1-13",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-13 Devil at the Crossroads",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-13-DevilattheCrossroadsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Bag of holding (type I) (level 4; 75 gp)",
+          "Bag of holding (type II) (level 7; 300 gp)",
+          "Boots of elvenkind (level 5; 145 gp)"
+        ],
+        "example": "Bag of holding (type I) (level 4; 75 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Bag_of_holding_type_I_level_4;_75_gp": {
+      "y": 3.5,
+      "y2": 7.0
+    },
+    "item.line.Bag_of_holding_type_II_level_7;_300_gp": {
+      "y": 3.5,
+      "y2": 58.9
+    },
+    "item.line.Boots_of_elvenkind_level_5;_145_gp": {
+      "y": 55.4,
+      "y2": 63.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Bag of holding (type I) (level 4; 75 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Bag_of_holding_type_I_level_4;_75_gp"
+            ]
+          }
+        ],
+        "Bag of holding (type II) (level 7; 300 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Bag_of_holding_type_II_level_7;_300_gp"
+            ]
+          }
+        ],
+        "Boots of elvenkind (level 5; 145 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Boots_of_elvenkind_level_5;_145_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

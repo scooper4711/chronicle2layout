@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s1-24",
+  "parent": "pfs2.season1-layout-s1-24",
+  "description": "1-24 Lightning Strikes Stars Fall",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-24-LightningStrikesStarsFallChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "adamantine chunk (500 gp; limit 1)",
+          "Numerian steel breastplateR (900 gp; level 10; limit 1)"
+        ],
+        "example": "adamantine chunk (500 gp; limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.adamantine_chunk_500_gp;_limit_1": {
+      "y": 54.9,
+      "y2": 59.0
+    },
+    "item.line.Numerian_steel_breastplateR_900_gp;_level_10;_limi": {
+      "y": 59.6,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "adamantine chunk (500 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.adamantine_chunk_500_gp;_limit_1"
+            ]
+          }
+        ],
+        "Numerian steel breastplateR (900 gp; level 10; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Numerian_steel_breastplateR_900_gp;_level_10;_limi"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "pfs2.s5-05",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-05 The Isl and of the Vibrant Dead",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-05-TheIslandoftheVibrantDeadChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "parchment of direct message (level 3, 50 gp; Pathfinder Lost Omens Firebrands 86)",
+          "greater hat of disguise (level 7, 340 gp)"
+        ],
+        "example": "parchment of direct message (level 3, 50 gp; Pathfinder Lost Omens Firebrands 86)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "including evidence of Ghessa being a kurobozu",
+          "without finding definitive proof of duplicity"
+        ],
+        "example": "including evidence of Ghessa being a kurobozu"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.including_evidence_of_Ghessa_being_a_kurobozu": {
+      "x": 69.137,
+      "y": 36.29,
+      "x2": 70.641,
+      "y2": 44.013
+    },
+    "checkbox.without_finding_definitive_proof_of_duplicity": {
+      "x": 11.851,
+      "y": 44.506,
+      "x2": 13.356,
+      "y2": 52.229
+    },
+    "item.line.parchment_of_direct_message_level_3_50_gp;_Pathfin": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.greater_hat_of_disguise_level_7_340_gp": {
+      "y": 18.8,
+      "y2": 23.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "parchment of direct message (level 3, 50 gp; Pathfinder Lost Omens Firebrands 86)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.parchment_of_direct_message_level_3_50_gp;_Pathfin"
+            ]
+          }
+        ],
+        "greater hat of disguise (level 7, 340 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_hat_of_disguise_level_7_340_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "including evidence of Ghessa being a kurobozu": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.including_evidence_of_Ghessa_being_a_kurobozu"
+            ]
+          }
+        ],
+        "without finding definitive proof of duplicity": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.without_finding_definitive_proof_of_duplicity"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

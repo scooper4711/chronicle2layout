@@ -1,0 +1,215 @@
+{
+  "id": "pfs2.s7-05",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-05 Battle of the Thorns",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-05-BattleoftheThornsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)",
+          "murderer\u2019s knot (level 7, 66 gp)",
+          "moderate healing potion (level 6, 12 gp)",
+          "lesser energy breath potion (level 7, 70 gp)",
+          "+2 striking composite shortbow (level 10, 1,000 gp)",
+          "+2 striking lance (level 10, 1,000 gp)",
+          "+1 striking returning unholy trident (level 11, 1,500 gp)"
+        ],
+        "example": "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "failed",
+          "managed to steal critical war plans from the army commander",
+          "the Shelynite dissident Vali",
+          "the Kuthite zealot Mara to bring back to her agents in Nidal"
+        ],
+        "example": "failed"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.failed": {
+      "x": 96.811,
+      "y": 19.862,
+      "x2": 98.316,
+      "y2": 27.585
+    },
+    "checkbox.managed_to_steal_critical_war_plans_from_the_army_": {
+      "x": 8.867,
+      "y": 28.08,
+      "x2": 10.372,
+      "y2": 35.804
+    },
+    "checkbox.the_Shelynite_dissident_Vali": {
+      "x": 24.363,
+      "y": 36.299,
+      "x2": 25.868,
+      "y2": 44.022
+    },
+    "checkbox.the_Kuthite_zealot_Mara_to_bring_back_to_her_agent": {
+      "x": 48.451,
+      "y": 36.299,
+      "x2": 49.956,
+      "y2": 44.022
+    },
+    "item.line.moderate_potion_of_retaliation_cold_level_6_12_gp;": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.murderer\u2019s_knot_level_7_66_gp": {
+      "y": 13.4,
+      "y2": 23.6
+    },
+    "item.line.moderate_healing_potion_level_6_12_gp": {
+      "y": 24.6,
+      "y2": 29.2
+    },
+    "item.line.lesser_energy_breath_potion_level_7_70_gp": {
+      "y": 30.2,
+      "y2": 34.8
+    },
+    "item.line.+2_striking_composite_shortbow_level_10_1000_gp": {
+      "y": 35.8,
+      "y2": 40.4
+    },
+    "item.line.+2_striking_lance_level_10_1000_gp": {
+      "y": 41.4,
+      "y2": 46.0
+    },
+    "item.line.+1_striking_returning_unholy_trident_level_11_1500": {
+      "y": 47.0,
+      "y2": 51.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "moderate potion of retaliation (cold) (level 6, 12 gp; Pathfinder Player Core 2 304)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_potion_of_retaliation_cold_level_6_12_gp;"
+            ]
+          }
+        ],
+        "murderer\u2019s knot (level 7, 66 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.murderer\u2019s_knot_level_7_66_gp"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_12_gp"
+            ]
+          }
+        ],
+        "lesser energy breath potion (level 7, 70 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_energy_breath_potion_level_7_70_gp"
+            ]
+          }
+        ],
+        "+2 striking composite shortbow (level 10, 1,000 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_composite_shortbow_level_10_1000_gp"
+            ]
+          }
+        ],
+        "+2 striking lance (level 10, 1,000 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_lance_level_10_1000_gp"
+            ]
+          }
+        ],
+        "+1 striking returning unholy trident (level 11, 1,500 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_returning_unholy_trident_level_11_1500"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "failed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed"
+            ]
+          }
+        ],
+        "managed to steal critical war plans from the army commander": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_steal_critical_war_plans_from_the_army_"
+            ]
+          }
+        ],
+        "the Shelynite dissident Vali": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Shelynite_dissident_Vali"
+            ]
+          }
+        ],
+        "the Kuthite zealot Mara to bring back to her agents in Nidal": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Kuthite_zealot_Mara_to_bring_back_to_her_agent"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

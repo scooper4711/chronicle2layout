@@ -1,0 +1,159 @@
+{
+  "id": "pfs2.s7-06",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-06 Brastlewark at War Part 1 The Gnome Defection",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-06-BrastlewarkatWarPart1TheGnomeDefectionChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Gnome Favor",
+          "In gratitude for aiding them in their defection from",
+          "Cheliax, the Brastlewark gnomes gifted you with",
+          "a custom knit item such as a hat or scarf. When",
+          "worn, this item\u2019s unmistakable craftsmanship",
+          "identifies you as a friend and ally to a Brastlewark",
+          "gnome. You gain a +1 item bonus on Diplomacy,",
+          "Deception, or Intimidation checks made as part",
+          "of an interaction with other Brastlewark gnomes."
+        ],
+        "example": "Gnome Favor"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Gnome_Favor": {
+      "y": 7.4,
+      "y2": 12.5
+    },
+    "item.line.In_gratitude_for_aiding_them_in_their_defection_fr": {
+      "y": 13.2,
+      "y2": 18.1
+    },
+    "item.line.Cheliax_the_Brastlewark_gnomes_gifted_you_with": {
+      "y": 18.8,
+      "y2": 23.7
+    },
+    "item.line.a_custom_knit_item_such_as_a_hat_or_scarf_When": {
+      "y": 24.4,
+      "y2": 29.3
+    },
+    "item.line.worn_this_item\u2019s_unmistakable_craftsmanship": {
+      "y": 30.0,
+      "y2": 34.9
+    },
+    "item.line.identifies_you_as_a_friend_and_ally_to_a_Brastlewa": {
+      "y": 35.6,
+      "y2": 40.5
+    },
+    "item.line.gnome_You_gain_a_+1_item_bonus_on_Diplomacy": {
+      "y": 41.2,
+      "y2": 46.1
+    },
+    "item.line.Deception_or_Intimidation_checks_made_as_part": {
+      "y": 46.8,
+      "y2": 51.7
+    },
+    "item.line.of_an_interaction_with_other_Brastlewark_gnomes": {
+      "y": 52.4,
+      "y2": 57.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Gnome Favor": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Gnome_Favor"
+            ]
+          }
+        ],
+        "In gratitude for aiding them in their defection from": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.In_gratitude_for_aiding_them_in_their_defection_fr"
+            ]
+          }
+        ],
+        "Cheliax, the Brastlewark gnomes gifted you with": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Cheliax_the_Brastlewark_gnomes_gifted_you_with"
+            ]
+          }
+        ],
+        "a custom knit item such as a hat or scarf. When": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.a_custom_knit_item_such_as_a_hat_or_scarf_When"
+            ]
+          }
+        ],
+        "worn, this item\u2019s unmistakable craftsmanship": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.worn_this_item\u2019s_unmistakable_craftsmanship"
+            ]
+          }
+        ],
+        "identifies you as a friend and ally to a Brastlewark": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.identifies_you_as_a_friend_and_ally_to_a_Brastlewa"
+            ]
+          }
+        ],
+        "gnome. You gain a +1 item bonus on Diplomacy,": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.gnome_You_gain_a_+1_item_bonus_on_Diplomacy"
+            ]
+          }
+        ],
+        "Deception, or Intimidation checks made as part": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Deception_or_Intimidation_checks_made_as_part"
+            ]
+          }
+        ],
+        "of an interaction with other Brastlewark gnomes.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.of_an_interaction_with_other_Brastlewark_gnomes"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

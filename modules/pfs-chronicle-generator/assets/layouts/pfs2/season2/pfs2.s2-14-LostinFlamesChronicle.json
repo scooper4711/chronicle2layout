@@ -1,0 +1,115 @@
+{
+  "id": "pfs2.s2-14",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-14 Lostin Flames",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-14-LostinFlamesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "animal staff (item 4, 90 gp)"
+        ],
+        "example": "animal staff (item 4, 90 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "discovered and disabled a strange demonic monolith related to an ancient cyclops ritual located within a raging forest fire",
+          "discovered and disabled a second monolith located at the center of a great storm",
+          "also managed to discover an abandoned camp that gave you insight into the fate of the missing Decemvirate member"
+        ],
+        "example": "discovered and disabled a strange demonic monolith related to an ancient cyclops ritual located within a raging forest fire"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.discovered_and_disabled_a_strange_demonic_monolith": {
+      "x": 77.71,
+      "y": 17.841,
+      "x2": 79.213,
+      "y2": 31.342
+    },
+    "checkbox.discovered_and_disabled_a_second_monolith_located_": {
+      "x": 77.576,
+      "y": 32.207,
+      "x2": 79.079,
+      "y2": 45.708
+    },
+    "checkbox.also_managed_to_discover_an_abandoned_camp_that_ga": {
+      "x": 44.719,
+      "y": 46.573,
+      "x2": 46.222,
+      "y2": 60.074
+    },
+    "item.line.animal_staff_item_4_90_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "animal staff (item 4, 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.animal_staff_item_4_90_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "discovered and disabled a strange demonic monolith related to an ancient cyclops ritual located within a raging forest fire": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.discovered_and_disabled_a_strange_demonic_monolith"
+            ]
+          }
+        ],
+        "discovered and disabled a second monolith located at the center of a great storm": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.discovered_and_disabled_a_second_monolith_located_"
+            ]
+          }
+        ],
+        "also managed to discover an abandoned camp that gave you insight into the fate of the missing Decemvirate member": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.also_managed_to_discover_an_abandoned_camp_that_ga"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

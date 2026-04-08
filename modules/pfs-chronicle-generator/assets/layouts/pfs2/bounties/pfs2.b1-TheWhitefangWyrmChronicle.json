@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.b1",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B1 The Whitefang Wyrm",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B1-TheWhitefangWyrmChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "slew the dragon/",
+          "convinced the dragon to leave the village in peace)"
+        ],
+        "example": "slew the dragon/"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.slew_the_dragon/": {
+      "x": 84.401,
+      "y": 11.583,
+      "x2": 86.466,
+      "y2": 16.267
+    },
+    "checkbox.convinced_the_dragon_to_leave_the_village_in_peace": {
+      "x": 1.552,
+      "y": 16.568,
+      "x2": 3.055,
+      "y2": 21.252
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "slew the dragon/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.slew_the_dragon/"
+            ]
+          }
+        ],
+        "convinced the dragon to leave the village in peace)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_the_dragon_to_leave_the_village_in_peace"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

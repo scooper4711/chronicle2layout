@@ -1,0 +1,143 @@
+{
+  "id": "pfs2.s2-06",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-06 The Crashing Wave",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-06-TheCrashingWaveChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "animal staff (item 4, 90 gp)",
+          "brine shark elemental gem (100 gp; item 8, as elemental gem, except it summons a brine shark)",
+          "dragon turtle scale (item 4, 13 gp)"
+        ],
+        "example": "animal staff (item 4, 90 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "stopping a rampaging dragon turtle/",
+          "saving a flooding hospital from a saboteur /",
+          "ending a dangerous ritual)"
+        ],
+        "example": "stopping a rampaging dragon turtle/"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.stopping_a_rampaging_dragon_turtle/": {
+      "x": 1.552,
+      "y": 17.841,
+      "x2": 3.621,
+      "y2": 31.342
+    },
+    "checkbox.saving_a_flooding_hospital_from_a_saboteur_/": {
+      "x": 31.384,
+      "y": 17.841,
+      "x2": 32.887,
+      "y2": 31.342
+    },
+    "checkbox.ending_a_dangerous_ritual": {
+      "x": 66.175,
+      "y": 17.841,
+      "x2": 67.677,
+      "y2": 31.342
+    },
+    "item.line.animal_staff_item_4_90_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.brine_shark_elemental_gem_100_gp;_item_8_as_elemen": {
+      "y": 12.3,
+      "y2": 22.0
+    },
+    "item.line.dragon_turtle_scale_item_4_13_gp": {
+      "y": 22.9,
+      "y2": 27.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "animal staff (item 4, 90 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.animal_staff_item_4_90_gp"
+            ]
+          }
+        ],
+        "brine shark elemental gem (100 gp; item 8, as elemental gem, except it summons a brine shark)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.brine_shark_elemental_gem_100_gp;_item_8_as_elemen"
+            ]
+          }
+        ],
+        "dragon turtle scale (item 4, 13 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon_turtle_scale_item_4_13_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "stopping a rampaging dragon turtle/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.stopping_a_rampaging_dragon_turtle/"
+            ]
+          }
+        ],
+        "saving a flooding hospital from a saboteur /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.saving_a_flooding_hospital_from_a_saboteur_/"
+            ]
+          }
+        ],
+        "ending a dangerous ritual)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.ending_a_dangerous_ritual"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "id": "pfs2.s5-18",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-18 Tapestry of the Mind",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-18-TapestryoftheMindChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "scroll of haste, 7th level (level 13, 600 gp; Core Rulebook 565)",
+          "+2 striking frost starknife (level 10, 1502 gp; Core Rulebook 584)",
+          "+2 greater striking frost starknife (level 12, 2502 gp; Core Rulebook 584)",
+          "compass of transpositional awareness (level 10, 950 gp; Dark Archive 154)"
+        ],
+        "example": "scroll of haste, 7th level (level 13, 600 gp; Core Rulebook 565)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "you had to kill",
+          "willingly stood down",
+          "the Vigilant Seal keep it sealed away",
+          "the Dark Archive study it",
+          "nothing"
+        ],
+        "example": "you had to kill"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.you_had_to_kill": {
+      "x": 26.439,
+      "y": 18.892,
+      "x2": 27.952,
+      "y2": 27.872
+    },
+    "checkbox.willingly_stood_down": {
+      "x": 40.847,
+      "y": 18.892,
+      "x2": 42.36,
+      "y2": 27.872
+    },
+    "checkbox.the_Vigilant_Seal_keep_it_sealed_away": {
+      "x": 73.947,
+      "y": 35.329,
+      "x2": 75.46,
+      "y2": 44.309
+    },
+    "checkbox.the_Dark_Archive_study_it": {
+      "x": 6.474,
+      "y": 43.547,
+      "x2": 7.987,
+      "y2": 52.527
+    },
+    "checkbox.nothing": {
+      "x": 27.512,
+      "y": 43.547,
+      "x2": 29.025,
+      "y2": 52.527
+    },
+    "item.line.scroll_of_haste_7th_level_level_13_600_gp;_Core_Ru": {
+      "y": 3.9,
+      "y2": 15.7
+    },
+    "item.line.+2_striking_frost_starknife_level_10_1502_gp;_Core": {
+      "y": 15.1,
+      "y2": 26.9
+    },
+    "item.line.+2_greater_striking_frost_starknife_level_12_2502_": {
+      "y": 26.3,
+      "y2": 38.1
+    },
+    "item.line.compass_of_transpositional_awareness_level_10_950_": {
+      "y": 37.5,
+      "y2": 49.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "scroll of haste, 7th level (level 13, 600 gp; Core Rulebook 565)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_haste_7th_level_level_13_600_gp;_Core_Ru"
+            ]
+          }
+        ],
+        "+2 striking frost starknife (level 10, 1502 gp; Core Rulebook 584)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_striking_frost_starknife_level_10_1502_gp;_Core"
+            ]
+          }
+        ],
+        "+2 greater striking frost starknife (level 12, 2502 gp; Core Rulebook 584)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_greater_striking_frost_starknife_level_12_2502_"
+            ]
+          }
+        ],
+        "compass of transpositional awareness (level 10, 950 gp; Dark Archive 154)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.compass_of_transpositional_awareness_level_10_950_"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "you had to kill": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_had_to_kill"
+            ]
+          }
+        ],
+        "willingly stood down": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.willingly_stood_down"
+            ]
+          }
+        ],
+        "the Vigilant Seal keep it sealed away": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Vigilant_Seal_keep_it_sealed_away"
+            ]
+          }
+        ],
+        "the Dark Archive study it": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Dark_Archive_study_it"
+            ]
+          }
+        ],
+        "nothing": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.nothing"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

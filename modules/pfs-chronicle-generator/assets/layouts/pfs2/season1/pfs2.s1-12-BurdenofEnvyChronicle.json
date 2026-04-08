@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s1-12",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-12 Burden of Envy",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-12-BurdenofEnvyChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 longsword (level 2; 35 gp)",
+          "gold nodule aeon stone (level 6; 230 gp)",
+          "+1 full plate (level 5; 160 gp)"
+        ],
+        "example": "+1 longsword (level 2; 35 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_longsword_level_2;_35_gp": {
+      "y": 3.1,
+      "y2": 7.1
+    },
+    "item.line.gold_nodule_aeon_stone_level_6;_230_gp": {
+      "y": 59.7,
+      "y2": 63.7
+    },
+    "item.line.+1_full_plate_level_5;_160_gp": {
+      "y": 55.0,
+      "y2": 58.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 longsword (level 2; 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_longsword_level_2;_35_gp"
+            ]
+          }
+        ],
+        "gold nodule aeon stone (level 6; 230 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.gold_nodule_aeon_stone_level_6;_230_gp"
+            ]
+          }
+        ],
+        "+1 full plate (level 5; 160 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_full_plate_level_5;_160_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

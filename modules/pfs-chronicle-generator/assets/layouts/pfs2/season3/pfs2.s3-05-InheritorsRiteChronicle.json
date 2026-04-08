@@ -1,0 +1,155 @@
+{
+  "id": "pfs2.s3-05",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-05 Inheritors Rite",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-05-InheritorsRiteChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Pathfinder Society characters can purchase a wide variety of",
+          "Pathfinder Society characters, visit paizo.com/pathfindersociety/",
+          "to their character level. Chronicle Sheets for Pathfinder Society",
+          "their character level +2.",
+          "channel protection amulet (item 3; 56 gp)"
+        ],
+        "example": "Pathfinder Society characters can purchase a wide variety of"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "disabled",
+          "destroyed the construct"
+        ],
+        "example": "disabled"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.disabled": {
+      "x": 38.157,
+      "y": 42.488,
+      "x2": 40.046,
+      "y2": 57.178
+    },
+    "checkbox.destroyed_the_construct": {
+      "x": 49.175,
+      "y": 42.488,
+      "x2": 51.064,
+      "y2": 57.178
+    },
+    "item.line.Pathfinder_Society_characters_can_purchase_a_wide_": {
+      "y": 1.5,
+      "y2": 6.2
+    },
+    "item.line.Pathfinder_Society_characters_visit_paizocom/pathf": {
+      "y": 11.8,
+      "y2": 17.1
+    },
+    "item.line.to_their_character_level_Chronicle_Sheets_for_Path": {
+      "y": 22.8,
+      "y2": 27.4
+    },
+    "item.line.their_character_level_+2": {
+      "y": 33.4,
+      "y2": 38.1
+    },
+    "item.line.channel_protection_amulet_item_3;_56_gp": {
+      "y": 44.0,
+      "y2": 48.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Pathfinder Society characters can purchase a wide variety of": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Pathfinder_Society_characters_can_purchase_a_wide_"
+            ]
+          }
+        ],
+        "Pathfinder Society characters, visit paizo.com/pathfindersociety/": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Pathfinder_Society_characters_visit_paizocom/pathf"
+            ]
+          }
+        ],
+        "to their character level. Chronicle Sheets for Pathfinder Society": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.to_their_character_level_Chronicle_Sheets_for_Path"
+            ]
+          }
+        ],
+        "their character level +2.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.their_character_level_+2"
+            ]
+          }
+        ],
+        "channel protection amulet (item 3; 56 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.channel_protection_amulet_item_3;_56_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "disabled": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.disabled"
+            ]
+          }
+        ],
+        "destroyed the construct": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.destroyed_the_construct"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

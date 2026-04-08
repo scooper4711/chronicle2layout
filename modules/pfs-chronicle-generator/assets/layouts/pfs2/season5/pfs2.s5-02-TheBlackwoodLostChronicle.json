@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.s5-02",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-02 The Blackwood Lost",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-02-TheBlackwoodLostChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "repaired the nexus and saved the survivors",
+          "ran out of time"
+        ],
+        "example": "repaired the nexus and saved the survivors"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.repaired_the_nexus_and_saved_the_survivors": {
+      "x": 79.179,
+      "y": 42.68,
+      "x2": 80.88,
+      "y2": 52.783
+    },
+    "checkbox.ran_out_of_time": {
+      "x": 19.101,
+      "y": 50.899,
+      "x2": 20.803,
+      "y2": 61.001
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "repaired the nexus and saved the survivors": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.repaired_the_nexus_and_saved_the_survivors"
+            ]
+          }
+        ],
+        "ran out of time": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.ran_out_of_time"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

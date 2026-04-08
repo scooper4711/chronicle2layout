@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s1-09",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-09 Star-Crossed Voyages",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-09-Star-CrossedVoyagesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "scrollstaff (level 1; 12 gp; Lost Omens Character Guide 100, limit 1)",
+          "+1 striking scrollstaff (level 4; 112 gp; Lost Omens Character Guide 100, limit 1)"
+        ],
+        "example": "scrollstaff (level 1; 12 gp; Lost Omens Character Guide 100, limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.scrollstaff_level_1;_12_gp;_Lost_Omens_Character_G": {
+      "y": 3.1,
+      "y2": 11.8
+    },
+    "item.line.+1_striking_scrollstaff_level_4;_112_gp;_Lost_Omen": {
+      "y": 55.0,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "scrollstaff (level 1; 12 gp; Lost Omens Character Guide 100, limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scrollstaff_level_1;_12_gp;_Lost_Omens_Character_G"
+            ]
+          }
+        ],
+        "+1 striking scrollstaff (level 4; 112 gp; Lost Omens Character Guide 100, limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_scrollstaff_level_4;_112_gp;_Lost_Omen"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

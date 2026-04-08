@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s1-07",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-07 Flooded Kings Court",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-07-FloodedKingsCourtChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "jade cat (level 2; 6 gp)",
+          "pendant of the occult (level 3; 60 gp)",
+          "goggles of night (level 5; 150 gp)",
+          "shark tooth charm (level 5; 23 gp)",
+          "viper arrow (level 4; 17 gp)"
+        ],
+        "example": "jade cat (level 2; 6 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.jade_cat_level_2;_6_gp": {
+      "y": 3.1,
+      "y2": 7.1
+    },
+    "item.line.pendant_of_the_occult_level_3;_60_gp": {
+      "y": 7.9,
+      "y2": 11.8
+    },
+    "item.line.goggles_of_night_level_5;_150_gp": {
+      "y": 55.0,
+      "y2": 58.9
+    },
+    "item.line.shark_tooth_charm_level_5;_23_gp": {
+      "y": 59.7,
+      "y2": 63.7
+    },
+    "item.line.viper_arrow_level_4;_17_gp": {
+      "y": 64.4,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "jade cat (level 2; 6 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.jade_cat_level_2;_6_gp"
+            ]
+          }
+        ],
+        "pendant of the occult (level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.pendant_of_the_occult_level_3;_60_gp"
+            ]
+          }
+        ],
+        "goggles of night (level 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.goggles_of_night_level_5;_150_gp"
+            ]
+          }
+        ],
+        "shark tooth charm (level 5; 23 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.shark_tooth_charm_level_5;_23_gp"
+            ]
+          }
+        ],
+        "viper arrow (level 4; 17 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.viper_arrow_level_4;_17_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

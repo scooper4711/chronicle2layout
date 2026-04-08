@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s1-00",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-00 Origin of the Open Road",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-00-OriginoftheOpenRoadChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bag of holding type II (level 7; 300 gp)",
+          "dagger of venom (level 5; 150 gp)",
+          "ring of the ram (level 6; 220 gp)"
+        ],
+        "example": "bag of holding type II (level 7; 300 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.bag_of_holding_type_II_level_7;_300_gp": {
+      "y": 3.1,
+      "y2": 7.1
+    },
+    "item.line.dagger_of_venom_level_5;_150_gp": {
+      "y": 7.9,
+      "y2": 11.8
+    },
+    "item.line.ring_of_the_ram_level_6;_220_gp": {
+      "y": 12.6,
+      "y2": 16.5
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bag of holding type II (level 7; 300 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bag_of_holding_type_II_level_7;_300_gp"
+            ]
+          }
+        ],
+        "dagger of venom (level 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dagger_of_venom_level_5;_150_gp"
+            ]
+          }
+        ],
+        "ring of the ram (level 6; 220 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_the_ram_level_6;_220_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

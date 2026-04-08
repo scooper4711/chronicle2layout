@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s3-03",
+  "parent": "pfs2.season3-layout-s3-00",
+  "description": "3-03 Echoes of Desperation",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-03-EchoesofDesperationChronicle.pdf"
+}

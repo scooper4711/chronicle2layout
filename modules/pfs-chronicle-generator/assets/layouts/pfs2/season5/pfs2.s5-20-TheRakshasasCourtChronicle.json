@@ -1,0 +1,211 @@
+{
+  "id": "pfs2.s5-20",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-20 The Rakshasas Court",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-20-TheRakshasasCourtChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "decanter of endless water (level 7, 320 gp)",
+          "anointed waterskin (level 9, 600 gp; Pathfinder Secrets of Magic 179)",
+          "candle of revealing (level 7, 60 gp; Pathfinder Advanced Player\u2019s Guide 257)",
+          "dust of disappearance (level 9, 135 gp)",
+          "thawing candle (level 8, 90 gp; Pathfinder Rage of Elements 125)",
+          "lover\u2019s gloves (level 8, 500 gp; Pathfinder Advanced Player\u2019s Guide 261)",
+          "ring of lies (level 10, 850 gp)",
+          "potion of fire resistance (lesser) (level 6, 45 gp)",
+          "potion of fire resistance (moderate) (level 10, 180 gp)"
+        ],
+        "example": "decanter of endless water (level 7, 320 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "fought sewer gators",
+          "disabled a steam trap to get to the underground entrance to the manor"
+        ],
+        "example": "fought sewer gators"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.fought_sewer_gators": {
+      "x": 8.731,
+      "y": 27.111,
+      "x2": 10.244,
+      "y2": 36.091
+    },
+    "checkbox.disabled_a_steam_trap_to_get_to_the_underground_en": {
+      "x": 33.534,
+      "y": 27.111,
+      "x2": 35.047,
+      "y2": 36.091
+    },
+    "item.line.decanter_of_endless_water_level_7_320_gp": {
+      "y": 7.6,
+      "y2": 12.5
+    },
+    "item.line.anointed_waterskin_level_9_600_gp;_Pathfinder_Secr": {
+      "y": 13.2,
+      "y2": 23.7
+    },
+    "item.line.candle_of_revealing_level_7_60_gp;_Pathfinder_Adva": {
+      "y": 24.4,
+      "y2": 34.9
+    },
+    "item.line.dust_of_disappearance_level_9_135_gp": {
+      "y": 35.6,
+      "y2": 40.5
+    },
+    "item.line.thawing_candle_level_8_90_gp;_Pathfinder_Rage_of_E": {
+      "y": 41.2,
+      "y2": 51.7
+    },
+    "item.line.lover\u2019s_gloves_level_8_500_gp;_Pathfinder_Advanced": {
+      "y": 52.4,
+      "y2": 62.9
+    },
+    "item.line.ring_of_lies_level_10_850_gp": {
+      "y": 63.6,
+      "y2": 68.5
+    },
+    "item.line.potion_of_fire_resistance_lesser_level_6_45_gp": {
+      "y": 69.2,
+      "y2": 74.1
+    },
+    "item.line.potion_of_fire_resistance_moderate_level_10_180_gp": {
+      "y": 69.2,
+      "y2": 85.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "decanter of endless water (level 7, 320 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.decanter_of_endless_water_level_7_320_gp"
+            ]
+          }
+        ],
+        "anointed waterskin (level 9, 600 gp; Pathfinder Secrets of Magic 179)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.anointed_waterskin_level_9_600_gp;_Pathfinder_Secr"
+            ]
+          }
+        ],
+        "candle of revealing (level 7, 60 gp; Pathfinder Advanced Player\u2019s Guide 257)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.candle_of_revealing_level_7_60_gp;_Pathfinder_Adva"
+            ]
+          }
+        ],
+        "dust of disappearance (level 9, 135 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dust_of_disappearance_level_9_135_gp"
+            ]
+          }
+        ],
+        "thawing candle (level 8, 90 gp; Pathfinder Rage of Elements 125)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.thawing_candle_level_8_90_gp;_Pathfinder_Rage_of_E"
+            ]
+          }
+        ],
+        "lover\u2019s gloves (level 8, 500 gp; Pathfinder Advanced Player\u2019s Guide 261)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lover\u2019s_gloves_level_8_500_gp;_Pathfinder_Advanced"
+            ]
+          }
+        ],
+        "ring of lies (level 10, 850 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_lies_level_10_850_gp"
+            ]
+          }
+        ],
+        "potion of fire resistance (lesser) (level 6, 45 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_fire_resistance_lesser_level_6_45_gp"
+            ]
+          }
+        ],
+        "potion of fire resistance (moderate) (level 10, 180 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_fire_resistance_moderate_level_10_180_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "fought sewer gators": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fought_sewer_gators"
+            ]
+          }
+        ],
+        "disabled a steam trap to get to the underground entrance to the manor": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.disabled_a_steam_trap_to_get_to_the_underground_en"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

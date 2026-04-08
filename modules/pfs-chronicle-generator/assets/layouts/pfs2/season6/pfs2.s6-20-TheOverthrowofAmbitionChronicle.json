@@ -1,0 +1,278 @@
+{
+  "id": "pfs2.s6-20",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-20 The Overthrow of Ambition",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-20-TheOverthrowofAmbitionChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+2 greater fire-resistant raiment resilient explorer\u2019s",
+          "clothing (level 12, 3190 gp; GM Core 266)",
+          "chunk of Riftcarver \u2013 functions as a +2 greater",
+          "striking rune (level 12, 1500 gp; GM Core 236);",
+          "limit 1",
+          "greater healing potion (level 12, 400 gp; GM Core 259)",
+          "greater frost vial (level 11, 250 gp; Player Core 2 285)",
+          "greater symbol of conflict (level 10, 900 gp; GM Core 296)",
+          "oil of keen edges (level 10, 900 gp; GM Core 257)"
+        ],
+        "example": "+2 greater fire-resistant raiment resilient explorer\u2019s"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "killing Hesla",
+          "bringing her back to the Grand Lodge alive",
+          "you",
+          "one of your party members",
+          "Hesla",
+          "Hesla",
+          "Jorsal of Lauterbury jumped off of the balcony",
+          "Hesla",
+          "Hesla"
+        ],
+        "example": "killing Hesla"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.killing_Hesla": {
+      "x": 73.329,
+      "y": 28.08,
+      "x2": 74.833,
+      "y2": 35.804
+    },
+    "checkbox.bringing_her_back_to_the_Grand_Lodge_alive": {
+      "x": 87.318,
+      "y": 28.08,
+      "x2": 88.823,
+      "y2": 35.804
+    },
+    "checkbox.you": {
+      "x": 36.687,
+      "y": 52.736,
+      "x2": 38.191,
+      "y2": 60.459
+    },
+    "checkbox.one_of_your_party_members": {
+      "x": 42.268,
+      "y": 52.736,
+      "x2": 43.772,
+      "y2": 60.459
+    },
+    "checkbox.Hesla": {
+      "x": 56.648,
+      "y": 77.391,
+      "x2": 58.152,
+      "y2": 85.114
+    },
+    "checkbox.Jorsal_of_Lauterbury_jumped_off_of_the_balcony": {
+      "x": 14.195,
+      "y": 60.954,
+      "x2": 15.699,
+      "y2": 68.677
+    },
+    "item.line.+2_greater_fire-resistant_raiment_resilient_explor": {
+      "y": 4.1,
+      "y2": 9.7
+    },
+    "item.line.clothing_level_12_3190_gp;_GM_Core_266": {
+      "y": 9.7,
+      "y2": 15.3
+    },
+    "item.line.chunk_of_Riftcarver_\u2013_functions_as_a_+2_greater": {
+      "y": 15.3,
+      "y2": 20.9
+    },
+    "item.line.striking_rune_level_12_1500_gp;_GM_Core_236;": {
+      "y": 20.9,
+      "y2": 26.5
+    },
+    "item.line.limit_1": {
+      "y": 26.5,
+      "y2": 32.1
+    },
+    "item.line.greater_healing_potion_level_12_400_gp;_GM_Core_25": {
+      "y": 32.1,
+      "y2": 43.2
+    },
+    "item.line.greater_frost_vial_level_11_250_gp;_Player_Core_2_": {
+      "y": 43.3,
+      "y2": 54.4
+    },
+    "item.line.greater_symbol_of_conflict_level_10_900_gp;_GM_Cor": {
+      "y": 54.5,
+      "y2": 65.6
+    },
+    "item.line.oil_of_keen_edges_level_10_900_gp;_GM_Core_257": {
+      "y": 65.6,
+      "y2": 71.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+2 greater fire-resistant raiment resilient explorer\u2019s": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+2_greater_fire-resistant_raiment_resilient_explor"
+            ]
+          }
+        ],
+        "clothing (level 12, 3190 gp; GM Core 266)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clothing_level_12_3190_gp;_GM_Core_266"
+            ]
+          }
+        ],
+        "chunk of Riftcarver \u2013 functions as a +2 greater": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.chunk_of_Riftcarver_\u2013_functions_as_a_+2_greater"
+            ]
+          }
+        ],
+        "striking rune (level 12, 1500 gp; GM Core 236);": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.striking_rune_level_12_1500_gp;_GM_Core_236;"
+            ]
+          }
+        ],
+        "limit 1": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.limit_1"
+            ]
+          }
+        ],
+        "greater healing potion (level 12, 400 gp; GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_healing_potion_level_12_400_gp;_GM_Core_25"
+            ]
+          }
+        ],
+        "greater frost vial (level 11, 250 gp; Player Core 2 285)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_frost_vial_level_11_250_gp;_Player_Core_2_"
+            ]
+          }
+        ],
+        "greater symbol of conflict (level 10, 900 gp; GM Core 296)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_symbol_of_conflict_level_10_900_gp;_GM_Cor"
+            ]
+          }
+        ],
+        "oil of keen edges (level 10, 900 gp; GM Core 257)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.oil_of_keen_edges_level_10_900_gp;_GM_Core_257"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "killing Hesla": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.killing_Hesla"
+            ]
+          }
+        ],
+        "bringing her back to the Grand Lodge alive": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.bringing_her_back_to_the_Grand_Lodge_alive"
+            ]
+          }
+        ],
+        "you": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you"
+            ]
+          }
+        ],
+        "one of your party members": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.one_of_your_party_members"
+            ]
+          }
+        ],
+        "Hesla": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Hesla"
+            ]
+          }
+        ],
+        "Jorsal of Lauterbury jumped off of the balcony": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Jorsal_of_Lauterbury_jumped_off_of_the_balcony"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "id": "pfs2.s4-06",
+  "parent": "pfs2.season4-layout-s4-06",
+  "description": "4-06 Signalfrom the Electric Laboratory",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-06-SignalfromtheElectricLaboratoryChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "ablative armor plating, greater (item 7, 70 gp; Pathfinder Guns & Gears 66)",
+          "antidote, greater (item 10, 160 gp)",
+          "clandestine cloak (item 6, 230 gp)",
+          "clandestine cloak, greater (item 10, 900 gp)",
+          "clockwork goggles, major (item 8, 80 gp; Pathfinder Guns & Gears 68)",
+          "oil of repulsion (item 11, 175 gp)"
+        ],
+        "example": "ablative armor plating, greater (item 7, 70 gp; Pathfinder Guns & Gears 66)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "helped them stabilize their form",
+          "were unable to save them from dissipating",
+          "You helped her recharge her artificial heart",
+          "she did not escape the manor alive",
+          "convinced them that you had the situation under control",
+          "were ultimately unable to assuage their fears"
+        ],
+        "example": "helped them stabilize their form"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.helped_them_stabilize_their_form": {
+      "x": 88.337,
+      "y": 27.377,
+      "x2": 89.848,
+      "y2": 34.161
+    },
+    "checkbox.were_unable_to_save_them_from_dissipating": {
+      "x": 17.376,
+      "y": 35.671,
+      "x2": 18.887,
+      "y2": 42.454
+    },
+    "checkbox.You_helped_her_recharge_her_artificial_heart": {
+      "x": 37.452,
+      "y": 43.964,
+      "x2": 38.963,
+      "y2": 50.747
+    },
+    "checkbox.she_did_not_escape_the_manor_alive": {
+      "x": 77.154,
+      "y": 43.964,
+      "x2": 78.665,
+      "y2": 50.747
+    },
+    "checkbox.convinced_them_that_you_had_the_situation_under_co": {
+      "x": 53.717,
+      "y": 77.136,
+      "x2": 55.228,
+      "y2": 83.92
+    },
+    "checkbox.were_ultimately_unable_to_assuage_their_fears": {
+      "x": 97.345,
+      "y": 77.136,
+      "x2": 98.856,
+      "y2": 83.92
+    },
+    "item.line.ablative_armor_plating_greater_item_7_70_gp;_Pathf": {
+      "y": 4.1,
+      "y2": 24.8
+    },
+    "item.line.antidote_greater_item_10_160_gp": {
+      "y": 25.5,
+      "y2": 35.5
+    },
+    "item.line.clandestine_cloak_item_6_230_gp": {
+      "y": 36.3,
+      "y2": 46.2
+    },
+    "item.line.clandestine_cloak_greater_item_10_900_gp": {
+      "y": 47.0,
+      "y2": 56.9
+    },
+    "item.line.clockwork_goggles_major_item_8_80_gp;_Pathfinder_G": {
+      "y": 57.7,
+      "y2": 78.4
+    },
+    "item.line.oil_of_repulsion_item_11_175_gp": {
+      "y": 79.2,
+      "y2": 89.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "ablative armor plating, greater (item 7, 70 gp; Pathfinder Guns & Gears 66)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ablative_armor_plating_greater_item_7_70_gp;_Pathf"
+            ]
+          }
+        ],
+        "antidote, greater (item 10, 160 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.antidote_greater_item_10_160_gp"
+            ]
+          }
+        ],
+        "clandestine cloak (item 6, 230 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clandestine_cloak_item_6_230_gp"
+            ]
+          }
+        ],
+        "clandestine cloak, greater (item 10, 900 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clandestine_cloak_greater_item_10_900_gp"
+            ]
+          }
+        ],
+        "clockwork goggles, major (item 8, 80 gp; Pathfinder Guns & Gears 68)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clockwork_goggles_major_item_8_80_gp;_Pathfinder_G"
+            ]
+          }
+        ],
+        "oil of repulsion (item 11, 175 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.oil_of_repulsion_item_11_175_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "helped them stabilize their form": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.helped_them_stabilize_their_form"
+            ]
+          }
+        ],
+        "were unable to save them from dissipating": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_unable_to_save_them_from_dissipating"
+            ]
+          }
+        ],
+        "You helped her recharge her artificial heart": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.You_helped_her_recharge_her_artificial_heart"
+            ]
+          }
+        ],
+        "she did not escape the manor alive": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.she_did_not_escape_the_manor_alive"
+            ]
+          }
+        ],
+        "convinced them that you had the situation under control": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_them_that_you_had_the_situation_under_co"
+            ]
+          }
+        ],
+        "were ultimately unable to assuage their fears": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_ultimately_unable_to_assuage_their_fears"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

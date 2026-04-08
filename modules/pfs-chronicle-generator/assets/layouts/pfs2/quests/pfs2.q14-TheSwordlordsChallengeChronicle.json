@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.q14",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q14 The Swordlords Challenge",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q14-TheSwordlordsChallengeChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Aldori dueling sword (item 1, 2 gp, Pathfinder Lost Omens World Guide 28)"
+        ],
+        "example": "Aldori dueling sword (item 1, 2 gp, Pathfinder Lost Omens World Guide 28)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Aldori_dueling_sword_item_1_2_gp_Pathfinder_Lost_O": {
+      "y": 7.6,
+      "y2": 18.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Aldori dueling sword (item 1, 2 gp, Pathfinder Lost Omens World Guide 28)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Aldori_dueling_sword_item_1_2_gp_Pathfinder_Lost_O"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

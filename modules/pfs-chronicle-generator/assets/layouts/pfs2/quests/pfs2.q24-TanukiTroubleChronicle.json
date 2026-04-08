@@ -1,0 +1,159 @@
+{
+  "id": "pfs2.q24",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q24 Tanuki Trouble",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q24-TanukiTroubleChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "\u014dmukade",
+          "venom (black adder venom) (level 2, 6gp; Pathfinder GM Core 248)",
+          "healing berry (minor healing potion) (level 1, 4gp; GM Core 259)"
+        ],
+        "example": "\u014dmukade"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "had a position of honor",
+          "were a guest of dishonor",
+          "prevented a fire from spreading",
+          "were not able to control a fire that broke out"
+        ],
+        "example": "had a position of honor"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.had_a_position_of_honor": {
+      "x": 21.172,
+      "y": 19.665,
+      "x2": 22.873,
+      "y2": 27.228
+    },
+    "checkbox.were_a_guest_of_dishonor": {
+      "x": 41.575,
+      "y": 19.665,
+      "x2": 43.277,
+      "y2": 27.228
+    },
+    "checkbox.prevented_a_fire_from_spreading": {
+      "x": 73.187,
+      "y": 19.665,
+      "x2": 74.889,
+      "y2": 27.228
+    },
+    "checkbox.were_not_able_to_control_a_fire_that_broke_out": {
+      "x": 1.373,
+      "y": 27.883,
+      "x2": 3.075,
+      "y2": 35.446
+    },
+    "item.line.\u014dmukade": {
+      "y": 6.5,
+      "y2": 13.3
+    },
+    "item.line.venom_black_adder_venom_level_2_6gp;_Pathfinder_GM": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.healing_berry_minor_healing_potion_level_1_4gp;_GM": {
+      "y": 13.2,
+      "y2": 29.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "\u014dmukade": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.\u014dmukade"
+            ]
+          }
+        ],
+        "venom (black adder venom) (level 2, 6gp; Pathfinder GM Core 248)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.venom_black_adder_venom_level_2_6gp;_Pathfinder_GM"
+            ]
+          }
+        ],
+        "healing berry (minor healing potion) (level 1, 4gp; GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.healing_berry_minor_healing_potion_level_1_4gp;_GM"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "had a position of honor": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.had_a_position_of_honor"
+            ]
+          }
+        ],
+        "were a guest of dishonor": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_a_guest_of_dishonor"
+            ]
+          }
+        ],
+        "prevented a fire from spreading": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.prevented_a_fire_from_spreading"
+            ]
+          }
+        ],
+        "were not able to control a fire that broke out": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_not_able_to_control_a_fire_that_broke_out"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

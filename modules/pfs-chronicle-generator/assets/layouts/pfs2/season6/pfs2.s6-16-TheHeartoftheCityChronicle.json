@@ -1,0 +1,141 @@
+{
+  "id": "pfs2.s6-16",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-16 The Heart of the City",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-16-TheHeartoftheCityChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "eagle-eye elixir, moderate (level 5; 27 gp; Pathfinder Player Core 2 287)",
+          "invisibility potion (level 4; 20 gp; Pathfinder GM Core 259)",
+          "skeleton key (level 5; 125 gp; Pathfinder GM Core 276)",
+          "traveler\u2019s any-tool (level 6; 200 gp; Pathfinder GM Core 277)"
+        ],
+        "example": "eagle-eye elixir, moderate (level 5; 27 gp; Pathfinder Player Core 2 287)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "convinced them of Hesla\u2019s upcoming schemes",
+          "couldn\u2019t convince them"
+        ],
+        "example": "convinced them of Hesla\u2019s upcoming schemes"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.convinced_them_of_Hesla\u2019s_upcoming_schemes": {
+      "x": 32.671,
+      "y": 52.736,
+      "x2": 34.175,
+      "y2": 60.459
+    },
+    "checkbox.couldn\u2019t_convince_them": {
+      "x": 70.651,
+      "y": 52.736,
+      "x2": 72.156,
+      "y2": 60.459
+    },
+    "item.line.eagle-eye_elixir_moderate_level_5;_27_gp;_Pathfind": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.invisibility_potion_level_4;_20_gp;_Pathfinder_GM_": {
+      "y": 18.8,
+      "y2": 29.3
+    },
+    "item.line.skeleton_key_level_5;_125_gp;_Pathfinder_GM_Core_2": {
+      "y": 30.0,
+      "y2": 40.5
+    },
+    "item.line.traveler\u2019s_any-tool_level_6;_200_gp;_Pathfinder_GM": {
+      "y": 41.2,
+      "y2": 51.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "eagle-eye elixir, moderate (level 5; 27 gp; Pathfinder Player Core 2 287)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.eagle-eye_elixir_moderate_level_5;_27_gp;_Pathfind"
+            ]
+          }
+        ],
+        "invisibility potion (level 4; 20 gp; Pathfinder GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.invisibility_potion_level_4;_20_gp;_Pathfinder_GM_"
+            ]
+          }
+        ],
+        "skeleton key (level 5; 125 gp; Pathfinder GM Core 276)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.skeleton_key_level_5;_125_gp;_Pathfinder_GM_Core_2"
+            ]
+          }
+        ],
+        "traveler\u2019s any-tool (level 6; 200 gp; Pathfinder GM Core 277)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.traveler\u2019s_any-tool_level_6;_200_gp;_Pathfinder_GM"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "convinced them of Hesla\u2019s upcoming schemes": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_them_of_Hesla\u2019s_upcoming_schemes"
+            ]
+          }
+        ],
+        "couldn\u2019t convince them": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.couldn\u2019t_convince_them"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

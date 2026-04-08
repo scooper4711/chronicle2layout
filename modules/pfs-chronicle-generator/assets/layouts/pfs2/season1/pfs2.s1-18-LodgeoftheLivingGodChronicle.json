@@ -1,0 +1,99 @@
+{
+  "id": "pfs2.s1-18",
+  "parent": "pfs2.season1-layout-s1-17",
+  "description": "1-18 Lodge of the Living God",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-18-LodgeoftheLivingGodChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately purchased with a 10% discount when that book is released; limit 1)"
+        ],
+        "example": "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately purchased with a 10% discount when that book is released; limit 1)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "protecting the keep/",
+          "abandoning the lodge)"
+        ],
+        "example": "protecting the keep/"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.protecting_the_keep/": {
+      "x": 30.842,
+      "y": 37.151,
+      "x2": 32.913,
+      "y2": 63.529
+    },
+    "checkbox.abandoning_the_lodge": {
+      "x": 48.601,
+      "y": 37.151,
+      "x2": 50.104,
+      "y2": 63.529
+    },
+    "item.line.Razmiri_wayfinder_This_item_will_appear_in_Lost_Om": {
+      "y": 54.9,
+      "y2": 77.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Razmiri wayfinder (This item will appear in Lost Omens: Pathfinder Society Guide and can be immediately purchased with a 10% discount when that book is released; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Razmiri_wayfinder_This_item_will_appear_in_Lost_Om"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "protecting the keep/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.protecting_the_keep/"
+            ]
+          }
+        ],
+        "abandoning the lodge)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.abandoning_the_lodge"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

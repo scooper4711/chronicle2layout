@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.q15",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q15 In the Footsteps of Horror",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q15-IntheFootstepsofHorrorChronicle.pdf"
+}

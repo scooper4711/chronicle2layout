@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s4-05",
+  "parent": "pfs2.season4-layout-s4-04",
+  "description": "4-05 The Arclord Who Never Was",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-05-TheArclordWhoNeverWasChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "battle lute (level 1; 15 gp; Pathfinder Adventure Path #164: Hands of the Devil 73)"
+        ],
+        "example": "battle lute (level 1; 15 gp; Pathfinder Adventure Path #164: Hands of the Devil 73)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.battle_lute_level_1;_15_gp;_Pathfinder_Adventure_P": {
+      "y": 12.2,
+      "y2": 55.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "battle lute (level 1; 15 gp; Pathfinder Adventure Path #164: Hands of the Devil 73)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.battle_lute_level_1;_15_gp;_Pathfinder_Adventure_P"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

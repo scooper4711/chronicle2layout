@@ -1,0 +1,115 @@
+{
+  "id": "pfs2.s2-12",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-12 Snakesin the Grass",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-12-SnakesintheGrassChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "greater hat of disguise (item 7, 340 gp)"
+        ],
+        "example": "greater hat of disguise (item 7, 340 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "you uncovered that Artennod was responsible for a sudden attack on the hobgoblin camp",
+          "managed to secure an agreement with Oprak for the Society but perhaps",
+          "Artennod Raike vowed revenge on behalf of the Aspis Consortium before departing the camp"
+        ],
+        "example": "you uncovered that Artennod was responsible for a sudden attack on the hobgoblin camp"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.you_uncovered_that_Artennod_was_responsible_for_a_": {
+      "x": 35.265,
+      "y": 32.207,
+      "x2": 36.767,
+      "y2": 45.708
+    },
+    "checkbox.managed_to_secure_an_agreement_with_Oprak_for_the_": {
+      "x": 9.78,
+      "y": 46.573,
+      "x2": 11.282,
+      "y2": 60.074
+    },
+    "checkbox.Artennod_Raike_vowed_revenge_on_behalf_of_the_Aspi": {
+      "x": 65.351,
+      "y": 46.573,
+      "x2": 66.854,
+      "y2": 60.074
+    },
+    "item.line.greater_hat_of_disguise_item_7_340_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "greater hat of disguise (item 7, 340 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_hat_of_disguise_item_7_340_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "you uncovered that Artennod was responsible for a sudden attack on the hobgoblin camp": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_uncovered_that_Artennod_was_responsible_for_a_"
+            ]
+          }
+        ],
+        "managed to secure an agreement with Oprak for the Society but perhaps": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.managed_to_secure_an_agreement_with_Oprak_for_the_"
+            ]
+          }
+        ],
+        "Artennod Raike vowed revenge on behalf of the Aspis Consortium before departing the camp": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Artennod_Raike_vowed_revenge_on_behalf_of_the_Aspi"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

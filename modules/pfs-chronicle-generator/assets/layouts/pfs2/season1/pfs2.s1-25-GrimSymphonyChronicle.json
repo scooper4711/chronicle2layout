@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s1-25",
+  "parent": "pfs2.season1-layout-s1-25",
+  "description": "1-25 Grim Symphony",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-25-GrimSymphonyChronicle.pdf"
+}

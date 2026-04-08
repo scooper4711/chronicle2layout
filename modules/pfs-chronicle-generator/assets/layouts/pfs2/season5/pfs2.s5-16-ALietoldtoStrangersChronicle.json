@@ -1,0 +1,99 @@
+{
+  "id": "pfs2.s5-16",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-16 ALietoldto Strangers",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-16-ALietoldtoStrangersChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "irondust stew (item 4, 15 gp, Pathfinder Lost Omens Highhelm 73)"
+        ],
+        "example": "irondust stew (item 4, 15 gp, Pathfinder Lost Omens Highhelm 73)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "was grateful for their help and promised to work with the Pathfinders in the future",
+          "was kidnapped by the gang and perished while in captivity"
+        ],
+        "example": "was grateful for their help and promised to work with the Pathfinders in the future"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.was_grateful_for_their_help_and_promised_to_work_w": {
+      "x": 10.737,
+      "y": 52.538,
+      "x2": 12.438,
+      "y2": 60.101
+    },
+    "checkbox.was_kidnapped_by_the_gang_and_perished_while_in_ca": {
+      "x": 76.11,
+      "y": 52.538,
+      "x2": 77.812,
+      "y2": 60.101
+    },
+    "item.line.irondust_stew_item_4_15_gp_Pathfinder_Lost_Omens_H": {
+      "y": 7.6,
+      "y2": 18.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "irondust stew (item 4, 15 gp, Pathfinder Lost Omens Highhelm 73)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.irondust_stew_item_4_15_gp_Pathfinder_Lost_Omens_H"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "was grateful for their help and promised to work with the Pathfinders in the future": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.was_grateful_for_their_help_and_promised_to_work_w"
+            ]
+          }
+        ],
+        "was kidnapped by the gang and perished while in captivity": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.was_kidnapped_by_the_gang_and_perished_while_in_ca"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

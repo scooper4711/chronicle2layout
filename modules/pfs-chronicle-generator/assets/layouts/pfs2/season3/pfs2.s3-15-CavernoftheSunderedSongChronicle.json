@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s3-15",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-15 Cavern of the Sundered Song",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-15-CavernoftheSunderedSongChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "mending lattice (item 13, 525 gp)"
+        ],
+        "example": "mending lattice (item 13, 525 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.mending_lattice_item_13_525_gp": {
+      "y": 1.5,
+      "y2": 6.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "mending lattice (item 13, 525 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.mending_lattice_item_13_525_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

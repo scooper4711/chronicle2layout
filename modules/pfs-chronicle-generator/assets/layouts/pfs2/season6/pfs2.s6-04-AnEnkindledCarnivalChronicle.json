@@ -1,0 +1,215 @@
+{
+  "id": "pfs2.s6-04",
+  "parent": "pfs2.season6-layout-s6-02",
+  "description": "6-04 An Enkindled Carnival",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-04-AnEnkindledCarnivalChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "minor healing potion (level 1, 4 gp)",
+          "lesser healing potion (level 3, 12 gp)",
+          "effervescent ampoule (level 2, 7 gp)",
+          "oil of mending (level 3, 9 gp)",
+          "potion of water breathing (level 3, 11 gp)",
+          "dancing scarf (level 3, 60 gp)",
+          "diplomat\u2019s badge (level 5, 125 gp)",
+          "everlight crystal (level 1, 15 gp)",
+          "pendant of the occult (level 3, 60 gp)",
+          "scroll of cleanse affliction (level 3, 12 gp; Player Core 320, GM Core 262)",
+          "3rd-rank scroll of cleanse affliction (level 5, 30 gp; Player Core 320, GM Core 262)",
+          "+1 dagger (level 2, 35 gp)",
+          "+1 striking dagger (level 4, 100 gp)"
+        ],
+        "example": "minor healing potion (level 1, 4 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.minor_healing_potion_level_1_4_gp": {
+      "y": 4.7,
+      "y2": 9.6
+    },
+    "item.line.lesser_healing_potion_level_3_12_gp": {
+      "y": 9.7,
+      "y2": 14.7
+    },
+    "item.line.effervescent_ampoule_level_2_7_gp": {
+      "y": 14.8,
+      "y2": 19.7
+    },
+    "item.line.oil_of_mending_level_3_9_gp": {
+      "y": 19.8,
+      "y2": 24.7
+    },
+    "item.line.potion_of_water_breathing_level_3_11_gp": {
+      "y": 24.9,
+      "y2": 29.8
+    },
+    "item.line.dancing_scarf_level_3_60_gp": {
+      "y": 29.9,
+      "y2": 34.8
+    },
+    "item.line.diplomat\u2019s_badge_level_5_125_gp": {
+      "y": 34.9,
+      "y2": 39.9
+    },
+    "item.line.everlight_crystal_level_1_15_gp": {
+      "y": 40.0,
+      "y2": 44.9
+    },
+    "item.line.pendant_of_the_occult_level_3_60_gp": {
+      "y": 45.0,
+      "y2": 49.9
+    },
+    "item.line.scroll_of_cleanse_affliction_level_3_12_gp;_Player": {
+      "y": 50.0,
+      "y2": 60.0
+    },
+    "item.line.3rd-rank_scroll_of_cleanse_affliction_level_5_30_g": {
+      "y": 60.1,
+      "y2": 70.1
+    },
+    "item.line.+1_dagger_level_2_35_gp": {
+      "y": 70.2,
+      "y2": 75.1
+    },
+    "item.line.+1_striking_dagger_level_4_100_gp": {
+      "y": 75.2,
+      "y2": 80.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "minor healing potion (level 1, 4 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.minor_healing_potion_level_1_4_gp"
+            ]
+          }
+        ],
+        "lesser healing potion (level 3, 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_healing_potion_level_3_12_gp"
+            ]
+          }
+        ],
+        "effervescent ampoule (level 2, 7 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.effervescent_ampoule_level_2_7_gp"
+            ]
+          }
+        ],
+        "oil of mending (level 3, 9 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.oil_of_mending_level_3_9_gp"
+            ]
+          }
+        ],
+        "potion of water breathing (level 3, 11 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_water_breathing_level_3_11_gp"
+            ]
+          }
+        ],
+        "dancing scarf (level 3, 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dancing_scarf_level_3_60_gp"
+            ]
+          }
+        ],
+        "diplomat\u2019s badge (level 5, 125 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.diplomat\u2019s_badge_level_5_125_gp"
+            ]
+          }
+        ],
+        "everlight crystal (level 1, 15 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.everlight_crystal_level_1_15_gp"
+            ]
+          }
+        ],
+        "pendant of the occult (level 3, 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.pendant_of_the_occult_level_3_60_gp"
+            ]
+          }
+        ],
+        "scroll of cleanse affliction (level 3, 12 gp; Player Core 320, GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_cleanse_affliction_level_3_12_gp;_Player"
+            ]
+          }
+        ],
+        "3rd-rank scroll of cleanse affliction (level 5, 30 gp; Player Core 320, GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.3rd-rank_scroll_of_cleanse_affliction_level_5_30_g"
+            ]
+          }
+        ],
+        "+1 dagger (level 2, 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_dagger_level_2_35_gp"
+            ]
+          }
+        ],
+        "+1 striking dagger (level 4, 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_dagger_level_4_100_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

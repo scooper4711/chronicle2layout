@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s1-10",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-10 Tarnbreakers Trail",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-10-TarnbreakersTrailChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "scroll of snowball (Lost Omens World Guide 112; level 1; 4 gp)"
+        ],
+        "example": "scroll of snowball (Lost Omens World Guide 112; level 1; 4 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.scroll_of_snowball_Lost_Omens_World_Guide_112;_lev": {
+      "y": 55.0,
+      "y2": 63.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "scroll of snowball (Lost Omens World Guide 112; level 1; 4 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_snowball_Lost_Omens_World_Guide_112;_lev"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

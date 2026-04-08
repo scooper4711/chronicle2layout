@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.q18",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q18 Student Exchange",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q18-StudentExchangeChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "impressed",
+          "failed to impress Takulu Ot"
+        ],
+        "example": "impressed"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.impressed": {
+      "x": 7.992,
+      "y": 11.446,
+      "x2": 9.694,
+      "y2": 19.009
+    },
+    "checkbox.failed_to_impress_Takulu_Ot": {
+      "x": 17.919,
+      "y": 11.446,
+      "x2": 19.621,
+      "y2": 19.009
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "impressed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.impressed"
+            ]
+          }
+        ],
+        "failed to impress Takulu Ot": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_impress_Takulu_Ot"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

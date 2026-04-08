@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.s6-11",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-11 The Godsrain and the Drag on",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-11-TheGodsrainandtheDragonChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "talked the imugi down",
+          "fought and defeated the imugi"
+        ],
+        "example": "talked the imugi down"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.talked_the_imugi_down": {
+      "x": 33.138,
+      "y": 50.886,
+      "x2": 34.84,
+      "y2": 60.988
+    },
+    "checkbox.fought_and_defeated_the_imugi": {
+      "x": 52.274,
+      "y": 50.886,
+      "x2": 53.976,
+      "y2": 60.988
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "talked the imugi down": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.talked_the_imugi_down"
+            ]
+          }
+        ],
+        "fought and defeated the imugi": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fought_and_defeated_the_imugi"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

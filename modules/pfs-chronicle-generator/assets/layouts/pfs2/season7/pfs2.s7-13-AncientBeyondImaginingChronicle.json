@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-13",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-13 Ancient Beyond Imagining",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-13-AncientBeyondImaginingChronicle.pdf"
+}

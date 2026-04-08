@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.b5",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B5 Witchs Winter Holiday",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B5-WitchsWinterHolidayChronicle.pdf"
+}

@@ -1,0 +1,217 @@
+{
+  "id": "pfs2.s6-05",
+  "parent": "pfs2.season6-layout-s6-02",
+  "description": "6-05 Silver Bark Golden Blades",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-05-SilverBarkGoldenBladesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "aerial cloak (level 3, 60 gp; Rage of Elements 74)",
+          "floating four-person tent (level 2, 25 gp; Rage of Elements 75)",
+          "polished pebble aeon stone (level 3, 50 gp; Rage of Elements 98)",
+          "purifying ladle (level 2, 32 gp; Rage of Elements 202)",
+          "smoke veil (level 3, 60 gp; Rage of Elements 124)",
+          "thorn triad (level 4, 90 gp; Rage of Elements 203)"
+        ],
+        "example": "aerial cloak (level 3, 60 gp; Rage of Elements 74)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "tofu shop",
+          "submerged boat launch",
+          "Big Katsu",
+          "Bun the Black",
+          "Mama Tofu"
+        ],
+        "example": "tofu shop"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.tofu_shop": {
+      "x": 61.926,
+      "y": 13.597,
+      "x2": 63.817,
+      "y2": 22.0
+    },
+    "checkbox.submerged_boat_launch": {
+      "x": 76.427,
+      "y": 13.597,
+      "x2": 78.318,
+      "y2": 22.0
+    },
+    "checkbox.Big_Katsu": {
+      "x": 26.652,
+      "y": 21.815,
+      "x2": 28.543,
+      "y2": 30.218
+    },
+    "checkbox.Bun_the_Black": {
+      "x": 37.93,
+      "y": 21.815,
+      "x2": 39.821,
+      "y2": 30.218
+    },
+    "checkbox.Mama_Tofu": {
+      "x": 54.988,
+      "y": 21.815,
+      "x2": 56.879,
+      "y2": 30.218
+    },
+    "item.line.aerial_cloak_level_3_60_gp;_Rage_of_Elements_74": {
+      "y": 4.6,
+      "y2": 15.7
+    },
+    "item.line.floating_four-person_tent_level_2_25_gp;_Rage_of_E": {
+      "y": 15.8,
+      "y2": 26.9
+    },
+    "item.line.polished_pebble_aeon_stone_level_3_50_gp;_Rage_of_": {
+      "y": 27.0,
+      "y2": 38.1
+    },
+    "item.line.purifying_ladle_level_2_32_gp;_Rage_of_Elements_20": {
+      "y": 38.2,
+      "y2": 49.3
+    },
+    "item.line.smoke_veil_level_3_60_gp;_Rage_of_Elements_124": {
+      "y": 49.4,
+      "y2": 60.5
+    },
+    "item.line.thorn_triad_level_4_90_gp;_Rage_of_Elements_203": {
+      "y": 60.6,
+      "y2": 71.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "aerial cloak (level 3, 60 gp; Rage of Elements 74)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.aerial_cloak_level_3_60_gp;_Rage_of_Elements_74"
+            ]
+          }
+        ],
+        "floating four-person tent (level 2, 25 gp; Rage of Elements 75)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.floating_four-person_tent_level_2_25_gp;_Rage_of_E"
+            ]
+          }
+        ],
+        "polished pebble aeon stone (level 3, 50 gp; Rage of Elements 98)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.polished_pebble_aeon_stone_level_3_50_gp;_Rage_of_"
+            ]
+          }
+        ],
+        "purifying ladle (level 2, 32 gp; Rage of Elements 202)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.purifying_ladle_level_2_32_gp;_Rage_of_Elements_20"
+            ]
+          }
+        ],
+        "smoke veil (level 3, 60 gp; Rage of Elements 124)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.smoke_veil_level_3_60_gp;_Rage_of_Elements_124"
+            ]
+          }
+        ],
+        "thorn triad (level 4, 90 gp; Rage of Elements 203)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.thorn_triad_level_4_90_gp;_Rage_of_Elements_203"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "tofu shop": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.tofu_shop"
+            ]
+          }
+        ],
+        "submerged boat launch": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.submerged_boat_launch"
+            ]
+          }
+        ],
+        "Big Katsu": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Big_Katsu"
+            ]
+          }
+        ],
+        "Bun the Black": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Bun_the_Black"
+            ]
+          }
+        ],
+        "Mama Tofu": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Mama_Tofu"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

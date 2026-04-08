@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s7-14",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-14 Brastlewark at War Part 2 The Gnome Liberation",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-14-BrastlewarkatWarPart2TheGnomeLiberationChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser healing potion (level 3, 12 gp, Pathfinder GM Core 259)",
+          "wand of blazing bolt (level 5, 160 gp, Pathfinder GM Core 282)",
+          "wand of heal (level 3, 60 gp, Pathfinder GM Core 283)"
+        ],
+        "example": "lesser healing potion (level 3, 12 gp, Pathfinder GM Core 259)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_healing_potion_level_3_12_gp_Pathfinder_GM_": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.wand_of_blazing_bolt_level_5_160_gp_Pathfinder_GM_": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.wand_of_heal_level_3_60_gp_Pathfinder_GM_Core_283": {
+      "y": 30.2,
+      "y2": 34.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser healing potion (level 3, 12 gp, Pathfinder GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_healing_potion_level_3_12_gp_Pathfinder_GM_"
+            ]
+          }
+        ],
+        "wand of blazing bolt (level 5, 160 gp, Pathfinder GM Core 282)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_blazing_bolt_level_5_160_gp_Pathfinder_GM_"
+            ]
+          }
+        ],
+        "wand of heal (level 3, 60 gp, Pathfinder GM Core 283)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_heal_level_3_60_gp_Pathfinder_GM_Core_283"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

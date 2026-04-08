@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.q23",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q23 Lacking Respect",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q23-LackingRespectChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "befriending",
+          "defeating a young Jadwiga woman before facing off against their cruel canine leader"
+        ],
+        "example": "befriending"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.befriending": {
+      "x": 45.924,
+      "y": 19.66,
+      "x2": 47.626,
+      "y2": 27.223
+    },
+    "checkbox.defeating_a_young_Jadwiga_woman_before_facing_off_": {
+      "x": 57.256,
+      "y": 19.66,
+      "x2": 58.957,
+      "y2": 27.223
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "befriending": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.befriending"
+            ]
+          }
+        ],
+        "defeating a young Jadwiga woman before facing off against their cruel canine leader": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.defeating_a_young_Jadwiga_woman_before_facing_off_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

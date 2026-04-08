@@ -1,0 +1,117 @@
+{
+  "id": "pfs2.s1-03",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-03 Escaping the Grave",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-03-EscapingtheGraveChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "channel protection amulet (level 3; 56 gp)",
+          "wayfinder of rescue (level 4; 80 gp; as a standard wayfinder, but once per day you can activate it to cast heal a creature other than yourself, using either the one- action or two-action version of heal as a 1st-level spell)",
+          "healer's gloves (level 4; 80 gp)",
+          "lesser healing potion (level 3; 12 gp)",
+          "minor sturdy shield (level 4; 100 gp)",
+          "wayfinder of rescue (level 4; 80 gp; see Subtier 1\u20132)"
+        ],
+        "example": "channel protection amulet (level 3; 56 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.channel_protection_amulet_level_3;_56_gp": {
+      "y": 55.4,
+      "y2": 58.9
+    },
+    "item.line.wayfinder_of_rescue_level_4;_80_gp;_as_a_standard_": {
+      "y": 8.2,
+      "y2": 35.3
+    },
+    "item.line.healers_gloves_level_4;_80_gp": {
+      "y": 60.1,
+      "y2": 63.6
+    },
+    "item.line.lesser_healing_potion_level_3;_12_gp": {
+      "y": 64.8,
+      "y2": 68.3
+    },
+    "item.line.minor_sturdy_shield_level_4;_100_gp": {
+      "y": 69.5,
+      "y2": 73.0
+    },
+    "item.line.wayfinder_of_rescue_level_4;_80_gp;_see_Subtier_1\u2013": {
+      "y": 74.2,
+      "y2": 82.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "channel protection amulet (level 3; 56 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.channel_protection_amulet_level_3;_56_gp"
+            ]
+          }
+        ],
+        "wayfinder of rescue (level 4; 80 gp; as a standard wayfinder, but once per day you can activate it to cast heal a creature other than yourself, using either the one- action or two-action version of heal as a 1st-level spell)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wayfinder_of_rescue_level_4;_80_gp;_as_a_standard_"
+            ]
+          }
+        ],
+        "healer's gloves (level 4; 80 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.healers_gloves_level_4;_80_gp"
+            ]
+          }
+        ],
+        "lesser healing potion (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_healing_potion_level_3;_12_gp"
+            ]
+          }
+        ],
+        "minor sturdy shield (level 4; 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.minor_sturdy_shield_level_4;_100_gp"
+            ]
+          }
+        ],
+        "wayfinder of rescue (level 4; 80 gp; see Subtier 1\u20132)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wayfinder_of_rescue_level_4;_80_gp;_see_Subtier_1\u2013"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

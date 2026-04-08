@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.b13",
+  "parent": "pfs2.bounty-layout-b13",
+  "description": "B13 The Blackwood Abundance",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Society characters, visit https://paizo.com/pathfindersociety/",
+          "character level +2."
+        ],
+        "example": "Society characters, visit https://paizo.com/pathfindersociety/"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Society_characters_visit_https://paizocom/pathfind": {
+      "y": 11.6,
+      "y2": 16.9
+    },
+    "item.line.character_level_+2": {
+      "y": 33.2,
+      "y2": 37.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Society characters, visit https://paizo.com/pathfindersociety/": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Society_characters_visit_https://paizocom/pathfind"
+            ]
+          }
+        ],
+        "character level +2.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.character_level_+2"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

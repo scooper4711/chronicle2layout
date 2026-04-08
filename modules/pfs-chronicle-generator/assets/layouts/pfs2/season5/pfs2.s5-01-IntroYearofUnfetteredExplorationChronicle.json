@@ -1,0 +1,173 @@
+{
+  "id": "pfs2.s5-01",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-01 Intro Year of Unfettered Exploration",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-01-IntroYearofUnfetteredExplorationChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "potion of retaliation, lesser (level 3, 12 gp; Pathfinder Advanced Player\u2019s Guide 259)",
+          "doubling rings (level 3, 50 gp)",
+          "dragon turtle scale (level 4, 13 gp)",
+          "hunter\u2019s bane (level 2, 6 gp)"
+        ],
+        "example": "potion of retaliation, lesser (level 3, 12 gp; Pathfinder Advanced Player\u2019s Guide 259)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "were able to make friends with the elemental pair",
+          "unfortunately wound up in a fight",
+          "on time",
+          "fashionably late"
+        ],
+        "example": "were able to make friends with the elemental pair"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.were_able_to_make_friends_with_the_elemental_pair": {
+      "x": 34.464,
+      "y": 50.886,
+      "x2": 36.166,
+      "y2": 60.988
+    },
+    "checkbox.unfortunately_wound_up_in_a_fight": {
+      "x": 75.197,
+      "y": 50.886,
+      "x2": 76.898,
+      "y2": 60.988
+    },
+    "checkbox.on_time": {
+      "x": 30.226,
+      "y": 67.318,
+      "x2": 31.928,
+      "y2": 77.421
+    },
+    "checkbox.fashionably_late": {
+      "x": 47.186,
+      "y": 67.318,
+      "x2": 48.887,
+      "y2": 77.421
+    },
+    "item.line.potion_of_retaliation_lesser_level_3_12_gp;_Pathfi": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.doubling_rings_level_3_50_gp": {
+      "y": 18.8,
+      "y2": 23.7
+    },
+    "item.line.dragon_turtle_scale_level_4_13_gp": {
+      "y": 24.4,
+      "y2": 29.3
+    },
+    "item.line.hunter\u2019s_bane_level_2_6_gp": {
+      "y": 30.0,
+      "y2": 34.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "potion of retaliation, lesser (level 3, 12 gp; Pathfinder Advanced Player\u2019s Guide 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_retaliation_lesser_level_3_12_gp;_Pathfi"
+            ]
+          }
+        ],
+        "doubling rings (level 3, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.doubling_rings_level_3_50_gp"
+            ]
+          }
+        ],
+        "dragon turtle scale (level 4, 13 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dragon_turtle_scale_level_4_13_gp"
+            ]
+          }
+        ],
+        "hunter\u2019s bane (level 2, 6 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.hunter\u2019s_bane_level_2_6_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "were able to make friends with the elemental pair": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_able_to_make_friends_with_the_elemental_pair"
+            ]
+          }
+        ],
+        "unfortunately wound up in a fight": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.unfortunately_wound_up_in_a_fight"
+            ]
+          }
+        ],
+        "on time": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.on_time"
+            ]
+          }
+        ],
+        "fashionably late": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fashionably_late"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

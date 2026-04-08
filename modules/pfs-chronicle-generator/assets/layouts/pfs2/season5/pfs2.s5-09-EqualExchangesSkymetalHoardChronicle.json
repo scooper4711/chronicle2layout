@@ -1,0 +1,219 @@
+{
+  "id": "pfs2.s5-09",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-09 Equal Exchanges-Skymetal Hoard",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-09-EqualExchanges-SkymetalHoardChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "crafting materials for a druid\u2019s crown (level 6, 110 gp; Pathfinder Treasure Vault 151)",
+          "lesser mirror goggles (level 5, 135 gp; Pathfinder Treasure Vault 147)",
+          "moderate healing potion (level 6, 50 gp)",
+          "noqual (40+ gp; Pathfinder Lost Omens Grand Bazaar 99)",
+          "wounding rune (level 7, 340 gp)"
+        ],
+        "example": "crafting materials for a druid\u2019s crown (level 6, 110 gp; Pathfinder Treasure Vault 151)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "appeased/befriended",
+          "antagonized the anito observing you",
+          "fully deactivated",
+          "delayed the activation of the magical ward protecting the skymetal hoard left behind by the dragon and collected the treasure",
+          "you remained mindful and avoided excessive collateral damage to your natural surroundings",
+          "you took whatever means necessary even if it meant destroying your surroundings in the process"
+        ],
+        "example": "appeased/befriended"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.appeased/befriended": {
+      "x": 34.256,
+      "y": 19.862,
+      "x2": 35.76,
+      "y2": 27.585
+    },
+    "checkbox.antagonized_the_anito_observing_you": {
+      "x": 53.498,
+      "y": 19.862,
+      "x2": 55.002,
+      "y2": 27.585
+    },
+    "checkbox.fully_deactivated": {
+      "x": 30.254,
+      "y": 28.08,
+      "x2": 31.758,
+      "y2": 35.804
+    },
+    "checkbox.delayed_the_activation_of_the_magical_ward_protect": {
+      "x": 47.051,
+      "y": 28.08,
+      "x2": 48.555,
+      "y2": 35.804
+    },
+    "checkbox.you_remained_mindful_and_avoided_excessive_collate": {
+      "x": 50.392,
+      "y": 52.736,
+      "x2": 51.897,
+      "y2": 60.459
+    },
+    "checkbox.you_took_whatever_means_necessary_even_if_it_meant": {
+      "x": 25.782,
+      "y": 60.954,
+      "x2": 27.287,
+      "y2": 68.677
+    },
+    "item.line.crafting_materials_for_a_druid\u2019s_crown_level_6_110": {
+      "y": 7.6,
+      "y2": 18.1
+    },
+    "item.line.lesser_mirror_goggles_level_5_135_gp;_Pathfinder_T": {
+      "y": 18.8,
+      "y2": 29.3
+    },
+    "item.line.moderate_healing_potion_level_6_50_gp": {
+      "y": 30.0,
+      "y2": 34.9
+    },
+    "item.line.noqual_40+_gp;_Pathfinder_Lost_Omens_Grand_Bazaar_": {
+      "y": 35.6,
+      "y2": 46.1
+    },
+    "item.line.wounding_rune_level_7_340_gp": {
+      "y": 46.8,
+      "y2": 51.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "crafting materials for a druid\u2019s crown (level 6, 110 gp; Pathfinder Treasure Vault 151)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.crafting_materials_for_a_druid\u2019s_crown_level_6_110"
+            ]
+          }
+        ],
+        "lesser mirror goggles (level 5, 135 gp; Pathfinder Treasure Vault 147)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_mirror_goggles_level_5_135_gp;_Pathfinder_T"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_50_gp"
+            ]
+          }
+        ],
+        "noqual (40+ gp; Pathfinder Lost Omens Grand Bazaar 99)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.noqual_40+_gp;_Pathfinder_Lost_Omens_Grand_Bazaar_"
+            ]
+          }
+        ],
+        "wounding rune (level 7, 340 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wounding_rune_level_7_340_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "appeased/befriended": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.appeased/befriended"
+            ]
+          }
+        ],
+        "antagonized the anito observing you": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.antagonized_the_anito_observing_you"
+            ]
+          }
+        ],
+        "fully deactivated": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fully_deactivated"
+            ]
+          }
+        ],
+        "delayed the activation of the magical ward protecting the skymetal hoard left behind by the dragon and collected the treasure": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.delayed_the_activation_of_the_magical_ward_protect"
+            ]
+          }
+        ],
+        "you remained mindful and avoided excessive collateral damage to your natural surroundings": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_remained_mindful_and_avoided_excessive_collate"
+            ]
+          }
+        ],
+        "you took whatever means necessary even if it meant destroying your surroundings in the process": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_took_whatever_means_necessary_even_if_it_meant"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

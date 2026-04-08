@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.s6-08",
+  "parent": "pfs2.season6-layout-s6-02",
+  "description": "6-08 Up on Wheels and Rime",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-08-UponWheelsandRimeChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser frost vial (level 1, 3 gp; Pathfinder Core Rulebook 545)",
+          "moderate frost vial (level 3, 10 gp; Pathfinder Core Rulebook 545)"
+        ],
+        "example": "lesser frost vial (level 1, 3 gp; Pathfinder Core Rulebook 545)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_frost_vial_level_1_3_gp;_Pathfinder_Core_Ru": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.moderate_frost_vial_level_3_10_gp;_Pathfinder_Core": {
+      "y": 19.0,
+      "y2": 29.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser frost vial (level 1, 3 gp; Pathfinder Core Rulebook 545)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_frost_vial_level_1_3_gp;_Pathfinder_Core_Ru"
+            ]
+          }
+        ],
+        "moderate frost vial (level 3, 10 gp; Pathfinder Core Rulebook 545)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_frost_vial_level_3_10_gp;_Pathfinder_Core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

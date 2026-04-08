@@ -1,0 +1,113 @@
+{
+  "id": "pfs2.s1-16",
+  "parent": "pfs2.season1-layout-s1-16",
+  "description": "1-16 The Perennial Crown Part 1 Opal of Bhopan",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-16-ThePerennialCrownPart1OpalofBhopanChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bloodletting kukri (240 gp, level 6)",
+          "sneaky key (22 gp, level 5)"
+        ],
+        "example": "bloodletting kukri (240 gp, level 6)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "worked with him to break into the vaults /",
+          "refused his suggestion"
+        ],
+        "example": "worked with him to break into the vaults /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.worked_with_him_to_break_into_the_vaults_/": {
+      "x": 47.123,
+      "y": 42.109,
+      "x2": 49.179,
+      "y2": 54.016
+    },
+    "checkbox.refused_his_suggestion": {
+      "x": 80.758,
+      "y": 42.109,
+      "x2": 82.261,
+      "y2": 54.016
+    },
+    "item.line.bloodletting_kukri_240_gp_level_6": {
+      "y": 55.0,
+      "y2": 58.9
+    },
+    "item.line.sneaky_key_22_gp_level_5": {
+      "y": 7.9,
+      "y2": 11.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bloodletting kukri (240 gp, level 6)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bloodletting_kukri_240_gp_level_6"
+            ]
+          }
+        ],
+        "sneaky key (22 gp, level 5)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.sneaky_key_22_gp_level_5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "worked with him to break into the vaults /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.worked_with_him_to_break_into_the_vaults_/"
+            ]
+          }
+        ],
+        "refused his suggestion": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.refused_his_suggestion"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

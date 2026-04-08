@@ -1,0 +1,129 @@
+{
+  "id": "pfs2.s2-13",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-13 AGilded Test",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-13-AGildedTestChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "invisibility potion (item 4, 20 gp)",
+          "kukri (item 0, 6 sp)"
+        ],
+        "example": "invisibility potion (item 4, 20 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "you captured Archis Peers",
+          "you slew him",
+          "he escaped"
+        ],
+        "example": "you captured Archis Peers"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.you_captured_Archis_Peers": {
+      "x": 23.176,
+      "y": 60.939,
+      "x2": 24.678,
+      "y2": 74.44
+    },
+    "checkbox.you_slew_him": {
+      "x": 45.008,
+      "y": 60.939,
+      "x2": 46.511,
+      "y2": 74.44
+    },
+    "checkbox.he_escaped": {
+      "x": 59.633,
+      "y": 60.939,
+      "x2": 61.136,
+      "y2": 74.44
+    },
+    "item.line.invisibility_potion_item_4_20_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.kukri_item_0_6_sp": {
+      "y": 12.3,
+      "y2": 16.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "invisibility potion (item 4, 20 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.invisibility_potion_item_4_20_gp"
+            ]
+          }
+        ],
+        "kukri (item 0, 6 sp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.kukri_item_0_6_sp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "you captured Archis Peers": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_captured_Archis_Peers"
+            ]
+          }
+        ],
+        "you slew him": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_slew_him"
+            ]
+          }
+        ],
+        "he escaped": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.he_escaped"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

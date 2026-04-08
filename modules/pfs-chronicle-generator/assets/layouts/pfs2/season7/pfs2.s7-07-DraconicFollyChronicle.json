@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s7-07",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-07 Draconic Folly",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-07-DraconicFollyChronicle.pdf"
+}

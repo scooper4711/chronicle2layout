@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s2-01",
+  "parent": "pfs2.season2-layout-s2-00",
+  "description": "2-01 Citadel of Corruption",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-01-CitadelofCorruptionChronicle.pdf"
+}

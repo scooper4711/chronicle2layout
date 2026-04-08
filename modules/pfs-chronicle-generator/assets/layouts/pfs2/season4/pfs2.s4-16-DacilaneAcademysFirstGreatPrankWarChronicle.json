@@ -1,0 +1,212 @@
+{
+  "id": "pfs2.s4-16",
+  "parent": "pfs2.season4-layout-s4-00",
+  "description": "4-16 Dacilane Academys First Gre at Prank War",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-16-DacilaneAcademysFirstGreatPrankWarChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "decanter of endless water (level 7, 320 gp)"
+        ],
+        "example": "decanter of endless water (level 7, 320 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "peacefully",
+          "with violence",
+          "convinced him to calm down the fey",
+          "were unable to gain his favor",
+          "peacefully",
+          "had to resort to violence",
+          "with his minions",
+          "with Pappy",
+          "has decided to return",
+          "bears a grudge against the Pathfinder Society"
+        ],
+        "example": "peacefully"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.peacefully": {
+      "x": 9.449,
+      "y": 49.904,
+      "x2": 11.149,
+      "y2": 60.099
+    },
+    "checkbox.with_violence": {
+      "x": 22.691,
+      "y": 33.322,
+      "x2": 24.391,
+      "y2": 43.516
+    },
+    "checkbox.convinced_him_to_calm_down_the_fey": {
+      "x": 72.864,
+      "y": 33.322,
+      "x2": 74.564,
+      "y2": 43.516
+    },
+    "checkbox.were_unable_to_gain_his_favor": {
+      "x": 6.226,
+      "y": 41.613,
+      "x2": 7.926,
+      "y2": 51.808
+    },
+    "checkbox.had_to_resort_to_violence": {
+      "x": 24.602,
+      "y": 49.904,
+      "x2": 26.302,
+      "y2": 60.099
+    },
+    "checkbox.with_his_minions": {
+      "x": 57.766,
+      "y": 58.195,
+      "x2": 59.466,
+      "y2": 68.39
+    },
+    "checkbox.with_Pappy": {
+      "x": 75.042,
+      "y": 58.195,
+      "x2": 76.742,
+      "y2": 68.39
+    },
+    "checkbox.has_decided_to_return": {
+      "x": 43.688,
+      "y": 66.486,
+      "x2": 45.388,
+      "y2": 76.681
+    },
+    "checkbox.bears_a_grudge_against_the_Pathfinder_Society": {
+      "x": 63.638,
+      "y": 66.486,
+      "x2": 65.338,
+      "y2": 76.681
+    },
+    "item.line.decanter_of_endless_water_level_7_320_gp": {
+      "y": 7.2,
+      "y2": 12.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "decanter of endless water (level 7, 320 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.decanter_of_endless_water_level_7_320_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "peacefully": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.peacefully"
+            ]
+          }
+        ],
+        "with violence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.with_violence"
+            ]
+          }
+        ],
+        "convinced him to calm down the fey": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_him_to_calm_down_the_fey"
+            ]
+          }
+        ],
+        "were unable to gain his favor": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_unable_to_gain_his_favor"
+            ]
+          }
+        ],
+        "had to resort to violence": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.had_to_resort_to_violence"
+            ]
+          }
+        ],
+        "with his minions": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.with_his_minions"
+            ]
+          }
+        ],
+        "with Pappy": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.with_Pappy"
+            ]
+          }
+        ],
+        "has decided to return": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.has_decided_to_return"
+            ]
+          }
+        ],
+        "bears a grudge against the Pathfinder Society": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.bears_a_grudge_against_the_Pathfinder_Society"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

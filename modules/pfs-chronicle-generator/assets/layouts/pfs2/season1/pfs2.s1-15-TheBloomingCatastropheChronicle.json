@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s1-15",
+  "parent": "pfs2.season1-layout-s1-15",
+  "description": "1-15 The Blooming Catastrophe",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-15-TheBloomingCatastropheChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "hunter\u2019s bane (level 2, 5 gp (discounted price) limit 3)",
+          "beacon shot (level 3, 8 gp (discounted price) limit 5)",
+          "vine arrow (level 3, 8 gp (discounted price) limit 5)"
+        ],
+        "example": "hunter\u2019s bane (level 2, 5 gp (discounted price) limit 3)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.hunter\u2019s_bane_level_2_5_gp_discounted_price_limit_": {
+      "y": 3.5,
+      "y2": 11.7
+    },
+    "item.line.beacon_shot_level_3_8_gp_discounted_price_limit_5": {
+      "y": 60.1,
+      "y2": 73.0
+    },
+    "item.line.vine_arrow_level_3_8_gp_discounted_price_limit_5": {
+      "y": 17.6,
+      "y2": 63.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "hunter\u2019s bane (level 2, 5 gp (discounted price) limit 3)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.hunter\u2019s_bane_level_2_5_gp_discounted_price_limit_"
+            ]
+          }
+        ],
+        "beacon shot (level 3, 8 gp (discounted price) limit 5)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.beacon_shot_level_3_8_gp_discounted_price_limit_5"
+            ]
+          }
+        ],
+        "vine arrow (level 3, 8 gp (discounted price) limit 5)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.vine_arrow_level_3_8_gp_discounted_price_limit_5"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

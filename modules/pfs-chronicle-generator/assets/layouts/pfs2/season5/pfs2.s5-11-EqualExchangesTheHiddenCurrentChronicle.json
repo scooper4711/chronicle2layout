@@ -1,0 +1,237 @@
+{
+  "id": "pfs2.s5-11",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-11 Equal Exchanges-The Hidden Current",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-11-EqualExchanges-TheHiddenCurrentChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 striking battleaxe (level 4, 100 gp)",
+          "lesser retaliation rune (level 6, 250 gp; Path- finder Treasure Vault 144)",
+          "wine of the bloodR (level 5, 30 gp; Pathfinder Dark Archive 114)",
+          "ghost oil (level 4, 18 gp; Pathfinder Lost Omens Knights of Lastwall 90)"
+        ],
+        "example": "+1 striking battleaxe (level 4, 100 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "rescued",
+          "released",
+          "put down",
+          "left confined several test subject creatures",
+          "keeping all brains intact",
+          "losing someone\u2019s brain in the process)",
+          "laid to rest",
+          "destroyed the ghost of subject 287,"
+        ],
+        "example": "rescued"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.rescued": {
+      "x": 70.21,
+      "y": 13.332,
+      "x2": 71.882,
+      "y2": 21.914
+    },
+    "checkbox.released": {
+      "x": 78.602,
+      "y": 13.332,
+      "x2": 80.273,
+      "y2": 21.914
+    },
+    "checkbox.put_down": {
+      "x": 87.413,
+      "y": 13.332,
+      "x2": 89.084,
+      "y2": 21.914
+    },
+    "checkbox.left_confined_several_test_subject_creatures": {
+      "x": 2.14,
+      "y": 21.551,
+      "x2": 3.812,
+      "y2": 30.132
+    },
+    "checkbox.keeping_all_brains_intact": {
+      "x": 81.576,
+      "y": 21.551,
+      "x2": 83.247,
+      "y2": 30.132
+    },
+    "checkbox.losing_someone\u2019s_brain_in_the_process": {
+      "x": 6.813,
+      "y": 29.769,
+      "x2": 8.485,
+      "y2": 38.35
+    },
+    "checkbox.laid_to_rest": {
+      "x": 42.149,
+      "y": 29.769,
+      "x2": 43.821,
+      "y2": 38.35
+    },
+    "checkbox.destroyed_the_ghost_of_subject_287": {
+      "x": 52.748,
+      "y": 30.432,
+      "x2": 54.253,
+      "y2": 38.155
+    },
+    "item.line.+1_striking_battleaxe_level_4_100_gp": {
+      "y": 3.9,
+      "y2": 10.1
+    },
+    "item.line.lesser_retaliation_rune_level_6_250_gp;_Path-_find": {
+      "y": 9.5,
+      "y2": 21.3
+    },
+    "item.line.wine_of_the_bloodR_level_5_30_gp;_Pathfinder_Dark_": {
+      "y": 20.7,
+      "y2": 32.5
+    },
+    "item.line.ghost_oil_level_4_18_gp;_Pathfinder_Lost_Omens_Kni": {
+      "y": 31.9,
+      "y2": 43.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 striking battleaxe (level 4, 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_battleaxe_level_4_100_gp"
+            ]
+          }
+        ],
+        "lesser retaliation rune (level 6, 250 gp; Path- finder Treasure Vault 144)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_retaliation_rune_level_6_250_gp;_Path-_find"
+            ]
+          }
+        ],
+        "wine of the bloodR (level 5, 30 gp; Pathfinder Dark Archive 114)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wine_of_the_bloodR_level_5_30_gp;_Pathfinder_Dark_"
+            ]
+          }
+        ],
+        "ghost oil (level 4, 18 gp; Pathfinder Lost Omens Knights of Lastwall 90)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ghost_oil_level_4_18_gp;_Pathfinder_Lost_Omens_Kni"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "rescued": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.rescued"
+            ]
+          }
+        ],
+        "released": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.released"
+            ]
+          }
+        ],
+        "put down": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.put_down"
+            ]
+          }
+        ],
+        "left confined several test subject creatures": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.left_confined_several_test_subject_creatures"
+            ]
+          }
+        ],
+        "keeping all brains intact": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.keeping_all_brains_intact"
+            ]
+          }
+        ],
+        "losing someone\u2019s brain in the process)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.losing_someone\u2019s_brain_in_the_process"
+            ]
+          }
+        ],
+        "laid to rest": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.laid_to_rest"
+            ]
+          }
+        ],
+        "destroyed the ghost of subject 287,": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.destroyed_the_ghost_of_subject_287"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

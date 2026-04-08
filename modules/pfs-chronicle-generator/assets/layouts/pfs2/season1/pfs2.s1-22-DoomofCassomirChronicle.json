@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s1-22",
+  "parent": "pfs2.season1-layout-s1-22",
+  "description": "1-22 Doom of Cassomir",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-22-DoomofCassomirChronicle.pdf"
+}

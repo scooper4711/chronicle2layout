@@ -1,0 +1,175 @@
+{
+  "id": "pfs2.s2-07",
+  "parent": "pfs2.season2-layout-s2-07",
+  "description": "2-07 The Blakros Deception",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-07-TheBlakrosDeceptionChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bag of holding type II (item 7, 300 gp)",
+          "moderate healing potion (item 6, 50 gp)",
+          "shifting runestone (item 6, 225 gp)"
+        ],
+        "example": "bag of holding type II (item 7, 300 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "Nigel was competent",
+          "Nigel was incompetent) and",
+          "discovered the terrible secret at the heart of the Blakros family\u2019s success)",
+          "ally with Nigel",
+          "expose Nigel\u2019s deceit to the Blakros family)"
+        ],
+        "example": "Nigel was competent"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.Nigel_was_competent": {
+      "x": 89.532,
+      "y": 53.374,
+      "x2": 95.573,
+      "y2": 65.199
+    },
+    "checkbox.Nigel_was_incompetent_and": {
+      "x": 11.585,
+      "y": 65.957,
+      "x2": 13.088,
+      "y2": 77.782
+    },
+    "checkbox.discovered_the_terrible_secret_at_the_heart_of_the": {
+      "x": 34.213,
+      "y": 65.957,
+      "x2": 36.279,
+      "y2": 77.782
+    },
+    "checkbox.ally_with_Nigel": {
+      "x": 3.536,
+      "y": 78.54,
+      "x2": 5.039,
+      "y2": 90.364
+    },
+    "checkbox.expose_Nigel\u2019s_deceit_to_the_Blakros_family": {
+      "x": 18.925,
+      "y": 78.54,
+      "x2": 20.428,
+      "y2": 90.364
+    },
+    "item.line.bag_of_holding_type_II_item_7_300_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.moderate_healing_potion_item_6_50_gp": {
+      "y": 12.3,
+      "y2": 16.7
+    },
+    "item.line.shifting_runestone_item_6_225_gp": {
+      "y": 17.6,
+      "y2": 22.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bag of holding type II (item 7, 300 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bag_of_holding_type_II_item_7_300_gp"
+            ]
+          }
+        ],
+        "moderate healing potion (item 6, 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_item_6_50_gp"
+            ]
+          }
+        ],
+        "shifting runestone (item 6, 225 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.shifting_runestone_item_6_225_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "Nigel was competent": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Nigel_was_competent"
+            ]
+          }
+        ],
+        "Nigel was incompetent) and": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Nigel_was_incompetent_and"
+            ]
+          }
+        ],
+        "discovered the terrible secret at the heart of the Blakros family\u2019s success)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.discovered_the_terrible_secret_at_the_heart_of_the"
+            ]
+          }
+        ],
+        "ally with Nigel": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.ally_with_Nigel"
+            ]
+          }
+        ],
+        "expose Nigel\u2019s deceit to the Blakros family)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.expose_Nigel\u2019s_deceit_to_the_Blakros_family"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

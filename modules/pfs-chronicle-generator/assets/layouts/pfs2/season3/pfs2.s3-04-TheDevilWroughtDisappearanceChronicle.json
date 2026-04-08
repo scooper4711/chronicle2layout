@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s3-04",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-04 The Devil-Wrought Disappearance",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-04-TheDevil-WroughtDisappearanceChronicle.pdf"
+}

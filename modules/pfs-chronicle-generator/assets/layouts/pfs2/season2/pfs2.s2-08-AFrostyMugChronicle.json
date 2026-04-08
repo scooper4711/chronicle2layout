@@ -1,0 +1,171 @@
+{
+  "id": "pfs2.s2-08",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-08 AFrosty Mug",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-08-AFrostyMugChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "fear gem (item 4, 20 gp)",
+          "grim trophy (item 7, 55 gp)",
+          "lesser potion of disguise (item 5, 30 gp; naiad disguise; limit 1)",
+          "moderate potion of disguise (item 8, 100 gp; frost giant disguise; limit 1)",
+          "wand of mirror image (item 5, 150 gp)"
+        ],
+        "example": "fear gem (item 4, 20 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "sided with her to bring the town back under her dominion /",
+          "sided with the townspeople to vanquish her /",
+          "brokered a peace between the two sides)"
+        ],
+        "example": "sided with her to bring the town back under her dominion /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.sided_with_her_to_bring_the_town_back_under_her_do": {
+      "x": 14.997,
+      "y": 46.573,
+      "x2": 17.065,
+      "y2": 60.074
+    },
+    "checkbox.sided_with_the_townspeople_to_vanquish_her_/": {
+      "x": 61.704,
+      "y": 46.573,
+      "x2": 63.206,
+      "y2": 60.074
+    },
+    "checkbox.brokered_a_peace_between_the_two_sides": {
+      "x": 1.552,
+      "y": 60.939,
+      "x2": 3.055,
+      "y2": 74.44
+    },
+    "item.line.fear_gem_item_4_20_gp": {
+      "y": 7.0,
+      "y2": 11.4
+    },
+    "item.line.grim_trophy_item_7_55_gp": {
+      "y": 12.3,
+      "y2": 16.7
+    },
+    "item.line.lesser_potion_of_disguise_item_5_30_gp;_naiad_disg": {
+      "y": 17.6,
+      "y2": 22.0
+    },
+    "item.line.moderate_potion_of_disguise_item_8_100_gp;_frost_g": {
+      "y": 22.9,
+      "y2": 27.4
+    },
+    "item.line.wand_of_mirror_image_item_5_150_gp": {
+      "y": 28.3,
+      "y2": 32.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "fear gem (item 4, 20 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.fear_gem_item_4_20_gp"
+            ]
+          }
+        ],
+        "grim trophy (item 7, 55 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.grim_trophy_item_7_55_gp"
+            ]
+          }
+        ],
+        "lesser potion of disguise (item 5, 30 gp; naiad disguise; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_potion_of_disguise_item_5_30_gp;_naiad_disg"
+            ]
+          }
+        ],
+        "moderate potion of disguise (item 8, 100 gp; frost giant disguise; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_potion_of_disguise_item_8_100_gp;_frost_g"
+            ]
+          }
+        ],
+        "wand of mirror image (item 5, 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_mirror_image_item_5_150_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "sided with her to bring the town back under her dominion /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.sided_with_her_to_bring_the_town_back_under_her_do"
+            ]
+          }
+        ],
+        "sided with the townspeople to vanquish her /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.sided_with_the_townspeople_to_vanquish_her_/"
+            ]
+          }
+        ],
+        "brokered a peace between the two sides)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.brokered_a_peace_between_the_two_sides"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

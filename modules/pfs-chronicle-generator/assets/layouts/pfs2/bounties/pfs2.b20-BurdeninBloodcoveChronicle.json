@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.b20",
+  "parent": "pfs2.bounty-layout-b13",
+  "description": "B20 Burdenin Bloodcove",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B20-BurdeninBloodcoveChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "characters, visit https://paizo.com/pathfindersociety/characteroptions.",
+          "Chronicle Sheets for Pathfinder Society adventures sometimes include"
+        ],
+        "example": "characters, visit https://paizo.com/pathfindersociety/characteroptions."
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.characters_visit_https://paizocom/pathfindersociet": {
+      "y": 11.8,
+      "y2": 17.1
+    },
+    "item.line.Chronicle_Sheets_for_Pathfinder_Society_adventures": {
+      "y": 22.8,
+      "y2": 27.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "characters, visit https://paizo.com/pathfindersociety/characteroptions.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.characters_visit_https://paizocom/pathfindersociet"
+            ]
+          }
+        ],
+        "Chronicle Sheets for Pathfinder Society adventures sometimes include": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Chronicle_Sheets_for_Pathfinder_Society_adventures"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

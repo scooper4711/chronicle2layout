@@ -1,0 +1,231 @@
+{
+  "id": "pfs2.s6-06",
+  "parent": "pfs2.season6-layout-s6-02",
+  "description": "6-06 Rotten Apples",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-06-RottenApplesChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "moderate ghost charge (level 3, 10 gp; Player Core 2 285)",
+          "wand of heal (1st-rank) (level 3, 60 gp; Player Core 335, GM Core 282)",
+          "wand of heal (2nd-rank) (level 5, 160 gp; Player Core 335, GM Core 282)",
+          "wrist grappler (level 2, 25 gp; Lost Omens Firebrands 82)",
+          "masquerade scarf (level 2, 30 gp; GM Core 292)",
+          "clockwork wrist grappler (level 3, 40 gp; Lost Omens Firebrands 82)",
+          "persona mask (level 3, 50 gp; GM Core 293)"
+        ],
+        "example": "moderate ghost charge (level 3, 10 gp; Player Core 2 285)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "quickly",
+          "quietly through the Compost Forest",
+          "all",
+          "some",
+          "none of the remaining leshies"
+        ],
+        "example": "quickly"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.quickly": {
+      "x": 76.548,
+      "y": 26.244,
+      "x2": 78.25,
+      "y2": 36.346
+    },
+    "checkbox.quietly_through_the_Compost_Forest": {
+      "x": 84.674,
+      "y": 26.244,
+      "x2": 86.376,
+      "y2": 36.346
+    },
+    "checkbox.all": {
+      "x": 69.64,
+      "y": 34.462,
+      "x2": 71.342,
+      "y2": 44.564
+    },
+    "checkbox.some": {
+      "x": 73.931,
+      "y": 34.462,
+      "x2": 75.633,
+      "y2": 44.564
+    },
+    "checkbox.none_of_the_remaining_leshies": {
+      "x": 80.205,
+      "y": 34.462,
+      "x2": 81.907,
+      "y2": 44.564
+    },
+    "item.line.moderate_ghost_charge_level_3_10_gp;_Player_Core_2": {
+      "y": 7.4,
+      "y2": 18.1
+    },
+    "item.line.wand_of_heal_1st-rank_level_3_60_gp;_Player_Core_3": {
+      "y": 18.5,
+      "y2": 29.3
+    },
+    "item.line.wand_of_heal_2nd-rank_level_5_160_gp;_Player_Core_": {
+      "y": 24.1,
+      "y2": 40.5
+    },
+    "item.line.wrist_grappler_level_2_25_gp;_Lost_Omens_Firebrand": {
+      "y": 35.3,
+      "y2": 51.7
+    },
+    "item.line.masquerade_scarf_level_2_30_gp;_GM_Core_292": {
+      "y": 52.1,
+      "y2": 57.3
+    },
+    "item.line.clockwork_wrist_grappler_level_3_40_gp;_Lost_Omens": {
+      "y": 57.7,
+      "y2": 68.5
+    },
+    "item.line.persona_mask_level_3_50_gp;_GM_Core_293": {
+      "y": 68.9,
+      "y2": 74.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "moderate ghost charge (level 3, 10 gp; Player Core 2 285)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_ghost_charge_level_3_10_gp;_Player_Core_2"
+            ]
+          }
+        ],
+        "wand of heal (1st-rank) (level 3, 60 gp; Player Core 335, GM Core 282)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_heal_1st-rank_level_3_60_gp;_Player_Core_3"
+            ]
+          }
+        ],
+        "wand of heal (2nd-rank) (level 5, 160 gp; Player Core 335, GM Core 282)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_heal_2nd-rank_level_5_160_gp;_Player_Core_"
+            ]
+          }
+        ],
+        "wrist grappler (level 2, 25 gp; Lost Omens Firebrands 82)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wrist_grappler_level_2_25_gp;_Lost_Omens_Firebrand"
+            ]
+          }
+        ],
+        "masquerade scarf (level 2, 30 gp; GM Core 292)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.masquerade_scarf_level_2_30_gp;_GM_Core_292"
+            ]
+          }
+        ],
+        "clockwork wrist grappler (level 3, 40 gp; Lost Omens Firebrands 82)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.clockwork_wrist_grappler_level_3_40_gp;_Lost_Omens"
+            ]
+          }
+        ],
+        "persona mask (level 3, 50 gp; GM Core 293)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.persona_mask_level_3_50_gp;_GM_Core_293"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "quickly": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.quickly"
+            ]
+          }
+        ],
+        "quietly through the Compost Forest": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.quietly_through_the_Compost_Forest"
+            ]
+          }
+        ],
+        "all": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.all"
+            ]
+          }
+        ],
+        "some": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.some"
+            ]
+          }
+        ],
+        "none of the remaining leshies": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.none_of_the_remaining_leshies"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

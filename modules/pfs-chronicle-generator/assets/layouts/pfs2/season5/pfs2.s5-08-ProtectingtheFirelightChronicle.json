@@ -1,0 +1,453 @@
+{
+  "id": "pfs2.s5-08",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-08 Protecting the Firelight",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-08-ProtectingtheFirelightChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "rhino hide brooch (level 5, 28 gp; Pathfinder Adventure Path #170: Spoken on the Song Wind 76)",
+          "swift block cabochon (level 7, 70 gp)",
+          "peachwood talisman (level 6, 40 gp; Pathfinder Book of the Dead 20)",
+          "escape fulu (level 7, 70 gp; Pathfinder Treasure Vault 77)",
+          "bloodseeker beak (level 4, 20 gp)",
+          "stormfeather (level 8, 100 gp; Pathfinder Secrets of Magic 176)",
+          "life salt (level 5, 25 gp; Pathfinder Book of the Dead 20)",
+          "grim trophy (level 7, 55 gp)"
+        ],
+        "example": "rhino hide brooch (level 5, 28 gp; Pathfinder Adventure Path #170: Spoken on the Song Wind 76)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "preparing food",
+          "entertaining the children",
+          "hunting for herbs for the bonfire",
+          "enjoying the local hot spring",
+          "assisting with talismans",
+          "proved yourself to him",
+          "failed to convince him of your good intentions",
+          "vicious",
+          "hateful",
+          "furious",
+          "malicious spirits first",
+          "fey spirits",
+          "giant spirits",
+          "plant spirits",
+          "undead horror",
+          "cruel fey",
+          "vicious giants",
+          "hateful plants! You then presented Mayor Deyahi with the true story of Niishan\u2019s founding in the morning"
+        ],
+        "example": "preparing food"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.preparing_food": {
+      "x": 17.316,
+      "y": 18.025,
+      "x2": 19.018,
+      "y2": 28.128
+    },
+    "checkbox.entertaining_the_children": {
+      "x": 31.485,
+      "y": 18.025,
+      "x2": 33.187,
+      "y2": 28.128
+    },
+    "checkbox.hunting_for_herbs_for_the_bonfire": {
+      "x": 52.716,
+      "y": 18.025,
+      "x2": 54.418,
+      "y2": 28.128
+    },
+    "checkbox.enjoying_the_local_hot_spring": {
+      "x": 80.015,
+      "y": 18.025,
+      "x2": 81.717,
+      "y2": 28.128
+    },
+    "checkbox.assisting_with_talismans": {
+      "x": 12.944,
+      "y": 26.244,
+      "x2": 14.645,
+      "y2": 36.346
+    },
+    "checkbox.proved_yourself_to_him": {
+      "x": 82.573,
+      "y": 26.244,
+      "x2": 84.275,
+      "y2": 36.346
+    },
+    "checkbox.failed_to_convince_him_of_your_good_intentions": {
+      "x": 13.732,
+      "y": 34.462,
+      "x2": 15.434,
+      "y2": 44.564
+    },
+    "checkbox.vicious": {
+      "x": 6.586,
+      "y": 42.68,
+      "x2": 8.288,
+      "y2": 52.783
+    },
+    "checkbox.hateful": {
+      "x": 14.946,
+      "y": 42.68,
+      "x2": 16.648,
+      "y2": 52.783
+    },
+    "checkbox.furious": {
+      "x": 23.305,
+      "y": 42.68,
+      "x2": 25.007,
+      "y2": 52.783
+    },
+    "checkbox.malicious_spirits_first": {
+      "x": 33.97,
+      "y": 42.68,
+      "x2": 35.671,
+      "y2": 52.783
+    },
+    "checkbox.fey_spirits": {
+      "x": 62.134,
+      "y": 42.68,
+      "x2": 63.836,
+      "y2": 52.783
+    },
+    "checkbox.giant_spirits": {
+      "x": 72.607,
+      "y": 42.68,
+      "x2": 74.309,
+      "y2": 52.783
+    },
+    "checkbox.plant_spirits": {
+      "x": 86.803,
+      "y": 42.68,
+      "x2": 88.505,
+      "y2": 52.783
+    },
+    "checkbox.undead_horror": {
+      "x": 40.821,
+      "y": 59.117,
+      "x2": 42.523,
+      "y2": 69.22
+    },
+    "checkbox.cruel_fey": {
+      "x": 54.34,
+      "y": 59.117,
+      "x2": 56.042,
+      "y2": 69.22
+    },
+    "checkbox.vicious_giants": {
+      "x": 63.441,
+      "y": 59.117,
+      "x2": 65.143,
+      "y2": 69.22
+    },
+    "checkbox.hateful_plants!_You_then_presented_Mayor_Deyahi_wi": {
+      "x": 78.479,
+      "y": 59.117,
+      "x2": 80.181,
+      "y2": 69.22
+    },
+    "item.line.rhino_hide_brooch_level_5_28_gp;_Pathfinder_Advent": {
+      "y": 7.6,
+      "y2": 23.7
+    },
+    "item.line.swift_block_cabochon_level_7_70_gp": {
+      "y": 24.4,
+      "y2": 29.3
+    },
+    "item.line.peachwood_talisman_level_6_40_gp;_Pathfinder_Book_": {
+      "y": 30.0,
+      "y2": 40.5
+    },
+    "item.line.escape_fulu_level_7_70_gp;_Pathfinder_Treasure_Vau": {
+      "y": 41.2,
+      "y2": 51.7
+    },
+    "item.line.bloodseeker_beak_level_4_20_gp": {
+      "y": 52.4,
+      "y2": 57.3
+    },
+    "item.line.stormfeather_level_8_100_gp;_Pathfinder_Secrets_of": {
+      "y": 58.0,
+      "y2": 68.5
+    },
+    "item.line.life_salt_level_5_25_gp;_Pathfinder_Book_of_the_De": {
+      "y": 69.2,
+      "y2": 79.7
+    },
+    "item.line.grim_trophy_level_7_55_gp": {
+      "y": 80.4,
+      "y2": 85.3
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "rhino hide brooch (level 5, 28 gp; Pathfinder Adventure Path #170: Spoken on the Song Wind 76)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.rhino_hide_brooch_level_5_28_gp;_Pathfinder_Advent"
+            ]
+          }
+        ],
+        "swift block cabochon (level 7, 70 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.swift_block_cabochon_level_7_70_gp"
+            ]
+          }
+        ],
+        "peachwood talisman (level 6, 40 gp; Pathfinder Book of the Dead 20)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.peachwood_talisman_level_6_40_gp;_Pathfinder_Book_"
+            ]
+          }
+        ],
+        "escape fulu (level 7, 70 gp; Pathfinder Treasure Vault 77)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.escape_fulu_level_7_70_gp;_Pathfinder_Treasure_Vau"
+            ]
+          }
+        ],
+        "bloodseeker beak (level 4, 20 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bloodseeker_beak_level_4_20_gp"
+            ]
+          }
+        ],
+        "stormfeather (level 8, 100 gp; Pathfinder Secrets of Magic 176)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.stormfeather_level_8_100_gp;_Pathfinder_Secrets_of"
+            ]
+          }
+        ],
+        "life salt (level 5, 25 gp; Pathfinder Book of the Dead 20)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.life_salt_level_5_25_gp;_Pathfinder_Book_of_the_De"
+            ]
+          }
+        ],
+        "grim trophy (level 7, 55 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.grim_trophy_level_7_55_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "preparing food": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.preparing_food"
+            ]
+          }
+        ],
+        "entertaining the children": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.entertaining_the_children"
+            ]
+          }
+        ],
+        "hunting for herbs for the bonfire": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.hunting_for_herbs_for_the_bonfire"
+            ]
+          }
+        ],
+        "enjoying the local hot spring": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.enjoying_the_local_hot_spring"
+            ]
+          }
+        ],
+        "assisting with talismans": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.assisting_with_talismans"
+            ]
+          }
+        ],
+        "proved yourself to him": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.proved_yourself_to_him"
+            ]
+          }
+        ],
+        "failed to convince him of your good intentions": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_convince_him_of_your_good_intentions"
+            ]
+          }
+        ],
+        "vicious": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.vicious"
+            ]
+          }
+        ],
+        "hateful": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.hateful"
+            ]
+          }
+        ],
+        "furious": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.furious"
+            ]
+          }
+        ],
+        "malicious spirits first": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.malicious_spirits_first"
+            ]
+          }
+        ],
+        "fey spirits": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fey_spirits"
+            ]
+          }
+        ],
+        "giant spirits": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.giant_spirits"
+            ]
+          }
+        ],
+        "plant spirits": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.plant_spirits"
+            ]
+          }
+        ],
+        "undead horror": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.undead_horror"
+            ]
+          }
+        ],
+        "cruel fey": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.cruel_fey"
+            ]
+          }
+        ],
+        "vicious giants": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.vicious_giants"
+            ]
+          }
+        ],
+        "hateful plants! You then presented Mayor Deyahi with the true story of Niishan\u2019s founding in the morning": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.hateful_plants!_You_then_presented_Mayor_Deyahi_wi"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "id": "pfs2.s1-23",
+  "parent": "pfs2.season1-layout-s1-23",
+  "description": "1-23 Star-Crossed Court",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-23-Star-CrossedCourtChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lifting belt (Level 4; 80 gp)",
+          "ventriloquist\u2019s ring (Level 3; 60 gp)",
+          "diplomat\u2019s badge (Level 5; 125 gp)",
+          "ring of the ram (Level 6; 220 gp)"
+        ],
+        "example": "lifting belt (Level 4; 80 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "followed the advice of Eras the Needle /",
+          "listened to the words of Calisro Benarry/",
+          "forged your own path through the negotiations)"
+        ],
+        "example": "followed the advice of Eras the Needle /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.followed_the_advice_of_Eras_the_Needle_/": {
+      "x": 53.633,
+      "y": 9.082,
+      "x2": 55.708,
+      "y2": 35.46
+    },
+    "checkbox.listened_to_the_words_of_Calisro_Benarry/": {
+      "x": 86.44,
+      "y": 9.082,
+      "x2": 87.942,
+      "y2": 35.46
+    },
+    "checkbox.forged_your_own_path_through_the_negotiations": {
+      "x": 21.06,
+      "y": 37.151,
+      "x2": 22.563,
+      "y2": 63.529
+    },
+    "item.line.lifting_belt_Level_4;_80_gp": {
+      "y": 3.0,
+      "y2": 7.2
+    },
+    "item.line.ventriloquist\u2019s_ring_Level_3;_60_gp": {
+      "y": 7.7,
+      "y2": 11.9
+    },
+    "item.line.diplomat\u2019s_badge_Level_5;_125_gp": {
+      "y": 54.9,
+      "y2": 59.0
+    },
+    "item.line.ring_of_the_ram_Level_6;_220_gp": {
+      "y": 59.6,
+      "y2": 63.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lifting belt (Level 4; 80 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lifting_belt_Level_4;_80_gp"
+            ]
+          }
+        ],
+        "ventriloquist\u2019s ring (Level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ventriloquist\u2019s_ring_Level_3;_60_gp"
+            ]
+          }
+        ],
+        "diplomat\u2019s badge (Level 5; 125 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.diplomat\u2019s_badge_Level_5;_125_gp"
+            ]
+          }
+        ],
+        "ring of the ram (Level 6; 220 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ring_of_the_ram_Level_6;_220_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "followed the advice of Eras the Needle /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.followed_the_advice_of_Eras_the_Needle_/"
+            ]
+          }
+        ],
+        "listened to the words of Calisro Benarry/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.listened_to_the_words_of_Calisro_Benarry/"
+            ]
+          }
+        ],
+        "forged your own path through the negotiations)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.forged_your_own_path_through_the_negotiations"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

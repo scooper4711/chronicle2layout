@@ -1,0 +1,128 @@
+{
+  "id": "pfs2.s2-19",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-19 Enter the Pallid Peak",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-19-EnterthePallidPeakChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "the contents of an ancient lockbox and",
+          "multiple entrances to a deeper portion of the ruins",
+          "discovered and deactivated a churning lava hazard",
+          "put the spirits of dwarves who died in the Rending to rest",
+          "befriended a trio of ifrit dwarf exiles",
+          "fought off a duergar raiding party"
+        ],
+        "example": "the contents of an ancient lockbox and"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.the_contents_of_an_ancient_lockbox_and": {
+      "x": 15.013,
+      "y": 45.42,
+      "x2": 16.354,
+      "y2": 60.106
+    },
+    "checkbox.multiple_entrances_to_a_deeper_portion_of_the_ruin": {
+      "x": 46.05,
+      "y": 45.42,
+      "x2": 47.391,
+      "y2": 60.106
+    },
+    "checkbox.discovered_and_deactivated_a_churning_lava_hazard": {
+      "x": 89.27,
+      "y": 45.42,
+      "x2": 90.611,
+      "y2": 60.106
+    },
+    "checkbox.put_the_spirits_of_dwarves_who_died_in_the_Rending": {
+      "x": 34.611,
+      "y": 59.786,
+      "x2": 35.952,
+      "y2": 74.472
+    },
+    "checkbox.befriended_a_trio_of_ifrit_dwarf_exiles": {
+      "x": 82.883,
+      "y": 59.786,
+      "x2": 84.224,
+      "y2": 74.472
+    },
+    "checkbox.fought_off_a_duergar_raiding_party": {
+      "x": 45.915,
+      "y": 74.152,
+      "x2": 47.256,
+      "y2": 88.838
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "the contents of an ancient lockbox and": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_contents_of_an_ancient_lockbox_and"
+            ]
+          }
+        ],
+        "multiple entrances to a deeper portion of the ruins": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.multiple_entrances_to_a_deeper_portion_of_the_ruin"
+            ]
+          }
+        ],
+        "discovered and deactivated a churning lava hazard": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.discovered_and_deactivated_a_churning_lava_hazard"
+            ]
+          }
+        ],
+        "put the spirits of dwarves who died in the Rending to rest": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.put_the_spirits_of_dwarves_who_died_in_the_Rending"
+            ]
+          }
+        ],
+        "befriended a trio of ifrit dwarf exiles": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.befriended_a_trio_of_ifrit_dwarf_exiles"
+            ]
+          }
+        ],
+        "fought off a duergar raiding party": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.fought_off_a_duergar_raiding_party"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

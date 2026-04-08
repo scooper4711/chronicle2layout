@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.s3-10",
+  "parent": "pfs2.season3-layout-s3-10",
+  "description": "3-10 Delve the Pallid Depths",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-10-DelvethePallidDepthsChronicle.pdf"
+}

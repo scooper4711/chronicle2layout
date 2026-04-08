@@ -1,0 +1,80 @@
+{
+  "id": "pfs2.s2-02",
+  "parent": "pfs2.season2-layout-s2-00",
+  "description": "2-02 Mountain of Sea and Sky",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-02-MountainofSeaandSkyChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "the kodama guardians of the forest",
+          "a self-doubting sea dragon",
+          "a family of griffins)"
+        ],
+        "example": "the kodama guardians of the forest"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.the_kodama_guardians_of_the_forest": {
+      "x": 56.154,
+      "y": 54.78,
+      "x2": 58.222,
+      "y2": 66.686
+    },
+    "checkbox.a_self-doubting_sea_dragon": {
+      "x": 85.268,
+      "y": 54.78,
+      "x2": 86.77,
+      "y2": 66.686
+    },
+    "checkbox.a_family_of_griffins": {
+      "x": 13.582,
+      "y": 67.45,
+      "x2": 15.085,
+      "y2": 79.356
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "the kodama guardians of the forest": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_kodama_guardians_of_the_forest"
+            ]
+          }
+        ],
+        "a self-doubting sea dragon": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.a_self-doubting_sea_dragon"
+            ]
+          }
+        ],
+        "a family of griffins)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.a_family_of_griffins"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

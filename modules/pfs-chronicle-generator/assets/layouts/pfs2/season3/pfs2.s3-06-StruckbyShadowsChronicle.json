@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s3-06",
+  "parent": "pfs2.season3-layout-s3-04",
+  "description": "3-06 Struckby Shadows",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-06-StruckbyShadowsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Society characters, visit https://paizo.com/pathfindersociety/",
+          "to their character level. Chronicle Sheets for Pathfinder Society",
+          "their character level +2."
+        ],
+        "example": "Society characters, visit https://paizo.com/pathfindersociety/"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Society_characters_visit_https://paizocom/pathfind": {
+      "y": 11.8,
+      "y2": 17.1
+    },
+    "item.line.to_their_character_level_Chronicle_Sheets_for_Path": {
+      "y": 22.8,
+      "y2": 27.4
+    },
+    "item.line.their_character_level_+2": {
+      "y": 33.4,
+      "y2": 38.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Society characters, visit https://paizo.com/pathfindersociety/": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Society_characters_visit_https://paizocom/pathfind"
+            ]
+          }
+        ],
+        "to their character level. Chronicle Sheets for Pathfinder Society": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.to_their_character_level_Chronicle_Sheets_for_Path"
+            ]
+          }
+        ],
+        "their character level +2.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.their_character_level_+2"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "id": "pfs2.s1-08",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-08 Revolution on the Riverside",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-08-RevolutionontheRiversideChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 shortsword (level 2; 35 gp)",
+          "hat of the magi (level 3; 50 gp)",
+          "scroll of darkness (level 3; discounted price 6 gp; limit 1)",
+          "+1 striking shortsword (level 4; 100 gp)",
+          "goggles of night (level 5; 150 gp)",
+          "scroll of haste (level 5; discounted price 15 gp; limit 1)"
+        ],
+        "example": "+1 shortsword (level 2; 35 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_shortsword_level_2;_35_gp": {
+      "y": 3.1,
+      "y2": 7.1
+    },
+    "item.line.hat_of_the_magi_level_3;_50_gp": {
+      "y": 7.9,
+      "y2": 11.8
+    },
+    "item.line.scroll_of_darkness_level_3;_discounted_price_6_gp;": {
+      "y": 12.6,
+      "y2": 21.2
+    },
+    "item.line.+1_striking_shortsword_level_4;_100_gp": {
+      "y": 55.0,
+      "y2": 58.9
+    },
+    "item.line.goggles_of_night_level_5;_150_gp": {
+      "y": 59.7,
+      "y2": 63.7
+    },
+    "item.line.scroll_of_haste_level_5;_discounted_price_15_gp;_l": {
+      "y": 64.4,
+      "y2": 73.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 shortsword (level 2; 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_shortsword_level_2;_35_gp"
+            ]
+          }
+        ],
+        "hat of the magi (level 3; 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.hat_of_the_magi_level_3;_50_gp"
+            ]
+          }
+        ],
+        "scroll of darkness (level 3; discounted price 6 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_darkness_level_3;_discounted_price_6_gp;"
+            ]
+          }
+        ],
+        "+1 striking shortsword (level 4; 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_shortsword_level_4;_100_gp"
+            ]
+          }
+        ],
+        "goggles of night (level 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.goggles_of_night_level_5;_150_gp"
+            ]
+          }
+        ],
+        "scroll of haste (level 5; discounted price 15 gp; limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_haste_level_5;_discounted_price_15_gp;_l"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

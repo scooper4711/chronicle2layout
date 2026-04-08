@@ -1,0 +1,217 @@
+{
+  "id": "pfs2.s1-11",
+  "parent": "pfs2.season1-layout-s1-00",
+  "description": "1-11 Flames of Rebellion",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-11-FlamesofRebellionChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 handwraps of mighty blows (level 2; 35 gp)",
+          "archaic wayfinder (Lost Omens World Guide; level 2; 30 gp)",
+          "tracker\u2019s goggles (level 3; 60 gp)",
+          "+1 striking handwraps of mighty blows",
+          "(level 4; 100 gp)",
+          "goggles of night (level 5; 150 gp)"
+        ],
+        "example": "+1 handwraps of mighty blows (level 2; 35 gp)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "remains imprisoned in the keep/",
+          "seems to have moved on to the afterlife/",
+          "is in the hands of Zarta Dralneen for study)",
+          "seized the opportunity/",
+          "decided not to dabble in infernal matters)"
+        ],
+        "example": "remains imprisoned in the keep/"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.remains_imprisoned_in_the_keep/": {
+      "x": 30.971,
+      "y": 42.621,
+      "x2": 32.792,
+      "y2": 53.866
+    },
+    "checkbox.seems_to_have_moved_on_to_the_afterlife/": {
+      "x": 56.59,
+      "y": 42.621,
+      "x2": 58.009,
+      "y2": 53.866
+    },
+    "checkbox.is_in_the_hands_of_Zarta_Dralneen_for_study": {
+      "x": 86.683,
+      "y": 42.621,
+      "x2": 88.102,
+      "y2": 53.866
+    },
+    "checkbox.seized_the_opportunity/": {
+      "x": 10.747,
+      "y": 67.961,
+      "x2": 12.567,
+      "y2": 79.206
+    },
+    "checkbox.decided_not_to_dabble_in_infernal_matters": {
+      "x": 29.497,
+      "y": 67.961,
+      "x2": 30.916,
+      "y2": 79.206
+    },
+    "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp": {
+      "y": 3.1,
+      "y2": 11.8
+    },
+    "item.line.archaic_wayfinder_Lost_Omens_World_Guide;_level_2;": {
+      "y": 64.4,
+      "y2": 73.1
+    },
+    "item.line.tracker\u2019s_goggles_level_3;_60_gp": {
+      "y": 22.0,
+      "y2": 25.9
+    },
+    "item.line.+1_striking_handwraps_of_mighty_blows": {
+      "y": 55.0,
+      "y2": 58.9
+    },
+    "item.line.level_4;_100_gp": {
+      "y": 59.7,
+      "y2": 63.7
+    },
+    "item.line.goggles_of_night_level_5;_150_gp": {
+      "y": 73.9,
+      "y2": 77.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 handwraps of mighty blows (level 2; 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp"
+            ]
+          }
+        ],
+        "archaic wayfinder (Lost Omens World Guide; level 2; 30 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.archaic_wayfinder_Lost_Omens_World_Guide;_level_2;"
+            ]
+          }
+        ],
+        "tracker\u2019s goggles (level 3; 60 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.tracker\u2019s_goggles_level_3;_60_gp"
+            ]
+          }
+        ],
+        "+1 striking handwraps of mighty blows": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_handwraps_of_mighty_blows"
+            ]
+          }
+        ],
+        "(level 4; 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.level_4;_100_gp"
+            ]
+          }
+        ],
+        "goggles of night (level 5; 150 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.goggles_of_night_level_5;_150_gp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "remains imprisoned in the keep/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.remains_imprisoned_in_the_keep/"
+            ]
+          }
+        ],
+        "seems to have moved on to the afterlife/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.seems_to_have_moved_on_to_the_afterlife/"
+            ]
+          }
+        ],
+        "is in the hands of Zarta Dralneen for study)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.is_in_the_hands_of_Zarta_Dralneen_for_study"
+            ]
+          }
+        ],
+        "seized the opportunity/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.seized_the_opportunity/"
+            ]
+          }
+        ],
+        "decided not to dabble in infernal matters)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.decided_not_to_dabble_in_infernal_matters"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "pfs2.b10",
+  "parent": "pfs2.bounty-layout-b1",
+  "description": "B10 Hillcross Roundup",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B10-HillcrossRoundupChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "Along the way"
+        ],
+        "example": "Along the way"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.Along_the_way": {
+      "x": 41.06,
+      "y": 11.583,
+      "x2": 42.073,
+      "y2": 16.267
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "Along the way": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Along_the_way"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

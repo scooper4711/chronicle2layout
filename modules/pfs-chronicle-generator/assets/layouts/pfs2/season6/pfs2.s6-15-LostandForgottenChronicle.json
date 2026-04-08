@@ -1,0 +1,145 @@
+{
+  "id": "pfs2.s6-15",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-15 Lost and Forgotten",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-15-LostandForgottenChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "spectacles of understanding (level 5, 130 gp; PFS Guide pg. 117)",
+          "wand of shardstorm (level 5, 160 gp; GM Core pg. 283)",
+          "aeon stone (preserving) (level 5, 150 gp; GM Core pg. 284)",
+          "aeon stone (sprouting) (level 6, 220 gp; GM Core pg. 284)",
+          "ethersight ring (level 7, 325 gp; Treasure Vault pg. 153)",
+          "aeon stone (smoothing) (level 7, 310 gp; GM Core pg. 284)",
+          "wand of continuation (level 7, 360 gp; GM Core pg. 282)",
+          "aeon stone (envisioning) (level 8, 425 gp; GM Core pg. 284)"
+        ],
+        "example": "spectacles of understanding (level 5, 130 gp; PFS Guide pg. 117)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.spectacles_of_understanding_level_5_130_gp;_PFS_Gu": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.wand_of_shardstorm_level_5_160_gp;_GM_Core_pg_283": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.aeon_stone_preserving_level_5_150_gp;_GM_Core_pg_2": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.aeon_stone_sprouting_level_6_220_gp;_GM_Core_pg_28": {
+      "y": 35.8,
+      "y2": 51.6
+    },
+    "item.line.ethersight_ring_level_7_325_gp;_Treasure_Vault_pg_": {
+      "y": 47.0,
+      "y2": 62.8
+    },
+    "item.line.aeon_stone_smoothing_level_7_310_gp;_GM_Core_pg_28": {
+      "y": 63.7,
+      "y2": 74.0
+    },
+    "item.line.wand_of_continuation_level_7_360_gp;_GM_Core_pg_28": {
+      "y": 69.3,
+      "y2": 85.2
+    },
+    "item.line.aeon_stone_envisioning_level_8_425_gp;_GM_Core_pg_": {
+      "y": 86.1,
+      "y2": 96.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "spectacles of understanding (level 5, 130 gp; PFS Guide pg. 117)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.spectacles_of_understanding_level_5_130_gp;_PFS_Gu"
+            ]
+          }
+        ],
+        "wand of shardstorm (level 5, 160 gp; GM Core pg. 283)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_shardstorm_level_5_160_gp;_GM_Core_pg_283"
+            ]
+          }
+        ],
+        "aeon stone (preserving) (level 5, 150 gp; GM Core pg. 284)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.aeon_stone_preserving_level_5_150_gp;_GM_Core_pg_2"
+            ]
+          }
+        ],
+        "aeon stone (sprouting) (level 6, 220 gp; GM Core pg. 284)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.aeon_stone_sprouting_level_6_220_gp;_GM_Core_pg_28"
+            ]
+          }
+        ],
+        "ethersight ring (level 7, 325 gp; Treasure Vault pg. 153)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ethersight_ring_level_7_325_gp;_Treasure_Vault_pg_"
+            ]
+          }
+        ],
+        "aeon stone (smoothing) (level 7, 310 gp; GM Core pg. 284)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.aeon_stone_smoothing_level_7_310_gp;_GM_Core_pg_28"
+            ]
+          }
+        ],
+        "wand of continuation (level 7, 360 gp; GM Core pg. 282)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_continuation_level_7_360_gp;_GM_Core_pg_28"
+            ]
+          }
+        ],
+        "aeon stone (envisioning) (level 8, 425 gp; GM Core pg. 284)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.aeon_stone_envisioning_level_8_425_gp;_GM_Core_pg_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

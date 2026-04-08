@@ -1,0 +1,80 @@
+{
+  "id": "pfs2.s2-15",
+  "parent": "pfs2.season2-layout-s2-05",
+  "description": "2-15 ADirgefor Sarkoris",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season2/2-15-ADirgeforSarkorisChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "rescued the druid she was tormenting",
+          "succeeded/",
+          "failed"
+        ],
+        "example": "rescued the druid she was tormenting"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.rescued_the_druid_she_was_tormenting": {
+      "x": 28.407,
+      "y": 32.207,
+      "x2": 29.909,
+      "y2": 45.708
+    },
+    "checkbox.succeeded/": {
+      "x": 1.552,
+      "y": 60.939,
+      "x2": 3.055,
+      "y2": 74.44
+    },
+    "checkbox.failed": {
+      "x": 11.695,
+      "y": 60.939,
+      "x2": 13.198,
+      "y2": 74.44
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "rescued the druid she was tormenting": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.rescued_the_druid_she_was_tormenting"
+            ]
+          }
+        ],
+        "succeeded/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.succeeded/"
+            ]
+          }
+        ],
+        "failed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

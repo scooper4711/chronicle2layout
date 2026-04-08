@@ -1,0 +1,96 @@
+{
+  "id": "pfs2.s5-12",
+  "parent": "pfs2.season5-layout-s5-00",
+  "description": "5-12 Mischiefin the Maze",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season5/5-12-MischiefintheMazeChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "convinced the tanuki to stop pranking travelers",
+          "were bested by the your wily foes",
+          "befriended the irreverent people",
+          "angered them greatly"
+        ],
+        "example": "convinced the tanuki to stop pranking travelers"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.convinced_the_tanuki_to_stop_pranking_travelers": {
+      "x": 10.072,
+      "y": 44.32,
+      "x2": 11.774,
+      "y2": 51.883
+    },
+    "checkbox.were_bested_by_the_your_wily_foes": {
+      "x": 49.257,
+      "y": 44.32,
+      "x2": 50.958,
+      "y2": 51.883
+    },
+    "checkbox.befriended_the_irreverent_people": {
+      "x": 85.701,
+      "y": 44.32,
+      "x2": 87.403,
+      "y2": 51.883
+    },
+    "checkbox.angered_them_greatly": {
+      "x": 17.491,
+      "y": 52.538,
+      "x2": 19.193,
+      "y2": 60.101
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "convinced the tanuki to stop pranking travelers": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_the_tanuki_to_stop_pranking_travelers"
+            ]
+          }
+        ],
+        "were bested by the your wily foes": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_bested_by_the_your_wily_foes"
+            ]
+          }
+        ],
+        "befriended the irreverent people": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.befriended_the_irreverent_people"
+            ]
+          }
+        ],
+        "angered them greatly": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.angered_them_greatly"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

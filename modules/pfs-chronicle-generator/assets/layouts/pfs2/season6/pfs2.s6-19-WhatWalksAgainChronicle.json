@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s6-19",
+  "parent": "pfs2.season6-layout-s6-00",
+  "description": "6-19 Wh at Walks Again",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season6/6-19-WhatWalksAgainChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "potion of flying, greater (level 15; 1,000 gp; Pathfinder GM Core 259)"
+        ],
+        "example": "potion of flying, greater (level 15; 1,000 gp; Pathfinder GM Core 259)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.potion_of_flying_greater_level_15;_1000_gp;_Pathfi": {
+      "y": 7.6,
+      "y2": 18.1
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "potion of flying, greater (level 15; 1,000 gp; Pathfinder GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_flying_greater_level_15;_1000_gp;_Pathfi"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

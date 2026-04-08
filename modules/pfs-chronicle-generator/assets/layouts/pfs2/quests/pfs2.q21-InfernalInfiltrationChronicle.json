@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.q21",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q21 Infernal Infiltration",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q21-InfernalInfiltrationChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "recovered the documents",
+          "failed to recover the documents"
+        ],
+        "example": "recovered the documents"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.recovered_the_documents": {
+      "x": 69.893,
+      "y": 28.08,
+      "x2": 71.397,
+      "y2": 35.804
+    },
+    "checkbox.failed_to_recover_the_documents": {
+      "x": 92.766,
+      "y": 28.08,
+      "x2": 94.271,
+      "y2": 35.804
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "recovered the documents": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.recovered_the_documents"
+            ]
+          }
+        ],
+        "failed to recover the documents": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_recover_the_documents"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

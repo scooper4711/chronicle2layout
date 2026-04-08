@@ -1,0 +1,192 @@
+{
+  "id": "pfs2.q25",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q25 The Greengold Dilemma",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q25-TheGreengoldDilemmaChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "successfully decoded the letter",
+          "were unsuccessful in decoding the letter",
+          "Dalamian",
+          "Nalora",
+          "Nuandiall Ciranviash",
+          "Selwyn Vanaidori",
+          "Shalelu Andosana",
+          "Talwivir",
+          "successful",
+          "unsuccessful"
+        ],
+        "example": "successfully decoded the letter"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.successfully_decoded_the_letter": {
+      "x": 34.937,
+      "y": 19.862,
+      "x2": 36.442,
+      "y2": 27.585
+    },
+    "checkbox.were_unsuccessful_in_decoding_the_letter": {
+      "x": 62.46,
+      "y": 19.862,
+      "x2": 63.964,
+      "y2": 27.585
+    },
+    "checkbox.Dalamian": {
+      "x": 18.519,
+      "y": 28.08,
+      "x2": 20.024,
+      "y2": 35.804
+    },
+    "checkbox.Nalora": {
+      "x": 28.598,
+      "y": 28.08,
+      "x2": 30.102,
+      "y2": 35.804
+    },
+    "checkbox.Nuandiall_Ciranviash": {
+      "x": 36.657,
+      "y": 28.08,
+      "x2": 38.162,
+      "y2": 35.804
+    },
+    "checkbox.Selwyn_Vanaidori": {
+      "x": 55.463,
+      "y": 28.08,
+      "x2": 56.968,
+      "y2": 35.804
+    },
+    "checkbox.Shalelu_Andosana": {
+      "x": 71.25,
+      "y": 28.08,
+      "x2": 72.755,
+      "y2": 35.804
+    },
+    "checkbox.Talwivir": {
+      "x": 90.474,
+      "y": 28.08,
+      "x2": 91.978,
+      "y2": 35.804
+    },
+    "checkbox.successful": {
+      "x": 51.356,
+      "y": 36.299,
+      "x2": 52.86,
+      "y2": 44.022
+    },
+    "checkbox.unsuccessful": {
+      "x": 63.345,
+      "y": 36.299,
+      "x2": 64.85,
+      "y2": 44.022
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "successfully decoded the letter": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.successfully_decoded_the_letter"
+            ]
+          }
+        ],
+        "were unsuccessful in decoding the letter": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_unsuccessful_in_decoding_the_letter"
+            ]
+          }
+        ],
+        "Dalamian": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Dalamian"
+            ]
+          }
+        ],
+        "Nalora": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Nalora"
+            ]
+          }
+        ],
+        "Nuandiall Ciranviash": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Nuandiall_Ciranviash"
+            ]
+          }
+        ],
+        "Selwyn Vanaidori": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Selwyn_Vanaidori"
+            ]
+          }
+        ],
+        "Shalelu Andosana": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Shalelu_Andosana"
+            ]
+          }
+        ],
+        "Talwivir": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Talwivir"
+            ]
+          }
+        ],
+        "successful": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.successful"
+            ]
+          }
+        ],
+        "unsuccessful": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.unsuccessful"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

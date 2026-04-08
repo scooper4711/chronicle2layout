@@ -1,0 +1,80 @@
+{
+  "id": "pfs2.q19",
+  "parent": "pfs2.quest-layout-q14",
+  "description": "Q19 The Elsewhere Feast",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q19-TheElsewhereFeastChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "the awakened rabbit Summer Storm",
+          "the missing Voll family members",
+          "no one else"
+        ],
+        "example": "the awakened rabbit Summer Storm"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.the_awakened_rabbit_Summer_Storm": {
+      "x": 16.792,
+      "y": 27.883,
+      "x2": 18.494,
+      "y2": 35.446
+    },
+    "checkbox.the_missing_Voll_family_members": {
+      "x": 45.91,
+      "y": 27.883,
+      "x2": 47.612,
+      "y2": 35.446
+    },
+    "checkbox.no_one_else": {
+      "x": 72.36,
+      "y": 27.883,
+      "x2": 74.062,
+      "y2": 35.446
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "the awakened rabbit Summer Storm": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_awakened_rabbit_Summer_Storm"
+            ]
+          }
+        ],
+        "the missing Voll family members": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_missing_Voll_family_members"
+            ]
+          }
+        ],
+        "no one else": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.no_one_else"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

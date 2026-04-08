@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.s1-17",
+  "parent": "pfs2.season1-layout-s1-17",
+  "description": "1-17 The Perennial Crown Part 2 The Thorned Monarch",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-17-ThePerennialCrownPart2TheThornedMonarchChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "mambele (level 1; 6 sp; Pathfinder Lost Omens Gods & Magic 120)"
+        ],
+        "example": "mambele (level 1; 6 sp; Pathfinder Lost Omens Gods & Magic 120)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.mambele_level_1;_6_sp;_Pathfinder_Lost_Omens_Gods_": {
+      "y": 55.0,
+      "y2": 63.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "mambele (level 1; 6 sp; Pathfinder Lost Omens Gods & Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.mambele_level_1;_6_sp;_Pathfinder_Lost_Omens_Gods_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
