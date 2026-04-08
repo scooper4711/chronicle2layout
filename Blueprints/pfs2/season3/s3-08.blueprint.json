@@ -30,9 +30,9 @@
         "defaultfont"
       ],
       "align": "LB",
-      "left": "@h_rule[2].left",
-      "right": "@h_rule[2].right",
-      "bottom": "@h_rule[2]"
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
     },
     {
       "name": "date",
@@ -43,9 +43,9 @@
         "defaultfont"
       ],
       "align": "CB",
-      "left": "@h_rule[3].left",
-      "right": "@h_rule[3].right",
-      "bottom": "@h_rule[3]"
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
     },
     {
       "name": "gmid",
@@ -56,9 +56,9 @@
         "defaultfont"
       ],
       "align": "CB",
-      "left": "@h_rule[1].left",
-      "right": "@h_rule[1].right",
-      "bottom": "@h_rule[1]"
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
     },
     {
       "name": "char",
