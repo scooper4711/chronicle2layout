@@ -82,3 +82,66 @@ class DataContentEntry:
     fontweight: str | None
     align: str
     lines: int
+
+
+@dataclass(frozen=True)
+class RectangleEntry:
+    """A filled rectangle content entry for data-mode rendering.
+
+    Attributes:
+        canvas: Canvas region name.
+        x: Left edge as percentage of canvas (0-100).
+        y: Top edge as percentage of canvas (0-100).
+        x2: Right edge as percentage of canvas (0-100).
+        y2: Bottom edge as percentage of canvas (0-100).
+        color: Fill color as an RGB tuple (0-1 per channel).
+    """
+
+    canvas: str
+    x: float
+    y: float
+    x2: float
+    y2: float
+    color: tuple[float, float, float]
+
+
+@dataclass(frozen=True)
+class CheckboxEntry:
+    """A checkbox content entry for data-mode rendering.
+
+    Attributes:
+        canvas: Canvas region name.
+        x: Left edge as percentage of canvas (0-100).
+        y: Top edge as percentage of canvas (0-100).
+        x2: Right edge as percentage of canvas (0-100).
+        y2: Bottom edge as percentage of canvas (0-100).
+        color: Stroke/fill color as an RGB tuple (0-1 per channel).
+    """
+
+    canvas: str
+    x: float
+    y: float
+    x2: float
+    y2: float
+    color: tuple[float, float, float]
+
+
+@dataclass(frozen=True)
+class StrikeoutEntry:
+    """A strikeout line for data-mode rendering.
+
+    Attributes:
+        canvas: Canvas region name.
+        x: Left edge as percentage of canvas (0-100).
+        y: Top edge as percentage of canvas (0-100).
+        x2: Right edge as percentage of canvas (0-100).
+        y2: Bottom edge as percentage of canvas (0-100).
+        color: Stroke color as an RGB tuple (0-1 per channel).
+    """
+
+    canvas: str
+    x: float
+    y: float
+    x2: float
+    y2: float
+    color: tuple[float, float, float]

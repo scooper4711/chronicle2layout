@@ -19,6 +19,7 @@ SECONDARY_AXIS_PATTERN = (
     r"^(h_thin|h_bar|h_rule|v_thin|v_bar|grey_box)\[(\d+)\]\.(left|right|top|bottom)$"
 )
 CANVAS_REFERENCE_PATTERN = r"^(\w+)\.(left|right|top|bottom)$"
+PX_OFFSET_PATTERN = r"^(.+?)\s*([+-])\s*(\d+(?:\.\d+)?)px$"
 
 _HORIZONTAL_CATEGORIES = {"h_thin", "h_bar", "h_rule"}
 _VERTICAL_CATEGORIES = {"v_thin", "v_bar"}
@@ -32,6 +33,8 @@ def resolve_edge_value(
     detection: DetectionResult,
     resolved_canvases: dict[str, ResolvedCanvas],
     context: str = "",
+    edge_name: str | None = None,
+    aspectratio: str | None = None,
 ) -> float:
     """Resolve a single edge value to an absolute page percentage.
 
@@ -80,6 +83,26 @@ def resolve_edge_value(
     canvas_match = re.match(CANVAS_REFERENCE_PATTERN, edge_value)
     if canvas_match:
         return _resolve_canvas_reference(canvas_match, resolved_canvases, suffix)
+
+    px_match = re.match(PX_OFFSET_PATTERN, edge_value)
+    if px_match:
+        base_ref = px_match.group(1).strip()
+        operator = px_match.group(2)
+        px_count = float(px_match.group(3))
+        base_value = resolve_edge_value(
+            base_ref, detection, resolved_canvases, context,
+            edge_name, aspectratio,
+        )
+        if aspectratio and edge_name:
+            w_str, h_str = aspectratio.split(":")
+            width, height = float(w_str), float(h_str)
+            page_dim = height if edge_name in ("top", "bottom") else width
+        else:
+            page_dim = 783.0
+        offset_pct = px_count / page_dim * 100
+        if operator == "+":
+            return base_value + offset_pct
+        return base_value - offset_pct
 
     raise ValueError(
         f"Edge value '{edge_value}' is not a recognized pattern{suffix}"
@@ -170,6 +193,7 @@ def resolve_canvases(
     inherited_canvases: list[CanvasEntry],
     target_canvases: list[CanvasEntry],
     detection: DetectionResult,
+    aspectratio: str | None = None,
 ) -> dict[str, ResolvedCanvas]:
     """Resolve all canvases in order: inherited first, then target.
 
@@ -196,10 +220,22 @@ def resolve_canvases(
 
     for canvas in all_canvases:
         ctx = f"canvas '{canvas.name}'"
-        left = resolve_edge_value(canvas.left, detection, resolved, f"{ctx}, edge 'left'")
-        right = resolve_edge_value(canvas.right, detection, resolved, f"{ctx}, edge 'right'")
-        top = resolve_edge_value(canvas.top, detection, resolved, f"{ctx}, edge 'top'")
-        bottom = resolve_edge_value(canvas.bottom, detection, resolved, f"{ctx}, edge 'bottom'")
+        left = resolve_edge_value(
+            canvas.left, detection, resolved, f"{ctx}, edge 'left'",
+            "left", aspectratio,
+        )
+        right = resolve_edge_value(
+            canvas.right, detection, resolved, f"{ctx}, edge 'right'",
+            "right", aspectratio,
+        )
+        top = resolve_edge_value(
+            canvas.top, detection, resolved, f"{ctx}, edge 'top'",
+            "top", aspectratio,
+        )
+        bottom = resolve_edge_value(
+            canvas.bottom, detection, resolved, f"{ctx}, edge 'bottom'",
+            "bottom", aspectratio,
+        )
 
         resolved[canvas.name] = ResolvedCanvas(
             name=canvas.name,

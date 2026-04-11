@@ -7,7 +7,13 @@ multiline slot division, and font weight selection.
 
 import fitz
 
-from layout_visualizer.models import DataContentEntry, PixelRect
+from layout_visualizer.models import (
+    CheckboxEntry,
+    DataContentEntry,
+    PixelRect,
+    RectangleEntry,
+    StrikeoutEntry,
+)
 
 
 def compute_text_position(
@@ -119,6 +125,9 @@ def draw_data_text(
     pixmap: fitz.Pixmap,
     entries: list[DataContentEntry],
     canvas_pixels: dict[str, PixelRect],
+    rectangles: list[RectangleEntry] | None = None,
+    checkboxes: list[CheckboxEntry] | None = None,
+    strikeouts: list[StrikeoutEntry] | None = None,
     dpi: int = 150,
 ) -> fitz.Pixmap:
     """Render example text onto the PDF page pixmap.
@@ -162,6 +171,74 @@ def draw_data_text(
 
     shape = page.new_shape()
 
+    for rect_entry in (rectangles or []):
+        if rect_entry.canvas not in canvas_pixels:
+            continue
+        canvas_rect = canvas_pixels[rect_entry.canvas]
+        canvas_w = canvas_rect.x2 - canvas_rect.x
+        canvas_h = canvas_rect.y2 - canvas_rect.y
+        px = PixelRect(
+            name="rect",
+            x=canvas_rect.x + (rect_entry.x / 100) * canvas_w,
+            y=canvas_rect.y + (rect_entry.y / 100) * canvas_h,
+            x2=canvas_rect.x + (rect_entry.x2 / 100) * canvas_w,
+            y2=canvas_rect.y + (rect_entry.y2 / 100) * canvas_h,
+        )
+        pt = _pixel_rect_to_points(px, scale)
+        shape.draw_rect(fitz.Rect(pt.x, pt.y, pt.x2, pt.y2))
+        shape.finish(fill=rect_entry.color, color=rect_entry.color)
+
+    for cb in (checkboxes or []):
+        if cb.canvas not in canvas_pixels:
+            continue
+        canvas_rect = canvas_pixels[cb.canvas]
+        canvas_w = canvas_rect.x2 - canvas_rect.x
+        canvas_h = canvas_rect.y2 - canvas_rect.y
+        px = PixelRect(
+            name="checkbox",
+            x=canvas_rect.x + (cb.x / 100) * canvas_w,
+            y=canvas_rect.y + (cb.y / 100) * canvas_h,
+            x2=canvas_rect.x + (cb.x2 / 100) * canvas_w,
+            y2=canvas_rect.y + (cb.y2 / 100) * canvas_h,
+        )
+        pt = _pixel_rect_to_points(px, scale)
+        cx = (pt.x + pt.x2) / 2
+        cy = (pt.y + pt.y2) / 2
+        size = min(pt.x2 - pt.x, pt.y2 - pt.y) * 0.35
+        shape.draw_line(
+            fitz.Point(cx - size, cy - size),
+            fitz.Point(cx + size, cy + size),
+        )
+        shape.finish(color=cb.color, width=1.5)
+        shape.draw_line(
+            fitz.Point(cx + size, cy - size),
+            fitz.Point(cx - size, cy + size),
+        )
+        shape.finish(color=cb.color, width=1.5)
+
+    for so in (strikeouts or []):
+        if so.canvas not in canvas_pixels:
+            continue
+        canvas_rect = canvas_pixels[so.canvas]
+        canvas_w = canvas_rect.x2 - canvas_rect.x
+        canvas_h = canvas_rect.y2 - canvas_rect.y
+        px = PixelRect(
+            name="strikeout",
+            x=canvas_rect.x + (so.x / 100) * canvas_w,
+            y=canvas_rect.y + (so.y / 100) * canvas_h,
+            x2=canvas_rect.x + (so.x2 / 100) * canvas_w,
+            y2=canvas_rect.y + (so.y2 / 100) * canvas_h,
+        )
+        pt = _pixel_rect_to_points(px, scale)
+        rect = fitz.Rect(pt.x, pt.y, pt.x2, pt.y2)
+        shape.draw_rect(rect)
+        shape.finish(
+            fill=(so.color[0], so.color[1], so.color[2]),
+            color=so.color,
+            width=0.5,
+            fill_opacity=0.15,
+        )
+
     for entry in entries:
         if entry.canvas not in canvas_pixels:
             continue
@@ -174,30 +251,38 @@ def draw_data_text(
 
         if entry.entry_type == "multiline" and entry.lines > 1:
             slot_height = (pt_bbox.y2 - pt_bbox.y) / entry.lines
-            first_slot = PixelRect(
-                name=pt_bbox.name,
-                x=pt_bbox.x,
-                y=pt_bbox.y,
-                x2=pt_bbox.x2,
-                y2=pt_bbox.y + slot_height,
-            )
-            point = compute_text_position(
-                entry.example_value, entry.fontsize, entry.font,
-                is_bold, entry.align, first_slot,
-            )
+            lines = entry.example_value.split("\n")
+            for line_idx, line_text in enumerate(lines[:entry.lines]):
+                slot = PixelRect(
+                    name=pt_bbox.name,
+                    x=pt_bbox.x,
+                    y=pt_bbox.y + slot_height * line_idx,
+                    x2=pt_bbox.x2,
+                    y2=pt_bbox.y + slot_height * (line_idx + 1),
+                )
+                point = compute_text_position(
+                    line_text, entry.fontsize, entry.font,
+                    is_bold, entry.align, slot,
+                )
+                shape.insert_text(
+                    point,
+                    line_text,
+                    fontname=fontname,
+                    fontsize=entry.fontsize,
+                    color=(0, 0, 0),
+                )
         else:
             point = compute_text_position(
                 entry.example_value, entry.fontsize, entry.font,
                 is_bold, entry.align, pt_bbox,
             )
-
-        shape.insert_text(
-            point,
-            entry.example_value,
-            fontname=fontname,
-            fontsize=entry.fontsize,
-            color=(0, 0, 0),
-        )
+            shape.insert_text(
+                point,
+                entry.example_value,
+                fontname=fontname,
+                fontsize=entry.fontsize,
+                color=(0, 0, 0),
+            )
 
     shape.commit()
 

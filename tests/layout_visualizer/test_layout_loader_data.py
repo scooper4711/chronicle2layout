@@ -247,7 +247,7 @@ class TestLoadDataContent:
             }],
         )
 
-        entries, canvases, paths = load_data_content(path, index)
+        entries, _, _, _, canvases, paths = load_data_content(path, index)
 
         assert len(entries) == 1
         assert entries[0].param_name == "name"
@@ -272,7 +272,7 @@ class TestLoadDataContent:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert len(entries) == 1
         assert entries[0].entry_type == "multiline"
@@ -286,7 +286,7 @@ class TestLoadDataContent:
             content=[{"type": "checkbox", "canvas": "page", "x": 0, "y": 0, "x2": 5, "y2": 5}],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -297,7 +297,7 @@ class TestLoadDataContent:
             content=[{"type": "strikeout", "canvas": "page", "x": 0, "y": 0, "x2": 100, "y2": 5}],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -308,7 +308,7 @@ class TestLoadDataContent:
             content=[{"type": "line", "canvas": "page", "x": 0, "y": 50, "x2": 100, "y2": 50}],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -319,7 +319,7 @@ class TestLoadDataContent:
             content=[{"type": "rectangle", "canvas": "page", "x": 0, "y": 0, "x2": 50, "y2": 50}],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -341,7 +341,7 @@ class TestLoadDataContent:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert len(entries) == 1
         assert entries[0].example_value == "triggered"
@@ -366,7 +366,7 @@ class TestLoadDataContent:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert len(entries) == 1
         assert entries[0].example_value == "sword"
@@ -391,7 +391,7 @@ class TestExampleValueLoading:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries[0].example_value == "Alice"
 
@@ -407,7 +407,7 @@ class TestExampleValueLoading:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries[0].example_value == "42"
 
@@ -423,7 +423,7 @@ class TestExampleValueLoading:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries[0].example_value == "1.8"
 
@@ -440,7 +440,7 @@ class TestExampleValueLoading:
         )
 
         with caplog.at_level(logging.WARNING):
-            entries, _, _ = load_data_content(path, index)
+            entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
         assert "missing" in caplog.text
@@ -458,7 +458,7 @@ class TestExampleValueLoading:
         )
 
         with caplog.at_level(logging.WARNING):
-            entries, _, _ = load_data_content(path, index)
+            entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
         assert "name" in caplog.text
@@ -479,7 +479,7 @@ class TestEdgeCases:
             content=[],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -494,7 +494,7 @@ class TestEdgeCases:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -510,7 +510,7 @@ class TestEdgeCases:
             }],
         )
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []
 
@@ -518,6 +518,6 @@ class TestEdgeCases:
         """A layout with no content key produces no entries."""
         path, index = TestLoadDataContent()._write_single_layout(tmp_path)
 
-        entries, _, _ = load_data_content(path, index)
+        entries, _, _, _, _, _ = load_data_content(path, index)
 
         assert entries == []

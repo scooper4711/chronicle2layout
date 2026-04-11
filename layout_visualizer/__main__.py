@@ -258,9 +258,9 @@ def run_visualizer(
         canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
         pixel_rects = resolve_field_pixels(fields, canvas_pixels)
     elif mode == "data":
-        entries, canvases, _chain = load_data_content(layout_path, layout_index)
+        entries, rectangles, checkboxes, strikeouts, canvases, _chain = load_data_content(layout_path, layout_index)
         canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
-        composited = draw_data_text(pixmap, entries, canvas_pixels)
+        composited = draw_data_text(pixmap, entries, canvas_pixels, rectangles, checkboxes, strikeouts)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         composited.save(str(output_path))
         print(f"Wrote {output_path}")
@@ -384,6 +384,8 @@ def watch_and_regenerate(
             names = ", ".join(lid for lid, _ in affected_targets)
             print(f"Regenerating {names}...")
 
+            mtimes = _record_mtimes(watched_paths)
+
             try:
                 for layout_id, output_path in affected_targets:
                     run_visualizer(
@@ -396,7 +398,12 @@ def watch_and_regenerate(
                 _print_error(f"Error: Regeneration failed: {exc}")
 
             watched_paths = list(dep_map)
-            mtimes = _record_mtimes(watched_paths)
+            for new_path in watched_paths:
+                if new_path not in mtimes:
+                    try:
+                        mtimes[new_path] = os.path.getmtime(new_path)
+                    except OSError:
+                        pass
     except KeyboardInterrupt:
         print("Stopped.")
 

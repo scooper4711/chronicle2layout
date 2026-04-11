@@ -63,7 +63,9 @@ def generate_layout(
         load_blueprint_with_inheritance(blueprint_path, blueprint_index)
     )
 
-    resolved = resolve_canvases(inherited_canvases, blueprint.canvases, detection)
+    resolved = resolve_canvases(
+        inherited_canvases, blueprint.canvases, detection, effective_aspectratio,
+    )
 
     resolved_fields = None
     if blueprint.fields is not None:

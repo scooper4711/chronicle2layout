@@ -18,6 +18,7 @@ from blueprint2layout.models import (
 from blueprint2layout.resolver import resolve_edge_value
 
 EM_OFFSET_PATTERN = r"^(.+?)\s*([+-])\s*(\d+(?:\.\d+)?)em$"
+PX_OFFSET_PATTERN = r"^(.+?)\s*([+-])\s*(\d+(?:\.\d+)?)px$"
 
 # Pattern for canvas-scoped references: @category[index] or @category[index].edge
 CANVAS_SCOPED_PREFIX = "@"
@@ -250,6 +251,21 @@ def resolve_field_edge(
         width, height = _parse_aspectratio(aspectratio)
         page_dimension = height if edge_name in ("top", "bottom") else width
         offset_percentage = em_count * fontsize / page_dimension * 100
+
+        if operator == "+":
+            return base_value + offset_percentage
+        return base_value - offset_percentage
+
+    px_match = re.match(PX_OFFSET_PATTERN, edge_value)
+    if px_match:
+        base_ref = px_match.group(1).strip()
+        operator = px_match.group(2)
+        px_count = float(px_match.group(3))
+
+        base_value = resolve_edge_value(base_ref, active_detection, resolved_canvases, context)
+        width, height = _parse_aspectratio(aspectratio)
+        page_dimension = height if edge_name in ("top", "bottom") else width
+        offset_percentage = px_count / page_dimension * 100
 
         if operator == "+":
             return base_value + offset_percentage

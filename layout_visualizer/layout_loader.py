@@ -8,13 +8,27 @@ and chain walking to the shared.layout_index module.
 import logging
 from pathlib import Path
 
-from layout_visualizer.models import CanvasRegion, DataContentEntry
+from layout_visualizer.models import (
+    CanvasRegion,
+    CheckboxEntry,
+    DataContentEntry,
+    RectangleEntry,
+    StrikeoutEntry,
+)
 from shared.layout_index import build_json_index, collect_inheritance_chain
 
 logger = logging.getLogger(__name__)
 
 _TEXT_TYPES = {"text", "multiline"}
-_SKIP_TYPES = {"line", "rectangle"}
+_SKIP_TYPES = {"line"}
+
+_NAMED_COLORS: dict[str, tuple[float, float, float]] = {
+    "white": (1.0, 1.0, 1.0),
+    "black": (0.0, 0.0, 0.0),
+    "red": (1.0, 0.0, 0.0),
+    "green": (0.0, 0.5, 0.0),
+    "blue": (0.0, 0.0, 1.0),
+}
 
 
 def build_layout_index(layouts_dir: Path) -> dict[str, Path]:
@@ -426,6 +440,57 @@ def _collect_choice_nested_content(raw_entry: dict) -> list[dict]:
     return combined
 
 
+def _extract_checkbox_entries(
+    raw_entry: dict,
+    presets: dict[str, dict],
+    parameters: dict[str, dict],
+    canvases: dict[str, CanvasRegion],
+    checkboxes: list[CheckboxEntry],
+    strikeouts: list[StrikeoutEntry],
+) -> None:
+    """Extract all checkbox and strikeout entries from a choice block.
+
+    Checks every choice branch and collects all checkbox and strikeout
+    content entries regardless of the example value.
+    """
+    choices_content = raw_entry.get("content", {})
+    if not isinstance(choices_content, dict):
+        return
+
+    for choice_entries in choices_content.values():
+        if not isinstance(choice_entries, list):
+            continue
+        for entry in choice_entries:
+            entry_type = entry.get("type")
+            resolved = resolve_entry_presets(entry, presets)
+            canvas_name = resolved.get("canvas")
+            if not canvas_name or canvas_name not in canvases:
+                continue
+
+            if entry_type == "checkbox":
+                color_name = resolved.get("color", "black")
+                color = _NAMED_COLORS.get(color_name, (0.0, 0.0, 0.0))
+                checkboxes.append(CheckboxEntry(
+                    canvas=canvas_name,
+                    x=float(resolved.get("x", 0)),
+                    y=float(resolved.get("y", 0)),
+                    x2=float(resolved.get("x2", 0)),
+                    y2=float(resolved.get("y2", 0)),
+                    color=color,
+                ))
+            elif entry_type == "strikeout":
+                color_name = resolved.get("color", "black")
+                color = _NAMED_COLORS.get(color_name, (0.0, 0.0, 0.0))
+                strikeouts.append(StrikeoutEntry(
+                    canvas=canvas_name,
+                    x=float(resolved.get("x", 0)),
+                    y=float(resolved.get("y", 0)),
+                    x2=float(resolved.get("x2", 0)),
+                    y2=float(resolved.get("y2", 0)),
+                    color=color,
+                ))
+
+
 def _lookup_example_value(
     param_name: str,
     parameters: dict[str, dict],
@@ -478,31 +543,60 @@ def _extract_data_entries(
     parameters: dict[str, dict],
     canvases: dict[str, CanvasRegion],
     entries: list[DataContentEntry],
+    rectangles: list[RectangleEntry],
+    checkboxes: list[CheckboxEntry] | None = None,
+    strikeouts: list[StrikeoutEntry] | None = None,
 ) -> None:
-    """Recursively extract text/multiline entries from a content array.
+    """Recursively extract text/multiline and rectangle entries.
 
-    Skips non-text types. Recurses into trigger and choice nested
-    content. Resolves presets, looks up example values, and appends
-    fully resolved ``DataContentEntry`` instances.
+    Skips non-text types except rectangle. Recurses into trigger and
+    choice nested content. Resolves presets, looks up example values,
+    and appends fully resolved instances.
 
     Args:
         content: The content array to walk.
         presets: Merged preset definitions.
         parameters: Merged parameter definitions (flat).
         canvases: Merged canvas regions.
-        entries: Accumulator list for extracted entries.
+        entries: Accumulator list for extracted text entries.
+        rectangles: Accumulator list for extracted rectangle entries.
     """
     for raw_entry in content:
         entry_type = raw_entry.get("type")
 
         if entry_type == "trigger":
             nested = raw_entry.get("content", [])
-            _extract_data_entries(nested, presets, parameters, canvases, entries)
+            _extract_data_entries(
+                nested, presets, parameters, canvases,
+                entries, rectangles, checkboxes, strikeouts,
+            )
             continue
 
         if entry_type == "choice":
             nested = _collect_choice_nested_content(raw_entry)
-            _extract_data_entries(nested, presets, parameters, canvases, entries)
+            _extract_data_entries(
+                nested, presets, parameters, canvases, entries, rectangles,
+            )
+            _extract_checkbox_entries(
+                raw_entry, presets, parameters, canvases,
+                checkboxes, strikeouts,
+            )
+            continue
+
+        if entry_type == "rectangle":
+            resolved = resolve_entry_presets(raw_entry, presets)
+            canvas_name = resolved.get("canvas")
+            if not canvas_name or canvas_name not in canvases:
+                continue
+            color_name = resolved.get("color", "white")
+            color = _NAMED_COLORS.get(color_name, (1.0, 1.0, 1.0))
+            x = float(resolved.get("x", 0))
+            y = float(resolved.get("y", 0))
+            x2 = float(resolved.get("x2", 100))
+            y2 = float(resolved.get("y2", 100))
+            rectangles.append(RectangleEntry(
+                canvas=canvas_name, x=x, y=y, x2=x2, y2=y2, color=color,
+            ))
             continue
 
         if entry_type not in _TEXT_TYPES:
@@ -530,15 +624,15 @@ def _extract_data_entries(
 def load_data_content(
     layout_path: Path,
     layout_index: dict[str, Path],
-) -> tuple[list[DataContentEntry], dict[str, CanvasRegion], list[Path]]:
+) -> tuple[list[DataContentEntry], list[RectangleEntry], list[CheckboxEntry], list[StrikeoutEntry], dict[str, CanvasRegion], list[Path]]:
     """Load content entries for data mode rendering.
 
     Walks the inheritance chain, merges canvases, parameters,
-    presets, and content. Extracts text/multiline entries,
-    resolves presets, looks up example values, and returns
-    fully resolved ``DataContentEntry`` instances.
+    presets, and content. Extracts text/multiline and rectangle
+    entries, resolves presets, looks up example values, and returns
+    fully resolved instances.
 
-    Skips non-text types (checkbox, strikeout, line, rectangle).
+    Skips non-text types (checkbox, strikeout, line) except rectangle.
     Recurses into trigger and choice nested content.
     Warns and skips entries with missing parameters or examples.
 
@@ -547,7 +641,8 @@ def load_data_content(
         layout_index: Map of layout ids to file paths.
 
     Returns:
-        Tuple of (entries, merged_canvases, layout_file_paths).
+        Tuple of (text_entries, rectangle_entries, merged_canvases,
+        layout_file_paths).
 
     Requirements: layout-data-mode 2.1-2.5, 3.1-3.3, 7.1-7.6
     """
@@ -567,8 +662,12 @@ def load_data_content(
     presets = merge_presets(chain)
 
     entries: list[DataContentEntry] = []
+    rectangles: list[RectangleEntry] = []
+    checkboxes: list[CheckboxEntry] = []
+    strikeouts: list[StrikeoutEntry] = []
     _extract_data_entries(
-        merged_content, presets, parameters, merged_canvases, entries,
+        merged_content, presets, parameters, merged_canvases,
+        entries, rectangles, checkboxes, strikeouts,
     )
 
-    return entries, merged_canvases, file_paths
+    return entries, rectangles, checkboxes, strikeouts, merged_canvases, file_paths

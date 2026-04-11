@@ -272,7 +272,7 @@ class TestExampleValueStringification:
         layout_path.write_text(json.dumps(layout_data), encoding="utf-8")
         index = build_layout_index(tmp_dir)
 
-        entries, _, _ = load_data_content(layout_path, index)
+        entries, _, _, _, _, _ = load_data_content(layout_path, index)
 
         assert len(entries) == 1
         assert entries[0].example_value == str(example)
@@ -353,7 +353,7 @@ class TestNonTextTypeFiltering:
         layout_path.write_text(json.dumps(layout_data), encoding="utf-8")
         index = build_layout_index(tmp_dir)
 
-        entries, _, _ = load_data_content(layout_path, index)
+        entries, _, _, _, _, _ = load_data_content(layout_path, index)
 
         assert len(entries) == len(text_entries)
         for entry in entries:
@@ -469,7 +469,7 @@ class TestNestedContentExtraction:
         layout_path.write_text(json.dumps(layout_data), encoding="utf-8")
         index = build_layout_index(tmp_dir)
 
-        entries, _, _ = load_data_content(layout_path, index)
+        entries, _, _, _, _, _ = load_data_content(layout_path, index)
 
         extracted_names = {e.param_name for e in entries}
         assert extracted_names == set(all_param_names)

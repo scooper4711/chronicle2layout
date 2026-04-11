@@ -115,9 +115,20 @@ def detect_checkboxes(
         if not _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
             continue
 
+        cb_x0 = x0
+        cb_x1 = x1
+        if len(text) > 1:
+            char_width = (x1 - x0) / len(text)
+            for ch in CHECKBOX_CHARS:
+                idx = text.find(ch)
+                if idx >= 0:
+                    cb_x0 = x0 + char_width * idx
+                    cb_x1 = cb_x0 + char_width
+                    break
+
         checkboxes.append(
             _to_region_relative_pct(
-                x0, y0, x1, y1,
+                cb_x0, y0, cb_x1, y1,
                 region_x0, region_y0, region_width, region_height,
             )
         )
