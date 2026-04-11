@@ -169,6 +169,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default="summary",
         help="Canvas name for checkbox detection (default: summary).",
     )
+    parser.add_argument(
+        "--base-dir",
+        default=None,
+        help=(
+            "Base directory for computing relative paths in single-file "
+            "mode. When provided, the TOML rule matching uses the file's "
+            "path relative to this directory instead of just the filename."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -197,14 +206,19 @@ def _collect_pdf_files(pdf_path: Path) -> list[Path]:
 def _relative_path_for_matching(
     pdf_file: Path,
     pdf_path: Path,
+    base_dir: Path | None = None,
 ) -> str:
     """Compute the relative path string used for rule matching.
 
     For directory mode, returns the path relative to the base directory.
-    For single-file mode, returns just the filename.
+    For single-file mode with --base-dir, returns the path relative to
+    base_dir. For single-file mode without --base-dir, returns just the
+    filename.
     """
     if pdf_path.is_dir():
         return str(pdf_file.relative_to(pdf_path))
+    if base_dir is not None:
+        return str(pdf_file.relative_to(base_dir))
     return pdf_file.name
 
 
@@ -233,11 +247,14 @@ def _derive_output_file(
     pdf_base: Path,
     metadata: MatchedMetadata,
     output_dir: Path,
+    base_dir: Path | None = None,
 ) -> Path:
     """Derive the output file path, mirroring the PDF's subdirectory structure.
 
     For directory mode the PDF's relative subdirectory is preserved under
-    output_dir.  For single-file mode the file lands directly in output_dir.
+    output_dir.  For single-file mode with --base-dir, the subdirectory
+    is computed relative to base_dir.  For single-file mode without
+    --base-dir, the file lands directly in output_dir.
 
     The filename is ``{id}{chronicle_suffix}.json`` where the suffix
     is derived from the chronicle PDF name (e.g.
@@ -245,6 +262,8 @@ def _derive_output_file(
     """
     if pdf_base.is_dir():
         relative_parent = pdf_file.relative_to(pdf_base).parent
+    elif base_dir is not None:
+        relative_parent = pdf_file.relative_to(base_dir).parent
     else:
         relative_parent = Path(".")
     suffix = _extract_chronicle_suffix(metadata.default_chronicle_location)
@@ -259,6 +278,7 @@ def _process_single_pdf(
     item_canvas: str,
     checkbox_canvas: str,
     output_dir: Path,
+    base_dir: Path | None = None,
 ) -> Path | None:
     """Process a single PDF: resolve canvases, generate layout, write JSON.
 
@@ -296,7 +316,7 @@ def _process_single_pdf(
         default_chronicle_location=metadata.default_chronicle_location,
     )
 
-    output_file = _derive_output_file(pdf_file, pdf_base, metadata, output_dir)
+    output_file = _derive_output_file(pdf_file, pdf_base, metadata, output_dir, base_dir)
     output_file.parent.mkdir(parents=True, exist_ok=True)
     output_file.write_text(
         json.dumps(layout, indent=2) + "\n",
@@ -363,11 +383,14 @@ def main(argv: list[str] | None = None) -> int:
     # Collect PDF files
     pdf_files = _collect_pdf_files(pdf_path)
 
+    # Resolve base directory for single-file relative path matching
+    base_dir = Path(args.base_dir) if args.base_dir else None
+
     generated_count = 0
     skipped_count = 0
 
     for pdf_file in pdf_files:
-        relative = _relative_path_for_matching(pdf_file, pdf_path)
+        relative = _relative_path_for_matching(pdf_file, pdf_path, base_dir)
         metadata = match_rule(relative, config)
 
         if metadata is None:
@@ -396,6 +419,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.item_canvas,
                 args.checkbox_canvas,
                 output_dir,
+                base_dir,
             )
             if output_file is not None:
                 print(output_file)
