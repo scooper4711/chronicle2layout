@@ -1,0 +1,139 @@
+{
+  "id": "pfs2.s7-16",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-16 AStars Journey",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-16-AStarsJourneyChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "crafter\u2019s eyepiece (level 3, 60 gp; Pathfinder GM Core 288)",
+          "dancing scarf (level 3, 60 gp; GM Core 288)",
+          "glow rod (level 1, 3 gp; GM Core 251)",
+          "lesser maestro\u2019s instrument (level 3, 60 gp; GM Core 275)",
+          "shrinking potion (level 4, 15 gp; GM Core 261)"
+        ],
+        "example": "crafter\u2019s eyepiece (level 3, 60 gp; Pathfinder GM Core 288)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "You also solved an ancient puzzle"
+        ],
+        "example": "You also solved an ancient puzzle"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.You_also_solved_an_ancient_puzzle": {
+      "x": 31.717,
+      "y": 18.892,
+      "x2": 33.23,
+      "y2": 27.872
+    },
+    "item.line.crafter\u2019s_eyepiece_level_3_60_gp;_Pathfinder_GM_Co": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.dancing_scarf_level_3_60_gp;_GM_Core_288": {
+      "y": 19.0,
+      "y2": 23.6
+    },
+    "item.line.glow_rod_level_1_3_gp;_GM_Core_251": {
+      "y": 24.6,
+      "y2": 29.2
+    },
+    "item.line.lesser_maestro\u2019s_instrument_level_3_60_gp;_GM_Core": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.shrinking_potion_level_4_15_gp;_GM_Core_261": {
+      "y": 41.4,
+      "y2": 46.0
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "crafter\u2019s eyepiece (level 3, 60 gp; Pathfinder GM Core 288)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.crafter\u2019s_eyepiece_level_3_60_gp;_Pathfinder_GM_Co"
+            ]
+          }
+        ],
+        "dancing scarf (level 3, 60 gp; GM Core 288)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dancing_scarf_level_3_60_gp;_GM_Core_288"
+            ]
+          }
+        ],
+        "glow rod (level 1, 3 gp; GM Core 251)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.glow_rod_level_1_3_gp;_GM_Core_251"
+            ]
+          }
+        ],
+        "lesser maestro\u2019s instrument (level 3, 60 gp; GM Core 275)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_maestro\u2019s_instrument_level_3_60_gp;_GM_Core"
+            ]
+          }
+        ],
+        "shrinking potion (level 4, 15 gp; GM Core 261)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.shrinking_potion_level_4_15_gp;_GM_Core_261"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "You also solved an ancient puzzle": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.You_also_solved_an_ancient_puzzle"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

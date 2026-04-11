@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s7-15",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-15 Within Antiquated Halls",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-15-WithinAntiquatedHallsChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "adamantine chunk (level 8, 500 gp; Pathfinder GM Core 253)",
+          "scholarly journal of Amaznen\u2019s faith (level 3, 6 gp; Pathfinder Player Core 290)",
+          "scroll of lightning bolt (level 5, 30 gp; Pathfinder GM Core 262)",
+          "smoothing aeon stone (level 7, 310 gp; Pathfinder GM Core 285)",
+          "wand of revealing light (level 5, 160 gp; Pathfinder GM Core 282)"
+        ],
+        "example": "adamantine chunk (level 8, 500 gp; Pathfinder GM Core 253)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.adamantine_chunk_level_8_500_gp;_Pathfinder_GM_Cor": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.scholarly_journal_of_Amaznen\u2019s_faith_level_3_6_gp;": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.scroll_of_lightning_bolt_level_5_30_gp;_Pathfinder": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.smoothing_aeon_stone_level_7_310_gp;_Pathfinder_GM": {
+      "y": 41.4,
+      "y2": 51.6
+    },
+    "item.line.wand_of_revealing_light_level_5_160_gp;_Pathfinder": {
+      "y": 52.6,
+      "y2": 62.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "adamantine chunk (level 8, 500 gp; Pathfinder GM Core 253)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.adamantine_chunk_level_8_500_gp;_Pathfinder_GM_Cor"
+            ]
+          }
+        ],
+        "scholarly journal of Amaznen\u2019s faith (level 3, 6 gp; Pathfinder Player Core 290)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scholarly_journal_of_Amaznen\u2019s_faith_level_3_6_gp;"
+            ]
+          }
+        ],
+        "scroll of lightning bolt (level 5, 30 gp; Pathfinder GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_lightning_bolt_level_5_30_gp;_Pathfinder"
+            ]
+          }
+        ],
+        "smoothing aeon stone (level 7, 310 gp; Pathfinder GM Core 285)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.smoothing_aeon_stone_level_7_310_gp;_Pathfinder_GM"
+            ]
+          }
+        ],
+        "wand of revealing light (level 5, 160 gp; Pathfinder GM Core 282)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.wand_of_revealing_light_level_5_160_gp;_Pathfinder"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
