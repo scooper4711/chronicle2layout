@@ -231,10 +231,10 @@ class TestBuildDependencyMap:
         assert set(map_q14) <= set(map_both)
 
     def test_shared_ancestor_maps_to_both_ids(self):
-        # Both pfs2.b01 and pfs2.b02 share pfs2 in their chain.
+        # Both pfs2.b1 and pfs2.b2 share pfs2 in their chain.
         # The shared parent should map to both ids.
         dep_map = _build_dependency_map(
-            LAYOUT_ROOT, ["pfs2.b01", "pfs2.b02"],
+            LAYOUT_ROOT, ["pfs2.b1", "pfs2.b2"],
         )
         # Find the shared parent (pfs2 root layout)
         shared = [p for p, ids in dep_map.items() if len(ids) > 1]
