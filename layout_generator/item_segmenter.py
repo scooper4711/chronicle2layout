@@ -109,9 +109,6 @@ class _ItemAccumulator:
         self.tokens = []
         self.open_count = 0
         self.groups_completed = 0
-
-    def reset_position(self) -> None:
-        """Clear vertical position tracking for the next item."""
         self.y_start = None
         self.y_end = None
 
@@ -137,15 +134,29 @@ def _process_line(
         accumulator.y_start = line_y_top
     accumulator.y_end = line_y_bottom
 
-    for token in text.split():
+    tokens = text.split()
+    for idx, token in enumerate(tokens):
         if accumulator.process_token(token):
             accumulator.flush(items)
-            accumulator.y_start = line_y_top
-            accumulator.y_end = line_y_bottom
+            if idx < len(tokens) - 1:
+                accumulator.y_start = line_y_top
+                accumulator.y_end = line_y_bottom
 
     if accumulator.is_balanced():
         accumulator.flush(items)
-        accumulator.reset_position()
+
+
+def _resolve_overlapping_bounds(items: list[dict]) -> None:
+    """Adjust adjacent item y-bounds so they don't overlap.
+
+    When one item's y2 exceeds the next item's y, both are set to
+    the midpoint between them.
+    """
+    for i in range(len(items) - 1):
+        if items[i]["y2"] > items[i + 1]["y"]:
+            mid = (items[i]["y2"] + items[i + 1]["y"]) / 2
+            items[i]["y2"] = round(mid, 3)
+            items[i + 1]["y"] = round(mid, 3)
 
 
 def segment_items(lines: list[dict]) -> list[dict]:
@@ -153,7 +164,9 @@ def segment_items(lines: list[dict]) -> list[dict]:
 
     Streams tokens across lines, tracking parenthesis depth.
     Finalizes items when two parenthesis groups close with balanced
-    parens, or at end-of-line with balanced parens.
+    parens, or at end-of-line with balanced parens. Adjacent items
+    with overlapping y-bounds are adjusted to share a midpoint
+    boundary.
 
     Args:
         lines: Text line dicts from extract_text_lines.
@@ -172,5 +185,7 @@ def segment_items(lines: list[dict]) -> list[dict]:
     # Flush remaining tokens at end of input (unbalanced at EOF)
     if accumulator.tokens:
         accumulator.flush(items)
+
+    _resolve_overlapping_bounds(items)
 
     return items
