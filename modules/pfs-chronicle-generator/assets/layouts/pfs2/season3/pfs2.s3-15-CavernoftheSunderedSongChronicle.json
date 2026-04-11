@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s3-15",
-  "parent": "pfs2.season3-layout-s3-04",
+  "parent": "pfs2.season3-layout-s3-09",
   "description": "3-15 Cavern of the Sundered Song",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-15-CavernoftheSunderedSongChronicle.pdf",
   "parameters": {

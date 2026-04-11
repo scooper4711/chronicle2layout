@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-11",
-  "parent": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2.season4-layout-s4-09",
   "description": "4-11 Prisoners of the Electric Castle",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-11-PrisonersoftheElectricCastleChronicle.pdf",
   "parameters": {
@@ -53,96 +53,96 @@
       "size": 1
     },
     "checkbox.found_a_mysterious_object": {
-      "x": 81.896,
-      "y": 25.031,
-      "x2": 83.596,
-      "y2": 35.225
+      "x": 81.99,
+      "y": 25.17,
+      "x2": 83.692,
+      "y2": 35.273
     },
     "checkbox.you_were_unable_to_locate_it_among_the_strangeness": {
-      "x": 8.619,
-      "y": 33.322,
-      "x2": 10.319,
-      "y2": 43.516
+      "x": 8.629,
+      "y": 33.387,
+      "x2": 10.331,
+      "y2": 43.489
     },
     "checkbox.He_escaped": {
-      "x": 37.166,
-      "y": 41.613,
-      "x2": 38.866,
-      "y2": 51.808
+      "x": 37.209,
+      "y": 41.603,
+      "x2": 38.91,
+      "y2": 51.705
     },
     "checkbox.you_defeated_him_in_battle!_Before_leaving": {
-      "x": 50.698,
-      "y": 41.613,
-      "x2": 52.398,
-      "y2": 51.808
+      "x": 50.755,
+      "y": 41.603,
+      "x2": 52.457,
+      "y2": 51.705
     },
     "checkbox.transformed_and_you_unfortunately_had_to_fight_her": {
-      "x": 30.559,
-      "y": 49.904,
-      "x2": 32.259,
-      "y2": 60.099
+      "x": 30.593,
+      "y": 49.819,
+      "x2": 32.295,
+      "y2": 59.922
     },
     "checkbox.she_was_able_to_fight_it_off": {
-      "x": 73.635,
-      "y": 49.904,
-      "x2": 75.335,
-      "y2": 60.099
+      "x": 73.719,
+      "y": 49.819,
+      "x2": 75.421,
+      "y2": 59.922
     },
     "checkbox.all_the_Ardis_Scholars": {
-      "x": 87.107,
-      "y": 58.195,
-      "x2": 88.807,
-      "y2": 68.39
+      "x": 87.206,
+      "y": 58.036,
+      "x2": 88.908,
+      "y2": 68.138
     },
     "checkbox.some_of_the_Ardis_Scholars": {
-      "x": 10.003,
-      "y": 66.486,
-      "x2": 15.448,
-      "y2": 76.681
+      "x": 10.014,
+      "y": 66.252,
+      "x2": 11.105,
+      "y2": 76.354
     },
     "checkbox.on_the_Gale\u2019s_Claw": {
-      "x": 32.107,
-      "y": 66.486,
-      "x2": 33.807,
-      "y2": 76.681
+      "x": 32.144,
+      "y": 66.252,
+      "x2": 33.846,
+      "y2": 76.354
     },
     "checkbox.through_the_hallajin_key": {
-      "x": 50.932,
-      "y": 66.486,
-      "x2": 52.632,
-      "y2": 76.681
+      "x": 50.99,
+      "y": 66.252,
+      "x2": 52.692,
+      "y2": 76.354
     },
     "checkbox.made_it_back_with_you": {
-      "x": 77.327,
-      "y": 66.486,
-      "x2": 79.027,
-      "y2": 76.681
+      "x": 77.415,
+      "y": 66.252,
+      "x2": 79.117,
+      "y2": 76.354
     },
     "checkbox.heroically_sacrificed_themself_to_get_you_home": {
-      "x": 1.272,
-      "y": 74.777,
-      "x2": 2.972,
-      "y2": 84.972
+      "x": 1.274,
+      "y": 74.468,
+      "x2": 2.976,
+      "y2": 84.571
     },
     "item.line.chameleon_suit_level_4_16_gp;_Pathfinder_Guns_&_Ge": {
-      "y": 7.4,
-      "y2": 17.7
+      "y": 7.0,
+      "y2": 17.3
     },
     "item.line.chameleon_suit_greater_level_8_80_gp;_Pathfinder_G": {
-      "y": 18.6,
-      "y2": 28.9
+      "y": 18.2,
+      "y2": 28.5
     },
     "item.line.electromuscular_stimulatorR_level_5_30_gp;_Pathfin": {
-      "y": 29.8,
-      "y2": 40.1
+      "y": 29.4,
+      "y2": 39.7
     },
     "item.line.shockguard_coilR_level_10_175_gp;_Pathfinder_Guns_": {
-      "y": 41.0,
-      "y2": 51.3
+      "y": 40.6,
+      "y2": 50.9
     },
     "item.line.+1_striking_backpack_ballista_level_4_100_gp;_Path": {
-      "y": 52.2,
-      "y2": 62.4
+      "y": 51.8,
+      "y2": 62.1
     }
   },
   "content": [

@@ -62,46 +62,46 @@
     },
     "item.line.brazier_of_harmony_level_5_150_gp;_Pathfinder_Rage": {
       "y": 3.9,
-      "y2": 15.7
+      "y2": 15.4
     },
     "item.line.messenger\u2019s_ring_level_9_700_gp": {
-      "y": 15.1,
-      "y2": 21.3
+      "y": 15.4,
+      "y2": 21.0
     },
     "item.line.moderate_healing_potion_level_6_50_gp": {
-      "y": 20.7,
-      "y2": 26.9
+      "y": 21.0,
+      "y2": 26.6
     },
     "item.line.spellstrike_ammunition_type_III_level_7_70_gp": {
-      "y": 26.3,
-      "y2": 32.5
+      "y": 26.6,
+      "y2": 32.3
     },
     "item.line.crafter\u2019s_eyepiece_level_3_60_gp": {
-      "y": 26.3,
-      "y2": 38.1
+      "y": 32.3,
+      "y2": 37.8
     },
     "item.line.+1_mace_level_3_36_gp": {
-      "y": 37.5,
-      "y2": 43.7
+      "y": 37.8,
+      "y2": 43.4
     },
     "item.line.+1_striking_mace_level_4_101_gp": {
-      "y": 43.1,
-      "y2": 49.3
+      "y": 43.4,
+      "y2": 49.0
     },
     "item.line.+1_striking_called_shears_level_7_450_gp;_Pathfind": {
-      "y": 48.7,
-      "y2": 66.1
+      "y": 49.0,
+      "y2": 65.8
     },
     "item.line.+2_striking_called_shears_level_10_1350_gp;_Pathfi": {
-      "y": 65.5,
-      "y2": 82.9
+      "y": 65.8,
+      "y2": 82.6
     },
     "item.line.Players_with_this_chronicle_sheet_have_access_to": {
-      "y": 82.4,
-      "y2": 88.5
+      "y": 82.6,
+      "y2": 88.2
     },
     "item.line.the_shears_weapon_for_all_characters": {
-      "y": 88.0,
+      "y": 88.2,
       "y2": 94.1
     }
   },

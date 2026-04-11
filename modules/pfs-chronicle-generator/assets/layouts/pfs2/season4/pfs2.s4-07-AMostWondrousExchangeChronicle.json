@@ -9,9 +9,6 @@
         "type": "choice",
         "description": "Item line text to be struck out",
         "choices": [
-          "Once you have made these purchases, the other options become",
-          "unavailable for purchase from this Chronicle Sheet, though you can",
-          "still purchase them normally if you otherwise have access to them.",
           "encompassing lockpick (item 8, 450 gp; Grand Bazaar 10)",
           "envenomed snare (item 7, 60 gp; Grand Bazaar 15)",
           "holy prayer beads (item 5, 160 gp)",
@@ -23,7 +20,7 @@
           "spellstrike ammunition (type III; item 7, 70 gp)",
           "wand of fey flames (item 7, 360 gp; Grand Bazaar 81)"
         ],
-        "example": "Once you have made these purchases, the other options become"
+        "example": "encompassing lockpick (item 8, 450 gp; Grand Bazaar 10)"
       }
     },
     "Checkboxes": {
@@ -118,57 +115,45 @@
       "x2": 64.008,
       "y2": 87.909
     },
-    "item.line.Once_you_have_made_these_purchases_the_other_optio": {
-      "y": 6.8,
-      "y2": 11.5
-    },
-    "item.line.unavailable_for_purchase_from_this_Chronicle_Sheet": {
-      "y": 12.1,
-      "y2": 16.8
-    },
-    "item.line.still_purchase_them_normally_if_you_otherwise_have": {
-      "y": 17.4,
-      "y2": 22.1
-    },
     "item.line.encompassing_lockpick_item_8_450_gp;_Grand_Bazaar_": {
-      "y": 22.8,
-      "y2": 27.4
+      "y": 0.8,
+      "y2": 6.8
     },
     "item.line.envenomed_snare_item_7_60_gp;_Grand_Bazaar_15": {
-      "y": 28.1,
-      "y2": 32.8
+      "y": 7.6,
+      "y2": 13.6
     },
     "item.line.holy_prayer_beads_item_5_160_gp": {
-      "y": 33.4,
-      "y2": 38.1
+      "y": 14.5,
+      "y2": 20.5
     },
     "item.line.misdirecting_haversack_item_6_200_gp;_Grand_Bazaar": {
-      "y": 38.7,
-      "y2": 43.4
+      "y": 21.3,
+      "y2": 27.3
     },
     "item.line.pummeling_snare_item_5_25_gp;_Grand_Bazaar_43": {
-      "y": 44.0,
-      "y2": 48.7
+      "y": 28.1,
+      "y2": 34.1
     },
     "item.line.scroll_of_comprehend_language_4th_level_item_7_70_": {
-      "y": 49.4,
-      "y2": 54.0
+      "y": 35.0,
+      "y2": 41.0
     },
     "item.line.scroll_of_darkvision_5th_level_item_9_150_gp": {
-      "y": 54.7,
-      "y2": 59.4
+      "y": 41.8,
+      "y2": 47.8
     },
     "item.line.sky_serpent_bolts_item_5_25_gp_each;_Grand_Bazaar_": {
-      "y": 60.0,
-      "y2": 64.7
+      "y": 48.6,
+      "y2": 54.6
     },
     "item.line.spellstrike_ammunition_type_III;_item_7_70_gp": {
-      "y": 65.3,
-      "y2": 70.0
+      "y": 55.5,
+      "y2": 61.5
     },
     "item.line.wand_of_fey_flames_item_7_360_gp;_Grand_Bazaar_81": {
-      "y": 70.6,
-      "y2": 75.3
+      "y": 62.3,
+      "y2": 68.3
     }
   },
   "content": [
@@ -176,33 +161,6 @@
       "type": "choice",
       "choices": "param:strikeout_item_lines",
       "content": {
-        "Once you have made these purchases, the other options become": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.Once_you_have_made_these_purchases_the_other_optio"
-            ]
-          }
-        ],
-        "unavailable for purchase from this Chronicle Sheet, though you can": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.unavailable_for_purchase_from_this_Chronicle_Sheet"
-            ]
-          }
-        ],
-        "still purchase them normally if you otherwise have access to them.": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.still_purchase_them_normally_if_you_otherwise_have"
-            ]
-          }
-        ],
         "encompassing lockpick (item 8, 450 gp; Grand Bazaar 10)": [
           {
             "type": "strikeout",

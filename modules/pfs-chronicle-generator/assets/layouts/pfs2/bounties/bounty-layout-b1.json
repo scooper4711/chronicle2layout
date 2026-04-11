@@ -16,7 +16,7 @@
       "eventcode": {
         "type": "text",
         "description": "Event code",
-        "example": 1234
+        "example": "1,234,456"
       },
       "date": {
         "type": "text",
@@ -33,7 +33,7 @@
       "char": {
         "type": "text",
         "description": "Players character name",
-        "example": "Stormageddon"
+        "example": "Merisiel"
       },
       "societyid": {
         "type": "text",
@@ -85,7 +85,7 @@
       "gp_gained": {
         "type": "text",
         "description": "GP Gained",
-        "example": "4gp 2sp"
+        "example": "44.2 gp"
       },
       "gp_spent": {
         "type": "text",
@@ -114,7 +114,7 @@
       "reputation": {
         "type": "multiline",
         "description": "Reputation Gained",
-        "example": "Grand Archive: +4",
+        "example": "Grand Archive: +4\nHorizon Hunters +2\nVerdant Wheel +2",
         "lines": 3
       },
       "strikeout_item_lines": {
@@ -138,7 +138,7 @@
       "notes": {
         "type": "multiline",
         "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
+        "example": "This is a player note line 1\nThis is a player note line 2\nThis is a player note line 3",
         "lines": 12
       }
     }

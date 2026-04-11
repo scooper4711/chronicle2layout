@@ -68,14 +68,14 @@
     },
     "item.line.\u014dmukade": {
       "y": 6.5,
-      "y2": 13.3
+      "y2": 10.5
     },
     "item.line.venom_black_adder_venom_level_2_6gp;_Pathfinder_GM": {
-      "y": 7.6,
+      "y": 10.5,
       "y2": 18.1
     },
     "item.line.healing_berry_minor_healing_potion_level_1_4gp;_GM": {
-      "y": 13.2,
+      "y": 18.8,
       "y2": 29.3
     }
   },

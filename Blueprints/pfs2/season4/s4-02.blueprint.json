@@ -140,11 +140,11 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 20,
+      "lines": 21,
       "align": "LB",
       "left": "@h_rule[0].left",
       "right": "@h_rule[0].right",
-      "top": "@h_rule[0] - 1em",
+      "top": "@h_rule[0] - 1.2em",
       "bottom": "notes.bottom"
     },
     {

@@ -140,7 +140,7 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 6,
+      "lines": 10,
       "align": "LB",
       "left": "notes.left+1em",
       "right": "notes.right-1em",

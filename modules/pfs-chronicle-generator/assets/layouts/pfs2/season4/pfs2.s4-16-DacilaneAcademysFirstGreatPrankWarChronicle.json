@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-16",
-  "parent": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2.season4-layout-s4-09",
   "description": "4-16 Dacilane Academys First Gre at Prank War",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-16-DacilaneAcademysFirstGreatPrankWarChronicle.pdf",
   "parameters": {
@@ -47,62 +47,62 @@
       "size": 1
     },
     "checkbox.peacefully": {
-      "x": 9.449,
-      "y": 49.904,
-      "x2": 11.149,
-      "y2": 60.099
+      "x": 9.46,
+      "y": 49.819,
+      "x2": 11.162,
+      "y2": 59.922
     },
     "checkbox.with_violence": {
-      "x": 22.691,
-      "y": 33.322,
-      "x2": 24.391,
-      "y2": 43.516
+      "x": 22.717,
+      "y": 33.387,
+      "x2": 24.419,
+      "y2": 43.489
     },
     "checkbox.convinced_him_to_calm_down_the_fey": {
-      "x": 72.864,
-      "y": 33.322,
-      "x2": 74.564,
-      "y2": 43.516
+      "x": 72.947,
+      "y": 33.387,
+      "x2": 74.649,
+      "y2": 43.489
     },
     "checkbox.were_unable_to_gain_his_favor": {
-      "x": 6.226,
-      "y": 41.613,
-      "x2": 7.926,
-      "y2": 51.808
+      "x": 6.233,
+      "y": 41.603,
+      "x2": 7.935,
+      "y2": 51.705
     },
     "checkbox.had_to_resort_to_violence": {
-      "x": 24.602,
-      "y": 49.904,
-      "x2": 26.302,
-      "y2": 60.099
+      "x": 24.63,
+      "y": 49.819,
+      "x2": 26.332,
+      "y2": 59.922
     },
     "checkbox.with_his_minions": {
-      "x": 57.766,
-      "y": 58.195,
-      "x2": 59.466,
-      "y2": 68.39
+      "x": 57.832,
+      "y": 58.036,
+      "x2": 59.534,
+      "y2": 68.138
     },
     "checkbox.with_Pappy": {
-      "x": 75.042,
-      "y": 58.195,
-      "x2": 76.742,
-      "y2": 68.39
+      "x": 75.128,
+      "y": 58.036,
+      "x2": 76.83,
+      "y2": 68.138
     },
     "checkbox.has_decided_to_return": {
-      "x": 43.688,
-      "y": 66.486,
-      "x2": 45.388,
-      "y2": 76.681
+      "x": 43.738,
+      "y": 66.252,
+      "x2": 45.44,
+      "y2": 76.354
     },
     "checkbox.bears_a_grudge_against_the_Pathfinder_Society": {
-      "x": 63.638,
-      "y": 66.486,
-      "x2": 65.338,
-      "y2": 76.681
+      "x": 63.711,
+      "y": 66.252,
+      "x2": 65.413,
+      "y2": 76.354
     },
     "item.line.decanter_of_endless_water_level_7_320_gp": {
-      "y": 7.2,
-      "y2": 12.2
+      "y": 6.9,
+      "y2": 11.8
     }
   },
   "content": [

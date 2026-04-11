@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-09",
-  "parent": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2.season4-layout-s4-09",
   "description": "4-09 Killerin the Golden Mask",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-09-KillerintheGoldenMaskChronicle.pdf",
   "parameters": {
@@ -23,8 +23,8 @@
       "x2": 95
     },
     "item.line.lesser_camp_shroud_item_7;_65_gp;_Pathfinder_Lost_": {
-      "y": 7.2,
-      "y2": 17.8
+      "y": 6.9,
+      "y2": 17.4
     }
   },
   "content": [

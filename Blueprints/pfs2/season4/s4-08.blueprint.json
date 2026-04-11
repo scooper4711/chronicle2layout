@@ -1,0 +1,233 @@
+{
+  "id": "pfs2.season4-layout-s4-08",
+  "parent": "pfs2",
+  "description": "Layout for Season 4 Chronicles 08+",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-08-BattlesforStarsFateChronicle.pdf",
+  "flags": [
+    "hidden"
+  ],
+  "fields": [
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "eventcode",
+      "param": "eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "LB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "date",
+      "param": "date",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "gmid",
+      "param": "gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "char",
+      "param": "char",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontweight": "bold",
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "societyid_player",
+      "param": "societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1] - 0.3em"
+    },
+    {
+      "name": "societyid_char",
+      "param": "char_number_short",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM",
+      "left": "@h_rule[2].left + 0.5em",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2] - 0.3em"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CM",
+      "left": "@grey_box[1].left",
+      "right": "@grey_box[1].right",
+      "top": "@grey_box[1].top",
+      "bottom": "@grey_box[1].bottom"
+    },
+    {
+      "name": "gp_gained",
+      "param": "gp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CM",
+      "left": "@grey_box[4].left",
+      "right": "@grey_box[4].right",
+      "top": "@grey_box[4].top",
+      "bottom": "@grey_box[4].bottom"
+    },
+    {
+      "name": "notes",
+      "param": "notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 6,
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "top": "@h_rule[0] - 1em",
+      "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 10,
+      "lines": 5,
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "top": "@h_rule[1]-1em",
+      "bottom": "reputation.bottom"
+    }
+  ],
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_thin[0]",
+      "right": "v_thin[3]",
+      "top": "h_thin[0]",
+      "bottom": "h_thin[5]"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "main.top",
+      "bottom": "h_bar[0].top"
+    },
+    {
+      "name": "reputation",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[2].bottom",
+      "bottom": "h_bar[3].top"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[0].bottom",
+      "bottom": "h_bar[1].top"
+    },
+    {
+      "name": "items",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[1]",
+      "top": "h_bar[3].bottom",
+      "bottom": "h_bar[4].top"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[0].right",
+      "right": "main.right",
+      "top": "h_bar[1].bottom",
+      "bottom": "h_bar[3].top"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_bar[4].bottom",
+      "bottom": "h_thin[4].top"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_thin[4].bottom",
+      "bottom": "main.bottom"
+    }
+  ]
+}

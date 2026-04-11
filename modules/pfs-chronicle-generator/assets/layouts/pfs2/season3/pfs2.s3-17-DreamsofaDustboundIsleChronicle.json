@@ -4,19 +4,6 @@
   "description": "3-17 Dreamsofa Dustbound Isle",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season3/3-17-DreamsofaDustboundIsleChronicle.pdf",
   "parameters": {
-    "Items": {
-      "strikeout_item_lines": {
-        "type": "choice",
-        "description": "Item line text to be struck out",
-        "choices": [
-          "alluring scarf (item 8, 415 gp, Lost Omens Grand Bazaar 84)",
-          "clandestine cloak (item 6, 230 gp, Pathfinder Core Rulebook 608)",
-          "invisibility potion (item 4, 20 gp, Pathfinder Core Rulebook 563, limit 3)",
-          "lady\u2019s knife (item 6, 200 gp, Lost Omens Grand Bazaar 110)"
-        ],
-        "example": "alluring scarf (item 8, 415 gp, Lost Omens Grand Bazaar 84)"
-      }
-    },
     "Checkboxes": {
       "summary_checkbox": {
         "type": "choice",
@@ -29,12 +16,6 @@
     }
   },
   "presets": {
-    "strikeout_item": {
-      "canvas": "items",
-      "color": "black",
-      "x": 0.5,
-      "x2": 95
-    },
     "checkbox": {
       "canvas": "summary",
       "color": "black",
@@ -45,67 +26,9 @@
       "y": 31.862,
       "x2": 70.367,
       "y2": 46.552
-    },
-    "item.line.alluring_scarf_item_8_415_gp_Lost_Omens_Grand_Baza": {
-      "y": 7.0,
-      "y2": 11.4
-    },
-    "item.line.clandestine_cloak_item_6_230_gp_Pathfinder_Core_Ru": {
-      "y": 12.3,
-      "y2": 16.7
-    },
-    "item.line.invisibility_potion_item_4_20_gp_Pathfinder_Core_R": {
-      "y": 17.6,
-      "y2": 22.0
-    },
-    "item.line.lady\u2019s_knife_item_6_200_gp_Lost_Omens_Grand_Bazaar": {
-      "y": 22.9,
-      "y2": 27.4
     }
   },
   "content": [
-    {
-      "type": "choice",
-      "choices": "param:strikeout_item_lines",
-      "content": {
-        "alluring scarf (item 8, 415 gp, Lost Omens Grand Bazaar 84)": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.alluring_scarf_item_8_415_gp_Lost_Omens_Grand_Baza"
-            ]
-          }
-        ],
-        "clandestine cloak (item 6, 230 gp, Pathfinder Core Rulebook 608)": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.clandestine_cloak_item_6_230_gp_Pathfinder_Core_Ru"
-            ]
-          }
-        ],
-        "invisibility potion (item 4, 20 gp, Pathfinder Core Rulebook 563, limit 3)": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.invisibility_potion_item_4_20_gp_Pathfinder_Core_R"
-            ]
-          }
-        ],
-        "lady\u2019s knife (item 6, 200 gp, Lost Omens Grand Bazaar 110)": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.lady\u2019s_knife_item_6_200_gp_Lost_Omens_Grand_Bazaar"
-            ]
-          }
-        ]
-      }
-    },
     {
       "type": "choice",
       "choices": "param:summary_checkbox",

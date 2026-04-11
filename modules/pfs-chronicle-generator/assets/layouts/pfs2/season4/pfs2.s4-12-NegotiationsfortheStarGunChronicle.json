@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-12",
-  "parent": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2.season4-layout-s4-09",
   "description": "4-12 Negotiations for the Star Gun",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-12-NegotiationsfortheStarGunChronicle.pdf",
   "parameters": {
@@ -28,46 +28,46 @@
       "size": 1
     },
     "checkbox.were_able_to_calm_them_down_and_convince_them_of_y": {
-      "x": 56.243,
-      "y": 16.74,
-      "x2": 57.943,
-      "y2": 26.934
+      "x": 56.307,
+      "y": 16.954,
+      "x2": 58.009,
+      "y2": 27.056
     },
     "checkbox.you_escaped_from_their_anger_to_get_to_your_meetin": {
-      "x": 20.067,
-      "y": 25.031,
-      "x2": 21.767,
-      "y2": 35.225
+      "x": 20.09,
+      "y": 25.17,
+      "x2": 21.791,
+      "y2": 35.273
     },
     "checkbox.held_her_off": {
-      "x": 50.38,
-      "y": 33.322,
-      "x2": 52.08,
-      "y2": 43.516
+      "x": 50.437,
+      "y": 33.387,
+      "x2": 52.139,
+      "y2": 43.489
     },
     "checkbox.you_were_unable_to_withstand_her_magic": {
-      "x": 70.949,
-      "y": 33.322,
-      "x2": 72.649,
-      "y2": 43.516
+      "x": 71.03,
+      "y": 33.387,
+      "x2": 72.732,
+      "y2": 43.489
     },
     "checkbox.unanimous": {
-      "x": 25.415,
-      "y": 41.613,
-      "x2": 27.115,
-      "y2": 51.808
+      "x": 25.444,
+      "y": 41.603,
+      "x2": 27.145,
+      "y2": 51.705
     },
     "checkbox.partial_consent_from_the_council_to_travel_the_int": {
-      "x": 38.562,
-      "y": 41.613,
-      "x2": 40.262,
-      "y2": 51.808
+      "x": 38.606,
+      "y": 41.603,
+      "x2": 40.308,
+      "y2": 51.705
     },
     "checkbox.failed_to_secure_the_council\u2019s_approval": {
-      "x": 92.263,
-      "y": 41.613,
-      "x2": 93.963,
-      "y2": 51.808
+      "x": 92.368,
+      "y": 41.603,
+      "x2": 94.07,
+      "y2": 51.705
     }
   },
   "content": [

@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-10",
-  "parent": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2.season4-layout-s4-09",
   "description": "4-10 Arclords Abode",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-10-ArclordsAbodeChronicle.pdf",
   "parameters": {
@@ -42,36 +42,36 @@
       "size": 1
     },
     "checkbox.successfully_gathered_all_the_research_fragments": {
-      "x": 4.582,
-      "y": 49.904,
-      "x2": 6.282,
-      "y2": 60.099
+      "x": 4.587,
+      "y": 49.819,
+      "x2": 6.289,
+      "y2": 59.922
     },
     "checkbox.did_not_gather_all_of_the_fragments_of_her_researc": {
-      "x": 58.691,
-      "y": 49.904,
-      "x2": 60.391,
-      "y2": 60.099
+      "x": 58.758,
+      "y": 49.819,
+      "x2": 60.46,
+      "y2": 59.922
     },
     "checkbox.successfully_convinced_her_to_store_her_research_a": {
-      "x": 7.814,
-      "y": 58.195,
-      "x2": 9.514,
-      "y2": 68.39
+      "x": 7.822,
+      "y": 58.036,
+      "x2": 9.524,
+      "y2": 68.138
     },
     "checkbox.failed_to_convince_her": {
-      "x": 53.773,
-      "y": 58.195,
-      "x2": 55.473,
-      "y2": 68.39
+      "x": 53.834,
+      "y": 58.036,
+      "x2": 55.536,
+      "y2": 68.138
     },
     "item.line.Ganjay_book_Item_1_10_gp_Pathfinder_Lost_Omens_Pat": {
-      "y": 7.2,
-      "y2": 17.8
+      "y": 6.9,
+      "y2": 17.4
     },
     "item.line.oxygen_ooze_Item_4_15_gp_Pathfinder_Lost_Omens_Imp": {
-      "y": 18.4,
-      "y2": 29.0
+      "y": 18.1,
+      "y2": 28.6
     }
   },
   "content": [

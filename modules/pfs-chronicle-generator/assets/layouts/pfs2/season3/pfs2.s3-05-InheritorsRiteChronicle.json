@@ -9,13 +9,9 @@
         "type": "choice",
         "description": "Item line text to be struck out",
         "choices": [
-          "Pathfinder Society characters can purchase a wide variety of",
-          "Pathfinder Society characters, visit paizo.com/pathfindersociety/",
-          "to their character level. Chronicle Sheets for Pathfinder Society",
-          "their character level +2.",
           "channel protection amulet (item 3; 56 gp)"
         ],
-        "example": "Pathfinder Society characters can purchase a wide variety of"
+        "example": "channel protection amulet (item 3; 56 gp)"
       }
     },
     "Checkboxes": {
@@ -54,25 +50,9 @@
       "x2": 51.064,
       "y2": 57.178
     },
-    "item.line.Pathfinder_Society_characters_can_purchase_a_wide_": {
-      "y": 1.5,
-      "y2": 6.2
-    },
-    "item.line.Pathfinder_Society_characters_visit_paizocom/pathf": {
-      "y": 11.8,
-      "y2": 17.1
-    },
-    "item.line.to_their_character_level_Chronicle_Sheets_for_Path": {
-      "y": 22.8,
-      "y2": 27.4
-    },
-    "item.line.their_character_level_+2": {
-      "y": 33.4,
-      "y2": 38.1
-    },
     "item.line.channel_protection_amulet_item_3;_56_gp": {
-      "y": 44.0,
-      "y2": 48.7
+      "y": 6.8,
+      "y2": 14.6
     }
   },
   "content": [
@@ -80,42 +60,6 @@
       "type": "choice",
       "choices": "param:strikeout_item_lines",
       "content": {
-        "Pathfinder Society characters can purchase a wide variety of": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.Pathfinder_Society_characters_can_purchase_a_wide_"
-            ]
-          }
-        ],
-        "Pathfinder Society characters, visit paizo.com/pathfindersociety/": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.Pathfinder_Society_characters_visit_paizocom/pathf"
-            ]
-          }
-        ],
-        "to their character level. Chronicle Sheets for Pathfinder Society": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.to_their_character_level_Chronicle_Sheets_for_Path"
-            ]
-          }
-        ],
-        "their character level +2.": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.their_character_level_+2"
-            ]
-          }
-        ],
         "channel protection amulet (item 3; 56 gp)": [
           {
             "type": "strikeout",

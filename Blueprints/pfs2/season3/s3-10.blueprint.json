@@ -86,7 +86,7 @@
       "align": "RM",
       "left": "@h_rule[1].left",
       "right": "@h_rule[1].right",
-      "bottom": "@h_rule[1] - 0.3em"
+      "bottom": "@h_rule[1] - 0.4em"
     },
     {
       "name": "societyid_char",
@@ -101,7 +101,7 @@
       "align": "LM",
       "left": "@h_rule[2].left + 0.5em",
       "right": "@h_rule[2].right",
-      "bottom": "@h_rule[2] - 0.3em"
+      "bottom": "@h_rule[2] - 0.4em"
     },
     {
       "name": "xp_gained",
@@ -140,7 +140,7 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 6,
+      "lines": 5,
       "align": "LB",
       "left": "notes.left",
       "right": "notes.right",
@@ -156,7 +156,7 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 3,
+      "lines": 4,
       "align": "LB",
       "left": "reputation.left+1em",
       "right": "reputation.right-1em",

@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-08",
-  "parent": "pfs2.season4-layout-s4-07",
+  "parent": "pfs2.season4-layout-s4-08",
   "description": "4-08 Battles for Stars Fate",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-08-BattlesforStarsFateChronicle.pdf",
   "parameters": {
@@ -42,7 +42,7 @@
       "size": 1
     },
     "checkbox.earned/": {
-      "x": 65.904,
+      "x": 66.911,
       "y": 73.61,
       "x2": 67.918,
       "y2": 89.307

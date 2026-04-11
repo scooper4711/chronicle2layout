@@ -9,11 +9,6 @@
         "type": "choice",
         "description": "Item line text to be struck out",
         "choices": [
-          "Chronicle Sheet. Once you\u2019ve made these",
-          "purchases, the other options become unavailable",
-          "for purchase from this Chronicle Sheet, though",
-          "you can still purchase them normally if you",
-          "otherwise have access to them.",
           "brooch of shielding (item 2, 30 gp, limit 1)",
           "dagger of venom (item 5, discounted to 140 gp, limit 1)",
           "demon mask (item 4, discounted to 79 gp, limit 1)",
@@ -22,7 +17,7 @@
           "wand of manifold missiles (1st-level spell; item 5, discounted to 150 gp, limit 1)",
           "wand of widening (1st-level spell; item 4, discounted to 94 gp, limit 1)"
         ],
-        "example": "Chronicle Sheet. Once you\u2019ve made these"
+        "example": "brooch of shielding (item 2, 30 gp, limit 1)"
       }
     }
   },
@@ -33,53 +28,33 @@
       "x": 0.5,
       "x2": 95
     },
-    "item.line.Chronicle_Sheet_Once_you\u2019ve_made_these": {
-      "y": 12.8,
-      "y2": 17.8
-    },
-    "item.line.purchases_the_other_options_become_unavailable": {
-      "y": 18.4,
-      "y2": 23.4
-    },
-    "item.line.for_purchase_from_this_Chronicle_Sheet_though": {
-      "y": 24.0,
-      "y2": 29.0
-    },
-    "item.line.you_can_still_purchase_them_normally_if_you": {
-      "y": 29.6,
-      "y2": 34.6
-    },
-    "item.line.otherwise_have_access_to_them": {
-      "y": 35.2,
-      "y2": 40.1
-    },
     "item.line.brooch_of_shielding_item_2_30_gp_limit_1": {
-      "y": 41.0,
-      "y2": 45.7
+      "y": 2.4,
+      "y2": 10.1
     },
     "item.line.dagger_of_venom_item_5_discounted_to_140_gp_limit_": {
-      "y": 46.6,
-      "y2": 51.3
+      "y": 11.6,
+      "y2": 19.3
     },
     "item.line.demon_mask_item_4_discounted_to_79_gp_limit_1": {
-      "y": 52.2,
-      "y2": 56.9
+      "y": 20.9,
+      "y2": 28.6
     },
     "item.line.wand_of_comprehend_language_item_5_discounted_to_1": {
-      "y": 57.8,
-      "y2": 68.0
+      "y": 30.1,
+      "y2": 47.1
     },
     "item.line.wand_of_heal_item_3_discounted_to_56_gp_limit_1": {
-      "y": 69.0,
-      "y2": 73.6
+      "y": 48.7,
+      "y2": 56.4
     },
     "item.line.wand_of_manifold_missiles_1st-level_spell;_item_5_": {
-      "y": 74.6,
-      "y2": 84.8
+      "y": 57.9,
+      "y2": 74.9
     },
     "item.line.wand_of_widening_1st-level_spell;_item_4_discounte": {
-      "y": 85.8,
-      "y2": 96.0
+      "y": 76.4,
+      "y2": 93.4
     }
   },
   "content": [
@@ -87,51 +62,6 @@
       "type": "choice",
       "choices": "param:strikeout_item_lines",
       "content": {
-        "Chronicle Sheet. Once you\u2019ve made these": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.Chronicle_Sheet_Once_you\u2019ve_made_these"
-            ]
-          }
-        ],
-        "purchases, the other options become unavailable": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.purchases_the_other_options_become_unavailable"
-            ]
-          }
-        ],
-        "for purchase from this Chronicle Sheet, though": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.for_purchase_from_this_Chronicle_Sheet_though"
-            ]
-          }
-        ],
-        "you can still purchase them normally if you": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.you_can_still_purchase_them_normally_if_you"
-            ]
-          }
-        ],
-        "otherwise have access to them.": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.otherwise_have_access_to_them"
-            ]
-          }
-        ],
         "brooch of shielding (item 2, 30 gp, limit 1)": [
           {
             "type": "strikeout",

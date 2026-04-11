@@ -140,7 +140,7 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 20,
+      "lines": 6,
       "align": "LB",
       "left": "@h_rule[0].left",
       "right": "@h_rule[0].right",
@@ -202,7 +202,7 @@
       "parent": "main",
       "left": "main.left",
       "right": "v_thin[1]",
-      "top": "h_bar[3].bottom",
+      "top": "h_bar[3].bottom+50px",
       "bottom": "h_bar[4].top"
     },
     {

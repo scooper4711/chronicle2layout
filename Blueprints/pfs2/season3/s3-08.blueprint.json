@@ -157,7 +157,7 @@
         "defaultfont"
       ],
       "fontsize": 11,
-      "lines": 3,
+      "lines": 4,
       "align": "LB",
       "left": "reputation.left+1em",
       "right": "reputation.right-1em",

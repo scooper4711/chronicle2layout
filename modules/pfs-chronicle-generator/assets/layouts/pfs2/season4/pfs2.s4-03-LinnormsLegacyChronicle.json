@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-03",
-  "parent": "pfs2.season4-layout-s4-02",
+  "parent": "pfs2.season4-layout-s4-03",
   "description": "4-03 Linnorms Legacy",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-03-LinnormsLegacyChronicle.pdf",
   "parameters": {
@@ -9,10 +9,6 @@
         "type": "choice",
         "description": "Item line text to be struck out",
         "choices": [
-          "Once you have made these purchases, the other options become",
-          "unavailable for purchase from this Chronicle Sheet, though you",
-          "can still purchase them normally if you otherwise have access",
-          "to them.",
           "binding coil (item 6, discounted to 35 gp, Secrets of Magic 173)",
           "dragon turtle scale (item 4, discounted to 7 gp)",
           "eye of enlightenment (item 5, discounted to 15 gp, Secrets of Magic 173)",
@@ -25,7 +21,7 @@
           "wand of continuation (1st-level spells; item 5, discounted to 150 gp)",
           "wand of continuation (2nd-level spells; item 7, discounted to 338 gp)"
         ],
-        "example": "Once you have made these purchases, the other options become"
+        "example": "binding coil (item 6, discounted to 35 gp, Secrets of Magic 173)"
       }
     },
     "Checkboxes": {
@@ -64,65 +60,49 @@
       "x2": 33.223,
       "y2": 89.817
     },
-    "item.line.Once_you_have_made_these_purchases_the_other_optio": {
-      "y": 10.7,
-      "y2": 14.7
-    },
-    "item.line.unavailable_for_purchase_from_this_Chronicle_Sheet": {
-      "y": 15.2,
-      "y2": 19.2
-    },
-    "item.line.can_still_purchase_them_normally_if_you_otherwise_": {
-      "y": 19.7,
-      "y2": 23.7
-    },
-    "item.line.to_them": {
-      "y": 24.3,
-      "y2": 28.3
-    },
     "item.line.binding_coil_item_6_discounted_to_35_gp_Secrets_of": {
-      "y": 29.0,
-      "y2": 32.7
+      "y": 0.8,
+      "y2": 6.1
     },
     "item.line.dragon_turtle_scale_item_4_discounted_to_7_gp": {
-      "y": 33.5,
-      "y2": 37.3
+      "y": 7.2,
+      "y2": 12.5
     },
     "item.line.eye_of_enlightenment_item_5_discounted_to_15_gp_Se": {
-      "y": 38.0,
-      "y2": 46.4
+      "y": 13.5,
+      "y2": 25.1
     },
     "item.line.grim_trophy_item_7_discounted_to_33_gp": {
-      "y": 47.1,
-      "y2": 50.9
+      "y": 26.2,
+      "y2": 31.5
     },
     "item.line.moderate_thunderbird_tuft_item_5_discounted_to_15_": {
-      "y": 51.6,
-      "y2": 60.0
+      "y": 32.5,
+      "y2": 44.1
     },
     "item.line.orchestral_brooch_item_8_discounted_to_70_gp_Secre": {
-      "y": 60.7,
-      "y2": 64.5
+      "y": 45.2,
+      "y2": 50.5
     },
     "item.line.traveler\u2019s_any-tool_item_6_discounted_to_185_gp": {
-      "y": 65.3,
-      "y2": 69.1
+      "y": 51.5,
+      "y2": 56.8
     },
     "item.line.greater_staff_of_healing_item_8_discounted_to_440_": {
-      "y": 69.8,
-      "y2": 73.6
+      "y": 57.9,
+      "y2": 63.1
     },
     "item.line.scroll_of_rebounding_barrierR_item_7_70_gp_Lost_Om": {
-      "y": 74.3,
-      "y2": 78.1
+      "y": 64.2,
+      "y2": 69.5
     },
     "item.line.wand_of_continuation_1st-level_spells;_item_5_disc": {
-      "y": 78.9,
-      "y2": 82.7
+      "y": 70.5,
+      "y2": 75.8
     },
     "item.line.wand_of_continuation_2nd-level_spells;_item_7_disc": {
-      "y": 83.4,
-      "y2": 87.2
+      "y": 76.9,
+      "y2": 82.1
     }
   },
   "content": [
@@ -130,42 +110,6 @@
       "type": "choice",
       "choices": "param:strikeout_item_lines",
       "content": {
-        "Once you have made these purchases, the other options become": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.Once_you_have_made_these_purchases_the_other_optio"
-            ]
-          }
-        ],
-        "unavailable for purchase from this Chronicle Sheet, though you": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.unavailable_for_purchase_from_this_Chronicle_Sheet"
-            ]
-          }
-        ],
-        "can still purchase them normally if you otherwise have access": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.can_still_purchase_them_normally_if_you_otherwise_"
-            ]
-          }
-        ],
-        "to them.": [
-          {
-            "type": "strikeout",
-            "presets": [
-              "strikeout_item",
-              "item.line.to_them"
-            ]
-          }
-        ],
         "binding coil (item 6, discounted to 35 gp, Secrets of Magic 173)": [
           {
             "type": "strikeout",

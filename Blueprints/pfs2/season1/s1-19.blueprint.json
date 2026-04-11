@@ -146,6 +146,32 @@
       "right": "notes.right",
       "top": "notes.top",
       "bottom": "notes.bottom"
+    },
+    {
+      "name": "box",
+      "type": "rectangle",
+      "color": "white",
+      "canvas": "reputation",
+      "left": "reputation.left+5px",
+      "right": "reputation.right",
+      "top": "reputation.top+3px",
+      "bottom": "reputation.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 5,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
     }
   ],
   "canvases": [

@@ -77,7 +77,7 @@
     "checkbox.killed_the_would-_be-Trapmaster_Chief": {
       "x": 84.167,
       "y": 50.899,
-      "x2": 89.905,
+      "x2": 84.986,
       "y2": 61.001
     },
     "item.line.dragon\u2019s_crest_Item_1_10_gp_Pathfinder_Lost_Omens_": {
@@ -89,7 +89,7 @@
       "y2": 29.3
     },
     "item.line.vexing_vapor_moderate_Item_3_12_gp_Pathfinder_Lost": {
-      "y": 24.4,
+      "y": 30.0,
       "y2": 40.5
     }
   },

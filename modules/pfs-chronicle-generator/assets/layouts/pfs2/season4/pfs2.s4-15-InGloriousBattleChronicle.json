@@ -1,6 +1,6 @@
 {
   "id": "pfs2.s4-15",
-  "parent": "pfs2.season4-layout-s4-00",
+  "parent": "pfs2.season4-layout-s4-09",
   "description": "4-15 In Glorious Battle",
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season4/4-15-InGloriousBattleChronicle.pdf",
   "parameters": {
@@ -23,8 +23,8 @@
       "x2": 95
     },
     "item.line.standard_grade_adamantine_shield_item_8_440_gp": {
-      "y": 7.2,
-      "y2": 12.2
+      "y": 6.9,
+      "y2": 11.8
     }
   },
   "content": [
