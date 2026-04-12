@@ -127,8 +127,9 @@
   "field_styles": {
     "defaultfont": {
       "font": "Helvetica",
-      "fontsize": 14
+      "fontsize": 11
     }
+
   },
   "canvases": [
     {

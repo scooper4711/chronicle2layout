@@ -7,40 +7,26 @@
   ],
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
   "parameters": {
-    "Checkboxes, Reputation and Items": {
-      "summary_checkbox": {
-        "type": "choice",
-        "description": "Checkboxes in the adventure summary that should be selected",
-        "choices": [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
-        "example": "1,2,3,4,5"
+    "Player Info": {
+      "char": {
+        "type": "text",
+        "description": "Players character name",
+        "example": "Merisiel"
       },
-      "reputation": {
-        "type": "multiline",
-        "description": "Reputation Gained",
-        "example": "Grand Archive: +4",
-        "lines": 4
+      "societyid": {
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
       },
-      "strikeout_item_lines": {
-        "type": "choice",
-        "description": "Item line numbers that should be struk out",
-        "choices": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9
-        ],
-        "example": "1,2,3,4,5,6,7,8,9"
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
       }
     },
     "Rewards": {
@@ -98,6 +84,42 @@
         "lines": 6
       }
     },
+    "Checkboxes, Reputation and Items": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "example": "1,2,3,4,5"
+      },
+      "reputation": {
+        "type": "multiline",
+        "description": "Reputation Gained",
+        "example": "Grand Archive: +4",
+        "lines": 4
+      },
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line numbers that should be struk out",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "example": "1,2,3,4,5,6,7,8,9"
+      }
+    },
     "Event Info": {
       "event": {
         "type": "text",
@@ -118,28 +140,6 @@
         "type": "text",
         "description": "Gamemasters PFS ID",
         "example": 654321
-      }
-    },
-    "Player Info": {
-      "char": {
-        "type": "text",
-        "description": "Players character name",
-        "example": "Merisiel"
-      },
-      "societyid": {
-        "type": "text",
-        "description": "Organized Play ID",
-        "example": "123456"
-      },
-      "char_number": {
-        "type": "text",
-        "description": "Character number",
-        "example": "2001"
-      },
-      "char_number_short": {
-        "type": "text",
-        "description": "Character number without leading digit",
-        "example": "001"
       }
     }
   },
@@ -214,11 +214,11 @@
       "type": "text",
       "canvas": "character_info",
       "x": 1.6,
-      "y": 18.1,
+      "y": 24.9,
       "x2": 63.6,
       "y2": 50.0,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "fontweight": "bold",
       "align": "LB"
     },
@@ -257,7 +257,7 @@
       "x2": 98.7,
       "y2": 33.5,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CM"
     },
     {
@@ -269,7 +269,7 @@
       "x2": 98.7,
       "y2": 82.5,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CM"
     },
     {
@@ -303,11 +303,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 2.4,
-      "y": 24.2,
+      "y": 32.5,
       "x2": 50.1,
       "y2": 63.0,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "LB"
     },
     {
@@ -315,11 +315,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 52.3,
-      "y": 24.2,
+      "y": 32.5,
       "x2": 62.4,
       "y2": 63.0,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "LB"
     },
     {
@@ -327,11 +327,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 64.1,
-      "y": 24.2,
+      "y": 32.5,
       "x2": 78.5,
       "y2": 63.0,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CB"
     },
     {
@@ -339,11 +339,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 80.2,
-      "y": 24.2,
+      "y": 32.5,
       "x2": 99.4,
       "y2": 63.0,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CB"
     }
   ]

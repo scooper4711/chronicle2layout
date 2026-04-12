@@ -207,11 +207,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 2.4,
-      "y": 22.5,
+      "y": 31.0,
       "x2": 45.6,
       "y2": 62.2,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "LB"
     },
     {
@@ -219,11 +219,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 47.5,
-      "y": 22.5,
+      "y": 31.0,
       "x2": 62.4,
       "y2": 62.2,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "LB"
     },
     {
@@ -231,11 +231,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 64.1,
-      "y": 22.5,
+      "y": 31.0,
       "x2": 78.5,
       "y2": 62.2,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CB"
     },
     {
@@ -243,11 +243,11 @@
       "type": "text",
       "canvas": "session_info",
       "x": 80.2,
-      "y": 22.5,
+      "y": 31.0,
       "x2": 99.4,
       "y2": 62.2,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CB"
     },
     {
@@ -255,11 +255,11 @@
       "type": "text",
       "canvas": "character_info",
       "x": 1.6,
-      "y": 18.1,
+      "y": 24.9,
       "x2": 63.6,
       "y2": 50.0,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "fontweight": "bold",
       "align": "LB"
     },
@@ -298,7 +298,7 @@
       "x2": 98.7,
       "y2": 27.5,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CM"
     },
     {
@@ -310,7 +310,7 @@
       "x2": 98.7,
       "y2": 71.8,
       "font": "Helvetica",
-      "fontsize": 14,
+      "fontsize": 11,
       "align": "CM"
     },
     {
