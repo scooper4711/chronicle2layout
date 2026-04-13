@@ -1,0 +1,64 @@
+{
+  "id": "sfs2.s1-10",
+  "parent": "sfs2.season1-layout-s1-06",
+  "description": "1-10 Rites of Rekindling",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-10-RitesofRekindlingChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "convinced Pazi to surrender",
+          "failed to convince Pazi to surrender"
+        ],
+        "example": "convinced Pazi to surrender"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.convinced_Pazi_to_surrender": {
+      "x": 40.969,
+      "y": 26.97,
+      "x2": 43.1,
+      "y2": 38.459
+    },
+    "checkbox.failed_to_convince_Pazi_to_surrender": {
+      "x": 72.046,
+      "y": 26.97,
+      "x2": 74.177,
+      "y2": 38.459
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "convinced Pazi to surrender": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.convinced_Pazi_to_surrender"
+            ]
+          }
+        ],
+        "failed to convince Pazi to surrender": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_convince_Pazi_to_surrender"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

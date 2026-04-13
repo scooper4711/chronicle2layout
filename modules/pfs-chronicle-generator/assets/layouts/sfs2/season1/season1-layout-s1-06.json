@@ -1,0 +1,260 @@
+{
+  "id": "sfs2.season1-layout-s1-06",
+  "parent": "sfs2",
+  "description": "Layout for SFS2 1-06, 1-09, 1-10",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-06-MagicintheMistChronicle.pdf",
+  "parameters": {
+    "Event Info": {
+      "event": {
+        "type": "text",
+        "description": "Event name",
+        "example": "PaizoCon"
+      },
+      "eventcode": {
+        "type": "text",
+        "description": "Event code",
+        "example": "1,234,456"
+      },
+      "date": {
+        "type": "text",
+        "description": "The date on which the game session took place",
+        "example": "27.06.2020"
+      },
+      "gmid": {
+        "type": "text",
+        "description": "Gamemasters SFS ID",
+        "example": 654321
+      }
+    },
+    "Player Info": {
+      "char": {
+        "type": "text",
+        "description": "Players character name",
+        "example": "Merisiel"
+      },
+      "societyid": {
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
+      },
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
+      }
+    },
+    "Rewards": {
+      "xp_gained": {
+        "type": "text",
+        "description": "XP Gained",
+        "example": 4
+      },
+      "treasure_bundles_credits": {
+        "type": "text",
+        "description": "Credits from treasure bundles",
+        "example": 23
+      },
+      "income_earned": {
+        "type": "text",
+        "description": "Income earned (credits)",
+        "example": 1.8
+      },
+      "credits_gained": {
+        "type": "text",
+        "description": "Credits Gained",
+        "example": "42 credits"
+      }
+    },
+    "Checkboxes, Reputation and Items": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "example": "1,2,3,4,5"
+      }
+    },
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note line 1\nThis is a player note line 2\nThis is a player note line 3",
+        "lines": 3
+      }
+    }
+  },
+  "canvas": {
+    "main": {
+      "x": 6.0,
+      "y": 10.7,
+      "x2": 93.9,
+      "y2": 93.1,
+      "parent": "page"
+    },
+    "boons": {
+      "x": 0.0,
+      "y": 31.4,
+      "x2": 79.7,
+      "y2": 77.9,
+      "parent": "main"
+    },
+    "character_info": {
+      "x": 0.0,
+      "y": 0.0,
+      "x2": 79.7,
+      "y2": 9.2,
+      "parent": "main"
+    },
+    "summary": {
+      "x": 0.0,
+      "y": 11.5,
+      "x2": 79.7,
+      "y2": 31.4,
+      "parent": "main"
+    },
+    "rewards": {
+      "x": 82.1,
+      "y": 11.5,
+      "x2": 100.0,
+      "y2": 89.7,
+      "parent": "main"
+    },
+    "notes": {
+      "x": 0.0,
+      "y": 80.0,
+      "x2": 79.7,
+      "y2": 89.7,
+      "parent": "main"
+    },
+    "session_info": {
+      "x": 0.0,
+      "y": 89.7,
+      "x2": 100.0,
+      "y2": 100.0,
+      "parent": "main"
+    }
+  },
+  "content": [
+    {
+      "value": "param:char",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 1.4,
+      "y": 42.0,
+      "x2": 65.0,
+      "y2": 60.5,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "fontweight": "bold",
+      "align": "LB"
+    },
+    {
+      "value": "param:societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 67.6,
+      "y": 45.4,
+      "x2": 83.5,
+      "y2": 60.5,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM"
+    },
+    {
+      "value": "param:char_number",
+      "type": "text",
+      "canvas": "character_info",
+      "x": 85.7,
+      "y": 45.4,
+      "x2": 96.1,
+      "y2": 60.5,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM"
+    },
+    {
+      "value": "param:event",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 0.9,
+      "y": 64.6,
+      "x2": 44.1,
+      "y2": 81.2,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB"
+    },
+    {
+      "value": "param:eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 46.3,
+      "y": 64.6,
+      "x2": 61.1,
+      "y2": 81.2,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "LB"
+    },
+    {
+      "value": "param:date",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 63.3,
+      "y": 64.6,
+      "x2": 77.5,
+      "y2": 81.2,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "CB"
+    },
+    {
+      "value": "param:gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "x": 79.7,
+      "y": 64.6,
+      "x2": 98.9,
+      "y2": 81.2,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "CB"
+    },
+    {
+      "value": "param:xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "x": 20.7,
+      "y": 22.8,
+      "x2": 89.0,
+      "y2": 25.0,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "CB"
+    },
+    {
+      "value": "param:credits_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "x": 23.2,
+      "y": 65.5,
+      "x2": 87.7,
+      "y2": 67.7,
+      "font": "Helvetica",
+      "fontsize": 11,
+      "align": "CB"
+    }
+  ]
+}

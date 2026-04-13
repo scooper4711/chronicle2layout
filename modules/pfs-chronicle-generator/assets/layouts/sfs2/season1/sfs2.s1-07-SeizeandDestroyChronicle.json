@@ -1,0 +1,64 @@
+{
+  "id": "sfs2.s1-07",
+  "parent": "sfs2.season1-layout-s1-05",
+  "description": "1-07 Seize and Destroy",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-07-SeizeandDestroyChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "discovered",
+          "failed to discover the name of someone very important to the Wreck of the Returned: Elovai"
+        ],
+        "example": "discovered"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.discovered": {
+      "x": 26.326,
+      "y": 29.632,
+      "x2": 28.457,
+      "y2": 42.263
+    },
+    "checkbox.failed_to_discover_the_name_of_someone_very_import": {
+      "x": 41.474,
+      "y": 29.632,
+      "x2": 43.604,
+      "y2": 42.263
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "discovered": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.discovered"
+            ]
+          }
+        ],
+        "failed to discover the name of someone very important to the Wreck of the Returned: Elovai": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_discover_the_name_of_someone_very_import"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

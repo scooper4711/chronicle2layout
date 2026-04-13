@@ -1,0 +1,96 @@
+{
+  "id": "sfs2.s1-18",
+  "parent": "sfs2.season1-layout-s1-14",
+  "description": "1-18 Midnightsin Maro",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-18-MidnightsinMaroChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "killed",
+          "saved some converted locals and",
+          "destroyed",
+          "failed to destroy nodocite surveillers who were recording you"
+        ],
+        "example": "killed"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.killed": {
+      "x": 15.993,
+      "y": 27.12,
+      "x2": 18.123,
+      "y2": 39.089
+    },
+    "checkbox.saved_some_converted_locals_and": {
+      "x": 26.458,
+      "y": 27.12,
+      "x2": 28.588,
+      "y2": 39.089
+    },
+    "checkbox.destroyed": {
+      "x": 58.56,
+      "y": 27.12,
+      "x2": 60.69,
+      "y2": 39.089
+    },
+    "checkbox.failed_to_destroy_nodocite_surveillers_who_were_re": {
+      "x": 72.951,
+      "y": 27.12,
+      "x2": 75.082,
+      "y2": 39.089
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "killed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.killed"
+            ]
+          }
+        ],
+        "saved some converted locals and": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.saved_some_converted_locals_and"
+            ]
+          }
+        ],
+        "destroyed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.destroyed"
+            ]
+          }
+        ],
+        "failed to destroy nodocite surveillers who were recording you": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_destroy_nodocite_surveillers_who_were_re"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "sfs2.s1-06",
+  "parent": "sfs2.season1-layout-s1-06",
+  "description": "1-06 Magicin the Mist",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-06-MagicintheMistChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "exploring the other anchor worlds the tower connects",
+          "stabilizing a magical portal that leads to an unknown destination"
+        ],
+        "example": "exploring the other anchor worlds the tower connects"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.exploring_the_other_anchor_worlds_the_tower_connec": {
+      "x": 20.058,
+      "y": 36.567,
+      "x2": 22.188,
+      "y2": 47.263
+    },
+    "checkbox.stabilizing_a_magical_portal_that_leads_to_an_unkn": {
+      "x": 71.962,
+      "y": 36.567,
+      "x2": 74.093,
+      "y2": 47.263
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "exploring the other anchor worlds the tower connects": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.exploring_the_other_anchor_worlds_the_tower_connec"
+            ]
+          }
+        ],
+        "stabilizing a magical portal that leads to an unknown destination": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.stabilizing_a_magical_portal_that_leads_to_an_unkn"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

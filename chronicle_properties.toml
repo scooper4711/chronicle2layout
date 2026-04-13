@@ -335,9 +335,90 @@ default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/
 # =========================================================================
 # SFS2 — Starfinder Society Season 1
 # =========================================================================
-# No parent layouts yet — placeholder parent sfs2.season1-layout-s1-00.
-# Create the parent layout before running the generator.
+# Per-scenario layout overrides based on BOONS/NOTES vertical positions.
+# Specific rules go before the catch-all.
 
+# 1-01 — unique BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-01-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-01"
+parent = "sfs2.season1-layout-s1-01"
+description = "1-01 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-01-$1Chronicle.pdf"
+
+# 1-02 — unique BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-02-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-02"
+parent = "sfs2.season1-layout-s1-02"
+description = "1-02 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-02-$1Chronicle.pdf"
+
+# 1-03, 1-15, 1-16 — shared BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-(03|15|16)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-$1"
+parent = "sfs2.season1-layout-s1-03"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
+
+# 1-04 — unique BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-04-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-04"
+parent = "sfs2.season1-layout-s1-04"
+description = "1-04 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-04-$1Chronicle.pdf"
+
+# 1-05, 1-07, 1-13 — shared BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-(05|07|13)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-$1"
+parent = "sfs2.season1-layout-s1-05"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
+
+# 1-06, 1-09, 1-10 — shared BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-(06|09|10)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-$1"
+parent = "sfs2.season1-layout-s1-06"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
+
+# 1-08 — unique BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-08-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-08"
+parent = "sfs2.season1-layout-s1-08"
+description = "1-08 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-08-$1Chronicle.pdf"
+
+# 1-11 — unique BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-11-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-11"
+parent = "sfs2.season1-layout-s1-11"
+description = "1-11 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-11-$1Chronicle.pdf"
+
+# 1-14, 1-18 — shared BOONS/NOTES position
+[[rules]]
+pattern = 'sfs2/season1/1-(14|18)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-$1"
+parent = "sfs2.season1-layout-s1-14"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
+
+# 1-17 — unique (no Notes section)
+[[rules]]
+pattern = 'sfs2/season1/1-17-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-17"
+parent = "sfs2.season1-layout-s1-17"
+description = "1-17 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-17-$1Chronicle.pdf"
+
+# Catch-all for future SFS2 Season 1 chronicles (defaults to s1-00)
 [[rules]]
 pattern = 'sfs2/season1/1-(\d+)-(\S+)Chronicle\.pdf$'
 id = "sfs2.s1-$1"

@@ -1,0 +1,144 @@
+{
+  "id": "sfs2.s1-05",
+  "parent": "sfs2.season1-layout-s1-05",
+  "description": "1-05 Sloughscar Summit",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-05-SloughscarSummitChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "determined the ground was unstable due to khefaks",
+          "determined the ground was unstable due to a drunken earth elemental",
+          "noticed surveillance drones were spying on you",
+          "First Seeker Sarmak of the Starfinder Society",
+          "Jax of the Aspis Consortium",
+          "Posit-Certitude of the Aballonian Government",
+          "Voss"
+        ],
+        "example": "determined the ground was unstable due to khefaks"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.determined_the_ground_was_unstable_due_to_khefaks": {
+      "x": 32.249,
+      "y": 19.657,
+      "x2": 34.379,
+      "y2": 31.417
+    },
+    "checkbox.determined_the_ground_was_unstable_due_to_a_drunke": {
+      "x": 82.404,
+      "y": 19.657,
+      "x2": 84.535,
+      "y2": 31.417
+    },
+    "checkbox.noticed_surveillance_drones_were_spying_on_you": {
+      "x": 50.963,
+      "y": 29.93,
+      "x2": 53.093,
+      "y2": 41.69
+    },
+    "checkbox.First_Seeker_Sarmak_of_the_Starfinder_Society": {
+      "x": 47.42,
+      "y": 40.203,
+      "x2": 49.55,
+      "y2": 51.964
+    },
+    "checkbox.Jax_of_the_Aspis_Consortium": {
+      "x": 90.826,
+      "y": 40.203,
+      "x2": 92.957,
+      "y2": 51.964
+    },
+    "checkbox.Posit-Certitude_of_the_Aballonian_Government": {
+      "x": 21.675,
+      "y": 50.476,
+      "x2": 23.806,
+      "y2": 62.237
+    },
+    "checkbox.Voss": {
+      "x": 65.829,
+      "y": 50.476,
+      "x2": 67.96,
+      "y2": 62.237
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "determined the ground was unstable due to khefaks": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.determined_the_ground_was_unstable_due_to_khefaks"
+            ]
+          }
+        ],
+        "determined the ground was unstable due to a drunken earth elemental": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.determined_the_ground_was_unstable_due_to_a_drunke"
+            ]
+          }
+        ],
+        "noticed surveillance drones were spying on you": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.noticed_surveillance_drones_were_spying_on_you"
+            ]
+          }
+        ],
+        "First Seeker Sarmak of the Starfinder Society": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.First_Seeker_Sarmak_of_the_Starfinder_Society"
+            ]
+          }
+        ],
+        "Jax of the Aspis Consortium": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Jax_of_the_Aspis_Consortium"
+            ]
+          }
+        ],
+        "Posit-Certitude of the Aballonian Government": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Posit-Certitude_of_the_Aballonian_Government"
+            ]
+          }
+        ],
+        "Voss": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Voss"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

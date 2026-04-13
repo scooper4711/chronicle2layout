@@ -1,0 +1,192 @@
+{
+  "id": "sfs2.s1-17",
+  "parent": "sfs2.season1-layout-s1-17",
+  "description": "1-17 Corpse Fleet Conflict",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-17-CorpseFleetConflictChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "defeating",
+          "destroying",
+          "being disabled by the enemy ship",
+          "saved",
+          "were too late to save kalo smuggler Haalum",
+          "helped",
+          "refused to help Miri retrieve her father\u2019s body",
+          "the Knights of Golarion",
+          "the Starfinder Society",
+          "the government of Sejada in the Diaspora to seek justice"
+        ],
+        "example": "defeating"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.defeating": {
+      "x": 49.27,
+      "y": 14.114,
+      "x2": 51.4,
+      "y2": 26.083
+    },
+    "checkbox.destroying": {
+      "x": 61.273,
+      "y": 14.114,
+      "x2": 63.403,
+      "y2": 26.083
+    },
+    "checkbox.being_disabled_by_the_enemy_ship": {
+      "x": 76.774,
+      "y": 14.114,
+      "x2": 78.904,
+      "y2": 26.083
+    },
+    "checkbox.saved": {
+      "x": 69.883,
+      "y": 27.12,
+      "x2": 72.014,
+      "y2": 39.089
+    },
+    "checkbox.were_too_late_to_save_kalo_smuggler_Haalum": {
+      "x": 81.103,
+      "y": 27.12,
+      "x2": 83.234,
+      "y2": 39.089
+    },
+    "checkbox.helped": {
+      "x": 87.433,
+      "y": 53.133,
+      "x2": 89.563,
+      "y2": 65.102
+    },
+    "checkbox.refused_to_help_Miri_retrieve_her_father\u2019s_body": {
+      "x": 1.544,
+      "y": 66.139,
+      "x2": 3.674,
+      "y2": 78.109
+    },
+    "checkbox.the_Knights_of_Golarion": {
+      "x": 68.278,
+      "y": 66.139,
+      "x2": 70.409,
+      "y2": 78.109
+    },
+    "checkbox.the_Starfinder_Society": {
+      "x": 92.705,
+      "y": 66.139,
+      "x2": 94.835,
+      "y2": 78.109
+    },
+    "checkbox.the_government_of_Sejada_in_the_Diaspora_to_seek_j": {
+      "x": 20.296,
+      "y": 79.146,
+      "x2": 22.427,
+      "y2": 91.115
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "defeating": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.defeating"
+            ]
+          }
+        ],
+        "destroying": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.destroying"
+            ]
+          }
+        ],
+        "being disabled by the enemy ship": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.being_disabled_by_the_enemy_ship"
+            ]
+          }
+        ],
+        "saved": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.saved"
+            ]
+          }
+        ],
+        "were too late to save kalo smuggler Haalum": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.were_too_late_to_save_kalo_smuggler_Haalum"
+            ]
+          }
+        ],
+        "helped": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.helped"
+            ]
+          }
+        ],
+        "refused to help Miri retrieve her father\u2019s body": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.refused_to_help_Miri_retrieve_her_father\u2019s_body"
+            ]
+          }
+        ],
+        "the Knights of Golarion": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Knights_of_Golarion"
+            ]
+          }
+        ],
+        "the Starfinder Society": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_Starfinder_Society"
+            ]
+          }
+        ],
+        "the government of Sejada in the Diaspora to seek justice": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.the_government_of_Sejada_in_the_Diaspora_to_seek_j"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

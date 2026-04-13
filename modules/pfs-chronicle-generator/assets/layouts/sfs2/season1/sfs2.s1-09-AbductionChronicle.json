@@ -1,0 +1,224 @@
+{
+  "id": "sfs2.s1-09",
+  "parent": "sfs2.season1-layout-s1-06",
+  "description": "1-09 Abduction",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-09-AbductionChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "accompanied",
+          "did not accompany you on your mission",
+          "15",
+          "30",
+          "60 minutes and defeated the Functionary\u2019s humanoid and nodocite allies",
+          "Kiha",
+          "Voss",
+          "Snyllen Alder",
+          "did",
+          "didn\u2019t determine the coordinates of the conversion facility",
+          "survived",
+          "died"
+        ],
+        "example": "accompanied"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.accompanied": {
+      "x": 19.235,
+      "y": 17.624,
+      "x2": 21.365,
+      "y2": 29.113
+    },
+    "checkbox.did_not_accompany_you_on_your_mission": {
+      "x": 36.025,
+      "y": 17.624,
+      "x2": 38.156,
+      "y2": 29.113
+    },
+    "checkbox.15": {
+      "x": 39.144,
+      "y": 26.97,
+      "x2": 41.275,
+      "y2": 38.459
+    },
+    "checkbox.30": {
+      "x": 47.501,
+      "y": 26.97,
+      "x2": 49.631,
+      "y2": 38.459
+    },
+    "checkbox.60_minutes_and_defeated_the_Functionary\u2019s_humanoid": {
+      "x": 56.268,
+      "y": 26.97,
+      "x2": 58.399,
+      "y2": 38.459
+    },
+    "checkbox.Kiha": {
+      "x": 90.801,
+      "y": 36.317,
+      "x2": 92.931,
+      "y2": 47.805
+    },
+    "checkbox.Voss": {
+      "x": 1.974,
+      "y": 45.663,
+      "x2": 4.104,
+      "y2": 57.152
+    },
+    "checkbox.Snyllen_Alder": {
+      "x": 12.964,
+      "y": 45.663,
+      "x2": 15.094,
+      "y2": 57.152
+    },
+    "checkbox.did": {
+      "x": 20.556,
+      "y": 55.009,
+      "x2": 22.686,
+      "y2": 66.498
+    },
+    "checkbox.didn\u2019t_determine_the_coordinates_of_the_conversion": {
+      "x": 28.881,
+      "y": 55.009,
+      "x2": 31.012,
+      "y2": 66.498
+    },
+    "checkbox.survived": {
+      "x": 87.926,
+      "y": 55.009,
+      "x2": 90.057,
+      "y2": 66.498
+    },
+    "checkbox.died": {
+      "x": 4.315,
+      "y": 64.355,
+      "x2": 6.446,
+      "y2": 75.844
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "accompanied": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.accompanied"
+            ]
+          }
+        ],
+        "did not accompany you on your mission": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did_not_accompany_you_on_your_mission"
+            ]
+          }
+        ],
+        "15": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.15"
+            ]
+          }
+        ],
+        "30": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.30"
+            ]
+          }
+        ],
+        "60 minutes and defeated the Functionary\u2019s humanoid and nodocite allies": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.60_minutes_and_defeated_the_Functionary\u2019s_humanoid"
+            ]
+          }
+        ],
+        "Kiha": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Kiha"
+            ]
+          }
+        ],
+        "Voss": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Voss"
+            ]
+          }
+        ],
+        "Snyllen Alder": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Snyllen_Alder"
+            ]
+          }
+        ],
+        "did": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did"
+            ]
+          }
+        ],
+        "didn\u2019t determine the coordinates of the conversion facility": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.didn\u2019t_determine_the_coordinates_of_the_conversion"
+            ]
+          }
+        ],
+        "survived": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.survived"
+            ]
+          }
+        ],
+        "died": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.died"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

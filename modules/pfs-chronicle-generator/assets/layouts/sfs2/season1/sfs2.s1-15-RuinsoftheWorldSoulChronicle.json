@@ -1,0 +1,64 @@
+{
+  "id": "sfs2.s1-15",
+  "parent": "sfs2.season1-layout-s1-03",
+  "description": "1-15 Ruins of the World Soul",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-15-RuinsoftheWorldSoulChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "obtained braidworks to return to Aruk and/or",
+          "successfully completed the ritual to commune with the soul of Akiton"
+        ],
+        "example": "obtained braidworks to return to Aruk and/or"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.obtained_braidworks_to_return_to_Aruk_and/or": {
+      "x": 55.64,
+      "y": 23.94,
+      "x2": 57.77,
+      "y2": 34.505
+    },
+    "checkbox.successfully_completed_the_ritual_to_commune_with_": {
+      "x": 2.012,
+      "y": 35.421,
+      "x2": 4.143,
+      "y2": 45.986
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "obtained braidworks to return to Aruk and/or": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.obtained_braidworks_to_return_to_Aruk_and/or"
+            ]
+          }
+        ],
+        "successfully completed the ritual to commune with the soul of Akiton": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.successfully_completed_the_ritual_to_commune_with_"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

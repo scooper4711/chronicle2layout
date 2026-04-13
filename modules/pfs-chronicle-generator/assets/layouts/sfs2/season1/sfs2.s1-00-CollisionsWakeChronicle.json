@@ -1,0 +1,80 @@
+{
+  "id": "sfs2.s1-00",
+  "parent": "sfs2.season1-layout-s1-00",
+  "description": "1-00 Collisions Wake",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-00-CollisionsWakeChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "a clutch of quildebeest eggs",
+          "a newly hatched quildebeest trill",
+          "a mercenary group called the Rust Wraiths"
+        ],
+        "example": "a clutch of quildebeest eggs"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.a_clutch_of_quildebeest_eggs": {
+      "x": 22.202,
+      "y": 40.409,
+      "x2": 24.332,
+      "y2": 52.463
+    },
+    "checkbox.a_newly_hatched_quildebeest_trill": {
+      "x": 51.111,
+      "y": 40.409,
+      "x2": 53.241,
+      "y2": 52.463
+    },
+    "checkbox.a_mercenary_group_called_the_Rust_Wraiths": {
+      "x": 84.174,
+      "y": 40.409,
+      "x2": 86.304,
+      "y2": 52.463
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "a clutch of quildebeest eggs": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.a_clutch_of_quildebeest_eggs"
+            ]
+          }
+        ],
+        "a newly hatched quildebeest trill": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.a_newly_hatched_quildebeest_trill"
+            ]
+          }
+        ],
+        "a mercenary group called the Rust Wraiths": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.a_mercenary_group_called_the_Rust_Wraiths"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

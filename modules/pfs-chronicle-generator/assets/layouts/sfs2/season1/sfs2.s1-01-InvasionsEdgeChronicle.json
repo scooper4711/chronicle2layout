@@ -1,0 +1,64 @@
+{
+  "id": "sfs2.s1-01",
+  "parent": "sfs2.season1-layout-s1-01",
+  "description": "1-01 Invasions Edge",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-01-InvasionsEdgeChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "took a sample of these creatures back to the lodge",
+          "left the destroyed undead on site"
+        ],
+        "example": "took a sample of these creatures back to the lodge"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.took_a_sample_of_these_creatures_back_to_the_lodge": {
+      "x": 15.054,
+      "y": 75.664,
+      "x2": 17.185,
+      "y2": 89.356
+    },
+    "checkbox.left_the_destroyed_undead_on_site": {
+      "x": 64.432,
+      "y": 75.664,
+      "x2": 66.563,
+      "y2": 89.356
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "took a sample of these creatures back to the lodge": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.took_a_sample_of_these_creatures_back_to_the_lodge"
+            ]
+          }
+        ],
+        "left the destroyed undead on site": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.left_the_destroyed_undead_on_site"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

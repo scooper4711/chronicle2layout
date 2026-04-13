@@ -1,0 +1,188 @@
+{
+  "id": "sfs2.season1-layout-s1-14",
+  "parent": "sfs2",
+  "description": "Layout for SFS2 1-14, 1-18",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-14-TheBeastsofBoPartOneChronicle.pdf",
+  "fields": [
+    {
+      "name": "char",
+      "param": "char",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontweight": "bold",
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "societyid_player",
+      "param": "societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "societyid_char",
+      "param": "char_number",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "eventcode",
+      "param": "eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "LB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "date",
+      "param": "date",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "gmid",
+      "param": "gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[2].left+2em",
+      "right": "@h_rule[2].right-1em",
+      "bottom": "@h_rule[2].top"
+    },
+    {
+      "name": "credits_gained",
+      "param": "credits_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[7].left+2em",
+      "right": "@h_rule[7].right-1em",
+      "bottom": "@h_rule[7].top"
+    }
+  ],
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_thin[0]",
+      "right": "v_thin[2]",
+      "top": "h_bar[0].top",
+      "bottom": "grey_box[2].bottom"
+    },
+    {
+      "name": "boons",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[3].top",
+      "bottom": "h_bar[4].top"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[0].top",
+      "bottom": "h_bar[2].top"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[2].bottom",
+      "bottom": "h_bar[3].top"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[0].right",
+      "right": "main.right",
+      "top": "h_bar[2].bottom",
+      "bottom": "grey_box[2].top"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[4].bottom",
+      "bottom": "grey_box[2].top"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "grey_box[2].top",
+      "bottom": "main.bottom"
+    }
+  ]
+}
