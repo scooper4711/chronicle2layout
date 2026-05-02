@@ -1,0 +1,96 @@
+{
+  "id": "sfs2.s1-21",
+  "parent": "sfs2.season1-layout-s1-00",
+  "description": "1-21 Breaching the Wreck",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-21-BreachingtheWreckChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "saved",
+          "failed to save a clangit gremlin named Korrik from a dangerous fire",
+          "killed",
+          "freed an anchored dimensional"
+        ],
+        "example": "saved"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.saved": {
+      "x": 51.78,
+      "y": 40.409,
+      "x2": 53.91,
+      "y2": 52.463
+    },
+    "checkbox.failed_to_save_a_clangit_gremlin_named_Korrik_from": {
+      "x": 62.602,
+      "y": 40.409,
+      "x2": 64.732,
+      "y2": 52.463
+    },
+    "checkbox.killed": {
+      "x": 49.454,
+      "y": 53.507,
+      "x2": 51.585,
+      "y2": 65.561
+    },
+    "checkbox.freed_an_anchored_dimensional": {
+      "x": 59.95,
+      "y": 53.507,
+      "x2": 62.08,
+      "y2": 65.561
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "saved": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.saved"
+            ]
+          }
+        ],
+        "failed to save a clangit gremlin named Korrik from a dangerous fire": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.failed_to_save_a_clangit_gremlin_named_Korrik_from"
+            ]
+          }
+        ],
+        "killed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.killed"
+            ]
+          }
+        ],
+        "freed an anchored dimensional": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.freed_an_anchored_dimensional"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

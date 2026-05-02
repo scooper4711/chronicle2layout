@@ -2,6 +2,9 @@
   "id": "sfs2.season1-layout-s1-17",
   "parent": "sfs2",
   "description": "Layout for SFS2 1-17 CorpseFleetConflict (no Notes section)",
+  "flags": [
+    "hidden"
+  ],
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-17-CorpseFleetConflictChronicle.pdf",
   "parameters": {
     "Event Info": {
@@ -54,19 +57,19 @@
         "description": "XP Gained",
         "example": 4
       },
-      "treasure_bundles_credits": {
+      "treasure_bundle_value": {
         "type": "text",
-        "description": "Credits from treasure bundles",
+        "description": "Currency from treasure bundles",
         "example": 23
       },
       "income_earned": {
         "type": "text",
-        "description": "Income earned (credits)",
+        "description": "Income earned",
         "example": 1.8
       },
-      "credits_gained": {
+      "currency_gained": {
         "type": "text",
-        "description": "Credits Gained",
+        "description": "Currency Gained",
         "example": "42 credits"
       }
     },
@@ -238,7 +241,7 @@
       "align": "CB"
     },
     {
-      "value": "param:credits_gained",
+      "value": "param:currency_gained",
       "type": "text",
       "canvas": "rewards",
       "x": 23.2,

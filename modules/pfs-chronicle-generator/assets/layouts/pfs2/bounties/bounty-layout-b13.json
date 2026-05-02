@@ -7,83 +7,6 @@
   ],
   "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf",
   "parameters": {
-    "Player Info": {
-      "char": {
-        "type": "text",
-        "description": "Players character name",
-        "example": "Merisiel"
-      },
-      "societyid": {
-        "type": "text",
-        "description": "Organized Play ID",
-        "example": "123456"
-      },
-      "char_number": {
-        "type": "text",
-        "description": "Character number",
-        "example": "2001"
-      },
-      "char_number_short": {
-        "type": "text",
-        "description": "Character number without leading digit",
-        "example": "001"
-      }
-    },
-    "Rewards": {
-      "starting_xp": {
-        "type": "text",
-        "description": "Starting XP",
-        "example": 2
-      },
-      "xp_gained": {
-        "type": "text",
-        "description": "XP Gained",
-        "example": 4
-      },
-      "total_xp": {
-        "type": "text",
-        "description": "Total XP",
-        "example": 6
-      },
-      "starting_gp": {
-        "type": "text",
-        "description": "Starting GP",
-        "example": "1cp"
-      },
-      "treasure_bundles_gp": {
-        "type": "text",
-        "description": "Gold from treasure bundles",
-        "example": 23
-      },
-      "income_earned": {
-        "type": "text",
-        "description": "Income earned (gp)",
-        "example": 1.8
-      },
-      "gp_gained": {
-        "type": "text",
-        "description": "GP Gained",
-        "example": "44.2 gp"
-      },
-      "gp_spent": {
-        "type": "text",
-        "description": "GP Spent",
-        "example": "5sp"
-      },
-      "total_gp": {
-        "type": "text",
-        "description": "Total GP from treasure bundles and income",
-        "example": "3gp 7sp 1cp"
-      }
-    },
-    "Notes": {
-      "notes": {
-        "type": "multiline",
-        "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
-        "lines": 6
-      }
-    },
     "Checkboxes, Reputation and Items": {
       "summary_checkbox": {
         "type": "choice",
@@ -140,6 +63,83 @@
         "type": "text",
         "description": "Gamemasters PFS ID",
         "example": 654321
+      }
+    },
+    "Notes": {
+      "notes": {
+        "type": "multiline",
+        "description": "Notes on the chronicle sheet",
+        "example": "This is a player note",
+        "lines": 6
+      }
+    },
+    "Rewards": {
+      "starting_xp": {
+        "type": "text",
+        "description": "Starting XP",
+        "example": 2
+      },
+      "xp_gained": {
+        "type": "text",
+        "description": "XP Gained",
+        "example": 4
+      },
+      "total_xp": {
+        "type": "text",
+        "description": "Total XP",
+        "example": 6
+      },
+      "starting_currency": {
+        "type": "text",
+        "description": "Starting Currency",
+        "example": "15 gp or 150 credits"
+      },
+      "treasure_bundle_value": {
+        "type": "text",
+        "description": "Currency from treasure bundles",
+        "example": 42
+      },
+      "income_earned": {
+        "type": "text",
+        "description": "Income earned",
+        "example": 1.8
+      },
+      "currency_gained": {
+        "type": "text",
+        "description": "Currency Gained",
+        "example": "44.2 gp or 42 credits"
+      },
+      "currency_spent": {
+        "type": "text",
+        "description": "Currency Spent",
+        "example": "0.5 gp or 5 credits"
+      },
+      "total_currency": {
+        "type": "text",
+        "description": "Total currency from treasure bundles and income",
+        "example": "3.71 gp or 37 credits"
+      }
+    },
+    "Player Info": {
+      "char": {
+        "type": "text",
+        "description": "Players character name",
+        "example": "Merisiel"
+      },
+      "societyid": {
+        "type": "text",
+        "description": "Organized Play ID",
+        "example": "123456"
+      },
+      "char_number": {
+        "type": "text",
+        "description": "Character number",
+        "example": "2001"
+      },
+      "char_number_short": {
+        "type": "text",
+        "description": "Character number without leading digit",
+        "example": "001"
       }
     }
   },
@@ -261,7 +261,7 @@
       "align": "CM"
     },
     {
-      "value": "param:gp_gained",
+      "value": "param:currency_gained",
       "type": "text",
       "canvas": "rewards",
       "x": 3.2,

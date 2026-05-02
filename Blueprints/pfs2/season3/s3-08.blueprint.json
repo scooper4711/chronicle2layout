@@ -16,7 +16,6 @@
         "defaultfont"
       ],
       "align": "LB",
-
       "left": "@h_rule[0].left",
       "right": "@h_rule[0].right",
       "bottom": "@h_rule[0]"
@@ -119,8 +118,8 @@
       "bottom": "@grey_box[1].bottom"
     },
     {
-      "name": "gp_gained",
-      "param": "gp_gained",
+      "name": "currency_gained",
+      "param": "currency_gained",
       "type": "text",
       "canvas": "rewards",
       "styles": [

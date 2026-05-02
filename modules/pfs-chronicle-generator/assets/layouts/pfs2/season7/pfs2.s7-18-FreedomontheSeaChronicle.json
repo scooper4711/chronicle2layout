@@ -1,0 +1,48 @@
+{
+  "id": "pfs2.s7-18",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-18 Freedom on the Sea",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-18-FreedomontheSeaChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "along with the nefarious Captain Veda Jacobo"
+        ],
+        "example": "along with the nefarious Captain Veda Jacobo"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.along_with_the_nefarious_Captain_Veda_Jacobo": {
+      "x": 55.582,
+      "y": 18.892,
+      "x2": 57.095,
+      "y2": 27.872
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "along with the nefarious Captain Veda Jacobo": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.along_with_the_nefarious_Captain_Veda_Jacobo"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

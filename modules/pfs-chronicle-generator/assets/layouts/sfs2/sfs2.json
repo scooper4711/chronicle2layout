@@ -54,19 +54,19 @@
         "description": "XP Gained",
         "example": 4
       },
-      "treasure_bundles_credits": {
+      "treasure_bundle_value": {
         "type": "text",
-        "description": "Credits from treasure bundles",
+        "description": "Currency from treasure bundles",
         "example": 23
       },
       "income_earned": {
         "type": "text",
-        "description": "Income earned (credits)",
+        "description": "Income earned",
         "example": 1.8
       },
-      "credits_gained": {
+      "currency_gained": {
         "type": "text",
-        "description": "Credits Gained",
+        "description": "Currency Gained",
         "example": "42 credits"
       }
     },

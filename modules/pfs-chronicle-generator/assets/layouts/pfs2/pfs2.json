@@ -13,7 +13,7 @@
       "eventcode": {
         "type": "text",
         "description": "Event code",
-        "example": 1234
+        "example": "1,234,456"
       },
       "date": {
         "type": "text",
@@ -30,7 +30,7 @@
       "char": {
         "type": "text",
         "description": "Players character name",
-        "example": "Stormageddon"
+        "example": "Merisiel"
       },
       "societyid": {
         "type": "text",
@@ -64,35 +64,35 @@
         "description": "Total XP",
         "example": 6
       },
-      "starting_gp": {
+      "starting_currency": {
         "type": "text",
-        "description": "Starting GP",
-        "example": "1cp"
+        "description": "Starting Currency",
+        "example": "15 gp or 150 credits"
       },
-      "treasure_bundles_gp": {
+      "treasure_bundle_value": {
         "type": "text",
-        "description": "Gold from treasure bundles",
-        "example": 23
+        "description": "Currency from treasure bundles",
+        "example": 42
       },
       "income_earned": {
         "type": "text",
-        "description": "Income earned (gp)",
+        "description": "Income earned",
         "example": 1.8
       },
-      "gp_gained": {
+      "currency_gained": {
         "type": "text",
-        "description": "GP Gained",
-        "example": "4gp 2sp"
+        "description": "Currency Gained",
+        "example": "44.2 gp or 42 credits"
       },
-      "gp_spent": {
+      "currency_spent": {
         "type": "text",
-        "description": "GP Spent",
-        "example": "5sp"
+        "description": "Currency Spent",
+        "example": "0.5 gp or 5 credits"
       },
-      "total_gp": {
+      "total_currency": {
         "type": "text",
-        "description": "Total GP from treasure bundles and income",
-        "example": "3gp 7sp 1cp"
+        "description": "Total currency from treasure bundles and income",
+        "example": "3.71 gp or 37 credits"
       }
     },
     "Checkboxes, Reputation and Items": {
@@ -111,7 +111,7 @@
       "reputation": {
         "type": "multiline",
         "description": "Reputation Gained",
-        "example": "Grand Archive: +4",
+        "example": "Grand Archive: +4\nHorizon Hunters +2\nVerdant Wheel +2",
         "lines": 3
       },
       "strikeout_item_lines": {
@@ -135,7 +135,7 @@
       "notes": {
         "type": "multiline",
         "description": "Notes on the chronicle sheet",
-        "example": "This is a player note",
+        "example": "This is a player note line 1\nThis is a player note line 2\nThis is a player note line 3",
         "lines": 12
       }
     }

@@ -118,8 +118,8 @@
       "bottom": "@grey_box[0].bottom"
     },
     {
-      "name": "gp_gained",
-      "param": "gp_gained",
+      "name": "currency_gained",
+      "param": "currency_gained",
       "type": "text",
       "canvas": "rewards",
       "styles": [

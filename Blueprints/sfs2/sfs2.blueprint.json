@@ -54,19 +54,19 @@
         "description": "XP Gained",
         "example": 4
       },
-      "treasure_bundles_credits": {
+      "treasure_bundle_value": {
         "type": "text",
-        "description": "Credits from treasure bundles",
+        "description": "Currency from treasure bundles",
         "example": 23
       },
       "income_earned": {
         "type": "text",
-        "description": "Income earned (credits)",
+        "description": "Income earned",
         "example": 1.8
       },
-      "credits_gained": {
+      "currency_gained": {
         "type": "text",
-        "description": "Credits Gained",
+        "description": "Currency Gained",
         "example": "42 credits"
       }
     },
@@ -74,7 +74,13 @@
       "summary_checkbox": {
         "type": "choice",
         "description": "Checkboxes in the adventure summary that should be selected",
-        "choices": [1, 2, 3, 4, 5],
+        "choices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
         "example": "1,2,3,4,5"
       }
     },
@@ -92,7 +98,6 @@
       "font": "Helvetica",
       "fontsize": 11
     }
-
   },
   "canvases": [
     {

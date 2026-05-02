@@ -67,35 +67,35 @@
         "description": "Total XP",
         "example": 6
       },
-      "starting_gp": {
+      "starting_currency": {
         "type": "text",
-        "description": "Starting GP",
-        "example": "1cp"
+        "description": "Starting Currency",
+        "example": "15 gp or 150 credits"
       },
-      "treasure_bundles_gp": {
+      "treasure_bundle_value": {
         "type": "text",
-        "description": "Gold from treasure bundles",
-        "example": 23
+        "description": "Currency from treasure bundles",
+        "example": 42
       },
       "income_earned": {
         "type": "text",
-        "description": "Income earned (gp)",
+        "description": "Income earned",
         "example": 1.8
       },
-      "gp_gained": {
+      "currency_gained": {
         "type": "text",
-        "description": "GP Gained",
-        "example": "44.2 gp"
+        "description": "Currency Gained",
+        "example": "44.2 gp or 42 credits"
       },
-      "gp_spent": {
+      "currency_spent": {
         "type": "text",
-        "description": "GP Spent",
-        "example": "5sp"
+        "description": "Currency Spent",
+        "example": "0.5 gp or 5 credits"
       },
-      "total_gp": {
+      "total_currency": {
         "type": "text",
-        "description": "Total GP from treasure bundles and income",
-        "example": "3gp 7sp 1cp"
+        "description": "Total currency from treasure bundles and income",
+        "example": "3.71 gp or 37 credits"
       }
     },
     "Checkboxes, Reputation and Items": {
@@ -302,7 +302,7 @@
       "align": "CM"
     },
     {
-      "value": "param:gp_gained",
+      "value": "param:currency_gained",
       "type": "text",
       "canvas": "rewards",
       "x": 0.6,
