@@ -50,8 +50,8 @@ def build_json_index(directory: Path) -> dict[str, Path]:
     for json_path in directory.rglob("*.json"):
         try:
             data = json.loads(json_path.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, OSError):
-            logger.debug("Skipping %s: cannot parse JSON", json_path)
+        except (json.JSONDecodeError, OSError) as exc:
+            logger.warning("Skipping %s: %s", json_path, exc)
             continue
         if isinstance(data, dict) and isinstance(data.get("id"), str):
             index[data["id"]] = json_path
