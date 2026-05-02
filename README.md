@@ -24,6 +24,7 @@ Each tool lives in its own Python package with dedicated documentation.
 | [Blueprint to Layout](blueprint2layout/README.md) | Converts Blueprint JSON into layout JSON via pixel detection. |
 | [Layout Generator](layout_generator/README.md) | Generates filled chronicle PDFs from layouts and player data. |
 | [Layout Visualizer](layout_visualizer/README.md) | Renders canvas overlays on chronicle PDFs for debugging. |
+| [Scenario Download Workflow](scenario_download_workflow/README.md) | Automates end-to-end processing of newly downloaded scenario PDFs. |
 
 ## Setup
 

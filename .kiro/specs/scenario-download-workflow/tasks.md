@@ -117,20 +117,20 @@ Implement the `scenario_download_workflow` Python CLI package as a thin orchestr
     - Print summary at end (processed, skipped, failed counts)
     - _Requirements: 1.1–1.8, 3.1–3.5, 5.1–5.4, 12.1–12.5, 14.5, 15.1–15.4_
 
-  - [~] 7.2 Write unit tests for `__main__.py`
+  - [ ] 7.2 Write unit tests for `__main__.py`
     - Test argument parsing defaults and overrides
     - Test interactive confirmation with mocked input (y, n, q, case variations)
     - Test exit code logic with various success/fail/skip combinations
     - Test end-to-end flow with mocked tools and discovery
     - _Requirements: 1.1–1.8, 3.1–3.5, 14.5_
 
-  - [~] 7.3 Write property test for user response classification (Property 3)
+  - [ ] 7.3 Write property test for user response classification (Property 3)
     - **Property 3: User response classification is case-insensitive**
     - Generate random case variations of "y", "yes", "n", "no", "q", "quit"
     - Verify correct action classification regardless of casing
     - **Validates: Requirements 3.2, 3.3, 3.4**
 
-  - [~] 7.4 Write property test for exit code logic (Property 6)
+  - [ ] 7.4 Write property test for exit code logic (Property 6)
     - **Property 6: Exit code reflects processing outcomes**
     - Generate random (success_count, fail_count, skip_count) tuples
     - Verify exit code is 0 when success_count > 0, 1 when success_count == 0
@@ -140,7 +140,7 @@ Implement the `scenario_download_workflow` Python CLI package as a thin orchestr
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 9. Integration tests and documentation
-  - [~] 9.1 Write integration tests for the full pipeline
+  - [ ] 9.1 Write integration tests for the full pipeline
     - Mock all five `main()` functions and `fitz.open()`
     - Test end-to-end flow from discovery through visualization with mocked tools
     - Verify correct argument lists passed to each tool in sequence
@@ -149,14 +149,14 @@ Implement the `scenario_download_workflow` Python CLI package as a thin orchestr
     - Verify exit codes for mixed success/failure batches
     - _Requirements: 6.1–6.6, 7.1–7.5, 8.1–8.6, 9.1–9.6, 10.1–10.7, 11.1–11.4, 14.1–14.5_
 
-  - [~] 9.2 Create `scenario_download_workflow/README.md`
+  - [x] 9.2 Create `scenario_download_workflow/README.md`
     - Describe purpose and five-step pipeline
     - Document CLI arguments (`--downloads-dir`, `--project-dir`, `--recent`, `--non-interactive`)
     - Include usage example
     - Note dependency on five existing PFS Tools utilities
     - _Requirements: 17.1, 17.2, 17.3, 17.4, 17.5_
 
-  - [~] 9.3 Update top-level `README.md` utilities table
+  - [x] 9.3 Update top-level `README.md` utilities table
     - Add Scenario Download Workflow entry with relative link to utility README
     - _Requirements: 18.1_
 
