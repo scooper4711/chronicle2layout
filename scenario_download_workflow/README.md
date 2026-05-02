@@ -76,6 +76,31 @@ Process PZO9507-06.pdf? [y/n/q]
 
 Use `--non-interactive` to skip prompts and process everything.
 
+## Syncing Assets
+
+After processing scenarios, the generated layouts and chronicles live under
+`modules/pfs-chronicle-generator/assets`. Two helper scripts push changes
+to the sibling `../pfs-chronicle-generator` repo.
+
+### Review changes
+
+Compare JSON layout files and interactively view diffs for any that have
+actual content changes:
+
+```bash
+./diff_assets.sh
+```
+
+### Push updated assets
+
+Copy all new or changed files to the sibling repo. Files that are newer by
+timestamp but identical in content are skipped.
+
+```bash
+./sync_assets.sh           # copy changed files
+./sync_assets.sh --dry-run # preview what would be copied
+```
+
 ## Dependencies
 
 This utility orchestrates the five existing PFS Tools packages by calling
