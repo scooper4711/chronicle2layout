@@ -11,6 +11,7 @@
 # chronicles that use the same N-XX-Name format.
 
 layouts_dir = "modules/pfs-chronicle-generator/assets/layouts"
+chronicles_dir = "modules/pfs-chronicle-generator/assets/chronicles"
 
 # =========================================================================
 # Bounties
@@ -34,6 +35,43 @@ default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/
 # =========================================================================
 # Quests
 # =========================================================================
+# Q1–Q13 use season-2-style layouts; the summary/boons divider shifts
+# between groups.  Q14+ use a different series layout (quest-layout-q14).
+#
+# Group 1: Q1, Q3, Q4, Q6, Q7, Q8, Q9
+# Group 2: Q2
+# Group 3: Q5
+# Group 4: Q10, Q11, Q13
+
+[[rules]]
+pattern = 'pfs2/quests/Q([1346789])-(\S+)Chronicle\.pdf$'
+id = "pfs2.q$1"
+parent = "pfs2.quest-layout-q1"
+description = "Q$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/quests/Q(2)-(\S+)Chronicle\.pdf$'
+id = "pfs2.q$1"
+parent = "pfs2.quest-layout-q2"
+description = "Q$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/quests/Q(5)-(\S+)Chronicle\.pdf$'
+id = "pfs2.q$1"
+parent = "pfs2.quest-layout-q5"
+description = "Q$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q$1-$2Chronicle.pdf"
+
+[[rules]]
+pattern = 'pfs2/quests/Q(1[013])-(\S+)Chronicle\.pdf$'
+id = "pfs2.q$1"
+parent = "pfs2.quest-layout-q10"
+description = "Q$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q$1-$2Chronicle.pdf"
+
+# Catch-all for Q14+
 
 [[rules]]
 pattern = 'pfs2/quests/Q(\d+)-(\S+)Chronicle\.pdf$'
