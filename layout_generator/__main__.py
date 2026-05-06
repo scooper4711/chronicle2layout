@@ -385,6 +385,8 @@ def main(argv: list[str] | None = None) -> int:
 
     # Resolve base directory for single-file relative path matching
     base_dir = Path(args.base_dir) if args.base_dir else None
+    if base_dir is None and config.chronicles_dir is not None:
+        base_dir = Path(config.chronicles_dir)
 
     generated_count = 0
     skipped_count = 0

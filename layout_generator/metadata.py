@@ -43,11 +43,13 @@ class MetadataConfig:
 
     Attributes:
         layouts_dir: Optional global layouts directory path from the TOML.
+        chronicles_dir: Optional base directory for relative path matching.
         rules: Ordered list of MetadataRule entries.
     """
 
     layouts_dir: str | None
     rules: list[MetadataRule]
+    chronicles_dir: str | None = None
 
 
 @dataclass(frozen=True)
@@ -99,6 +101,7 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
         ) from exc
 
     layouts_dir = data.get("layouts_dir")
+    chronicles_dir = data.get("chronicles_dir")
     raw_rules = data.get("rules", [])
     rules: list[MetadataRule] = []
 
@@ -121,7 +124,11 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
             )
         )
 
-    return MetadataConfig(layouts_dir=layouts_dir, rules=rules)
+    return MetadataConfig(
+        layouts_dir=layouts_dir,
+        rules=rules,
+        chronicles_dir=chronicles_dir,
+    )
 
 
 _CONNECTORS = ("of", "at", "the", "to", "and", "for")
