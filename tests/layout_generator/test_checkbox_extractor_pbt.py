@@ -76,8 +76,9 @@ _region_pct = st.tuples(
     st.floats(min_value=65.0, max_value=100.0 - _MARGIN),
 ).map(lambda t: [t[0], t[1], t[2], t[3]])
 
-# Checkbox character strategy
-_checkbox_char = st.sampled_from(CHECKBOX_CHARS)
+# Checkbox character strategy — only characters the Helvetica font can render.
+# fitz.Font("helv") has glyphs for □ (U+25A1) but not ☐/☑/☒/▫.
+_checkbox_char = st.just("□")
 
 
 def _checkbox_positions_inside_region(
