@@ -160,12 +160,12 @@ class TestMatchLayoutIds:
 
     def test_question_mark_wildcard(self):
         index = {
-            "pfs.b01": Path("a.json"),
-            "pfs.b02": Path("b.json"),
+            "pfs.b1": Path("a.json"),
+            "pfs.b2": Path("b.json"),
             "pfs.b13": Path("c.json"),
         }
-        result = match_layout_ids("pfs.b0?", index)
-        assert result == ["pfs.b01", "pfs.b02"]
+        result = match_layout_ids("pfs.b?", index)
+        assert result == ["pfs.b1", "pfs.b2"]
 
 
 # ---------------------------------------------------------------------------
@@ -268,7 +268,7 @@ class TestSuccessfulRun:
 
     @_skip_no_pdf
     def test_wildcard_produces_multiple_pngs(self, tmp_path):
-        args = _base_args(layout_id="pfs2.b0?") + [
+        args = _base_args(layout_id="pfs2.b?") + [
             "--output-dir", str(tmp_path),
         ]
         code = main(args)
