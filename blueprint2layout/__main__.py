@@ -364,8 +364,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("."),
-        help="Directory for output layout JSON files (default: current directory).",
+        default=Path("modules/pfs-chronicle-generator/assets/layouts"),
+        help=(
+            "Directory for output layout JSON files "
+            "(default: modules/pfs-chronicle-generator/assets/layouts)."
+        ),
     )
     parser.add_argument(
         "--watch",
@@ -421,9 +424,13 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         for blueprint_id, output_path in targets:
-            run_single_layout(
-                args.blueprints_dir, blueprint_id, output_path,
-            )
+            try:
+                run_single_layout(
+                    args.blueprints_dir, blueprint_id, output_path,
+                )
+            except (ValueError, FileNotFoundError, OSError) as exc:
+                _print_error(f"Error in {blueprint_id}: {exc}")
+                return 1
     except (ValueError, FileNotFoundError, OSError) as exc:
         _print_error(f"Error: {exc}")
         return 1

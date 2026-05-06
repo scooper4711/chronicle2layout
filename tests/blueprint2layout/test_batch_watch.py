@@ -616,12 +616,12 @@ class TestParseArgsUnit:
         assert args.blueprint_id == "pfs2.bounty-layout-b13"
 
     def test_output_dir_default(self):
-        """--output-dir defaults to current directory."""
+        """--output-dir defaults to the project layouts directory."""
         args = parse_args([
             "--blueprints-dir", "/dir",
             "--blueprint-id", "x",
         ])
-        assert args.output_dir == Path(".")
+        assert args.output_dir == Path("modules/pfs-chronicle-generator/assets/layouts")
 
     def test_output_dir_custom(self):
         """--output-dir accepts a custom path."""
