@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.q4",
+  "parent": "pfs2.quest-layout-q1",
+  "description": "Q4 Port Peril Pub Crawl",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q4-PortPerilPubCrawlChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "archaic wayfinder (level 2; discounted price 25 gp; Lost Omens World Guide 17, limit 1)"
+        ],
+        "example": "archaic wayfinder (level 2; discounted price 25 gp; Lost Omens World Guide 17, limit 1)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.archaic_wayfinder_level_2;_discounted_price_25_gp;": {
+      "y": 55.0,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "archaic wayfinder (level 2; discounted price 25 gp; Lost Omens World Guide 17, limit 1)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.archaic_wayfinder_level_2;_discounted_price_25_gp;"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

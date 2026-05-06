@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.q7",
+  "parent": "pfs2.quest-layout-q1",
+  "description": "Q7 ACurious Claim",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q7-ACuriousClaimChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "kukri (6 sp)"
+        ],
+        "example": "kukri (6 sp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.kukri_6_sp": {
+      "y": 55.0,
+      "y2": 58.9
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "kukri (6 sp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.kukri_6_sp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.q5",
+  "parent": "pfs2.quest-layout-q5",
+  "description": "Q5 The Drag on Who Stole Evoking Day",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q5-TheDragonWhoStoleEvokingDayChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser dwarven daisy (level 1; 3 gp; limit 5)",
+          "moderate dwarven daisy (level 3; 8 gp; limit 5)"
+        ],
+        "example": "lesser dwarven daisy (level 1; 3 gp; limit 5)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_dwarven_daisy_level_1;_3_gp;_limit_5": {
+      "y": 3.2,
+      "y2": 7.1
+    },
+    "item.line.moderate_dwarven_daisy_level_3;_8_gp;_limit_5": {
+      "y": 55.1,
+      "y2": 63.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser dwarven daisy (level 1; 3 gp; limit 5)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_dwarven_daisy_level_1;_3_gp;_limit_5"
+            ]
+          }
+        ],
+        "moderate dwarven daisy (level 3; 8 gp; limit 5)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_dwarven_daisy_level_3;_8_gp;_limit_5"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

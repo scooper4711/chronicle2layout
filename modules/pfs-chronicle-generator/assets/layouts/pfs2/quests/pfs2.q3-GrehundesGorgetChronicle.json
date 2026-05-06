@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.q3",
+  "parent": "pfs2.quest-layout-q1",
+  "description": "Q3 Grehundes Gorget",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q3-GrehundesGorgetChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser winter wolf elixir (level 4; 15 gp)",
+          "lesser winter wolf elixir formula",
+          "(level 4; 5 gp)"
+        ],
+        "example": "lesser winter wolf elixir (level 4; 15 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_winter_wolf_elixir_level_4;_15_gp": {
+      "y": 51.8,
+      "y2": 56.1
+    },
+    "item.line.lesser_winter_wolf_elixir_formula": {
+      "y": 59.6,
+      "y2": 64.0
+    },
+    "item.line.level_4;_5_gp": {
+      "y": 64.3,
+      "y2": 68.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser winter wolf elixir (level 4; 15 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_winter_wolf_elixir_level_4;_15_gp"
+            ]
+          }
+        ],
+        "lesser winter wolf elixir formula": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_winter_wolf_elixir_formula"
+            ]
+          }
+        ],
+        "(level 4; 5 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.level_4;_5_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

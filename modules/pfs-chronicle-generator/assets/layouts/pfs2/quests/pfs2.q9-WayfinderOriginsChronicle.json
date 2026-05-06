@@ -1,0 +1,64 @@
+{
+  "id": "pfs2.q9",
+  "parent": "pfs2.quest-layout-q1",
+  "description": "Q9 Wayfinder Origins",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q9-WayfinderOriginsChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "blue/\u25abred/",
+          "green light"
+        ],
+        "example": "blue/\u25abred/"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.blue/\u25abred/": {
+      "x": 75.608,
+      "y": 16.769,
+      "x2": 76.465,
+      "y2": 28.676
+    },
+    "checkbox.green_light": {
+      "x": 85.612,
+      "y": 16.769,
+      "x2": 86.524,
+      "y2": 28.676
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "blue/\u25abred/": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.blue/\u25abred/"
+            ]
+          }
+        ],
+        "green light": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.green_light"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

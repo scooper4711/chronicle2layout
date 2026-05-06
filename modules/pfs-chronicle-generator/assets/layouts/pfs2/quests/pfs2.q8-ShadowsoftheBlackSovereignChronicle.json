@@ -1,0 +1,99 @@
+{
+  "id": "pfs2.q8",
+  "parent": "pfs2.quest-layout-q1",
+  "description": "Q8 Shadows of the Black Sovereign",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q8-ShadowsoftheBlackSovereignChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "polytool (level 1; 10 gp; Lost Omens: Gods and Magic 120)"
+        ],
+        "example": "polytool (level 1; 10 gp; Lost Omens: Gods and Magic 120)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "captured /",
+          "killed"
+        ],
+        "example": "captured /"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.captured_/": {
+      "x": 60.548,
+      "y": 29.439,
+      "x2": 62.051,
+      "y2": 41.346
+    },
+    "checkbox.killed": {
+      "x": 70.417,
+      "y": 29.439,
+      "x2": 71.92,
+      "y2": 41.346
+    },
+    "item.line.polytool_level_1;_10_gp;_Lost_Omens:_Gods_and_Magi": {
+      "y": 55.0,
+      "y2": 63.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "polytool (level 1; 10 gp; Lost Omens: Gods and Magic 120)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.polytool_level_1;_10_gp;_Lost_Omens:_Gods_and_Magi"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "captured /": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.captured_/"
+            ]
+          }
+        ],
+        "killed": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.killed"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "pfs2.q2",
+  "parent": "pfs2.quest-layout-q2",
+  "description": "Q2 Unforgiving Fire",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q2-UnforgivingFireChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "everburning torch (level 1; 15 gp)",
+          "+1 handwraps of mighty blows (level 2; 35 gp)",
+          "bracelet of dashing (level 3; 58 gp)",
+          "+1 striking handwraps of mighty blows (level 4; 100 gp)"
+        ],
+        "example": "everburning torch (level 1; 15 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.everburning_torch_level_1;_15_gp": {
+      "y": 60.1,
+      "y2": 63.6
+    },
+    "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp": {
+      "y": 17.6,
+      "y2": 21.1
+    },
+    "item.line.bracelet_of_dashing_level_3;_58_gp": {
+      "y": 64.8,
+      "y2": 68.3
+    },
+    "item.line.+1_striking_handwraps_of_mighty_blows_level_4;_100": {
+      "y": 69.5,
+      "y2": 77.7
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "everburning torch (level 1; 15 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.everburning_torch_level_1;_15_gp"
+            ]
+          }
+        ],
+        "+1 handwraps of mighty blows (level 2; 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_handwraps_of_mighty_blows_level_2;_35_gp"
+            ]
+          }
+        ],
+        "bracelet of dashing (level 3; 58 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bracelet_of_dashing_level_3;_58_gp"
+            ]
+          }
+        ],
+        "+1 striking handwraps of mighty blows (level 4; 100 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_striking_handwraps_of_mighty_blows_level_4;_100"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

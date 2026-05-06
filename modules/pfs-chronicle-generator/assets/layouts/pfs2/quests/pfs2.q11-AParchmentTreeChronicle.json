@@ -1,0 +1,6 @@
+{
+  "id": "pfs2.q11",
+  "parent": "pfs2.quest-layout-q10",
+  "description": "Q11 AParchment Tree",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q11-AParchmentTreeChronicle.pdf"
+}

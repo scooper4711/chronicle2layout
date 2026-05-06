@@ -1,0 +1,89 @@
+{
+  "id": "pfs2.q6",
+  "parent": "pfs2.quest-layout-q1",
+  "description": "Q6 Archaeologyin Aspenthar",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q6-ArchaeologyinAspentharChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "oil of potency (level 2; 7 gp)",
+          "moderate quicksilver mutagen (level 3; 12 gp)",
+          "moderate juggernaut mutagen (level 3; 12 gp)",
+          "lesser mistform elixir (level 4; 18 gp)"
+        ],
+        "example": "oil of potency (level 2; 7 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.oil_of_potency_level_2;_7_gp": {
+      "y": 3.1,
+      "y2": 7.1
+    },
+    "item.line.moderate_quicksilver_mutagen_level_3;_12_gp": {
+      "y": 7.9,
+      "y2": 16.5
+    },
+    "item.line.moderate_juggernaut_mutagen_level_3;_12_gp": {
+      "y": 55.0,
+      "y2": 63.7
+    },
+    "item.line.lesser_mistform_elixir_level_4;_18_gp": {
+      "y": 64.4,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "oil of potency (level 2; 7 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.oil_of_potency_level_2;_7_gp"
+            ]
+          }
+        ],
+        "moderate quicksilver mutagen (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_quicksilver_mutagen_level_3;_12_gp"
+            ]
+          }
+        ],
+        "moderate juggernaut mutagen (level 3; 12 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_juggernaut_mutagen_level_3;_12_gp"
+            ]
+          }
+        ],
+        "lesser mistform elixir (level 4; 18 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_mistform_elixir_level_4;_18_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

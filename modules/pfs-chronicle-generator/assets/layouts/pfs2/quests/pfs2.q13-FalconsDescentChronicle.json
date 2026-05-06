@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.q13",
+  "parent": "pfs2.quest-layout-q10",
+  "description": "Q13 Falcons Descent",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/quests/Q13-FalconsDescentChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "Golden Legion epaulets (level 3, 55 gp, Pathfinder Lost Omens World Guide 124)"
+        ],
+        "example": "Golden Legion epaulets (level 3, 55 gp, Pathfinder Lost Omens World Guide 124)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.Golden_Legion_epaulets_level_3_55_gp_Pathfinder_Lo": {
+      "y": 54.8,
+      "y2": 68.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "Golden Legion epaulets (level 3, 55 gp, Pathfinder Lost Omens World Guide 124)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Golden_Legion_epaulets_level_3_55_gp_Pathfinder_Lo"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
