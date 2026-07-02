@@ -1,0 +1,127 @@
+{
+  "id": "pfs2.s7-21",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-21 The Home of Empty Breath",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-21-TheHomeofEmptyBreathChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "bottled sunlight (moderate) (level 4, 20 gp; Book of the Dead 18)",
+          "grave token (level 4, 18 gp; Lost Omens: Impossible Lands 197)",
+          "life salt (level 5, 25 gp; Book of the Dead 20)"
+        ],
+        "example": "bottled sunlight (moderate) (level 4, 20 gp; Book of the Dead 18)"
+      }
+    },
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "returned the ghoul and their research to the Blood Lord Msasa Kuatuz in Mechitar right away",
+          "you gave the ghoul more time for research and trusted them to return to Msasa afterward"
+        ],
+        "example": "returned the ghoul and their research to the Blood Lord Msasa Kuatuz in Mechitar right away"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.returned_the_ghoul_and_their_research_to_the_Blood": {
+      "x": 68.935,
+      "y": 9.807,
+      "x2": 70.637,
+      "y2": 19.909
+    },
+    "checkbox.you_gave_the_ghoul_more_time_for_research_and_trus": {
+      "x": 45.872,
+      "y": 18.025,
+      "x2": 47.574,
+      "y2": 28.128
+    },
+    "item.line.bottled_sunlight_moderate_level_4_20_gp;_Book_of_t": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.grave_token_level_4_18_gp;_Lost_Omens:_Impossible_": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.life_salt_level_5_25_gp;_Book_of_the_Dead_20": {
+      "y": 30.2,
+      "y2": 34.8
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "bottled sunlight (moderate) (level 4, 20 gp; Book of the Dead 18)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.bottled_sunlight_moderate_level_4_20_gp;_Book_of_t"
+            ]
+          }
+        ],
+        "grave token (level 4, 18 gp; Lost Omens: Impossible Lands 197)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.grave_token_level_4_18_gp;_Lost_Omens:_Impossible_"
+            ]
+          }
+        ],
+        "life salt (level 5, 25 gp; Book of the Dead 20)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.life_salt_level_5_25_gp;_Book_of_the_Dead_20"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "returned the ghoul and their research to the Blood Lord Msasa Kuatuz in Mechitar right away": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.returned_the_ghoul_and_their_research_to_the_Blood"
+            ]
+          }
+        ],
+        "you gave the ghoul more time for research and trusted them to return to Msasa afterward": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.you_gave_the_ghoul_more_time_for_research_and_trus"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

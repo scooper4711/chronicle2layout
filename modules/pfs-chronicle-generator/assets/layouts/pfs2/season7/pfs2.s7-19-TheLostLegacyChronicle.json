@@ -1,0 +1,75 @@
+{
+  "id": "pfs2.s7-19",
+  "parent": "pfs2.season7-layout-s7-00",
+  "description": "7-19 The Lost Legacy",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-19-TheLostLegacyChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "scroll of fear (3rd rank) (level 5, 30 gp; GM Core 262)",
+          "scroll of fly (level 7, 70 gp; GM Core 262)",
+          "scroll of howling blizzard (level 9, 150 gp; GM Core 262)"
+        ],
+        "example": "scroll of fear (3rd rank) (level 5, 30 gp; GM Core 262)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.scroll_of_fear_3rd_rank_level_5_30_gp;_GM_Core_262": {
+      "y": 7.8,
+      "y2": 12.4
+    },
+    "item.line.scroll_of_fly_level_7_70_gp;_GM_Core_262": {
+      "y": 13.4,
+      "y2": 18.0
+    },
+    "item.line.scroll_of_howling_blizzard_level_9_150_gp;_GM_Core": {
+      "y": 19.0,
+      "y2": 23.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "scroll of fear (3rd rank) (level 5, 30 gp; GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_fear_3rd_rank_level_5_30_gp;_GM_Core_262"
+            ]
+          }
+        ],
+        "scroll of fly (level 7, 70 gp; GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_fly_level_7_70_gp;_GM_Core_262"
+            ]
+          }
+        ],
+        "scroll of howling blizzard (level 9, 150 gp; GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_howling_blizzard_level_9_150_gp;_GM_Core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
