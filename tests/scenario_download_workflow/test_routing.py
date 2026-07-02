@@ -140,3 +140,28 @@ class TestRoutingPathsFrozen:
             raise AssertionError("Expected FrozenInstanceError")
         except AttributeError:
             pass
+
+
+class TestIntroRouting:
+    """Intro (season=-2) routing."""
+
+    def test_scenarios_dir(self) -> None:
+        info = ScenarioInfo(season=-2, scenario="1", name="The Second Confirmation")
+        routes = compute_routing_paths(_ROOT, GameSystem.PFS, info)
+        assert routes.scenarios_dir == _ROOT / "Scenarios/PFS/Intros"
+
+    def test_chronicles_dir(self) -> None:
+        info = ScenarioInfo(season=-2, scenario="1", name="The Second Confirmation")
+        routes = compute_routing_paths(_ROOT, GameSystem.PFS, info)
+        assert routes.chronicles_dir == _CHRONICLES_BASE / "pfs2/intros"
+
+    def test_ids(self) -> None:
+        info = ScenarioInfo(season=-2, scenario="1", name="The Second Confirmation")
+        routes = compute_routing_paths(_ROOT, GameSystem.PFS, info)
+        assert routes.blueprint_id == "pfs2.i1"
+        assert routes.layout_id == "pfs2.i1"
+
+    def test_system_prefix(self) -> None:
+        info = ScenarioInfo(season=-2, scenario="2", name="United in Purpose")
+        routes = compute_routing_paths(_ROOT, GameSystem.PFS, info)
+        assert routes.system_prefix == "pfs2"

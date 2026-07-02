@@ -14,6 +14,19 @@ layouts_dir = "modules/pfs-chronicle-generator/assets/layouts"
 chronicles_dir = "modules/pfs-chronicle-generator/assets/chronicles"
 
 # =========================================================================
+# Intros
+# =========================================================================
+# Standalone introductory modules (Intro #1, Intro #2, etc.) use the
+# same chronicle layout as Season 5+.
+
+[[rules]]
+pattern = 'pfs2/intros/I(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.i$1"
+parent = "pfs2.intro-layout-i1"
+description = "Intro $1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/intros/I$1-$2Chronicle.pdf"
+
+# =========================================================================
 # Bounties
 # =========================================================================
 # B1–B12 use bounty-layout-b1, B13+ use bounty-layout-b13.

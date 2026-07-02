@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.i2",
+  "parent": "pfs2.intro-layout-i1",
+  "description": "Intro 2 Unitedin Purpose",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/intros/I2-UnitedinPurposeChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 longsword (item 2, 35 gp)"
+        ],
+        "example": "+1 longsword (item 2, 35 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_longsword_item_2_35_gp": {
+      "y": 5.0,
+      "y2": 10.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 longsword (item 2, 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_longsword_item_2_35_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

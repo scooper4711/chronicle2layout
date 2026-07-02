@@ -12,22 +12,25 @@ Key public functions:
 """
 
 from chronicle_extractor.filename import UNSAFE_CHARACTERS, sanitize_name
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
+from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON, _INTRO_SEASON
 
 
 def subdirectory_for_season(season: int) -> str:
     """Return the subdirectory name for a given season number.
 
     Args:
-        season: The season number. 0 for quests, -1 for bounties.
+        season: The season number. 0 for quests, -1 for bounties, -2 for intros.
 
     Returns:
-        "Season X" for positive seasons, "Quests" for 0, "Bounties" for -1.
+        "Season X" for positive seasons, "Quests" for 0, "Bounties" for -1,
+        "Intros" for -2.
 
     Requirements: scenario-renamer 6.1, 6.2, 6.3
     """
     if season == _BOUNTY_SEASON:
         return "Bounties"
+    if season == _INTRO_SEASON:
+        return "Intros"
     if season == 0:
         return "Quests"
     return f"Season {season}"
@@ -40,6 +43,7 @@ def build_scenario_filename(info: ScenarioInfo) -> str:
     - Scenarios: "{season}-{scenario}-{SanitizedName}.pdf"
     - Quests: "Q{scenario}-{SanitizedName}.pdf"
     - Bounties: "B{scenario}-{SanitizedName}.pdf"
+    - Intros: "I{scenario}-{SanitizedName}.pdf"
 
     Args:
         info: The parsed scenario metadata.
@@ -53,6 +57,8 @@ def build_scenario_filename(info: ScenarioInfo) -> str:
 
     if info.season == _BOUNTY_SEASON:
         return f"B{info.scenario}-{sanitized}.pdf"
+    if info.season == _INTRO_SEASON:
+        return f"I{info.scenario}-{sanitized}.pdf"
     if info.season == 0:
         return f"Q{info.scenario}-{sanitized}.pdf"
     return f"{info.season}-{info.scenario}-{sanitized}.pdf"

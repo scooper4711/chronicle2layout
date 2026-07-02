@@ -1,0 +1,61 @@
+{
+  "id": "pfs2.i1",
+  "parent": "pfs2.intro-layout-i1",
+  "description": "Intro 1 The Second Confirmation",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/intros/I1-TheSecondConfirmationChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "+1 short sword (item 2, 35 gp)",
+          "dusty rose prism aeon stone (item 3; 50 gp)"
+        ],
+        "example": "+1 short sword (item 2, 35 gp)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.+1_short_sword_item_2_35_gp": {
+      "y": 5.0,
+      "y2": 10.4
+    },
+    "item.line.dusty_rose_prism_aeon_stone_item_3;_50_gp": {
+      "y": 11.2,
+      "y2": 16.6
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "+1 short sword (item 2, 35 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_short_sword_item_2_35_gp"
+            ]
+          }
+        ],
+        "dusty rose prism aeon stone (item 3; 50 gp)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.dusty_rose_prism_aeon_stone_item_3;_50_gp"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

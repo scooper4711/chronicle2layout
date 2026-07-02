@@ -13,7 +13,7 @@ from pathlib import Path
 
 import fitz  # PyMuPDF
 
-from chronicle_extractor.parser import extract_scenario_info
+from chronicle_extractor.parser import extract_scenario_info, extract_scenario_number
 from scenario_download_workflow.detection import detect_game_system
 from scenario_download_workflow.discovery import discover_recent_pdfs
 from scenario_download_workflow.duration import parse_duration
@@ -100,6 +100,50 @@ def _read_page_text(doc: fitz.Document, page_index: int) -> str | None:
     return doc[page_index].get_text()
 
 
+def _print_extraction_diagnostics(
+    pdf_path: Path,
+    first_page_text: str,
+    last_page_text: str | None,
+) -> None:
+    """Print diagnostic details when scenario info extraction fails.
+
+    Shows what was detected (number, chronicle presence) so the user
+    can identify which extraction step failed.
+    """
+    from chronicle_extractor.parser import extract_from_chronicle
+
+    details: list[str] = []
+
+    number = extract_scenario_number(first_page_text)
+    if number is not None:
+        season, scenario = number
+        details.append(f"number found on page 1: season={season}, scenario={scenario}")
+    else:
+        details.append("no scenario/quest/bounty/intro number on page 1")
+
+    if last_page_text is not None:
+        chronicle_result = extract_from_chronicle(last_page_text)
+        if chronicle_result is not None:
+            details.append(
+                f"chronicle parsed: season={chronicle_result.season}, "
+                f"scenario={chronicle_result.scenario}, name={chronicle_result.name!r}"
+            )
+        else:
+            details.append("chronicle sheet present but no number/name extracted")
+    else:
+        details.append("no last page text available")
+
+    if number is not None and last_page_text is None:
+        details.append("name extraction failed: no interior or chronicle pages")
+
+    diagnostic = "; ".join(details)
+    print(
+        f"Warning: cannot extract scenario info from {pdf_path.name}, skipping "
+        f"({diagnostic})",
+        file=sys.stderr,
+    )
+
+
 def _process_pdf(
     pdf_path: Path,
     project_dir: Path,
@@ -146,9 +190,8 @@ def _process_pdf(
             last_page_text=last_page_text,
         )
         if info is None:
-            print(
-                f"Warning: cannot extract scenario info from {pdf_path.name}, skipping",
-                file=sys.stderr,
+            _print_extraction_diagnostics(
+                pdf_path, first_page_text, last_page_text,
             )
             return "skip"
 

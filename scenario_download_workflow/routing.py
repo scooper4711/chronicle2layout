@@ -2,14 +2,14 @@
 
 Computes all output directory paths and IDs for a single scenario
 based on its game system and parsed metadata. Handles season
-subdirectories, quest routing (season=0), and bounty routing
-(season=-1).
+subdirectories, quest routing (season=0), bounty routing
+(season=-1), and intro routing (season=-2).
 """
 
 from dataclasses import dataclass
 from pathlib import Path
 
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
+from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON, _INTRO_SEASON
 from scenario_download_workflow.detection import GameSystem, system_prefix
 
 _CHRONICLES_RELATIVE = Path("modules/pfs-chronicle-generator/assets/chronicles")
@@ -45,7 +45,8 @@ def compute_routing_paths(
     """Compute all output paths for a scenario based on game system and metadata.
 
     Handles season subdirectories, quest (season=0) routing to quests/,
-    and bounty (season=-1) routing to bounties/.
+    bounty (season=-1) routing to bounties/, and intro (season=-2)
+    routing to intros/.
 
     Args:
         project_root: The PFS Tools project root directory.
@@ -62,6 +63,10 @@ def compute_routing_paths(
         season_subdir = "Bounties"
         chronicles_subdir = "bounties"
         scenario_id = f"{prefix}.b{info.scenario}"
+    elif info.season == _INTRO_SEASON:
+        season_subdir = "Intros"
+        chronicles_subdir = "intros"
+        scenario_id = f"{prefix}.i{info.scenario}"
     elif info.season == 0:
         season_subdir = "Quests"
         chronicles_subdir = "quests"

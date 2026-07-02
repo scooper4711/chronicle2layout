@@ -224,3 +224,113 @@ class TestExtractScenarioInfoBounty:
         assert result.season == _BOUNTY_SEASON
         assert result.scenario == "21"
         assert result.name == "Against the Unliving"
+
+
+class TestExtractScenarioNumberIntro:
+    """Tests for extract_scenario_number with Intro format."""
+
+    def test_intro_first_page_tab(self) -> None:
+        """Intro PDFs have 'Intro #N\\t' on the first page."""
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        result = extract_scenario_number("By Thurston Hillman\nThe Second \nConfirmation\nIntro #1\t\nLevels 1\u20132\n")
+        assert result == (_INTRO_SEASON, "1")
+
+    def test_intro_double_digit(self) -> None:
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        result = extract_scenario_number("Intro #12\nLevels 1\u20132\n")
+        assert result == (_INTRO_SEASON, "12")
+
+    def test_intro_case_insensitive(self) -> None:
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        result = extract_scenario_number("INTRO #3\nLevels 1\u20132\n")
+        assert result == (_INTRO_SEASON, "3")
+
+
+class TestExtractFromChronicleIntro:
+    """Tests for extract_from_chronicle with Intro formats."""
+
+    def test_intro_chronicle_format(self) -> None:
+        """Intro chronicle: 'Intro #N:\\nName\\nAdventure Summary'."""
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        text = (
+            "Chronicle Code: N3WV\n"
+            "Intro #1:\n"
+            "The Second Confirmation\n"
+            "Adventure Summary\n"
+            "Boons\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == _INTRO_SEASON
+        assert result.scenario == "1"
+        assert result.name == "The Second Confirmation"
+
+    def test_intro_chronicle_second(self) -> None:
+        """Second Intro module chronicle."""
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        text = (
+            "Chronicle Code: A4CK\n"
+            "Intro #2:\n"
+            "United in Purpose\n"
+            "Adventure Summary\n"
+            "Boons\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == _INTRO_SEASON
+        assert result.scenario == "2"
+        assert result.name == "United in Purpose"
+
+    def test_intro_name_on_same_line(self) -> None:
+        """Intro number and name on the same line."""
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        text = (
+            "Chronicle Code: XXXX\n"
+            "Intro #3: Some Adventure\n"
+            "Adventure Summary\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == _INTRO_SEASON
+        assert result.scenario == "3"
+        assert result.name == "Some Adventure"
+
+
+class TestExtractScenarioInfoIntro:
+    """Tests for extract_scenario_info with full Intro PDF structure."""
+
+    def test_intro_via_chronicle(self) -> None:
+        """Intro extracted from chronicle sheet (primary path)."""
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        p1 = "By Thurston Hillman\nThe Second \nConfirmation\nIntro #1\t\nLevels 1\u20132\n"
+        last = (
+            "Chronicle Code: N3WV\n"
+            "Intro #1:\n"
+            "The Second Confirmation\n"
+            "Adventure Summary\nBoons\nRewards\n"
+        )
+        result = extract_scenario_info(p1, last_page_text=last)
+        assert result is not None
+        assert result.season == _INTRO_SEASON
+        assert result.scenario == "1"
+        assert result.name == "The Second Confirmation"
+
+    def test_intro_fallback_to_page_comparison(self) -> None:
+        """Intro with no chronicle match falls back to page name comparison."""
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        p1 = "Intro #2\t\nLevels 1\u20132\nSecond Edition\n"
+        p3 = "3\nPathfinder Society Scenario\nUnited in Purpose\nWhere on Golarion?\n"
+        p4 = "4\nPathfinder Society Scenario\nUnited in Purpose\nAdventure Background\n"
+        result = extract_scenario_info(p1, p3, p4)
+        assert result is not None
+        assert result.season == _INTRO_SEASON
+        assert result.scenario == "2"
+        assert result.name == "United in Purpose"

@@ -21,13 +21,14 @@ _ROOT = Path("/project")
 def game_system_and_scenario_info(draw: st.DrawFn) -> tuple[GameSystem, ScenarioInfo]:
     """Generate a random GameSystem and ScenarioInfo.
 
-    Season is drawn from three categories:
+    Season is drawn from four categories:
     - positive (1-20): regular season scenario
     - 0: quest
     - -1: bounty
+    - -2: intro
     """
     system = draw(st.sampled_from(list(GameSystem)))
-    season = draw(st.sampled_from([-1, 0]) | st.integers(min_value=1, max_value=20))
+    season = draw(st.sampled_from([-2, -1, 0]) | st.integers(min_value=1, max_value=20))
     scenario = draw(
         st.from_regex(r"[0-9]{1,3}", fullmatch=True).filter(lambda s: len(s) > 0)
     )
@@ -85,11 +86,16 @@ def test_routing_uses_correct_prefixes_and_subdirectories(
         assert routes.chronicles_dir.name == "quests"
         assert routes.blueprint_id == f"{prefix}.q{info.scenario}"
         assert routes.layout_id == f"{prefix}.q{info.scenario}"
-    else:
+    elif info.season == -1:
         assert scenarios_parts[-1] == "Bounties"
         assert routes.chronicles_dir.name == "bounties"
         assert routes.blueprint_id == f"{prefix}.b{info.scenario}"
         assert routes.layout_id == f"{prefix}.b{info.scenario}"
+    else:
+        assert scenarios_parts[-1] == "Intros"
+        assert routes.chronicles_dir.name == "intros"
+        assert routes.blueprint_id == f"{prefix}.i{info.scenario}"
+        assert routes.layout_id == f"{prefix}.i{info.scenario}"
 
     # Blueprint and layout IDs always match
     assert routes.blueprint_id == routes.layout_id

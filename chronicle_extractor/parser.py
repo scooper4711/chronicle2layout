@@ -36,7 +36,11 @@ BOUNTY_FIRST_PAGE_PATTERN: re.Pattern[str] = re.compile(
     r"Bounty:\s*(\d+)", re.IGNORECASE
 )
 
+# Matches "Intro #NN" on first page or chronicle.
+INTRO_PATTERN: re.Pattern[str] = re.compile(r"Intro\s*#(\d+)", re.IGNORECASE)
+
 _BOUNTY_SEASON = -1  # Sentinel value for bounties (distinct from 0 = Quests)
+_INTRO_SEASON = -2  # Sentinel value for standalone Intro modules
 
 _HEADER_LABEL = "pathfinder society scenario"
 
@@ -60,6 +64,7 @@ _CHRONICLE_PATTERNS: list[tuple[re.Pattern[str], int | None]] = [
     (SCENARIO_PATTERN, None),   # season from group(1)
     (QUEST_PATTERN, 0),
     (BOUNTY_PATTERN, _BOUNTY_SEASON),
+    (INTRO_PATTERN, _INTRO_SEASON),
 ]
 
 
@@ -187,6 +192,10 @@ def extract_scenario_number(first_page_text: str) -> tuple[int, str] | None:
     if b_match:
         return _BOUNTY_SEASON, b_match.group(1)
 
+    i_match = INTRO_PATTERN.search(first_page_text)
+    if i_match:
+        return _INTRO_SEASON, i_match.group(1)
+
     return None
 
 
@@ -211,6 +220,8 @@ def _lines_after_header(page_text: str) -> list[str]:
         if lower.startswith("pathfinder quest"):
             return lines[i + 1:]
         if lower.startswith("pathfinder bounty"):
+            return lines[i + 1:]
+        if lower.startswith("pathfinder intro"):
             return lines[i + 1:]
 
     return []
@@ -288,8 +299,13 @@ def extract_name_from_chronicle(last_page_text: str) -> str | None:
         if line.endswith(":"):
             continue
 
-        # Skip lines that are just the scenario/quest/bounty number
-        if SCENARIO_PATTERN.search(line) or QUEST_PATTERN.search(line) or BOUNTY_PATTERN.search(line):
+        # Skip lines that are just the scenario/quest/bounty/intro number
+        if (
+            SCENARIO_PATTERN.search(line)
+            or QUEST_PATTERN.search(line)
+            or BOUNTY_PATTERN.search(line)
+            or INTRO_PATTERN.search(line)
+        ):
             continue
 
         name_lines.append(line)
