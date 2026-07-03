@@ -17,6 +17,8 @@ import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 
+from shared.path_validation import user_path
+
 
 @dataclass(frozen=True)
 class MetadataRule:
@@ -92,8 +94,10 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
             f"Metadata file not found: {metadata_path}"
         )
 
+    validated_path = user_path(metadata_path)
+
     try:
-        raw = metadata_path.read_bytes()
+        raw = validated_path.read_bytes()
         data = tomllib.loads(raw.decode())
     except tomllib.TOMLDecodeError as exc:
         raise ValueError(
