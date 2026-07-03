@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 from chronicle_extractor.extractor import process_directory
+from shared.path_validation import user_path
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -57,15 +58,22 @@ def main(argv: list[str] | None = None) -> int:
     """
     args = parse_args(argv)
 
-    if not args.input_dir.exists():
+    try:
+        input_dir = user_path(args.input_dir)
+        output_dir = user_path(args.output_dir)
+    except ValueError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
+
+    if not input_dir.exists():
         print(
-            f"Error: input directory does not exist: {args.input_dir}",
+            f"Error: input directory does not exist: {input_dir}",
             file=sys.stderr,
         )
         return 1
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    process_directory(args.input_dir, args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    process_directory(input_dir, output_dir)
     return 0
 
 
