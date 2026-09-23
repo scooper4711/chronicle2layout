@@ -384,6 +384,18 @@ description = "7-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season7/7-$1-$2Chronicle.pdf"
 
 # =========================================================================
+# Season 8
+# =========================================================================
+# All Season 8 chronicles share a single layout initially.
+
+[[rules]]
+pattern = 'pfs2/season8/8-(\d+)-(\S+)Chronicle\.pdf$'
+id = "pfs2.s8-$1"
+parent = "pfs2.season8-layout-s8-00"
+description = "8-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-$1-$2Chronicle.pdf"
+
+# =========================================================================
 # SFS2 — Starfinder Society Season 1
 # =========================================================================
 # Per-scenario layout overrides based on BOONS/NOTES vertical positions.
@@ -476,3 +488,22 @@ id = "sfs2.s1-$1"
 parent = "sfs2.season1-layout-s1-00"
 description = "1-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
+
+# =========================================================================
+# SFS2 — Starfinder Society Season 2
+# =========================================================================
+# 2-00 has a unique layout; the rest share a single catch-all.
+
+[[rules]]
+pattern = 'sfs2/season2/2-00-(\S+)Chronicle\.pdf$'
+id = "sfs2.s2-00"
+parent = "sfs2.season2-layout-s2-00-specific"
+description = "2-00 ${~1}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-00-$1Chronicle.pdf"
+
+[[rules]]
+pattern = 'sfs2/season2/2-(\d+)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s2-$1"
+parent = "sfs2.season2-layout-s2-00"
+description = "2-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-$1-$2Chronicle.pdf"

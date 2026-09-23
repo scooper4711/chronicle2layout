@@ -97,6 +97,27 @@ class TestExtractScenarioName:
         page_b = "4\nPathFInder Society Scenario\nTest Name\nBody text\n"
         assert extract_scenario_name(page_a, page_b) == "Test Name"
 
+    def test_strips_full_title_prefix(self) -> None:
+        """Season 8+ headers repeat 'Pathfinder Society 8-01: Name'."""
+        page_a = (
+            "3\nPathfinder Society Scenario\n"
+            "Pathfinder Society 8-01: Intro to the Year\n"
+            "of Clockwork Mystery\nBody A\n"
+        )
+        page_b = (
+            "4\nPathfinder Society Scenario\n"
+            "Pathfinder Society 8-01: Intro to the Year\n"
+            "of Clockwork Mystery\nBody B\n"
+        )
+        assert extract_scenario_name(page_a, page_b) == (
+            "Intro to the Year of Clockwork Mystery"
+        )
+
+    def test_strips_scenario_hash_prefix(self) -> None:
+        page_a = "3\nPathfinder Society Scenario\nPathfinder Society Scenario #8-02: The Fey Reclamation\nA\n"
+        page_b = "4\nPathfinder Society Scenario\nPathfinder Society Scenario #8-02: The Fey Reclamation\nB\n"
+        assert extract_scenario_name(page_a, page_b) == "The Fey Reclamation"
+
 
 class TestExtractScenarioInfo:
     """Tests for extract_scenario_info combining number and name."""
@@ -191,6 +212,69 @@ class TestExtractFromChronicle:
         assert result is not None
         assert result.scenario == "5"
         assert result.name == "Witch's Winter Holiday"
+
+    def test_stops_at_copyright_symbol(self) -> None:
+        """Name collection stops when copyright boilerplate appears."""
+        text = (
+            "Chronicle Code: WT99\n"
+            "#8-03:\n"
+            "For the Love of Vanity\n"
+            "\u00a92026 Paizo Inc. Author David Schwartz. Reserved Material "
+            "Reserved Material elements in this product include all elements "
+            "designated as Reserved Material under the ORC License.\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == 8
+        assert result.scenario == "03"
+        assert result.name == "For the Love of Vanity"
+
+    def test_stops_at_paizo_inc_text(self) -> None:
+        """Name collection stops at 'Paizo Inc' even without copyright symbol."""
+        text = (
+            "Chronicle Code: AB12\n"
+            "#8-01:\n"
+            "Enough is Enough\n"
+            "Paizo Inc. All Rights Reserved.\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == 8
+        assert result.scenario == "01"
+        assert result.name == "Enough is Enough"
+
+    def test_stops_at_reserved_material(self) -> None:
+        """Name collection stops at 'Reserved Material' boilerplate."""
+        text = (
+            "Chronicle Code: CD34\n"
+            "#8-05:\n"
+            "Some Adventure Name\n"
+            "Reserved Material elements in this product...\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.name == "Some Adventure Name"
+
+    def test_inline_copyright_truncated(self) -> None:
+        """Boilerplate sharing the number line is cut, name kept."""
+        text = (
+            "Pathfinder Society Scenario #8-02: The Fey Reclamation "
+            "\u00a9 2026, Paizo Inc. Author: Lucas Servideo\n"
+            "Adventure Summary\n"
+        )
+        result = extract_from_chronicle(text)
+        assert result is not None
+        assert result.season == 8
+        assert result.scenario == "02"
+        assert result.name == "The Fey Reclamation"
+
+    def test_inline_name_only_boilerplate_yields_none(self) -> None:
+        """A remainder of pure boilerplate does not become the name."""
+        text = (
+            "Pathfinder Society Scenario #8-02: \u00a92026 Paizo Inc.\n"
+            "Adventure Summary\n"
+        )
+        assert extract_from_chronicle(text) is None
 
 
 class TestExtractScenarioInfoBounty:

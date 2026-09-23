@@ -1,0 +1,6 @@
+{
+  "id": "sfs2.s2-00",
+  "parent": "sfs2.season2-layout-s2-00-specific",
+  "description": "2-00 Mo on Busters",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-00-MoonBustersChronicle.pdf"
+}

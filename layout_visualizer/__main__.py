@@ -54,6 +54,10 @@ from layout_visualizer.coordinate_resolver import (
     resolve_field_pixels,
 )
 from layout_visualizer.data_renderer import draw_data_text
+from layout_visualizer.detection_overlay import (
+    collect_overlay_rects,
+    parse_show_value,
+)
 from layout_visualizer.layout_loader import (
     build_layout_index,
     load_content_fields,
@@ -174,10 +178,21 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             "What to visualize: 'canvases' draws canvas regions, "
             "'fields' draws content field positions, "
             "'data' renders example parameter values as text "
-            "(default: canvases)."
+            "(default: canvases).  Ignored when --show is given "
+            "(except --mode data, which still takes precedence)."
         ),
     )
-
+    parser.add_argument(
+        "--show",
+        type=parse_show_value,
+        default=None,
+        metavar="CATEGORIES",
+        help=(
+            "Comma-separated overlay categories to draw together: "
+            "h_thin, h_bar, h_rule, v_thin, v_bar, grey_box, "
+            "canvases, fields.  Overrides --mode (except data)."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -221,6 +236,7 @@ def run_visualizer(
     layout_id: str,
     output_path: Path,
     mode: str = "canvases",
+    show: frozenset[str] | None = None,
 ) -> None:
     """Run the full visualization pipeline once.
 
@@ -233,6 +249,9 @@ def run_visualizer(
         layout_id: Layout id to visualize.
         output_path: Path for the output PNG file.
         mode: What to visualize — "canvases", "fields", or "data".
+        show: Optional overlay categories to draw together.  When set
+            (and mode is not "data"), replaces the single-category
+            mode with the requested combined overlays.
 
     Raises:
         FileNotFoundError: If PDF not found or layout id not in index.
@@ -253,11 +272,7 @@ def run_visualizer(
     pdf_path = resolve_chronicle_pdf(layout_id, layout_index)
     pixmap = render_pdf_page(pdf_path)
 
-    if mode == "fields":
-        fields, canvases, _chain = load_content_fields(layout_path, layout_index)
-        canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
-        pixel_rects = resolve_field_pixels(fields, canvas_pixels)
-    elif mode == "data":
+    if mode == "data" and not show:
         entries, rectangles, checkboxes, strikeouts, canvases, _chain = load_data_content(layout_path, layout_index)
         canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
         composited = draw_data_text(pixmap, entries, canvas_pixels, rectangles, checkboxes, strikeouts)
@@ -265,11 +280,26 @@ def run_visualizer(
         composited.save(str(output_path))
         print(f"Wrote {output_path}")
         return
+
+    if show is not None:
+        pixel_rects, colors = collect_overlay_rects(
+            layout_path,
+            layout_index,
+            pdf_path,
+            pixmap.width,
+            pixmap.height,
+            show,
+        )
+    elif mode == "fields":
+        fields, canvases, _chain = load_content_fields(layout_path, layout_index)
+        canvas_pixels = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
+        pixel_rects = resolve_field_pixels(fields, canvas_pixels)
+        colors = assign_colors(list(pixel_rects.keys()))
     else:
         canvases, _chain = load_layout_with_inheritance(layout_path, layout_index)
         pixel_rects = resolve_canvas_pixels(canvases, pixmap.width, pixmap.height)
+        colors = assign_colors(list(pixel_rects.keys()))
 
-    colors = assign_colors(list(pixel_rects.keys()))
     composited = draw_overlays(pixmap, pixel_rects, colors)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     composited.save(str(output_path))
@@ -344,6 +374,7 @@ def watch_and_regenerate(
     layout_root: Path,
     targets: list[tuple[str, Path]],
     mode: str = "canvases",
+    show: frozenset[str] | None = None,
 ) -> None:
     """Watch layout files for changes and regenerate affected PNGs.
 
@@ -355,13 +386,14 @@ def watch_and_regenerate(
         layout_root: Root directory containing layout JSON files.
         targets: List of (layout_id, output_path) pairs to generate.
         mode: What to visualize — "canvases", "fields", or "data".
+        show: Optional overlay categories passed through to run_visualizer.
 
     Requirements: layout-visualizer 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7
     """
     target_map = {lid: out for lid, out in targets}
 
     for layout_id, output_path in targets:
-        run_visualizer(layout_root, layout_id, output_path, mode)
+        run_visualizer(layout_root, layout_id, output_path, mode, show)
 
     dep_map = _build_dependency_map(layout_root, list(target_map))
     watched_paths = list(dep_map)
@@ -389,7 +421,7 @@ def watch_and_regenerate(
             try:
                 for layout_id, output_path in affected_targets:
                     run_visualizer(
-                        layout_root, layout_id, output_path, mode,
+                        layout_root, layout_id, output_path, mode, show,
                     )
                 dep_map = _build_dependency_map(
                     layout_root, list(target_map),
@@ -451,14 +483,14 @@ def main(argv: list[str] | None = None) -> int:
 
         if args.watch:
             watch_and_regenerate(
-                args.layout_root, targets, args.mode,
+                args.layout_root, targets, args.mode, args.show,
             )
             return 0
 
         for layout_id, output_path in targets:
             run_visualizer(
                 args.layout_root, layout_id,
-                output_path, args.mode,
+                output_path, args.mode, args.show,
             )
     except FileNotFoundError as exc:
         _print_error(f"Error: {exc}")

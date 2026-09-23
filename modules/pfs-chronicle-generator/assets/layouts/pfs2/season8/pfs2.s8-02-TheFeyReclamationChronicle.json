@@ -1,0 +1,243 @@
+{
+  "id": "pfs2.s8-02",
+  "parent": "pfs2.season8-layout-s8-00",
+  "description": "8-02 The Fey Reclamation",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-02-TheFeyReclamationChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "\u2022 Lisa Stevens and Vic Wertz",
+          "\u2022 Jim Butler",
+          "Creative Officer \u2022 Erik Mona",
+          "President of People, Culture, & Logistics \u2022 Maggie",
+          "President of Technology \u2022 Rei Ko",
+          "Growth Officer \u2022 Christian Moore",
+          "Notice",
+          "product is licensed under the ORC License located at",
+          "at TX 9-307-067 and available online at",
+          "paizo.com/orclicense, azoralaw.com/orclicense,",
+          "are disclaimed as set forth therein.",
+          "This product is original game content and is not",
+          "game system.",
+          "use our Licensed Material in your own published work,",
+          "your product as follows:"
+        ],
+        "example": "\u2022 Lisa Stevens and Vic Wertz"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.\u2022_Lisa_Stevens_and_Vic_Wertz": {
+      "y": 1.8,
+      "y2": 6.9
+    },
+    "item.line.\u2022_Jim_Butler": {
+      "y": 7.4,
+      "y2": 12.5
+    },
+    "item.line.Creative_Officer_\u2022_Erik_Mona": {
+      "y": 12.9,
+      "y2": 18.1
+    },
+    "item.line.President_of_People_Culture_&_Logistics_\u2022_Maggie": {
+      "y": 18.5,
+      "y2": 23.7
+    },
+    "item.line.President_of_Technology_\u2022_Rei_Ko": {
+      "y": 24.1,
+      "y2": 29.3
+    },
+    "item.line.Growth_Officer_\u2022_Christian_Moore": {
+      "y": 29.7,
+      "y2": 34.9
+    },
+    "item.line.Notice": {
+      "y": 45.7,
+      "y2": 51.9
+    },
+    "item.line.product_is_licensed_under_the_ORC_License_located_": {
+      "y": 52.6,
+      "y2": 57.2
+    },
+    "item.line.at_TX_9-307-067_and_available_online_at": {
+      "y": 58.1,
+      "y2": 62.8
+    },
+    "item.line.paizocom/orclicense_azoralawcom/orclicense": {
+      "y": 63.7,
+      "y2": 68.4
+    },
+    "item.line.are_disclaimed_as_set_forth_therein": {
+      "y": 69.3,
+      "y2": 74.0
+    },
+    "item.line.This_product_is_original_game_content_and_is_not": {
+      "y": 74.9,
+      "y2": 79.6
+    },
+    "item.line.game_system": {
+      "y": 80.5,
+      "y2": 85.2
+    },
+    "item.line.use_our_Licensed_Material_in_your_own_published_wo": {
+      "y": 86.1,
+      "y2": 90.8
+    },
+    "item.line.your_product_as_follows:": {
+      "y": 91.7,
+      "y2": 96.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "\u2022 Lisa Stevens and Vic Wertz": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.\u2022_Lisa_Stevens_and_Vic_Wertz"
+            ]
+          }
+        ],
+        "\u2022 Jim Butler": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.\u2022_Jim_Butler"
+            ]
+          }
+        ],
+        "Creative Officer \u2022 Erik Mona": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Creative_Officer_\u2022_Erik_Mona"
+            ]
+          }
+        ],
+        "President of People, Culture, & Logistics \u2022 Maggie": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.President_of_People_Culture_&_Logistics_\u2022_Maggie"
+            ]
+          }
+        ],
+        "President of Technology \u2022 Rei Ko": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.President_of_Technology_\u2022_Rei_Ko"
+            ]
+          }
+        ],
+        "Growth Officer \u2022 Christian Moore": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Growth_Officer_\u2022_Christian_Moore"
+            ]
+          }
+        ],
+        "Notice": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.Notice"
+            ]
+          }
+        ],
+        "product is licensed under the ORC License located at": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.product_is_licensed_under_the_ORC_License_located_"
+            ]
+          }
+        ],
+        "at TX 9-307-067 and available online at": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.at_TX_9-307-067_and_available_online_at"
+            ]
+          }
+        ],
+        "paizo.com/orclicense, azoralaw.com/orclicense,": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.paizocom/orclicense_azoralawcom/orclicense"
+            ]
+          }
+        ],
+        "are disclaimed as set forth therein.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.are_disclaimed_as_set_forth_therein"
+            ]
+          }
+        ],
+        "This product is original game content and is not": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.This_product_is_original_game_content_and_is_not"
+            ]
+          }
+        ],
+        "game system.": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.game_system"
+            ]
+          }
+        ],
+        "use our Licensed Material in your own published work,": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.use_our_Licensed_Material_in_your_own_published_wo"
+            ]
+          }
+        ],
+        "your product as follows:": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.your_product_as_follows:"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

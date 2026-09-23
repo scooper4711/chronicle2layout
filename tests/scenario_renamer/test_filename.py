@@ -86,3 +86,32 @@ class TestBuildImageFilename:
             2, "03", "CatastrophesSpark", "Map-1", "jpg"
         )
         assert result == "2-03-CatastrophesSparkMap-1.jpg"
+
+
+class TestSubdirectoryForSeasonIntro:
+    """Tests for subdirectory_for_season with Intro season."""
+
+    def test_intros(self) -> None:
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        assert subdirectory_for_season(_INTRO_SEASON) == "Intros"
+
+
+class TestBuildScenarioFilenameIntro:
+    """Tests for build_scenario_filename with Intro scenarios."""
+
+    def test_intro_1(self) -> None:
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        info = ScenarioInfo(
+            season=_INTRO_SEASON, scenario="1", name="The Second Confirmation"
+        )
+        assert build_scenario_filename(info) == "I1-TheSecondConfirmation.pdf"
+
+    def test_intro_2(self) -> None:
+        from chronicle_extractor.parser import _INTRO_SEASON
+
+        info = ScenarioInfo(
+            season=_INTRO_SEASON, scenario="2", name="United in Purpose"
+        )
+        assert build_scenario_filename(info) == "I2-UnitedinPurpose.pdf"

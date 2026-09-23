@@ -28,6 +28,11 @@ REAL_CHRONICLE_PDF = Path(
     "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
 )
 
+_skip_no_pdf = pytest.mark.skipif(
+    not REAL_CHRONICLE_PDF.exists(),
+    reason="Real chronicle PDF not available",
+)
+
 
 def _base_args(
     layout_root: str = str(LAYOUT_ROOT),
@@ -206,6 +211,8 @@ class TestParseArgs:
         assert args.mode == "canvases"
 
 
+
+
 # ---------------------------------------------------------------------------
 # Watch path collection across multiple layouts
 # ---------------------------------------------------------------------------
@@ -244,12 +251,6 @@ class TestBuildDependencyMap:
 # ---------------------------------------------------------------------------
 # Successful end-to-end runs
 # ---------------------------------------------------------------------------
-
-
-_skip_no_pdf = pytest.mark.skipif(
-    not REAL_CHRONICLE_PDF.exists(),
-    reason="Real chronicle PDF not available",
-)
 
 
 class TestSuccessfulRun:

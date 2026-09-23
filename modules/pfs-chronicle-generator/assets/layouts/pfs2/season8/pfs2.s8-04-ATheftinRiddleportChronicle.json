@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s8-04",
+  "parent": "pfs2.season8-layout-s8-00",
+  "description": "8-04 ATheftin Riddleport",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-04-ATheftinRiddleportChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser acid flask (level 1, 3 gp, Pathfinder Player Core 2 283)",
+          "minor healing potion (level 1, 4 gp, Pathfinder GM Core 259)",
+          "minor oil of unlife (level 1, 4 gp, Pathfinder GM Core 258)",
+          "potion of emergency escape (level 1, 3 gp, Pathfinder Player Core 2 304)",
+          "+1 scimitar (level 2, 35 gp, Pathfinder GM Core 236)"
+        ],
+        "example": "lesser acid flask (level 1, 3 gp, Pathfinder Player Core 2 283)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_acid_flask_level_1_3_gp_Pathfinder_Player_C": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.minor_healing_potion_level_1_4_gp_Pathfinder_GM_Co": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.minor_oil_of_unlife_level_1_4_gp_Pathfinder_GM_Cor": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.potion_of_emergency_escape_level_1_3_gp_Pathfinder": {
+      "y": 41.4,
+      "y2": 51.6
+    },
+    "item.line.+1_scimitar_level_2_35_gp_Pathfinder_GM_Core_236": {
+      "y": 52.6,
+      "y2": 57.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser acid flask (level 1, 3 gp, Pathfinder Player Core 2 283)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_acid_flask_level_1_3_gp_Pathfinder_Player_C"
+            ]
+          }
+        ],
+        "minor healing potion (level 1, 4 gp, Pathfinder GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.minor_healing_potion_level_1_4_gp_Pathfinder_GM_Co"
+            ]
+          }
+        ],
+        "minor oil of unlife (level 1, 4 gp, Pathfinder GM Core 258)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.minor_oil_of_unlife_level_1_4_gp_Pathfinder_GM_Cor"
+            ]
+          }
+        ],
+        "potion of emergency escape (level 1, 3 gp, Pathfinder Player Core 2 304)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.potion_of_emergency_escape_level_1_3_gp_Pathfinder"
+            ]
+          }
+        ],
+        "+1 scimitar (level 2, 35 gp, Pathfinder GM Core 236)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.+1_scimitar_level_2_35_gp_Pathfinder_GM_Core_236"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

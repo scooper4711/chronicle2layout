@@ -1,0 +1,144 @@
+{
+  "id": "sfs2.s2-03",
+  "parent": "sfs2.season2-layout-s2-00",
+  "description": "2-03 Bittersweet",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-03-BittersweetChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "did",
+          "did not get them to reconcile",
+          "kept the recipes",
+          "Jenpuh",
+          "Kolale and Taanu",
+          "Kolale",
+          "Taanu"
+        ],
+        "example": "did"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.did": {
+      "x": 36.271,
+      "y": 53.507,
+      "x2": 38.402,
+      "y2": 65.561
+    },
+    "checkbox.did_not_get_them_to_reconcile": {
+      "x": 44.263,
+      "y": 53.507,
+      "x2": 46.394,
+      "y2": 65.561
+    },
+    "checkbox.kept_the_recipes": {
+      "x": 56.664,
+      "y": 66.605,
+      "x2": 58.794,
+      "y2": 78.659
+    },
+    "checkbox.Jenpuh": {
+      "x": 89.096,
+      "y": 66.605,
+      "x2": 91.226,
+      "y2": 78.659
+    },
+    "checkbox.Kolale_and_Taanu": {
+      "x": 2.012,
+      "y": 79.703,
+      "x2": 4.143,
+      "y2": 91.757
+    },
+    "checkbox.Kolale": {
+      "x": 20.364,
+      "y": 79.703,
+      "x2": 22.495,
+      "y2": 91.757
+    },
+    "checkbox.Taanu": {
+      "x": 31.685,
+      "y": 79.703,
+      "x2": 33.816,
+      "y2": 91.757
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "did": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did"
+            ]
+          }
+        ],
+        "did not get them to reconcile": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.did_not_get_them_to_reconcile"
+            ]
+          }
+        ],
+        "kept the recipes": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.kept_the_recipes"
+            ]
+          }
+        ],
+        "Jenpuh": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Jenpuh"
+            ]
+          }
+        ],
+        "Kolale and Taanu": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Kolale_and_Taanu"
+            ]
+          }
+        ],
+        "Kolale": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Kolale"
+            ]
+          }
+        ],
+        "Taanu": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.Taanu"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

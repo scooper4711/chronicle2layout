@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s8-01",
+  "parent": "pfs2.season8-layout-s8-00",
+  "description": "8-01 Intro to the Year of Clockwork Mystery",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-01-IntrototheYearofClockworkMysteryChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "mage\u2019s hat (level 3, 50 gp; Pathfinder GM Core 292)",
+          "minor healing potion (level 1, 4 gp; GM Core 259)",
+          "minor oil of unlife (level 1, 4 gp; GM Core 258)",
+          "shielding salve (level 1, 4 gp; Pathfinder Player Core 2 303)",
+          "walking cauldron (level 1, 12 gp; GM Core 297)"
+        ],
+        "example": "mage\u2019s hat (level 3, 50 gp; Pathfinder GM Core 292)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.mage\u2019s_hat_level_3_50_gp;_Pathfinder_GM_Core_292": {
+      "y": 7.8,
+      "y2": 12.4
+    },
+    "item.line.minor_healing_potion_level_1_4_gp;_GM_Core_259": {
+      "y": 13.4,
+      "y2": 18.0
+    },
+    "item.line.minor_oil_of_unlife_level_1_4_gp;_GM_Core_258": {
+      "y": 19.0,
+      "y2": 23.6
+    },
+    "item.line.shielding_salve_level_1_4_gp;_Pathfinder_Player_Co": {
+      "y": 24.6,
+      "y2": 34.8
+    },
+    "item.line.walking_cauldron_level_1_12_gp;_GM_Core_297": {
+      "y": 35.8,
+      "y2": 40.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "mage\u2019s hat (level 3, 50 gp; Pathfinder GM Core 292)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.mage\u2019s_hat_level_3_50_gp;_Pathfinder_GM_Core_292"
+            ]
+          }
+        ],
+        "minor healing potion (level 1, 4 gp; GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.minor_healing_potion_level_1_4_gp;_GM_Core_259"
+            ]
+          }
+        ],
+        "minor oil of unlife (level 1, 4 gp; GM Core 258)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.minor_oil_of_unlife_level_1_4_gp;_GM_Core_258"
+            ]
+          }
+        ],
+        "shielding salve (level 1, 4 gp; Pathfinder Player Core 2 303)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.shielding_salve_level_1_4_gp;_Pathfinder_Player_Co"
+            ]
+          }
+        ],
+        "walking cauldron (level 1, 12 gp; GM Core 297)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.walking_cauldron_level_1_12_gp;_GM_Core_297"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

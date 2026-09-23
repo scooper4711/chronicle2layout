@@ -53,10 +53,33 @@ _CHRONICLE_STOP = {
     "character chronicle #",
 }
 
+# Substrings that signal legal/copyright/author boilerplate, not title text.
+_COPYRIGHT_MARKERS = (
+    "©",
+    "paizo inc",
+    "reserved material",
+    "orc license",
+    "author:",
+)
+
 
 
 # Maximum line length for a title; longer lines are narrative text.
 _MAX_NAME_LINE_LENGTH = 80
+
+# Season 8+ interior pages repeat the full title in the running header,
+# e.g. "Pathfinder Society Scenario #8-01: Intro to the Year of Clockwork
+# Mystery". Strip that prefix so only the scenario name is kept.
+_TITLE_PREFIX_PATTERN: re.Pattern[str] = re.compile(
+    r"^Pathfinder Society\s+(?:Scenario\s+)?#?\d+[-–]\d+:\s*",
+    re.IGNORECASE,
+)
+
+
+def _strip_title_prefix(name: str) -> str:
+    """Remove a leading 'Pathfinder Society 8-01:' style prefix."""
+    return _TITLE_PREFIX_PATTERN.sub("", name)
+
 
 # Ordered list of (pattern, season_value) for chronicle number matching.
 # Season value is a callable: int for fixed values, group(1) cast for scenario.
@@ -101,10 +124,30 @@ def _strip_non_content_lines(lines: list[str]) -> list[str]:
     return [line.strip() for line in lines if line.strip()]
 
 
+def _clean_inline_name(text: str) -> str:
+    """Clean a same-line name remainder from a number match.
+
+    Truncates legal/copyright boilerplate that shares the line with the
+    scenario name (e.g. "The Fey Reclamation © 2026, Paizo Inc.").
+    Returns an empty string when nothing name-like remains.
+    """
+    lower = text.lower()
+    cut = len(text)
+    for marker in _COPYRIGHT_MARKERS:
+        at = lower.find(marker)
+        if at != -1:
+            cut = min(cut, at)
+    cleaned = text[:cut].strip()
+    if not cleaned or cleaned.lower() in _CHRONICLE_STOP:
+        return ""
+    return cleaned
+
+
 def _collect_chronicle_name(lines: list[str], start: int) -> list[str]:
     """Collect name lines from the chronicle starting at a given index.
 
-    Stops at chronicle stop words or long narrative lines.
+    Stops at chronicle stop words, copyright/legal boilerplate, or long
+    narrative lines.
 
     Args:
         lines: All non-empty stripped lines from the chronicle page.
@@ -115,9 +158,12 @@ def _collect_chronicle_name(lines: list[str], start: int) -> list[str]:
     """
     name_lines: list[str] = []
     for line in lines[start:]:
-        if line.lower() in _CHRONICLE_STOP:
+        lower = line.lower()
+        if lower in _CHRONICLE_STOP:
             break
         if len(line) > _MAX_NAME_LINE_LENGTH:
+            break
+        if any(marker in lower for marker in _COPYRIGHT_MARKERS):
             break
         name_lines.append(line)
     return name_lines
@@ -149,7 +195,7 @@ def extract_from_chronicle(last_page_text: str) -> ScenarioInfo | None:
             continue
 
         season, scenario, remainder = result
-        name_lines = [remainder] if remainder else []
+        name_lines = [cleaned] if (cleaned := _clean_inline_name(remainder)) else []
         name_lines.extend(_collect_chronicle_name(lines, i + 1))
 
         if not name_lines:
@@ -261,7 +307,7 @@ def extract_scenario_name(
     if not common:
         return None
 
-    return " ".join(common)
+    return _strip_title_prefix(" ".join(common))
 
 
 def extract_name_from_chronicle(last_page_text: str) -> str | None:
@@ -313,7 +359,7 @@ def extract_name_from_chronicle(last_page_text: str) -> str | None:
     if not name_lines:
         return None
 
-    return " ".join(name_lines)
+    return _strip_title_prefix(" ".join(name_lines))
 
 
 def extract_scenario_info(
