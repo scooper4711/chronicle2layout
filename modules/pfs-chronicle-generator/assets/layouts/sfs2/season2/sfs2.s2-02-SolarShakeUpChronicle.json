@@ -24,15 +24,15 @@
     },
     "checkbox.saved": {
       "x": 53.871,
-      "y": 66.605,
+      "y": 51.402,
       "x2": 56.001,
-      "y2": 78.659
+      "y2": 60.704
     },
     "checkbox.failed_to_save_the_researchers_from_being_devoured": {
       "x": 64.456,
-      "y": 66.605,
+      "y": 51.402,
       "x2": 66.587,
-      "y2": 78.659
+      "y2": 60.704
     }
   },
   "content": [

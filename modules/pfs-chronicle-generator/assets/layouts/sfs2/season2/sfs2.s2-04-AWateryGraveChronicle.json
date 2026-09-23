@@ -26,27 +26,27 @@
     },
     "checkbox.defeated": {
       "x": 85.66,
-      "y": 14.213,
+      "y": 10.969,
       "x2": 87.79,
-      "y2": 26.267
+      "y2": 20.271
     },
     "checkbox.were_defeated_by_a_daemon_bound_to_the_ruin_then": {
       "x": 1.657,
-      "y": 27.311,
+      "y": 21.077,
       "x2": 3.787,
-      "y2": 39.365
+      "y2": 30.379
     },
     "checkbox.failed_to_rescue_the_explorer_Greffgo": {
       "x": 50.767,
-      "y": 27.311,
+      "y": 21.077,
       "x2": 52.897,
-      "y2": 39.365
+      "y2": 30.379
     },
     "checkbox.rescued_Greffgo_and_helped_finish_his_investigatio": {
       "x": 88.964,
-      "y": 27.311,
+      "y": 21.077,
       "x2": 91.094,
-      "y2": 39.365
+      "y2": 30.379
     }
   },
   "content": [

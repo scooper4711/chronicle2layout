@@ -14,7 +14,9 @@
           "Main Street",
           "Planar Requisitions Office Branch",
           "Go-Mart",
-          "Street Concert"
+          "Street Concert",
+          "exchanged",
+          "chose not to exchange contact info with Arlo Darose"
         ],
         "example": "Tsomah and"
       }
@@ -28,39 +30,51 @@
     },
     "checkbox.Tsomah_and": {
       "x": 74.65,
-      "y": 14.213,
+      "y": 10.969,
       "x2": 76.78,
-      "y2": 26.267
+      "y2": 20.271
     },
     "checkbox.Madael_from_bloodspawned_beasts_created_by_a_blood": {
       "x": 88.325,
-      "y": 14.213,
+      "y": 10.969,
       "x2": 90.455,
-      "y2": 26.267
+      "y2": 20.271
     },
     "checkbox.Main_Street": {
       "x": 2.878,
-      "y": 66.605,
+      "y": 51.402,
       "x2": 5.009,
-      "y2": 78.659
+      "y2": 60.704
     },
     "checkbox.Planar_Requisitions_Office_Branch": {
       "x": 17.203,
-      "y": 66.605,
+      "y": 51.402,
       "x2": 19.333,
-      "y2": 78.659
+      "y2": 60.704
     },
     "checkbox.Go-Mart": {
       "x": 50.751,
-      "y": 66.605,
+      "y": 51.402,
       "x2": 52.881,
-      "y2": 78.659
+      "y2": 60.704
     },
     "checkbox.Street_Concert": {
       "x": 61.932,
-      "y": 66.605,
+      "y": 51.402,
       "x2": 64.063,
-      "y2": 78.659
+      "y2": 60.704
+    },
+    "checkbox.exchanged": {
+      "x": 31.397,
+      "y": 71.618,
+      "x2": 33.527,
+      "y2": 80.92
+    },
+    "checkbox.chose_not_to_exchange_contact_info_with_Arlo_Daros": {
+      "x": 46.465,
+      "y": 71.618,
+      "x2": 48.596,
+      "y2": 80.92
     }
   },
   "content": [
@@ -119,6 +133,24 @@
             "presets": [
               "checkbox",
               "checkbox.Street_Concert"
+            ]
+          }
+        ],
+        "exchanged": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.exchanged"
+            ]
+          }
+        ],
+        "chose not to exchange contact info with Arlo Darose": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.chose_not_to_exchange_contact_info_with_Arlo_Daros"
             ]
           }
         ]

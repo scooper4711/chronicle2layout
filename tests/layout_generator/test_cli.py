@@ -15,7 +15,11 @@ from pathlib import Path
 
 import pytest
 
-from layout_generator.__main__ import main
+from layout_generator.__main__ import (
+    _derive_output_file,
+    _relative_path_for_matching,
+    main,
+)
 
 REAL_PDF = Path("modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-00-OriginoftheOpenRoadChronicle.pdf")
 LAYOUTS_DIR = Path(
@@ -380,6 +384,83 @@ class TestSingleFileMode:
         # Output path printed to stdout
         captured = capsys.readouterr()
         assert "pfs2-s1-00.json" in captured.out
+
+
+# ---------------------------------------------------------------------------
+# Absolute/relative path mixing (app invokes per-PDF with absolute paths)
+# ---------------------------------------------------------------------------
+
+
+class TestMixedPathModes:
+    """Single-file mode tolerates absolute PDFs against relative bases."""
+
+    def test_matching_absolute_pdf_relative_base(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        monkeypatch.chdir(tmp_path)
+        pdf = (tmp_path / "chronicles" / "pfs2" / "season8" / "8-02-XChronicle.pdf").absolute()
+        result = _relative_path_for_matching(pdf, Path("x.pdf"), Path("chronicles"))
+        assert result == str(Path("pfs2/season8/8-02-XChronicle.pdf"))
+
+    def test_matching_outside_base_falls_back_to_filename(self) -> None:
+        result = _relative_path_for_matching(
+            Path("/elsewhere/YChronicle.pdf"), Path("x.pdf"), Path("chronicles"),
+        )
+        assert result == "YChronicle.pdf"
+
+    def test_derive_output_mirrors_subdirectory(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        from layout_generator.__main__ import MatchedMetadata
+
+        monkeypatch.chdir(tmp_path)
+        pdf = (tmp_path / "chronicles" / "pfs2" / "season8" / "8-02-TheFeyReclamationChronicle.pdf").absolute()
+        metadata = MatchedMetadata(
+            id="pfs2.s8-02",
+            parent="p",
+            description="d",
+            default_chronicle_location="modules/chronicles/pfs2/season8/8-02-TheFeyReclamationChronicle.pdf",
+        )
+        out = _derive_output_file(
+            pdf, Path("x.pdf"), metadata, tmp_path / "out", Path("chronicles"),
+        )
+        assert out == tmp_path / "out" / "pfs2" / "season8" / "pfs2.s8-02-TheFeyReclamationChronicle.json"
+
+    @pytest.mark.skipif(
+        not REAL_PDF.exists(),
+        reason="Real chronicle PDF not available",
+    )
+    def test_single_file_absolute_pdf_with_base_dir(
+        self,
+        tmp_path: Path,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """The app's invocation: absolute PDF, --base-dir, prefixed pattern."""
+        layouts_dir = tmp_path / "layouts"
+        layouts_dir.mkdir()
+        create_parent_layout(layouts_dir, "pfs2.season1-layout-s1-00")
+
+        output_dir = tmp_path / "output"
+
+        toml_content = (
+            "[[rules]]\n"
+            "pattern = 'pfs2/season1/1-(\\d+)-(\\S+)Chronicle\\.pdf$'\n"
+            "id = 'pfs2.s1-$1'\n"
+            "parent = 'pfs2.season1-layout-s1-00'\n"
+            "description = '1-$1'\n"
+        )
+        toml_path = write_toml(tmp_path / "meta.toml", toml_content)
+
+        exit_code = main([
+            str(REAL_PDF.absolute()),
+            "--metadata-file", str(toml_path),
+            "--layouts-dir", str(layouts_dir),
+            "--output-dir", str(output_dir),
+            "--base-dir", str(Path("modules/pfs-chronicle-generator/assets/chronicles").absolute()),
+        ])
+
+        assert exit_code == 0
+        assert (output_dir / "pfs2" / "season1" / "pfs2.s1-00.json").exists()
 
 
 # ---------------------------------------------------------------------------

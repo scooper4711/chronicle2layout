@@ -203,6 +203,23 @@ def _collect_pdf_files(pdf_path: Path) -> list[Path]:
     return sorted(pdf_path.rglob("*.pdf"))
 
 
+def _relative_to_base(pdf_file: Path, base_dir: Path) -> Path | None:
+    """Resolve pdf_file relative to base_dir, tolerating absolute/relative mix.
+
+    Falls back to resolving both against the current directory, so an
+    absolute PDF path still matches a relative base (and vice versa).
+    Returns None when the file is outside the base directory.
+    """
+    try:
+        return pdf_file.relative_to(base_dir)
+    except ValueError:
+        pass
+    try:
+        return pdf_file.absolute().relative_to(base_dir.absolute())
+    except ValueError:
+        return None
+
+
 def _relative_path_for_matching(
     pdf_file: Path,
     pdf_path: Path,
@@ -218,7 +235,9 @@ def _relative_path_for_matching(
     if pdf_path.is_dir():
         return str(pdf_file.relative_to(pdf_path))
     if base_dir is not None:
-        return str(pdf_file.relative_to(base_dir))
+        relative = _relative_to_base(pdf_file, base_dir)
+        if relative is not None:
+            return str(relative)
     return pdf_file.name
 
 
@@ -263,7 +282,8 @@ def _derive_output_file(
     if pdf_base.is_dir():
         relative_parent = pdf_file.relative_to(pdf_base).parent
     elif base_dir is not None:
-        relative_parent = pdf_file.relative_to(base_dir).parent
+        relative = _relative_to_base(pdf_file, base_dir)
+        relative_parent = relative.parent if relative is not None else Path(".")
     else:
         relative_parent = Path(".")
     suffix = _extract_chronicle_suffix(metadata.default_chronicle_location)
