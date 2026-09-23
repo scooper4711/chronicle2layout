@@ -111,11 +111,10 @@
       "styles": [
         "defaultfont"
       ],
-      "align": "CM",
-      "left": "@grey_box[0].left",
-      "right": "@grey_box[0].right",
-      "top": "@grey_box[0].top",
-      "bottom": "@grey_box[0].bottom"
+      "align": "CB",
+      "left": "@h_rule[4].left+2em",
+      "right": "@h_rule[4].right-1em",
+      "bottom": "@h_rule[4].top"
     },
     {
       "name": "currency_gained",
@@ -126,10 +125,9 @@
         "defaultfont"
       ],
       "align": "CM",
-      "left": "@grey_box[1].left",
-      "right": "@grey_box[1].right",
-      "top": "@grey_box[1].top",
-      "bottom": "@grey_box[1].bottom"
+      "left": "@h_rule[9].left+2em",
+      "right": "@h_rule[9].right-1em",
+      "bottom": "@h_rule[9].top"
     },
     {
       "name": "notes",

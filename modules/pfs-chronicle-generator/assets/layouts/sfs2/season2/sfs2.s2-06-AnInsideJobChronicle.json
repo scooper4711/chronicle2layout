@@ -1,0 +1,64 @@
+{
+  "id": "sfs2.s2-06",
+  "parent": "sfs2.season2-layout-s2-00",
+  "description": "2-06 An Inside Job",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-06-AnInsideJobChronicle.pdf",
+  "parameters": {
+    "Checkboxes": {
+      "summary_checkbox": {
+        "type": "choice",
+        "description": "Checkboxes in the adventure summary that should be selected",
+        "choices": [
+          "adopted a pet (____________________)",
+          "owe a favor to the Spikesworn"
+        ],
+        "example": "adopted a pet (____________________)"
+      }
+    }
+  },
+  "presets": {
+    "checkbox": {
+      "canvas": "summary",
+      "color": "black",
+      "size": 1
+    },
+    "checkbox.adopted_a_pet_____________________": {
+      "x": 6.92,
+      "y": 21.077,
+      "x2": 9.051,
+      "y2": 30.379
+    },
+    "checkbox.owe_a_favor_to_the_Spikesworn": {
+      "x": 46.027,
+      "y": 21.077,
+      "x2": 48.157,
+      "y2": 30.379
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:summary_checkbox",
+      "content": {
+        "adopted a pet (____________________)": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.adopted_a_pet_____________________"
+            ]
+          }
+        ],
+        "owe a favor to the Spikesworn": [
+          {
+            "type": "checkbox",
+            "presets": [
+              "checkbox",
+              "checkbox.owe_a_favor_to_the_Spikesworn"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

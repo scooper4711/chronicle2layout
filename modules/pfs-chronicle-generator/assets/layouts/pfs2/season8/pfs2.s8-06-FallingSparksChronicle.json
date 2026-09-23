@@ -1,0 +1,159 @@
+{
+  "id": "pfs2.s8-06",
+  "parent": "pfs2.season8-layout-s8-00",
+  "description": "8-06 Falling Sparks",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-06-FallingSparksChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "moderate antidote (level 6, 35 gp; Pathfinder GM Core 246)",
+          "moderate antiplague (level 6, 35 gp; Pathfinder GM Core 246)",
+          "moderate blast boots (level 3, 11 gp; Pathfinder Guns & Gears 67)",
+          "greater clockwork goggles (level 4, 15 gp; Pathfinder Guns & Gears 68)",
+          "fate shot (level 6, 50 gp; Pathfinder Treasure Vault 81)",
+          "moderate healing potion (level 6, 50 gp; Pathfinder GM Core 259)",
+          "iron cube (level 6, 50 gp; Pathfinder GM Core 265)",
+          "lesser potion of fire resistance (level 6, 45 gp; Pathfinder GM Core 260)",
+          "greater smoke ball (level 7, 53 gp; Pathfinder Player Core 2 296)"
+        ],
+        "example": "moderate antidote (level 6, 35 gp; Pathfinder GM Core 246)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.moderate_antidote_level_6_35_gp;_Pathfinder_GM_Cor": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.moderate_antiplague_level_6_35_gp;_Pathfinder_GM_C": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.moderate_blast_boots_level_3_11_gp;_Pathfinder_Gun": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.greater_clockwork_goggles_level_4_15_gp;_Pathfinde": {
+      "y": 41.4,
+      "y2": 51.6
+    },
+    "item.line.fate_shot_level_6_50_gp;_Pathfinder_Treasure_Vault": {
+      "y": 52.6,
+      "y2": 57.2
+    },
+    "item.line.moderate_healing_potion_level_6_50_gp;_Pathfinder_": {
+      "y": 58.1,
+      "y2": 68.4
+    },
+    "item.line.iron_cube_level_6_50_gp;_Pathfinder_GM_Core_265": {
+      "y": 69.3,
+      "y2": 74.0
+    },
+    "item.line.lesser_potion_of_fire_resistance_level_6_45_gp;_Pa": {
+      "y": 74.9,
+      "y2": 85.2
+    },
+    "item.line.greater_smoke_ball_level_7_53_gp;_Pathfinder_Playe": {
+      "y": 86.1,
+      "y2": 96.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "moderate antidote (level 6, 35 gp; Pathfinder GM Core 246)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_antidote_level_6_35_gp;_Pathfinder_GM_Cor"
+            ]
+          }
+        ],
+        "moderate antiplague (level 6, 35 gp; Pathfinder GM Core 246)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_antiplague_level_6_35_gp;_Pathfinder_GM_C"
+            ]
+          }
+        ],
+        "moderate blast boots (level 3, 11 gp; Pathfinder Guns & Gears 67)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_blast_boots_level_3_11_gp;_Pathfinder_Gun"
+            ]
+          }
+        ],
+        "greater clockwork goggles (level 4, 15 gp; Pathfinder Guns & Gears 68)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_clockwork_goggles_level_4_15_gp;_Pathfinde"
+            ]
+          }
+        ],
+        "fate shot (level 6, 50 gp; Pathfinder Treasure Vault 81)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.fate_shot_level_6_50_gp;_Pathfinder_Treasure_Vault"
+            ]
+          }
+        ],
+        "moderate healing potion (level 6, 50 gp; Pathfinder GM Core 259)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_healing_potion_level_6_50_gp;_Pathfinder_"
+            ]
+          }
+        ],
+        "iron cube (level 6, 50 gp; Pathfinder GM Core 265)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.iron_cube_level_6_50_gp;_Pathfinder_GM_Core_265"
+            ]
+          }
+        ],
+        "lesser potion of fire resistance (level 6, 45 gp; Pathfinder GM Core 260)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_potion_of_fire_resistance_level_6_45_gp;_Pa"
+            ]
+          }
+        ],
+        "greater smoke ball (level 7, 53 gp; Pathfinder Player Core 2 296)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.greater_smoke_ball_level_7_53_gp;_Pathfinder_Playe"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

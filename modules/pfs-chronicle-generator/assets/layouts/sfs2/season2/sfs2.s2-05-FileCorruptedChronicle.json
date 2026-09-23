@@ -1,0 +1,6 @@
+{
+  "id": "sfs2.s2-05",
+  "parent": "sfs2.season2-layout-s2-00",
+  "description": "2-05 File Corrupted",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-05-FileCorruptedChronicle.pdf"
+}
