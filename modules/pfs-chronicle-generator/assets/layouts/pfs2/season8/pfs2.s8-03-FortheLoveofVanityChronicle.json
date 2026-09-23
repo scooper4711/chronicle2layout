@@ -1,0 +1,89 @@
+{
+  "id": "pfs2.s8-03",
+  "parent": "pfs2.season8-layout-s8-00",
+  "description": "8-03 For the Love of Vanity",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-03-FortheLoveofVanityChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "cloud pouch (level 6, 225 gp; Path!nder GM Core 273)",
+          "moderate ghost charge (level 3, 10 gp; Path!nder Player Core 2 285)",
+          "pocket stage (level 5, 138 gp; Path!nder GM Core 276)",
+          "scroll of illusory disguise (3rd rank; level 5, 30 gp; Path!nder GM Core 262)"
+        ],
+        "example": "cloud pouch (level 6, 225 gp; Path!nder GM Core 273)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.cloud_pouch_level_6_225_gp;_Path!nder_GM_Core_273": {
+      "y": 7.8,
+      "y2": 12.4
+    },
+    "item.line.moderate_ghost_charge_level_3_10_gp;_Path!nder_Pla": {
+      "y": 13.4,
+      "y2": 23.6
+    },
+    "item.line.pocket_stage_level_5_138_gp;_Path!nder_GM_Core_276": {
+      "y": 24.6,
+      "y2": 29.2
+    },
+    "item.line.scroll_of_illusory_disguise_3rd_rank;_level_5_30_g": {
+      "y": 30.2,
+      "y2": 40.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "cloud pouch (level 6, 225 gp; Path!nder GM Core 273)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.cloud_pouch_level_6_225_gp;_Path!nder_GM_Core_273"
+            ]
+          }
+        ],
+        "moderate ghost charge (level 3, 10 gp; Path!nder Player Core 2 285)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.moderate_ghost_charge_level_3_10_gp;_Path!nder_Pla"
+            ]
+          }
+        ],
+        "pocket stage (level 5, 138 gp; Path!nder GM Core 276)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.pocket_stage_level_5_138_gp;_Path!nder_GM_Core_276"
+            ]
+          }
+        ],
+        "scroll of illusory disguise (3rd rank; level 5, 30 gp; Path!nder GM Core 262)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.scroll_of_illusory_disguise_3rd_rank;_level_5_30_g"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
