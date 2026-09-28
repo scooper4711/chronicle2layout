@@ -1,0 +1,254 @@
+{
+  "id": "pfs2.printables-layout-p0",
+  "parent": "pfs2",
+  "description": "Layout for Printables Chronicles",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/printables/Paizo+Printables+Sanctioning.pdf",
+  "flags": [
+    "hidden"
+  ],
+  "fields": [
+    {
+      "name": "adventure",
+      "param": "adventure",
+      "type": "text",
+      "canvas": "summary",
+      "align": "LB",
+      "top": "h_thin[1]",
+      "left": "@h_thin[1].left",
+      "styles": [
+        "defaultfont"
+      ],
+      "right": "@h_thin[1].right",
+      "bottom": "@h_thin[1]"
+    },
+    {
+      "name": "event",
+      "param": "event",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "eventcode",
+      "param": "eventcode",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "LB",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1]"
+    },
+    {
+      "name": "date",
+      "param": "date",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[3].left",
+      "right": "@h_rule[3].right",
+      "bottom": "@h_rule[3]"
+    },
+    {
+      "name": "gmid",
+      "param": "gmid",
+      "type": "text",
+      "canvas": "session_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[2].left",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2]"
+    },
+    {
+      "name": "char",
+      "param": "char",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontweight": "bold",
+      "align": "LB",
+      "left": "@h_rule[0].left",
+      "right": "@h_rule[0].right",
+      "bottom": "@h_rule[0]"
+    },
+    {
+      "name": "societyid_player",
+      "param": "societyid",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "RM",
+      "left": "@h_rule[1].left",
+      "right": "@h_rule[1].right",
+      "bottom": "@h_rule[1] - 0.7em"
+    },
+    {
+      "name": "societyid_char",
+      "param": "char_number_short",
+      "type": "text",
+      "canvas": "character_info",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 9,
+      "fontweight": "bold",
+      "align": "LM",
+      "left": "@h_rule[2].left + 1em",
+      "right": "@h_rule[2].right",
+      "bottom": "@h_rule[2] - 0.7em"
+    },
+    {
+      "name": "xp_gained",
+      "param": "xp_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CB",
+      "left": "@h_rule[4].left+2em",
+      "right": "@h_rule[4].right-1em",
+      "bottom": "@h_rule[4].top"
+    },
+    {
+      "name": "currency_gained",
+      "param": "currency_gained",
+      "type": "text",
+      "canvas": "rewards",
+      "styles": [
+        "defaultfont"
+      ],
+      "align": "CM",
+      "left": "@h_rule[9].left+2em",
+      "right": "@h_rule[9].right-1em",
+      "bottom": "@h_rule[9].top"
+    },
+    {
+      "name": "notes",
+      "param": "notes",
+      "type": "multiline",
+      "canvas": "notes",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 13,
+      "align": "LB",
+      "left": "notes.left+1em",
+      "right": "notes.right-1em",
+      "top": "notes.top+0.5em",
+      "bottom": "notes.bottom"
+    },
+    {
+      "name": "reputation",
+      "param": "reputation",
+      "type": "multiline",
+      "canvas": "reputation",
+      "styles": [
+        "defaultfont"
+      ],
+      "fontsize": 11,
+      "lines": 4,
+      "align": "LB",
+      "left": "reputation.left+1em",
+      "right": "reputation.right-1em",
+      "top": "reputation.top",
+      "bottom": "reputation.bottom"
+    }
+  ],
+  "canvases": [
+    {
+      "name": "main",
+      "parent": "page",
+      "left": "v_thin[0]",
+      "right": "v_thin[3]",
+      "top": "h_thin[0]",
+      "bottom": "h_thin[8]"
+    },
+    {
+      "name": "character_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "main.top",
+      "bottom": "h_bar[0].top"
+    },
+    {
+      "name": "reputation",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[4].bottom",
+      "bottom": "h_thin[7].top"
+    },
+    {
+      "name": "summary",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_bar[0].left",
+      "top": "h_bar[0].bottom",
+      "bottom": "h_bar[2].top"
+    },
+    {
+      "name": "items",
+      "parent": "main",
+      "left": "main.left",
+      "right": "v_thin[1]",
+      "top": "h_bar[3].bottom",
+      "bottom": "h_bar[4].top"
+    },
+    {
+      "name": "rewards",
+      "parent": "main",
+      "left": "v_bar[0].right",
+      "right": "main.right",
+      "top": "h_bar[0].bottom",
+      "bottom": "h_bar[4].top"
+    },
+    {
+      "name": "notes",
+      "parent": "main",
+      "left": "v_thin[1]",
+      "right": "v_bar[0]",
+      "top": "h_bar[3].bottom",
+      "bottom": "h_bar[4].top"
+    },
+    {
+      "name": "session_info",
+      "parent": "main",
+      "left": "main.left",
+      "right": "main.right",
+      "top": "h_thin[7]",
+      "bottom": "main.bottom"
+    }
+  ],
+  "parameters": {
+    "Event Info": {
+      "adventure": {
+        "type": "text",
+        "description": "Adventure completed",
+        "example": "Paizo Printables"
+      }
+    }
+  }
+}

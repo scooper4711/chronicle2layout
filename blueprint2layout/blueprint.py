@@ -217,8 +217,13 @@ def _merge_parameters(
         return parent_params
 
     merged: dict = {}
-    all_groups = set(parent_params) | set(child_params)
-    for group in all_groups:
+    # Ordered (never set-union): parent groups first, then child-only
+    # groups. Set iteration order varies per process, which used to
+    # reshuffle group order on every otherwise-identical run.
+    ordered_groups = list(parent_params) + [
+        group for group in child_params if group not in parent_params
+    ]
+    for group in ordered_groups:
         parent_group = parent_params.get(group, {})
         child_group = child_params.get(group, {})
         merged[group] = {**parent_group, **child_group}

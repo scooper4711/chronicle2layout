@@ -1,0 +1,47 @@
+{
+  "id": "pfs2.printables",
+  "parent": "pfs2.printables-layout-p0",
+  "description": "Printables Sanctioning",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/printables/Paizo+Printables+Sanctioning.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "None"
+        ],
+        "example": "None"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.None": {
+      "y": 7.8,
+      "y2": 12.4
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "None": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.None"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

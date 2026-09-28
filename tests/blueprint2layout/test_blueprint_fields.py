@@ -271,6 +271,20 @@ class TestMergeParameters:
         assert result["Event Info"]["event"]["description"] == "Child event"
         assert result["Event Info"]["date"]["description"] == "Date"
 
+    def test_group_order_is_parent_first_then_child_only(self):
+        """Group order is deterministic: parent groups, then child-only groups."""
+        parent = {
+            "Zebra": {"z": {"type": "text"}},
+            "Alpha": {"a": {"type": "text"}},
+        }
+        child = {
+            "Middle": {"m": {"type": "text"}},
+            "Alpha": {"a2": {"type": "text"}},
+        }
+        result = _merge_parameters(parent, child)
+
+        assert list(result.keys()) == ["Zebra", "Alpha", "Middle"]
+
     def test_both_none_returns_none(self):
         """Validates: Requirement 2.4 — both None yields None."""
         assert _merge_parameters(None, None) is None

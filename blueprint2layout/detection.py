@@ -30,6 +30,18 @@ GREY_BOX_BLOCK_FILL_THRESHOLD = 0.5
 GREY_BOX_MIN_BLOCKS = 3
 GREY_BOX_MIN_AREA = 500
 
+# Minimum underscore run length that can form a fill-in rule.
+UNDERSCORE_MIN_RUN_LENGTH = 3
+
+# An underscore run only counts as a structural rule when it spans at
+# least this fraction of the page width (mirrors HORIZONTAL_MIN_WIDTH_RATIO).
+UNDERSCORE_MIN_WIDTH_RATIO = 0.05
+
+# Maximum non-underscore text allowed on the run's line for it to count
+# as standalone. Inline blanks inside narrative sentences never qualify,
+# so their chronicles gain no entries and existing indexes never shift.
+UNDERSCORE_MAX_LABEL_CHARS = 25
+
 
 def _find_all_grey_runs(
     row: np.ndarray, min_value: int, max_value: int, min_length: int
@@ -920,6 +932,103 @@ def extract_vector_h_rules(
     return candidates
 
 
+def _is_standalone_underscore_rule(run_width_pct: float, line_remainder: str) -> bool:
+    """Decide whether an underscore run is a structural fill-in rule.
+
+    Only standalone rules qualify: the run must span a structural width
+    and the rest of its text line must be a short label. Inline blanks
+    inside narrative sentences never qualify.
+
+    Args:
+        run_width_pct: Run width as a percentage of page width.
+        line_remainder: The run's text line with underscores removed.
+
+    Returns:
+        True when the run counts as a detectable rule.
+    """
+    return (
+        run_width_pct >= UNDERSCORE_MIN_WIDTH_RATIO * 100
+        and len(line_remainder.strip()) <= UNDERSCORE_MAX_LABEL_CHARS
+    )
+
+
+def detect_underscore_rules(pdf_path: str) -> list[HorizontalLine]:
+    """Detect underscore fill-in rules as thin horizontal lines.
+
+    Finds runs of three or more underscore characters in the PDF's text
+    (e.g. "Adventure Completed: ___") using per-character boxes from the
+    last page. Underscores are text, so pixel detection never sees them:
+    text redaction removes them and their fragments are black, narrow,
+    and gapped. Only standalone rules qualify (see
+    :func:`_is_standalone_underscore_rule`).
+
+    Args:
+        pdf_path: Path to the PDF file.
+
+    Returns:
+        List of HorizontalLine instances in page order.
+    """
+    import fitz
+
+    try:
+        doc = fitz.open(pdf_path)
+    except Exception:
+        return []
+
+    if doc.page_count == 0:
+        doc.close()
+        return []
+
+    page = doc[doc.page_count - 1]
+    page_width = page.rect.width
+    page_height = page.rect.height
+
+    rules: list[HorizontalLine] = []
+    for block in page.get_text("rawdict").get("blocks", []):
+        for line in block.get("lines", []):
+            chars = [
+                char
+                for span in line.get("spans", [])
+                for char in span.get("chars", [])
+            ]
+            line_text = "".join(char.get("c", "") for char in chars)
+            remainder = line_text.replace("_", "")
+
+            current: list[dict] = []
+            runs: list[list[dict]] = []
+            for char in chars:
+                if char.get("c") == "_":
+                    current.append(char)
+                else:
+                    if len(current) >= UNDERSCORE_MIN_RUN_LENGTH:
+                        runs.append(current)
+                    current = []
+            if len(current) >= UNDERSCORE_MIN_RUN_LENGTH:
+                runs.append(current)
+
+            for run in runs:
+                x0 = min(char["bbox"][0] for char in run)
+                x1 = max(char["bbox"][2] for char in run)
+                y0 = min(char["bbox"][1] for char in run)
+                y1 = max(char["bbox"][3] for char in run)
+                width_pct = (x1 - x0) / page_width * 100
+                if not _is_standalone_underscore_rule(width_pct, remainder):
+                    continue
+                y_pct = round((y0 + y1) / 2 / page_height * 100, 1)
+                rules.append(
+                    HorizontalLine(
+                        y=y_pct,
+                        x=round(x0 / page_width * 100, 1),
+                        x2=round(x1 / page_width * 100, 1),
+                        thickness_px=max(1, round((y1 - y0) / 72 * 150)),
+                        y2=y_pct,
+                    )
+                )
+
+    doc.close()
+    return rules
+
+
 def detect_structures(
     grayscale: np.ndarray,
     rgb: np.ndarray,
@@ -928,14 +1037,15 @@ def detect_structures(
     """Run all detection passes and assemble the complete result.
 
     Orchestrates horizontal black lines, vertical black lines,
-    grey rules (with deduplication), grey boxes, and optionally
-    extracts thin vector lines from the PDF that are too thin
-    to survive rasterization.
+    grey rules (with deduplication), grey boxes, underscore fill-in
+    rules (merged into h_thin), and optionally extracts thin vector
+    lines from the PDF that are too thin to survive rasterization.
 
     Args:
         grayscale: Grayscale image array, shape (height, width).
         rgb: RGB image array, shape (height, width, 3).
-        pdf_path: Optional path to the PDF for vector line extraction.
+        pdf_path: Optional path to the PDF for vector line and
+            underscore rule extraction.
 
     Returns:
         A DetectionResult with all six arrays populated.
@@ -952,6 +1062,11 @@ def detect_structures(
         if vector_h_rules:
             h_rule = list(h_rule) + vector_h_rules
             h_rule.sort(key=lambda line: (line.y, line.x))
+        underscore_rules = detect_underscore_rules(pdf_path)
+        if underscore_rules:
+            # Stable sort by y only: existing entries keep their exact
+            # relative order, so no current index shifts.
+            h_thin = sorted(list(h_thin) + underscore_rules, key=lambda line: line.y)
 
     return DetectionResult(
         h_thin=h_thin,

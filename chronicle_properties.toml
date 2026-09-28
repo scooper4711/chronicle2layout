@@ -396,6 +396,18 @@ description = "8-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-$1-$2Chronicle.pdf"
 
 # =========================================================================
+# Printables
+# =========================================================================
+# Generic Paizo Printables sanctioning chronicle (no scenario number).
+
+[[rules]]
+pattern = 'pfs2/printables/Paizo\+Printables\+Sanctioning\.pdf$'
+id = "pfs2.printables"
+parent = "pfs2.printables-layout-p0"
+description = "Printables Sanctioning"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/pfs2/printables/Paizo+Printables+Sanctioning.pdf"
+
+# =========================================================================
 # SFS2 — Starfinder Society Season 1
 # =========================================================================
 # Per-scenario layout overrides based on BOONS/NOTES vertical positions.
