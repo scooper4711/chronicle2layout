@@ -22,6 +22,7 @@ from layout_generator.generator import generate_layout_json
 from layout_generator.metadata import (
     MatchedMetadata,
     load_metadata,
+    match_fillin_labels,
     match_rule,
 )
 from shared.layout_index import build_json_index, collect_inheritance_chain
@@ -332,6 +333,7 @@ def _process_single_pdf(
     checkbox_canvas: str,
     output_dir: Path,
     base_dir: Path | None = None,
+    fillin_labels: dict[str, str] | None = None,
 ) -> Path | None:
     """Process a single PDF: resolve canvases, generate layout, write JSON.
 
@@ -360,7 +362,7 @@ def _process_single_pdf(
     fillins: list[dict] = []
     canvas_rects = _absolute_canvas_rects(metadata.parent, layout_index)
     if canvas_rects:
-        fillins = extract_fillins(pdf_file, canvas_rects)
+        fillins = extract_fillins(pdf_file, canvas_rects, fillin_labels)
 
     layout = generate_layout_json(
         pdf_path=pdf_file,
@@ -481,6 +483,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.checkbox_canvas,
                 output_dir,
                 base_dir,
+                match_fillin_labels(relative, config),
             )
             if output_file is not None:
                 print(output_file)

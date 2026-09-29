@@ -519,3 +519,13 @@ id = "sfs2.s2-$1"
 parent = "sfs2.season2-layout-s2-00"
 description = "2-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-$1-$2Chronicle.pdf"
+
+# =========================================================================
+# Fill-in lead-text overrides
+# =========================================================================
+# Maps derived fill-in names to replacement labels, matched against the
+# chronicle path (first match wins). Keeps generated lead text stable.
+
+[[fillin_labels]]
+pattern = 'sfs2/season1/1-07-SeizeandDestroyChronicle\.pdf$'
+labels = { "%" = "% of data erased" }

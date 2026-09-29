@@ -40,6 +40,19 @@ class MetadataRule:
 
 
 @dataclass(frozen=True)
+class FillinLabelRule:
+    """A lead-text override entry from the TOML metadata file.
+
+    Attributes:
+        pattern: Regex pattern to match against PDF relative paths.
+        labels: Map of derived fill-in names to replacement labels.
+    """
+
+    pattern: str
+    labels: dict[str, str]
+
+
+@dataclass(frozen=True)
 class MetadataConfig:
     """Parsed contents of the TOML metadata file.
 
@@ -47,11 +60,13 @@ class MetadataConfig:
         layouts_dir: Optional global layouts directory path from the TOML.
         chronicles_dir: Optional base directory for relative path matching.
         rules: Ordered list of MetadataRule entries.
+        fillin_label_rules: Ordered list of FillinLabelRule entries.
     """
 
     layouts_dir: str | None
     rules: list[MetadataRule]
     chronicles_dir: str | None = None
+    fillin_label_rules: tuple[FillinLabelRule, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -128,10 +143,28 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
             )
         )
 
+    fillin_label_rules: list[FillinLabelRule] = []
+    for index, entry in enumerate(data.get("fillin_labels", [])):
+        if "pattern" not in entry:
+            raise ValueError(
+                f"Fill-in label rule {index} in {metadata_path} "
+                f"missing required field 'pattern'"
+            )
+        labels = entry.get("labels", {})
+        if not isinstance(labels, dict):
+            raise ValueError(
+                f"Fill-in label rule {index} in {metadata_path} "
+                f"has non-mapping 'labels'"
+            )
+        fillin_label_rules.append(
+            FillinLabelRule(pattern=entry["pattern"], labels=dict(labels))
+        )
+
     return MetadataConfig(
         layouts_dir=layouts_dir,
         rules=rules,
         chronicles_dir=chronicles_dir,
+        fillin_label_rules=tuple(fillin_label_rules),
     )
 
 
@@ -279,3 +312,18 @@ def match_rule(
         )
 
     return None
+
+
+def match_fillin_labels(
+    relative_path: str,
+    config: MetadataConfig,
+) -> dict[str, str]:
+    """Find lead-text overrides for a chronicle PDF.
+
+    Tests fillin_labels rules in order; the first matching pattern
+    wins. Returns an empty map when nothing matches.
+    """
+    for rule in config.fillin_label_rules:
+        if re.search(rule.pattern, relative_path):
+            return dict(rule.labels)
+    return {}

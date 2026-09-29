@@ -158,6 +158,7 @@ def _deepest_canvas(
 def extract_fillins(
     pdf_path: str | Path,
     canvas_rects: dict[str, list[float]],
+    label_overrides: dict[str, str] | None = None,
 ) -> list[dict]:
     """Extract fill-in blanks from the chronicle's last page.
 
@@ -165,6 +166,8 @@ def extract_fillins(
         pdf_path: Path to the chronicle PDF.
         canvas_rects: Map of canvas names to absolute page percentage
             rects ([x0, y0, x1, y1]) from the parent layout chain.
+        label_overrides: Map of derived names to replacement lead text,
+            applied before deduplication.
 
     Returns:
         List of dicts with name, canvas, x, y, x2, y2 (canvas-relative
@@ -200,6 +203,8 @@ def extract_fillins(
         name = derive_fillin_name(before, after)
         if not name:
             continue
+        if label_overrides and name in label_overrides:
+            name = label_overrides[name]
         x0, x1 = run_box
         _, word_y0, _, word_y1 = words[idx][0:4]
         span_size = _run_font_size(page, (x0 + x1) / 2, (word_y0 + word_y1) / 2)

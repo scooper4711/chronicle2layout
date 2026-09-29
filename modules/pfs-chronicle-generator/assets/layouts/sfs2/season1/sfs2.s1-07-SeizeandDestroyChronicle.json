@@ -16,10 +16,10 @@
       }
     },
     "Fill-ins": {
-      "%": {
+      "% of data erased": {
         "type": "text",
-        "description": "%",
-        "example": "%"
+        "description": "% of data erased",
+        "example": "% of data erased"
       }
     }
   },
@@ -68,7 +68,7 @@
       }
     },
     {
-      "value": "param:%",
+      "value": "param:% of data erased",
       "type": "text",
       "canvas": "summary",
       "x": 5.9,

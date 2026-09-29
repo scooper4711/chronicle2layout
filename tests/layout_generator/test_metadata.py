@@ -295,3 +295,42 @@ class TestMatchRule:
         result = match_rule("bounties/b13", self._make_config(rules))
         assert result is not None
         assert result.id == "bounties/b13-layout"
+
+
+class TestFillinLabelRules:
+    """Tests for fillin_labels parsing and first-match lookup."""
+
+    def test_loads_fillin_label_sections(self, tmp_path: Path) -> None:
+        toml_path = write_toml(
+            tmp_path,
+            '[[rules]]\n'
+            'pattern = ".*"\n'
+            'id = "x"\n'
+            'parent = "y"\n'
+            '[[fillin_labels]]\n'
+            "pattern = '1-07-'\n"
+            'labels = { "%" = "% of data erased" }\n',
+            "meta.toml",
+        )
+        config = load_metadata(toml_path)
+        assert len(config.fillin_label_rules) == 1
+        assert config.fillin_label_rules[0].labels == {"%": "% of data erased"}
+
+    def test_match_returns_first_labels(self) -> None:
+        from layout_generator.metadata import FillinLabelRule, match_fillin_labels
+
+        config = MetadataConfig(
+            layouts_dir=None,
+            rules=[],
+            fillin_label_rules=(
+                FillinLabelRule(pattern=r"1-07-.*", labels={"%": "% of data erased"}),
+                FillinLabelRule(pattern=r".*", labels={"%": "other"}),
+            ),
+        )
+        assert match_fillin_labels("1-07-X.pdf", config) == {"%": "% of data erased"}
+
+    def test_no_match_returns_empty_map(self) -> None:
+        from layout_generator.metadata import match_fillin_labels
+
+        config = MetadataConfig(layouts_dir=None, rules=[], fillin_label_rules=())
+        assert match_fillin_labels("anything.pdf", config) == {}
