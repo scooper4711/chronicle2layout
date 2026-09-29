@@ -13,13 +13,12 @@
       "type": "text",
       "canvas": "summary",
       "align": "LB",
-      "top": "h_thin[1]",
-      "left": "@h_thin[1].left",
+      "left": 22.7,
       "styles": [
         "defaultfont"
       ],
-      "right": "@h_thin[1].right",
-      "bottom": "@h_thin[1]"
+      "right": 60.7,
+      "bottom": 29.4
     },
     {
       "name": "event",
@@ -183,7 +182,7 @@
       "left": "v_thin[0]",
       "right": "v_thin[3]",
       "top": "h_thin[0]",
-      "bottom": "h_thin[8]"
+      "bottom": "h_thin[7]"
     },
     {
       "name": "character_info",
@@ -199,7 +198,7 @@
       "left": "main.left",
       "right": "v_bar[0].left",
       "top": "h_bar[4].bottom",
-      "bottom": "h_thin[7].top"
+      "bottom": "h_thin[6].top"
     },
     {
       "name": "summary",
@@ -238,17 +237,8 @@
       "parent": "main",
       "left": "main.left",
       "right": "main.right",
-      "top": "h_thin[7]",
+      "top": "h_thin[6]",
       "bottom": "main.bottom"
     }
-  ],
-  "parameters": {
-    "Event Info": {
-      "adventure": {
-        "type": "text",
-        "description": "Adventure completed",
-        "example": "Paizo Printables"
-      }
-    }
-  }
+  ]
 }

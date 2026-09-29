@@ -14,6 +14,13 @@
         ],
         "example": "obtained braidworks to return to Aruk and/or"
       }
+    },
+    "Fill-ins": {
+      "note it here": {
+        "type": "text",
+        "description": "note it here",
+        "example": "note it here"
+      }
     }
   },
   "presets": {
@@ -59,6 +66,18 @@
           }
         ]
       }
+    },
+    {
+      "value": "param:note it here",
+      "type": "text",
+      "canvas": "boons",
+      "x": 2.9,
+      "y": 38.7,
+      "x2": 27.2,
+      "y2": 41.8,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "align": "LB"
     }
   ]
 }

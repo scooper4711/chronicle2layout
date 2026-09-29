@@ -3,19 +3,15 @@
 Validates Requirements: 2.1–2.6, 3.1–3.6, 4.1–4.5, 5.1–5.7, 6.1–6.6
 """
 
-from pathlib import Path
-
 import numpy as np
 import pytest
 
 from blueprint2layout.detection import (
-    _is_standalone_underscore_rule,
     detect_horizontal_black_lines,
-    detect_structures,
-    detect_underscore_rules,
     detect_vertical_black_lines,
     detect_grey_rules,
     detect_grey_boxes,
+    detect_structures,
 )
 
 
@@ -407,74 +403,3 @@ class TestDetectStructures:
         assert isinstance(result.h_bar, list)
         assert isinstance(result.h_rule, list)
         assert isinstance(result.v_bar, list)
-
-
-PRINTABLES_PDF = Path(
-    "modules/pfs-chronicle-generator/assets/chronicles"
-    "/pfs2/printables/Paizo+Printables+Sanctioning.pdf"
-)
-
-# Chronicles with inline fill-in blanks that must NOT gain entries.
-INLINE_BLANK_PDFS = [
-    "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season1/1-01-TheAbsalomInitiationChronicle.pdf",
-    "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-07-SeizeandDestroyChronicle.pdf",
-    "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-15-RuinsoftheWorldSoulChronicle.pdf",
-    "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-23-PsychicEchoesChronicle.pdf",
-    "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-25-TheHollowedShellChronicle.pdf",
-    "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season2/2-06-AnInsideJobChronicle.pdf",
-]
-
-
-class TestStandaloneUnderscoreRule:
-    """Unit tests for the standalone-rule gate."""
-
-    def test_wide_run_short_label_qualifies(self) -> None:
-        assert _is_standalone_underscore_rule(37.5, "Adventure Completed:") is True
-
-    def test_narrow_run_rejected(self) -> None:
-        assert _is_standalone_underscore_rule(3.5, "Level") is False
-
-    def test_sentence_remainder_rejected(self) -> None:
-        remainder = "attempt a task of level . If you succeed you earn a reward"
-        assert _is_standalone_underscore_rule(16.7, remainder) is False
-
-
-class TestDetectUnderscoreRules:
-    """Underscore fill-in rules surface as h_thin entries."""
-
-    _skip_no_pdf = pytest.mark.skipif(
-        not PRINTABLES_PDF.exists(),
-        reason="Printables chronicle PDF not available",
-    )
-
-    @_skip_no_pdf
-    def test_printables_rule_detected(self) -> None:
-        rules = detect_underscore_rules(str(PRINTABLES_PDF))
-        assert len(rules) == 1
-        rule = rules[0]
-        assert rule.y == pytest.approx(28.5, abs=1.0)
-        assert rule.x2 - rule.x > 30.0
-
-    @_skip_no_pdf
-    def test_printables_rule_merges_into_h_thin_sorted(self) -> None:
-        from blueprint2layout.pdf_preparation import prepare_page
-
-        grayscale, rgb = prepare_page(str(PRINTABLES_PDF))
-        result = detect_structures(grayscale, rgb, pdf_path=str(PRINTABLES_PDF))
-        ys = [line.y for line in result.h_thin]
-        assert ys == sorted(ys)
-        assert any(abs(y - 28.5) < 1.0 for y in ys)
-
-    @pytest.mark.parametrize("pdf", INLINE_BLANK_PDFS)
-    def test_inline_blanks_gain_no_entries(self, pdf: str) -> None:
-        """Inline blanks must not shift any existing h_thin index."""
-        if not Path(pdf).exists():
-            pytest.skip("chronicle PDF not available")
-        from blueprint2layout.pdf_preparation import prepare_page
-
-        grayscale, rgb = prepare_page(pdf)
-        pixel_only, _ = detect_horizontal_black_lines(grayscale)
-        full = detect_structures(grayscale, rgb, pdf_path=pdf)
-        assert [(r.y, r.x, r.x2) for r in full.h_thin] == [
-            (r.y, r.x, r.x2) for r in pixel_only
-        ]

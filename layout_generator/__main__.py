@@ -17,6 +17,7 @@ import re
 import sys
 from pathlib import Path
 
+from layout_generator.fillin_extractor import extract_fillins
 from layout_generator.generator import generate_layout_json
 from layout_generator.metadata import (
     MatchedMetadata,
@@ -290,6 +291,38 @@ def _derive_output_file(
     return output_dir / relative_parent / f"{metadata.id}{suffix}.json"
 
 
+def _absolute_canvas_rects(
+    parent_id: str,
+    layout_index: dict[str, Path],
+) -> dict[str, list[float]]:
+    """Resolve every canvas in the parent chain to absolute percentages.
+
+    Merges canvas definitions root-first (child overrides parent),
+    then composes each to absolute page percentages.
+
+    Args:
+        parent_id: Parent layout id to start from.
+        layout_index: Map of layout ids to file paths.
+
+    Returns:
+        Map of canvas names to [x0, y0, x1, y1] absolute percentages.
+    """
+    if parent_id not in layout_index:
+        return {}
+    chain = collect_inheritance_chain(layout_index[parent_id], layout_index)
+    canvases: dict[str, dict] = {}
+    for _path, data in chain:
+        for name, props in data.get("canvas", {}).items():
+            canvases[name] = props
+    rects: dict[str, list[float]] = {}
+    for name in canvases:
+        try:
+            rects[name] = _compose_absolute_coordinates(name, canvases)
+        except (KeyError, TypeError, ValueError):
+            continue
+    return rects
+
+
 def _process_single_pdf(
     pdf_file: Path,
     pdf_base: Path,
@@ -324,6 +357,11 @@ def _process_single_pdf(
             file=sys.stderr,
         )
 
+    fillins: list[dict] = []
+    canvas_rects = _absolute_canvas_rects(metadata.parent, layout_index)
+    if canvas_rects:
+        fillins = extract_fillins(pdf_file, canvas_rects)
+
     layout = generate_layout_json(
         pdf_path=pdf_file,
         item_region_pct=item_region,
@@ -334,6 +372,7 @@ def _process_single_pdf(
         parent=metadata.parent,
         description=metadata.description,
         default_chronicle_location=metadata.default_chronicle_location,
+        fillins=fillins or None,
     )
 
     output_file = _derive_output_file(pdf_file, pdf_base, metadata, output_dir, base_dir)

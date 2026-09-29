@@ -18,6 +18,13 @@
         ],
         "example": "healed it"
       }
+    },
+    "Fill-ins": {
+      "kaylix cubs": {
+        "type": "text",
+        "description": "kaylix cubs",
+        "example": "kaylix cubs"
+      }
     }
   },
   "presets": {
@@ -123,6 +130,18 @@
           }
         ]
       }
+    },
+    {
+      "value": "param:kaylix cubs",
+      "type": "text",
+      "canvas": "summary",
+      "x": 68.3,
+      "y": 54.5,
+      "x2": 72.8,
+      "y2": 65.4,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "align": "LB"
     }
   ]
 }

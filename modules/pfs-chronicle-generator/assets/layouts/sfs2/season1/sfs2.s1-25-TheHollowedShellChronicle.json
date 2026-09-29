@@ -16,6 +16,13 @@
         ],
         "example": "saved"
       }
+    },
+    "Fill-ins": {
+      "audio logs": {
+        "type": "text",
+        "description": "audio logs",
+        "example": "audio logs"
+      }
     }
   },
   "presets": {
@@ -91,6 +98,18 @@
           }
         ]
       }
+    },
+    {
+      "value": "param:audio logs",
+      "type": "text",
+      "canvas": "summary",
+      "x": 13.5,
+      "y": 41.4,
+      "x2": 17.1,
+      "y2": 52.3,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "align": "LB"
     }
   ]
 }

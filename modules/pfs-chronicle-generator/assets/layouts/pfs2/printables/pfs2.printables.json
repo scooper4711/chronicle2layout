@@ -13,6 +13,13 @@
         ],
         "example": "None"
       }
+    },
+    "Fill-ins": {
+      "Adventure Completed": {
+        "type": "text",
+        "description": "Adventure Completed",
+        "example": "Adventure Completed"
+      }
     }
   },
   "presets": {
@@ -42,6 +49,18 @@
           }
         ]
       }
+    },
+    {
+      "value": "param:Adventure Completed",
+      "type": "text",
+      "canvas": "summary",
+      "x": 23.9,
+      "y": 52.5,
+      "x2": 78.2,
+      "y2": 59.7,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "align": "LB"
     }
   ]
 }

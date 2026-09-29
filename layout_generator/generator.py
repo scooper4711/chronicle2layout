@@ -179,6 +179,46 @@ def _build_checkboxes_section(
     return params, presets, content_entry
 
 
+def _build_fillins_section(
+    fillins: list[dict],
+) -> tuple[dict, list[dict]]:
+    """Build parameters and content for fill-in blank text fields.
+
+    Each blank becomes a text parameter in a Fill-ins group plus a text
+    content element positioned on the blank, so the module can list and
+    fill values the layout never predefined.
+
+    Returns:
+        Tuple of (params, content_entries).
+    """
+    params: dict = {
+        "Fill-ins": {
+            entry["name"]: {
+                "type": "text",
+                "description": entry["name"],
+                "example": entry["name"],
+            }
+            for entry in fillins
+        },
+    }
+    content: list[dict] = [
+        {
+            "value": f"param:{entry['name']}",
+            "type": "text",
+            "canvas": entry["canvas"],
+            "x": entry["x"],
+            "y": entry["y"],
+            "x2": entry["x2"],
+            "y2": entry["y2"],
+            "font": "Helvetica",
+            "fontsize": entry["fontsize"],
+            "align": "LB",
+        }
+        for entry in fillins
+    ]
+    return params, content
+
+
 def generate_layout_json(
     pdf_path: str | Path,
     item_region_pct: list[float] | None = None,
@@ -189,11 +229,13 @@ def generate_layout_json(
     parent: str | None = None,
     description: str | None = None,
     default_chronicle_location: str | None = None,
+    fillins: list[dict] | None = None,
 ) -> dict:
     """Generate a leaf layout JSON dict from a chronicle PDF.
 
     Orchestrates the full pipeline: text extraction, item segmentation,
-    checkbox detection, label extraction, and layout assembly.
+    checkbox detection, label extraction, fill-in blank extraction,
+    and layout assembly.
 
     Args:
         pdf_path: Path to the chronicle PDF.
@@ -207,6 +249,8 @@ def generate_layout_json(
         parent: Parent layout id.
         description: Layout description.
         default_chronicle_location: defaultChronicleLocation value.
+        fillins: Pre-extracted fill-in blanks (name, canvas, x, y, x2,
+            y2, fontsize). None skips the fill-ins section.
 
     Returns:
         Layout dict conforming to LAYOUT_FORMAT.md.
@@ -240,7 +284,7 @@ def generate_layout_json(
                 cb for cb in checkbox_labels if cb["label"]
             ]
 
-    if not items and not checkbox_labels:
+    if not items and not checkbox_labels and not fillins:
         return layout
 
     layout["parameters"] = {}
@@ -263,6 +307,11 @@ def generate_layout_json(
         layout["parameters"].update(cb_params)
         layout["presets"].update(cb_presets)
         layout["content"].append(cb_content)
+
+    if fillins:
+        fillin_params, fillin_content = _build_fillins_section(fillins)
+        layout["parameters"].update(fillin_params)
+        layout["content"].extend(fillin_content)
 
     if item_line_presets:
         layout["presets"].update(item_line_presets)

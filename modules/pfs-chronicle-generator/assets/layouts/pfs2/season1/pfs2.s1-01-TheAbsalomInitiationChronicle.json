@@ -37,6 +37,13 @@
         ],
         "example": "killed"
       }
+    },
+    "Fill-ins": {
+      "task of level": {
+        "type": "text",
+        "description": "task of level",
+        "example": "task of level"
+      }
     }
   },
   "presets": {
@@ -282,6 +289,18 @@
           }
         ]
       }
+    },
+    {
+      "value": "param:task of level",
+      "type": "text",
+      "canvas": "main",
+      "x": 69.2,
+      "y": 37.9,
+      "x2": 73.1,
+      "y2": 39.5,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "align": "LB"
     }
   ]
 }

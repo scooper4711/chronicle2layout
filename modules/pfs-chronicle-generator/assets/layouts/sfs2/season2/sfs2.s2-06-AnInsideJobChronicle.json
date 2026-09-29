@@ -14,6 +14,13 @@
         ],
         "example": "adopted a pet (____________________)"
       }
+    },
+    "Fill-ins": {
+      "adopted a pet": {
+        "type": "text",
+        "description": "adopted a pet",
+        "example": "adopted a pet"
+      }
     }
   },
   "presets": {
@@ -59,6 +66,18 @@
           }
         ]
       }
+    },
+    {
+      "value": "param:adopted a pet",
+      "type": "text",
+      "canvas": "summary",
+      "x": 24.1,
+      "y": 21.8,
+      "x2": 41.6,
+      "y2": 30.2,
+      "font": "Helvetica",
+      "fontsize": 9,
+      "align": "LB"
     }
   ]
 }

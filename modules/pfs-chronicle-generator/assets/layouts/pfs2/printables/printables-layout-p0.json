@@ -27,11 +27,6 @@
         "type": "text",
         "description": "Gamemasters PFS ID",
         "example": 654321
-      },
-      "adventure": {
-        "type": "text",
-        "description": "Adventure completed",
-        "example": "Paizo Printables"
       }
     },
     "Player Info": {
@@ -212,9 +207,9 @@
       "type": "text",
       "canvas": "summary",
       "x": 23.9,
-      "y": 40.5,
+      "y": 52.4,
       "x2": 78.1,
-      "y2": 56.2,
+      "y2": 60.0,
       "font": "Helvetica",
       "fontsize": 11,
       "align": "LB"
