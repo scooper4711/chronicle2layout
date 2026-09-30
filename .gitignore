@@ -39,3 +39,6 @@ Thumbs.db
 /PFS
 /SFS
 modules/pfs-chronicle-generator/assets/chronicles/
+
+# Scratch files
+tmp/

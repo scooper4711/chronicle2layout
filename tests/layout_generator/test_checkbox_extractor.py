@@ -415,6 +415,10 @@ class TestCleanLabel:
         """A label like '12.5' ending in period-after-digit is preserved."""
         assert _clean_label(["12.5."]) == "12.5."
 
+    def test_strips_trailing_comma_after_digit(self) -> None:
+        """A comma after a digit is not a decimal point and is removed."""
+        assert _clean_label(["Investigation", "Site", "A01,"]) == "Investigation Site A01"
+
     def test_no_trailing_punctuation_unchanged(self) -> None:
         """Label without trailing punctuation is returned as-is."""
         assert _clean_label(["hello", "world"]) == "hello world"
