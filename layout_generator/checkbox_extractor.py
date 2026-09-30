@@ -191,10 +191,16 @@ def _clean_label(label_words: list[str]) -> str:
     Preserves ellipsis ("...") and decimal numbers (digit before period).
     """
     label = ' '.join(label_words).strip()
-    if label.endswith('.') or label.endswith(','):
-        if not label.endswith('...') and not (len(label) >= 2 and label[-2].isdigit()):
-            label = label[:-1].strip()
+    if label.endswith(',') or _is_sentence_period(label):
+        label = label[:-1].strip()
     return label
+
+
+def _is_sentence_period(label: str) -> bool:
+    """Check for a trailing period that is not an ellipsis or decimal point."""
+    if not label.endswith('.') or label.endswith('...'):
+        return False
+    return not (len(label) >= 2 and label[-2].isdigit())
 
 
 def extract_checkbox_labels(

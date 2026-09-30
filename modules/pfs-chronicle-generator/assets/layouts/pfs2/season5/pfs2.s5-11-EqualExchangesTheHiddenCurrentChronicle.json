@@ -29,7 +29,7 @@
           "keeping all brains intact",
           "losing someone\u2019s brain in the process)",
           "laid to rest",
-          "destroyed the ghost of subject 287,"
+          "destroyed the ghost of subject 287"
         ],
         "example": "rescued"
       }
@@ -222,7 +222,7 @@
             ]
           }
         ],
-        "destroyed the ghost of subject 287,": [
+        "destroyed the ghost of subject 287": [
           {
             "type": "checkbox",
             "presets": [
