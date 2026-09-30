@@ -1,0 +1,6 @@
+[tool.ruff]
+line-length = 120
+extend-exclude = ["Legacy_Layouts", "Scenarios", "debug_scripts", "debug_clips", "modules", "tmp"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "SIM", "C4"]
