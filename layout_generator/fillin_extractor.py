@@ -38,6 +38,7 @@ def _is_bare_opener(text: str) -> bool:
     stripped = text.strip()
     return bool(stripped) and all(char in _OPENERS for char in stripped)
 
+
 # Characters stripped from token ends (parens kept out of names but do
 # not stop the scan, so "adopted a pet (" still yields "adopted a pet").
 STRIP_CHARS = "()\"'.,!?;:\u2014\u2013-\u2022\u25e6\u00b7"
@@ -188,17 +189,12 @@ def extract_fillins(
     words = page.get_text("words")
 
     # Word indexes holding underscore runs, in reading order.
-    run_indexes = [
-        idx for idx, word in enumerate(words)
-        if RUN_PATTERN.search(word[4])
-    ]
+    run_indexes = [idx for idx, word in enumerate(words) if RUN_PATTERN.search(word[4])]
 
     raw: list[dict] = []
     for pos, idx in enumerate(run_indexes):
         prev_idx = run_indexes[pos - 1] if pos > 0 else -1
-        next_idx = (
-            run_indexes[pos + 1] if pos + 1 < len(run_indexes) else len(words)
-        )
+        next_idx = run_indexes[pos + 1] if pos + 1 < len(run_indexes) else len(words)
         before, after, run_box = _split_context(words, idx, prev_idx, next_idx)
         name = derive_fillin_name(before, after)
         if not name:
@@ -219,7 +215,7 @@ def extract_fillins(
 
     names = _unique_names([entry["name"] for entry in raw])
     fillins: list[dict] = []
-    for entry, name in zip(raw, names):
+    for entry, name in zip(raw, names, strict=True):
         x0, y0, x1, y1 = entry["bbox"]
         cx = (x0 + x1) / 2 / page_width * 100
         cy = (y0 + y1) / 2 / page_height * 100

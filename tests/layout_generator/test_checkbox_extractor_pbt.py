@@ -10,11 +10,10 @@ import tempfile
 from pathlib import Path
 
 import fitz
-from hypothesis import given, settings, assume
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
 from layout_generator.checkbox_extractor import (
-    CHECKBOX_CHARS,
     _clean_label,
     detect_checkboxes,
 )
@@ -136,9 +135,7 @@ def test_checkbox_region_relative_positions(data: st.DataObject) -> None:
       (b) x <= x2 and y <= y2 (bounding box is valid).
     """
     region = data.draw(_region_pct, label="region_pct")
-    entries = data.draw(
-        _checkbox_positions_inside_region(region), label="checkbox_entries"
-    )
+    entries = data.draw(_checkbox_positions_inside_region(region), label="checkbox_entries")
     assume(len(entries) > 0)
 
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -147,27 +144,19 @@ def test_checkbox_region_relative_positions(data: st.DataObject) -> None:
         checkboxes = detect_checkboxes(str(pdf_path), region)
 
     # We placed checkboxes inside the region, so we expect results.
-    assert len(checkboxes) > 0, (
-        f"Expected checkboxes but got none. "
-        f"Region: {region}, entries: {entries}"
-    )
+    assert len(checkboxes) > 0, f"Expected checkboxes but got none. Region: {region}, entries: {entries}"
 
     for cb in checkboxes:
         # (a) All coordinates are region-relative percentages in [0, 100]
         for key in ("x", "y", "x2", "y2"):
             value = cb[key]
             assert 0 <= value <= 100, (
-                f"Coordinate {key}={value} out of [0, 100] range. "
-                f"Checkbox: {cb}, region: {region}"
+                f"Coordinate {key}={value} out of [0, 100] range. Checkbox: {cb}, region: {region}"
             )
 
         # (b) Bounding box is valid: x <= x2 and y <= y2
-        assert cb["x"] <= cb["x2"], (
-            f"Invalid bbox: x={cb['x']} > x2={cb['x2']}"
-        )
-        assert cb["y"] <= cb["y2"], (
-            f"Invalid bbox: y={cb['y']} > y2={cb['y2']}"
-        )
+        assert cb["x"] <= cb["x2"], f"Invalid bbox: x={cb['x']} > x2={cb['x2']}"
+        assert cb["y"] <= cb["y2"], f"Invalid bbox: y={cb['y']} > y2={cb['y2']}"
 
 
 # ---------------------------------------------------------------------------
@@ -231,44 +220,30 @@ def test_trailing_punctuation_stripping(
         words = prefix_words + [last_word]
         result = _clean_label(words)
         # Trailing comma should be stripped
-        assert not result.endswith(","), (
-            f"Trailing comma not stripped: {result!r} (words: {words})"
-        )
+        assert not result.endswith(","), f"Trailing comma not stripped: {result!r} (words: {words})"
         # The word content (minus comma) should be present
         expected_content = last_word[:-1]
-        assert result.endswith(expected_content), (
-            f"Expected result to end with {expected_content!r}, "
-            f"got {result!r}"
-        )
+        assert result.endswith(expected_content), f"Expected result to end with {expected_content!r}, got {result!r}"
 
     elif case == "period":
         last_word = data.draw(_word_trailing_period, label="last_word")
         words = prefix_words + [last_word]
         result = _clean_label(words)
         # Trailing period should be stripped (not ellipsis, not decimal)
-        assert not result.endswith("."), (
-            f"Trailing period not stripped: {result!r} (words: {words})"
-        )
+        assert not result.endswith("."), f"Trailing period not stripped: {result!r} (words: {words})"
         expected_content = last_word[:-1]
-        assert result.endswith(expected_content), (
-            f"Expected result to end with {expected_content!r}, "
-            f"got {result!r}"
-        )
+        assert result.endswith(expected_content), f"Expected result to end with {expected_content!r}, got {result!r}"
 
     elif case == "ellipsis":
         last_word = data.draw(_word_trailing_ellipsis, label="last_word")
         words = prefix_words + [last_word]
         result = _clean_label(words)
         # Ellipsis should be preserved
-        assert result.endswith("..."), (
-            f"Ellipsis not preserved: {result!r} (words: {words})"
-        )
+        assert result.endswith("..."), f"Ellipsis not preserved: {result!r} (words: {words})"
 
     elif case == "decimal":
         decimal_words = data.draw(_decimal_trailing_period, label="decimal_words")
         words = prefix_words + decimal_words
         result = _clean_label(words)
         # Decimal period should be preserved (digit before period)
-        assert result.endswith("."), (
-            f"Decimal period not preserved: {result!r} (words: {words})"
-        )
+        assert result.endswith("."), f"Decimal period not preserved: {result!r} (words: {words})"

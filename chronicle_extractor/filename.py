@@ -7,7 +7,7 @@ path with season-based subdirectories.
 
 from pathlib import Path
 
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON, _INTRO_SEASON
+from chronicle_extractor.parser import _BOUNTY_SEASON, _INTRO_SEASON, ScenarioInfo
 
 UNSAFE_CHARACTERS: str = "':;?/\\*<>|\",\u2019"
 

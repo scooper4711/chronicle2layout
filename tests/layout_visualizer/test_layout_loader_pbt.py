@@ -18,7 +18,6 @@ from layout_visualizer.layout_loader import (
 )
 from layout_visualizer.models import CanvasRegion
 
-
 # ---------------------------------------------------------------------------
 # Strategies
 # ---------------------------------------------------------------------------
@@ -50,9 +49,8 @@ def _layout_chain_strategy():
     Chain depth is 2-5. Each layout may define 1-4 canvases. At least one
     overlapping canvas name is guaranteed between adjacent layers.
     """
-    return (
-        st.integers(min_value=2, max_value=5)
-        .flatmap(lambda depth: st.tuples(
+    return st.integers(min_value=2, max_value=5).flatmap(
+        lambda depth: st.tuples(
             # shared canvas names that will appear in multiple layers
             st.lists(_canvas_name, min_size=1, max_size=3, unique=True),
             # per-layer unique canvas names (may be empty)
@@ -73,7 +71,7 @@ def _layout_chain_strategy():
                 min_size=depth,
                 max_size=depth,
             ),
-        ))
+        )
     )
 
 
@@ -146,6 +144,7 @@ def _build_chain(draw_result):
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _write_layout(path: Path, data: dict) -> Path:
     """Write a layout dict as JSON to the given path."""
     path.write_text(json.dumps(data), encoding="utf-8")
@@ -156,6 +155,7 @@ def _write_layout(path: Path, data: dict) -> Path:
 # Property 2: Canvas extraction round-trip
 # Feature: layout-visualizer, Property 2: Canvas extraction round-trip
 # ---------------------------------------------------------------------------
+
 
 class TestCanvasExtractionRoundTrip:
     """Validates: Requirements 2.1"""
@@ -187,6 +187,7 @@ class TestCanvasExtractionRoundTrip:
 # Property 3: Inheritance chain merging with child override
 # Feature: layout-visualizer, Property 3: Inheritance chain merging with child override
 # ---------------------------------------------------------------------------
+
 
 class TestInheritanceChainMerging:
     """Validates: Requirements 2.2, 2.3, 2.4"""

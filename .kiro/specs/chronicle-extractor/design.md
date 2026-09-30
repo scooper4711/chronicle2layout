@@ -78,6 +78,7 @@ def is_pdf_file(entry: os.DirEntry) -> bool:
     Requirements: chronicle-extractor 2.1, 2.3
     """
 
+
 def is_map_pdf(stem: str) -> bool:
     """Check if a filename stem indicates a map PDF.
 
@@ -89,6 +90,7 @@ def is_map_pdf(stem: str) -> bool:
 
     Requirements: chronicle-extractor 2.2
     """
+
 
 def is_scenario_pdf(entry: os.DirEntry) -> bool:
     """Check if a directory entry is a processable scenario PDF.
@@ -111,6 +113,7 @@ def is_scenario_pdf(entry: os.DirEntry) -> bool:
 import re
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class ScenarioInfo:
     """Parsed scenario metadata from a PDF's first page.
@@ -120,15 +123,16 @@ class ScenarioInfo:
         scenario: The zero-padded scenario number string (e.g., '07', '12').
         name: The scenario name as extracted from the PDF text.
     """
+
     season: int
     scenario: str
     name: str
 
+
 # Regex pattern: matches #X-YY followed by the scenario name
 # Captures: season number, scenario number, and trailing scenario name text
-SCENARIO_PATTERN: re.Pattern = re.compile(
-    r"#(\d+)-(\d+)\s*[:\s]*(.+)"
-)
+SCENARIO_PATTERN: re.Pattern = re.compile(r"#(\d+)-(\d+)\s*[:\s]*(.+)")
+
 
 def extract_scenario_info(first_page_text: str) -> ScenarioInfo | None:
     """Extract PFS scenario number and name from first-page text.
@@ -153,6 +157,7 @@ def extract_scenario_info(first_page_text: str) -> ScenarioInfo | None:
 # Characters to strip from scenario names for filesystem safety
 UNSAFE_CHARACTERS: str = "':;?/\\*<>|\""
 
+
 def sanitize_name(name: str) -> str:
     """Remove spaces and unsafe characters from a scenario name.
 
@@ -167,6 +172,7 @@ def sanitize_name(name: str) -> str:
 
     Requirements: chronicle-extractor 5.2, 5.3, 5.4
     """
+
 
 def build_output_path(
     output_dir: Path,
@@ -207,6 +213,7 @@ def extract_last_page(input_path: Path, output_path: Path) -> None:
     Requirements: chronicle-extractor 4.1, 4.3
     """
 
+
 def process_directory(input_dir: Path, output_dir: Path) -> None:
     """Process all scenario PDFs in a directory.
 
@@ -236,6 +243,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
     Requirements: chronicle-extractor 1.1, 1.2
     """
+
 
 def main(argv: list[str] | None = None) -> int:
     """Entry point for the chronicle extractor CLI.

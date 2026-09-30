@@ -14,7 +14,7 @@ from pathlib import Path
 
 import fitz
 
-CHECKBOX_CHARS: list[str] = ['□', '☐', '☑', '☒', '▫']
+CHECKBOX_CHARS: list[str] = ["□", "☐", "☑", "☒", "▫"]
 """Unicode characters recognized as checkboxes."""
 
 
@@ -24,13 +24,17 @@ def _contains_checkbox_char(text: str) -> bool:
 
 
 def _is_in_region(
-    x0: float, y0: float, x1: float, y1: float,
-    region_x0: float, region_y0: float,
-    region_x2: float, region_y2: float,
+    x0: float,
+    y0: float,
+    x1: float,
+    y1: float,
+    region_x0: float,
+    region_y0: float,
+    region_x2: float,
+    region_y2: float,
 ) -> bool:
     """Check if a word bounding box falls within the specified region."""
-    return (x0 >= region_x0 and x1 <= region_x2
-            and y0 >= region_y0 and y1 <= region_y2)
+    return x0 >= region_x0 and x1 <= region_x2 and y0 >= region_y0 and y1 <= region_y2
 
 
 def _compute_region_bounds(
@@ -62,9 +66,14 @@ def _compute_region_bounds(
 
 
 def _to_region_relative_pct(
-    x0: float, y0: float, x1: float, y1: float,
-    region_x0: float, region_y0: float,
-    region_width: float, region_height: float,
+    x0: float,
+    y0: float,
+    x1: float,
+    y1: float,
+    region_x0: float,
+    region_y0: float,
+    region_width: float,
+    region_height: float,
 ) -> dict:
     """Convert absolute coordinates to region-relative percentage bbox."""
     return {
@@ -102,8 +111,8 @@ def detect_checkboxes(
     page_width = page.rect.width
     page_height = page.rect.height
 
-    region_x0, region_y0, region_x2, region_y2, region_width, region_height = (
-        _compute_region_bounds(region_pct, page_width, page_height)
+    region_x0, region_y0, region_x2, region_y2, region_width, region_height = _compute_region_bounds(
+        region_pct, page_width, page_height
     )
 
     checkboxes: list[dict] = []
@@ -128,8 +137,14 @@ def detect_checkboxes(
 
         checkboxes.append(
             _to_region_relative_pct(
-                cb_x0, y0, cb_x1, y1,
-                region_x0, region_y0, region_width, region_height,
+                cb_x0,
+                y0,
+                cb_x1,
+                y1,
+                region_x0,
+                region_y0,
+                region_width,
+                region_height,
             )
         )
 
@@ -145,7 +160,7 @@ def _extract_text_after_checkbox(text: str) -> str | None:
     for ch in CHECKBOX_CHARS:
         idx = text.find(ch)
         if idx >= 0:
-            remainder = text[idx + len(ch):]
+            remainder = text[idx + len(ch) :]
             if remainder:
                 return remainder
     return None
@@ -176,10 +191,10 @@ def _collect_label_words(
             continue
         if _contains_checkbox_char(text):
             break
-        if text.lower() == 'or':
+        if text.lower() == "or":
             break
         label_words.append(text)
-        if text.endswith(',') or text.endswith('.'):
+        if text.endswith(",") or text.endswith("."):
             break
 
     return label_words
@@ -190,15 +205,15 @@ def _clean_label(label_words: list[str]) -> str:
 
     Preserves ellipsis ("...") and decimal numbers (digit before period).
     """
-    label = ' '.join(label_words).strip()
-    if label.endswith(',') or _is_sentence_period(label):
+    label = " ".join(label_words).strip()
+    if label.endswith(",") or _is_sentence_period(label):
         label = label[:-1].strip()
     return label
 
 
 def _is_sentence_period(label: str) -> bool:
     """Check for a trailing period that is not an ellipsis or decimal point."""
-    if not label.endswith('.') or label.endswith('...'):
+    if not label.endswith(".") or label.endswith("..."):
         return False
     return not (len(label) >= 2 and label[-2].isdigit())
 
@@ -245,28 +260,31 @@ def extract_checkbox_labels(
     checkbox_positions: list[int] = []
     for idx, word_data in enumerate(words_on_page):
         x0, y0, x1, y1, text = word_data[0], word_data[1], word_data[2], word_data[3], word_data[4]
-        if _contains_checkbox_char(text):
-            if _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
-                checkbox_positions.append(idx)
+        if _contains_checkbox_char(text) and _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
+            checkbox_positions.append(idx)
 
     results: list[dict] = []
     for i, cb_idx in enumerate(checkbox_positions):
-        next_cb_idx = (
-            checkbox_positions[i + 1]
-            if i + 1 < len(checkbox_positions)
-            else len(words_on_page)
-        )
+        next_cb_idx = checkbox_positions[i + 1] if i + 1 < len(checkbox_positions) else len(words_on_page)
 
         cb_text = words_on_page[cb_idx][4]
         label_words = _collect_label_words(
-            words_on_page, cb_idx, next_cb_idx, cb_text,
-            region_x0, region_y0, region_x2, region_y2,
+            words_on_page,
+            cb_idx,
+            next_cb_idx,
+            cb_text,
+            region_x0,
+            region_y0,
+            region_x2,
+            region_y2,
         )
         label = _clean_label(label_words)
 
-        results.append({
-            'checkbox': checkboxes[i] if i < len(checkboxes) else None,
-            'label': label,
-        })
+        results.append(
+            {
+                "checkbox": checkboxes[i] if i < len(checkboxes) else None,
+                "label": label,
+            }
+        )
 
     return results

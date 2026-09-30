@@ -108,11 +108,11 @@ No new data models are needed. The existing `CanvasRegion` dataclass is sufficie
 ```python
 @dataclass(frozen=True)
 class CanvasRegion:
-    name: str      # Label text (choice key or fallback)
-    x: float       # Left edge % of parent canvas
-    y: float       # Top edge % of parent canvas
-    x2: float      # Right edge % of parent canvas
-    y2: float      # Bottom edge % of parent canvas
+    name: str  # Label text (choice key or fallback)
+    x: float  # Left edge % of parent canvas
+    y: float  # Top edge % of parent canvas
+    x2: float  # Right edge % of parent canvas
+    y2: float  # Bottom edge % of parent canvas
     parent: str | None = None  # Canvas name
 ```
 

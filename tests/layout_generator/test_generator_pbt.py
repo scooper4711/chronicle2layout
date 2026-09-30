@@ -13,17 +13,16 @@ from pathlib import Path
 from unittest.mock import patch
 
 import fitz
-from hypothesis import given, settings, assume
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
 from layout_generator.generator import (
+    _SAFE_LABEL_MAX_LENGTH,
     STRIKEOUT_X_END,
     STRIKEOUT_X_START,
-    _SAFE_LABEL_MAX_LENGTH,
     generate_layout_json,
     make_safe_label,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -47,15 +46,7 @@ def create_minimal_pdf(tmp_path: Path, filename: str = "test.pdf") -> Path:
 # Arbitrary text for safe label testing — includes spaces, punctuation,
 # and characters that make_safe_label should handle.
 _label_text = st.text(
-    alphabet=st.sampled_from(
-        list(
-            "abcdefghijklmnopqrstuvwxyz"
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "0123456789"
-            " ,.()'\""
-            "-_+!@#$%^&*"
-        )
-    ),
+    alphabet=st.sampled_from(list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.()'\"-_+!@#$%^&*")),
     min_size=0,
     max_size=80,
 )
@@ -85,7 +76,10 @@ _item_entry = st.builds(
 def _unique_items_strategy() -> st.SearchStrategy[list[dict]]:
     """Generate a list of item entries with unique text values."""
     return st.lists(
-        _item_entry, min_size=1, max_size=6, unique_by=lambda i: i["text"],
+        _item_entry,
+        min_size=1,
+        max_size=6,
+        unique_by=lambda i: i["text"],
     )
 
 
@@ -98,13 +92,16 @@ def _unique_checkbox_labels_strategy() -> st.SearchStrategy[list[dict]]:
         unique_by=lambda cb: cb["label"],
     )
 
+
 # Checkbox bounding box
-_checkbox_bbox = st.fixed_dictionaries({
-    "x": _pct_coord,
-    "y": _pct_coord,
-    "x2": _pct_coord,
-    "y2": _pct_coord,
-})
+_checkbox_bbox = st.fixed_dictionaries(
+    {
+        "x": _pct_coord,
+        "y": _pct_coord,
+        "x2": _pct_coord,
+        "y2": _pct_coord,
+    }
+)
 
 # Non-empty label for checkboxes
 _checkbox_label_text = st.from_regex(r"[A-Za-z][a-z ]{1,20}", fullmatch=True)
@@ -153,21 +150,15 @@ def test_safe_label_sanitization(text: str) -> None:
     # (a) No forbidden characters
     forbidden = set(" ,.()'\"\n\t")
     found_forbidden = set(result) & forbidden
-    assert not found_forbidden, (
-        f"Forbidden characters {found_forbidden} found in result: "
-        f"{result!r} (input: {text!r})"
-    )
+    assert not found_forbidden, f"Forbidden characters {found_forbidden} found in result: {result!r} (input: {text!r})"
 
     # (b) Length at most 50 characters
     assert len(result) <= _SAFE_LABEL_MAX_LENGTH, (
-        f"Result length {len(result)} exceeds {_SAFE_LABEL_MAX_LENGTH}: "
-        f"{result!r} (input: {text!r})"
+        f"Result length {len(result)} exceeds {_SAFE_LABEL_MAX_LENGTH}: {result!r} (input: {text!r})"
     )
 
     # (c) Deterministic: calling again with the same input gives the same output
-    assert make_safe_label(text) == result, (
-        f"Non-deterministic for input: {text!r}"
-    )
+    assert make_safe_label(text) == result, f"Non-deterministic for input: {text!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -211,9 +202,7 @@ def test_layout_json_round_trip(
     - Call generate_layout_json and verify the round-trip.
     """
     # Filter to non-empty labels (matching generate_layout_json behavior)
-    valid_checkbox_labels = [
-        cb for cb in checkbox_labels if cb["label"].strip()
-    ]
+    valid_checkbox_labels = [cb for cb in checkbox_labels if cb["label"].strip()]
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
@@ -228,15 +217,11 @@ def test_layout_json_round_trip(
             }
             for item in items
         ]
-        mock_checkboxes = [
-            cb["checkbox"] for cb in valid_checkbox_labels
-        ]
+        mock_checkboxes = [cb["checkbox"] for cb in valid_checkbox_labels]
 
         # Determine regions based on whether we have data
         item_region = [0.0, 0.0, 100.0, 100.0] if items else None
-        checkbox_region = (
-            [0.0, 0.0, 100.0, 100.0] if valid_checkbox_labels else None
-        )
+        checkbox_region = [0.0, 0.0, 100.0, 100.0] if valid_checkbox_labels else None
 
         with (
             patch(
@@ -272,11 +257,7 @@ def test_layout_json_round_trip(
     serialized = json.dumps(layout)
     deserialized = json.loads(serialized)
 
-    assert deserialized == layout, (
-        f"Round-trip mismatch.\n"
-        f"  Original:     {layout}\n"
-        f"  Deserialized: {deserialized}"
-    )
+    assert deserialized == layout, f"Round-trip mismatch.\n  Original:     {layout}\n  Deserialized: {deserialized}"
 
 
 # ---------------------------------------------------------------------------
@@ -371,17 +352,14 @@ def test_item_layout_assembly(
         safe = make_safe_label(text)
         preset_name = f"item.line.{safe}"
         assert preset_name in layout["presets"], (
-            f"Missing preset {preset_name!r} in presets: "
-            f"{list(layout['presets'].keys())}"
+            f"Missing preset {preset_name!r} in presets: {list(layout['presets'].keys())}"
         )
         preset = layout["presets"][preset_name]
         assert preset["y"] == round(item["y"], 1), (
-            f"y mismatch for {preset_name}: "
-            f"expected {round(item['y'], 1)}, got {preset['y']}"
+            f"y mismatch for {preset_name}: expected {round(item['y'], 1)}, got {preset['y']}"
         )
         assert preset["y2"] == round(item["y2"], 1), (
-            f"y2 mismatch for {preset_name}: "
-            f"expected {round(item['y2'], 1)}, got {preset['y2']}"
+            f"y2 mismatch for {preset_name}: expected {round(item['y2'], 1)}, got {preset['y2']}"
         )
 
     # (d) Choice content entry mapping each item text to strikeout element
@@ -392,9 +370,7 @@ def test_item_layout_assembly(
     assert item_content["choices"] == "param:strikeout_item_lines"
     content_map = item_content["content"]
     for text in seen_texts:
-        assert text in content_map, (
-            f"Missing content entry for {text!r}"
-        )
+        assert text in content_map, f"Missing content entry for {text!r}"
         entries = content_map[text]
         assert len(entries) == 1
         assert entries[0]["type"] == "strikeout"
@@ -436,9 +412,7 @@ def test_checkbox_layout_assembly(
       (d) Choice content entry mapping each label to a checkbox element.
     """
     # Filter to non-empty labels (matching generator behavior)
-    valid_labels = [
-        cb for cb in checkbox_labels if cb["label"].strip()
-    ]
+    valid_labels = [cb for cb in checkbox_labels if cb["label"].strip()]
     assume(len(valid_labels) > 0)
 
     mock_checkboxes = [cb["checkbox"] for cb in valid_labels]
@@ -489,8 +463,7 @@ def test_checkbox_layout_assembly(
         safe = make_safe_label(cb["label"])
         preset_name = f"checkbox.{safe}"
         assert preset_name in layout["presets"], (
-            f"Missing preset {preset_name!r} in presets: "
-            f"{list(layout['presets'].keys())}"
+            f"Missing preset {preset_name!r} in presets: {list(layout['presets'].keys())}"
         )
         preset = layout["presets"][preset_name]
         assert preset["x"] == cb["checkbox"]["x"]
@@ -512,9 +485,7 @@ def test_checkbox_layout_assembly(
     content_map = cb_content["content"]
     for cb in valid_labels:
         label = cb["label"]
-        assert label in content_map, (
-            f"Missing content entry for {label!r}"
-        )
+        assert label in content_map, f"Missing content entry for {label!r}"
         entries = content_map[label]
         assert len(entries) == 1
         assert entries[0]["type"] == "checkbox"

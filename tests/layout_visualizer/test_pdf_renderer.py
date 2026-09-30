@@ -9,8 +9,7 @@ import pytest
 from layout_visualizer.pdf_renderer import render_pdf_page
 
 REAL_PDF = Path(
-    "modules/pfs-chronicle-generator/assets/chronicles"
-    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+    "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
 )
 
 

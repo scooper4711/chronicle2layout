@@ -17,7 +17,7 @@ from blueprint2layout.blueprint import (
     load_blueprint_with_inheritance,
     parse_blueprint,
 )
-from blueprint2layout.models import Blueprint, CanvasEntry, FieldEntry
+from blueprint2layout.models import FieldEntry
 
 
 def _write_blueprint(path: Path, data: dict) -> None:
@@ -432,7 +432,8 @@ class TestBackwardCompatibility:
 
         index = build_blueprint_index(tmp_path)
         _, _, merged_params, merged_styles, _ = load_blueprint_with_inheritance(
-            tmp_path / "child.json", index,
+            tmp_path / "child.json",
+            index,
         )
 
         assert merged_params is None

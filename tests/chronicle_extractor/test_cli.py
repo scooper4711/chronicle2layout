@@ -13,7 +13,10 @@ from chronicle_extractor.__main__ import main, parse_args
 
 
 def _create_scenario_pdf(
-    path: Path, scenario_tag: str, name: str, pages: int = 6,
+    path: Path,
+    scenario_tag: str,
+    name: str,
+    pages: int = 6,
 ) -> None:
     """Create a multi-page PDF with scenario number on page 1 and running headers."""
     doc = fitz.open()
@@ -62,9 +65,7 @@ class TestMainMissingInputDir:
         code = main(["--input-dir", str(missing), "--output-dir", str(tmp_path / "out")])
         assert code == 1
 
-    def test_prints_error_to_stderr(
-        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
-    ) -> None:
+    def test_prints_error_to_stderr(self, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
         missing = tmp_path / "nonexistent"
         main(["--input-dir", str(missing), "--output-dir", str(tmp_path / "out")])
         captured = capsys.readouterr()
@@ -112,9 +113,7 @@ class TestMainEndToEnd:
         )
         return input_dir
 
-    def test_produces_chronicle_pdfs(
-        self, scenario_dir: Path, tmp_path: Path
-    ) -> None:
+    def test_produces_chronicle_pdfs(self, scenario_dir: Path, tmp_path: Path) -> None:
         output_dir = tmp_path / "output"
         code = main(["--input-dir", str(scenario_dir), "--output-dir", str(output_dir)])
 
@@ -122,18 +121,14 @@ class TestMainEndToEnd:
         chronicles = list(output_dir.rglob("*Chronicle.pdf"))
         assert len(chronicles) == 2
 
-    def test_organizes_by_season(
-        self, scenario_dir: Path, tmp_path: Path
-    ) -> None:
+    def test_organizes_by_season(self, scenario_dir: Path, tmp_path: Path) -> None:
         output_dir = tmp_path / "output"
         main(["--input-dir", str(scenario_dir), "--output-dir", str(output_dir)])
 
         assert (output_dir / "season1").is_dir()
         assert (output_dir / "season2").is_dir()
 
-    def test_chronicle_pdfs_have_one_page(
-        self, scenario_dir: Path, tmp_path: Path
-    ) -> None:
+    def test_chronicle_pdfs_have_one_page(self, scenario_dir: Path, tmp_path: Path) -> None:
         output_dir = tmp_path / "output"
         main(["--input-dir", str(scenario_dir), "--output-dir", str(output_dir)])
 

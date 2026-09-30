@@ -1,8 +1,11 @@
 """Unit tests for blueprint parsing."""
 
+import json
+from pathlib import Path
+
 import pytest
 
-from blueprint2layout.blueprint import parse_blueprint
+from blueprint2layout.blueprint import build_blueprint_index, load_blueprint_with_inheritance, parse_blueprint
 from blueprint2layout.models import Blueprint, CanvasEntry
 
 
@@ -201,12 +204,6 @@ class TestParseBlueprint:
         with pytest.raises(ValueError, match="must be int, float, or str"):
             parse_blueprint(data)
 
-import json
-from pathlib import Path
-
-from blueprint2layout.blueprint import build_blueprint_index, load_blueprint_with_inheritance
-from blueprint2layout.models import CanvasEntry
-
 
 def _write_blueprint_json(path: Path, data: dict) -> None:
     """Write a Blueprint dict as JSON to the given path."""
@@ -283,9 +280,12 @@ class TestLoadBlueprintNoParent:
     """Tests for load_blueprint_with_inheritance with no parent."""
 
     def test_load_single_blueprint(self, tmp_path: Path):
-        data = _make_blueprint_data("solo.bp", canvases=[
-            {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
+        data = _make_blueprint_data(
+            "solo.bp",
+            canvases=[
+                {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
         bp_path = tmp_path / "solo.json"
         _write_blueprint_json(bp_path, data)
 
@@ -304,12 +304,19 @@ class TestLoadBlueprintWithParent:
     """Tests for load_blueprint_with_inheritance with a parent-child chain."""
 
     def test_load_parent_child_chain(self, tmp_path: Path):
-        parent_data = _make_blueprint_data("parent.bp", canvases=[
-            {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
-        child_data = _make_blueprint_data("child.bp", parent="parent.bp", canvases=[
-            {"name": "summary", "parent": "page", "left": 5, "right": 95, "top": 10, "bottom": 90},
-        ])
+        parent_data = _make_blueprint_data(
+            "parent.bp",
+            canvases=[
+                {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
+        child_data = _make_blueprint_data(
+            "child.bp",
+            parent="parent.bp",
+            canvases=[
+                {"name": "summary", "parent": "page", "left": 5, "right": 95, "top": 10, "bottom": 90},
+            ],
+        )
         parent_path = tmp_path / "parent.json"
         child_path = tmp_path / "child.json"
         _write_blueprint_json(parent_path, parent_data)
@@ -326,7 +333,11 @@ class TestLoadBlueprintWithParent:
         assert len(inherited) == 1
         assert inherited[0].name == "page"
         assert inherited[0] == CanvasEntry(
-            name="page", left=0, right=100, top=0, bottom=100,
+            name="page",
+            left=0,
+            right=100,
+            top=0,
+            bottom=100,
         )
 
 
@@ -334,22 +345,34 @@ class TestLoadBlueprintGrandparentChain:
     """Tests for load_blueprint_with_inheritance with a three-level chain."""
 
     def test_load_three_level_chain(self, tmp_path: Path):
-        root_data = _make_blueprint_data("root.bp", canvases=[
-            {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
-        mid_data = _make_blueprint_data("mid.bp", parent="root.bp", canvases=[
-            {"name": "main", "parent": "page", "left": 5, "right": 95, "top": 5, "bottom": 95},
-        ])
-        leaf_data = _make_blueprint_data("leaf.bp", parent="mid.bp", canvases=[
-            {"name": "detail", "parent": "main", "left": 10, "right": 90, "top": 10, "bottom": 90},
-        ])
+        root_data = _make_blueprint_data(
+            "root.bp",
+            canvases=[
+                {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
+        mid_data = _make_blueprint_data(
+            "mid.bp",
+            parent="root.bp",
+            canvases=[
+                {"name": "main", "parent": "page", "left": 5, "right": 95, "top": 5, "bottom": 95},
+            ],
+        )
+        leaf_data = _make_blueprint_data(
+            "leaf.bp",
+            parent="mid.bp",
+            canvases=[
+                {"name": "detail", "parent": "main", "left": 10, "right": 90, "top": 10, "bottom": 90},
+            ],
+        )
         _write_blueprint_json(tmp_path / "root.json", root_data)
         _write_blueprint_json(tmp_path / "mid.json", mid_data)
         _write_blueprint_json(tmp_path / "leaf.json", leaf_data)
 
         index = build_blueprint_index(tmp_path)
         blueprint, inherited, _, _, _ = load_blueprint_with_inheritance(
-            tmp_path / "leaf.json", index,
+            tmp_path / "leaf.json",
+            index,
         )
 
         assert blueprint.id == "leaf.bp"
@@ -363,12 +386,20 @@ class TestLoadBlueprintCircularReference:
     """Tests for circular parent reference detection."""
 
     def test_circular_reference_raises_error(self, tmp_path: Path):
-        a_data = _make_blueprint_data("a.bp", parent="b.bp", canvases=[
-            {"name": "canvas_a", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
-        b_data = _make_blueprint_data("b.bp", parent="a.bp", canvases=[
-            {"name": "canvas_b", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
+        a_data = _make_blueprint_data(
+            "a.bp",
+            parent="b.bp",
+            canvases=[
+                {"name": "canvas_a", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
+        b_data = _make_blueprint_data(
+            "b.bp",
+            parent="a.bp",
+            canvases=[
+                {"name": "canvas_b", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
         _write_blueprint_json(tmp_path / "a.json", a_data)
         _write_blueprint_json(tmp_path / "b.json", b_data)
 
@@ -382,12 +413,19 @@ class TestLoadBlueprintDuplicateCanvasName:
     """Tests for duplicate canvas name detection across inheritance."""
 
     def test_duplicate_canvas_name_raises_error(self, tmp_path: Path):
-        parent_data = _make_blueprint_data("parent.bp", canvases=[
-            {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
-        child_data = _make_blueprint_data("child.bp", parent="parent.bp", canvases=[
-            {"name": "page", "left": 5, "right": 95, "top": 5, "bottom": 95},
-        ])
+        parent_data = _make_blueprint_data(
+            "parent.bp",
+            canvases=[
+                {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
+        child_data = _make_blueprint_data(
+            "child.bp",
+            parent="parent.bp",
+            canvases=[
+                {"name": "page", "left": 5, "right": 95, "top": 5, "bottom": 95},
+            ],
+        )
         _write_blueprint_json(tmp_path / "parent.json", parent_data)
         _write_blueprint_json(tmp_path / "child.json", child_data)
 
@@ -401,9 +439,13 @@ class TestLoadBlueprintUnknownParent:
     """Tests for unknown parent id detection."""
 
     def test_unknown_parent_raises_error(self, tmp_path: Path):
-        child_data = _make_blueprint_data("child.bp", parent="nonexistent.bp", canvases=[
-            {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
-        ])
+        child_data = _make_blueprint_data(
+            "child.bp",
+            parent="nonexistent.bp",
+            canvases=[
+                {"name": "page", "left": 0, "right": 100, "top": 0, "bottom": 100},
+            ],
+        )
         _write_blueprint_json(tmp_path / "child.json", child_data)
 
         index = build_blueprint_index(tmp_path)

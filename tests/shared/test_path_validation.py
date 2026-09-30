@@ -1,6 +1,5 @@
 """Tests for shared.path_validation module."""
 
-import os
 from pathlib import Path
 
 import pytest

@@ -32,9 +32,7 @@ QUEST_PATTERN: re.Pattern[str] = re.compile(r"Quest\s*#(\d+)", re.IGNORECASE)
 
 # Matches "Bounty #NN" on chronicle or "Bounty: NN" on first page.
 BOUNTY_PATTERN: re.Pattern[str] = re.compile(r"Bounty\s*#(\d+)", re.IGNORECASE)
-BOUNTY_FIRST_PAGE_PATTERN: re.Pattern[str] = re.compile(
-    r"Bounty:\s*(\d+)", re.IGNORECASE
-)
+BOUNTY_FIRST_PAGE_PATTERN: re.Pattern[str] = re.compile(r"Bounty:\s*(\d+)", re.IGNORECASE)
 
 # Matches "Intro #NN" on first page or chronicle.
 INTRO_PATTERN: re.Pattern[str] = re.compile(r"Intro\s*#(\d+)", re.IGNORECASE)
@@ -63,7 +61,6 @@ _COPYRIGHT_MARKERS = (
 )
 
 
-
 # Maximum line length for a title; longer lines are narrative text.
 _MAX_NAME_LINE_LENGTH = 80
 
@@ -84,7 +81,7 @@ def _strip_title_prefix(name: str) -> str:
 # Ordered list of (pattern, season_value) for chronicle number matching.
 # Season value is a callable: int for fixed values, group(1) cast for scenario.
 _CHRONICLE_PATTERNS: list[tuple[re.Pattern[str], int | None]] = [
-    (SCENARIO_PATTERN, None),   # season from group(1)
+    (SCENARIO_PATTERN, None),  # season from group(1)
     (QUEST_PATTERN, 0),
     (BOUNTY_PATTERN, _BOUNTY_SEASON),
     (INTRO_PATTERN, _INTRO_SEASON),
@@ -113,10 +110,9 @@ def _match_chronicle_number(
         else:
             season = int(match.group(1))
             scenario = match.group(2)
-        remainder = line[match.end():].strip().lstrip(":").strip()
+        remainder = line[match.end() :].strip().lstrip(":").strip()
         return season, scenario, remainder
     return None
-
 
 
 def _strip_non_content_lines(lines: list[str]) -> list[str]:
@@ -210,8 +206,6 @@ def extract_from_chronicle(last_page_text: str) -> ScenarioInfo | None:
     return None
 
 
-
-
 def extract_scenario_number(first_page_text: str) -> tuple[int, str] | None:
     """Extract season and scenario number from first-page text.
 
@@ -262,13 +256,13 @@ def _lines_after_header(page_text: str) -> list[str]:
     for i, line in enumerate(lines):
         lower = line.lower()
         if lower.startswith(_HEADER_LABEL):
-            return lines[i + 1:]
+            return lines[i + 1 :]
         if lower.startswith("pathfinder quest"):
-            return lines[i + 1:]
+            return lines[i + 1 :]
         if lower.startswith("pathfinder bounty"):
-            return lines[i + 1:]
+            return lines[i + 1 :]
         if lower.startswith("pathfinder intro"):
-            return lines[i + 1:]
+            return lines[i + 1 :]
 
     return []
 
@@ -298,7 +292,7 @@ def extract_scenario_name(
         return None
 
     common: list[str] = []
-    for la, lb in zip(lines_a, lines_b):
+    for la, lb in zip(lines_a, lines_b, strict=False):
         if la == lb:
             common.append(la)
         else:

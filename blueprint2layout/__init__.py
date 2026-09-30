@@ -50,10 +50,7 @@ def generate_layout(
     if not pdf_path.exists():
         raise FileNotFoundError(f"PDF file not found: {pdf_path}")
 
-    if blueprints_dir is None:
-        blueprints_dir = blueprint_path.parent
-    else:
-        blueprints_dir = Path(blueprints_dir)
+    blueprints_dir = blueprint_path.parent if blueprints_dir is None else Path(blueprints_dir)
 
     grayscale, rgb = prepare_page(str(pdf_path))
     detection = detect_structures(grayscale, rgb, str(pdf_path))
@@ -64,7 +61,10 @@ def generate_layout(
     )
 
     resolved = resolve_canvases(
-        inherited_canvases, blueprint.canvases, detection, effective_aspectratio,
+        inherited_canvases,
+        blueprint.canvases,
+        detection,
+        effective_aspectratio,
     )
 
     resolved_fields = None
@@ -78,7 +78,9 @@ def generate_layout(
         )
 
     return assemble_layout(
-        blueprint, resolved, resolved,
+        blueprint,
+        resolved,
+        resolved,
         resolved_fields=resolved_fields,
         merged_parameters=merged_parameters,
     )

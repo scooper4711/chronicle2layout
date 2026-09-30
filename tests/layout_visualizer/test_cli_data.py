@@ -16,8 +16,7 @@ from layout_visualizer.__main__ import main, parse_args
 LAYOUT_ROOT = Path("modules/pfs-chronicle-generator/assets/layouts")
 LAYOUT_ID = "pfs2.b13"
 REAL_CHRONICLE_PDF = Path(
-    "modules/pfs-chronicle-generator/assets/chronicles"
-    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+    "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
 )
 
 
@@ -27,8 +26,10 @@ def _base_args(
 ) -> list[str]:
     """Build a base argument list with the required flags."""
     return [
-        "--layout-root", layout_root,
-        "--layout-id", layout_id,
+        "--layout-root",
+        layout_root,
+        "--layout-id",
+        layout_id,
     ]
 
 
@@ -54,8 +55,10 @@ class TestDataModeRun:
     )
     def test_data_mode_produces_png(self, tmp_path):
         args = _base_args() + [
-            "--output-dir", str(tmp_path),
-            "--mode", "data",
+            "--output-dir",
+            str(tmp_path),
+            "--mode",
+            "data",
         ]
         code = main(args)
 

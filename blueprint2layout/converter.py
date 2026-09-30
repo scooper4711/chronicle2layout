@@ -42,10 +42,7 @@ def convert_to_parent_relative(
         }
 
     if canvas.parent not in all_canvases:
-        raise ValueError(
-            f"Unknown parent canvas '{canvas.parent}' "
-            f"for canvas '{canvas.name}'"
-        )
+        raise ValueError(f"Unknown parent canvas '{canvas.parent}' for canvas '{canvas.name}'")
 
     parent = all_canvases[canvas.parent]
     parent_width = parent.right - parent.left

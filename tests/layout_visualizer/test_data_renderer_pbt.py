@@ -13,7 +13,6 @@ from hypothesis import strategies as st
 from layout_visualizer.data_renderer import compute_text_position
 from layout_visualizer.models import PixelRect
 
-
 # ---------------------------------------------------------------------------
 # Shared strategies
 # ---------------------------------------------------------------------------
@@ -45,6 +44,7 @@ def _bbox_strategy(draw):
 # Property 4: Alignment position computation
 # Feature: layout-data-mode, Property 4: Alignment position computation
 # ---------------------------------------------------------------------------
+
 
 class TestAlignmentPositionComputation:
     """**Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8**
@@ -107,7 +107,6 @@ class TestAlignmentPositionComputation:
             assert abs(point.y - expected_y) < 1e-6
 
 
-
 # ---------------------------------------------------------------------------
 # Property 5: Multiline line slot division
 # Feature: layout-data-mode, Property 5: Multiline line slot division
@@ -144,7 +143,7 @@ class TestMultilineSlotDivision:
 
         Feature: layout-data-mode, Property 5: Multiline line slot division
         """
-        bbox_y2 = box_y + box_height
+        box_y + box_height
         slot_height = box_height / lines
 
         # Verify slot height formula

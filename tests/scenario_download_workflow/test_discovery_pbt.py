@@ -53,9 +53,7 @@ def filesystem_entry(draw: st.DrawFn) -> dict:
     }
 
 
-def _create_entry(
-    base_dir: Path, entry: dict
-) -> Path:
+def _create_entry(base_dir: Path, entry: dict) -> Path:
     """Create a filesystem entry from a descriptor and return its path."""
     full_name = entry["name"] + entry["extension"]
     path = base_dir / full_name
@@ -120,19 +118,13 @@ def test_discovery_returns_exactly_matching_pdfs_sorted(
 
         # Compute expected set of matching filenames
         expected_names = sorted(
-            entry["name"] + entry["extension"]
-            for entry in unique_entries
-            if _is_matching_pdf(entry, window_seconds)
+            entry["name"] + entry["extension"] for entry in unique_entries if _is_matching_pdf(entry, window_seconds)
         )
 
         result_names = [p.name for p in result]
 
         # Property: result contains exactly the matching files
-        assert result_names == expected_names, (
-            f"Expected {expected_names}, got {result_names}"
-        )
+        assert result_names == expected_names, f"Expected {expected_names}, got {result_names}"
 
         # Property: result is sorted alphabetically by filename
-        assert result_names == sorted(result_names), (
-            f"Result not sorted: {result_names}"
-        )
+        assert result_names == sorted(result_names), f"Result not sorted: {result_names}"

@@ -6,16 +6,15 @@ randomly generated inputs.
 Validates: Requirements 1.2, 1.4, 2.1, 2.2, 2.3, 2.4, 3.2, 3.4, 6.8
 """
 
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
-import pytest
 
 from blueprint2layout.blueprint import (
     _merge_field_styles,
     _merge_parameters,
     parse_blueprint,
 )
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies
@@ -168,7 +167,9 @@ class TestParameterMergingProperty:
     @given(parent=_parameters_dict, child=_parameters_dict)
     @settings(max_examples=100)
     def test_all_params_within_shared_groups(
-        self, parent: dict, child: dict,
+        self,
+        parent: dict,
+        child: dict,
     ) -> None:
         """Within shared groups, all params from both appear in result."""
         result = _merge_parameters(parent, child)
@@ -184,7 +185,9 @@ class TestParameterMergingProperty:
     @given(parent=_parameters_dict, child=_parameters_dict)
     @settings(max_examples=100)
     def test_child_wins_for_shared_params(
-        self, parent: dict, child: dict,
+        self,
+        parent: dict,
+        child: dict,
     ) -> None:
         """For shared params within shared groups, child's value is used."""
         result = _merge_parameters(parent, child)
@@ -199,7 +202,9 @@ class TestParameterMergingProperty:
     @given(parent=_parameters_dict, child=_parameters_dict)
     @settings(max_examples=100)
     def test_parent_only_params_preserved(
-        self, parent: dict, child: dict,
+        self,
+        parent: dict,
+        child: dict,
     ) -> None:
         """Params only in parent are preserved in shared groups."""
         result = _merge_parameters(parent, child)
@@ -240,7 +245,9 @@ class TestFieldStyleMergingProperty:
     @given(parent=_field_styles_dict, child=_field_styles_dict)
     @settings(max_examples=100)
     def test_child_overrides_parent_for_same_name(
-        self, parent: dict, child: dict,
+        self,
+        parent: dict,
+        child: dict,
     ) -> None:
         """For shared style names, child's definition wins."""
         result = _merge_field_styles(parent, child)
@@ -253,7 +260,9 @@ class TestFieldStyleMergingProperty:
     @given(parent=_field_styles_dict, child=_field_styles_dict)
     @settings(max_examples=100)
     def test_parent_only_styles_preserved(
-        self, parent: dict, child: dict,
+        self,
+        parent: dict,
+        child: dict,
     ) -> None:
         """Styles only in parent are preserved unchanged."""
         result = _merge_field_styles(parent, child)
@@ -288,7 +297,8 @@ class TestInvalidRootPropertyTypes:
     @given(bad_location=_non_string_values)
     @settings(max_examples=100)
     def test_non_string_chronicle_location_raises(
-        self, bad_location: object,
+        self,
+        bad_location: object,
     ) -> None:
         """Non-string defaultChronicleLocation raises ValueError."""
         data = _minimal_blueprint_data(defaultChronicleLocation=bad_location)

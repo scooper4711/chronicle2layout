@@ -163,8 +163,8 @@ class TestRegionFiltering:
         # Place one word inside and one outside a region
         # Region will be 25%-75% of page (153-459 pts on 612-wide page)
         words = [
-            (200.0, 400.0, "inside"),   # x=200, within 153-459
-            (10.0, 400.0, "outside"),    # x=10, outside 153-459
+            (200.0, 400.0, "inside"),  # x=200, within 153-459
+            (10.0, 400.0, "outside"),  # x=10, outside 153-459
         ]
         pdf_path = create_pdf_with_words(tmp_path, words)
 
@@ -215,7 +215,7 @@ class TestYCoordinateGrouping:
         lines = extract_text_lines(str(pdf_path), region)
 
         # Both words should be on the same line
-        matching = [l for l in lines if "hello" in l["text"] and "world" in l["text"]]
+        matching = [line for line in lines if "hello" in line["text"] and "world" in line["text"]]
         assert len(matching) == 1, f"Expected 1 grouped line, got {len(matching)}: {lines}"
 
     def test_words_beyond_tolerance_separated(self, tmp_path: Path) -> None:
@@ -231,8 +231,8 @@ class TestYCoordinateGrouping:
         region = [0.0, 0.0, 100.0, 100.0]
         lines = extract_text_lines(str(pdf_path), region)
 
-        first_lines = [l for l in lines if "first" in l["text"]]
-        second_lines = [l for l in lines if "second" in l["text"]]
+        first_lines = [line for line in lines if "first" in line["text"]]
+        second_lines = [line for line in lines if "second" in line["text"]]
         assert len(first_lines) == 1
         assert len(second_lines) == 1
         assert first_lines[0] != second_lines[0]
@@ -308,9 +308,7 @@ class TestSortOrder:
         lines = extract_text_lines(str(pdf_path), region)
 
         y_values = [line["top_left_pct"][1] for line in lines]
-        assert y_values == sorted(y_values), (
-            f"Lines not sorted top-to-bottom: {y_values}"
-        )
+        assert y_values == sorted(y_values), f"Lines not sorted top-to-bottom: {y_values}"
 
     def test_consecutive_lines_ascending_y(self, tmp_path: Path) -> None:
         """For consecutive lines, line[i].y <= line[i+1].y."""

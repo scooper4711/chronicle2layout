@@ -27,10 +27,14 @@ def test_too_few_arguments_exits_nonzero():
 
 def test_missing_blueprint_file_exits_nonzero(tmp_path):
     """Calling main with a nonexistent blueprints directory should return exit code 1."""
-    exit_code = main([
-        "--blueprints-dir", str(tmp_path / "nonexistent"),
-        "--blueprint-id", "test.bp",
-    ])
+    exit_code = main(
+        [
+            "--blueprints-dir",
+            str(tmp_path / "nonexistent"),
+            "--blueprint-id",
+            "test.bp",
+        ]
+    )
     assert exit_code == 1
 
 
@@ -54,8 +58,12 @@ def test_missing_pdf_file_exits_nonzero(tmp_path):
     blueprint_file = blueprints_dir / "test.bp.blueprint.json"
     blueprint_file.write_text(json.dumps(blueprint_data))
 
-    exit_code = main([
-        "--blueprints-dir", str(blueprints_dir),
-        "--blueprint-id", "nonexistent.bp",
-    ])
+    exit_code = main(
+        [
+            "--blueprints-dir",
+            str(blueprints_dir),
+            "--blueprint-id",
+            "nonexistent.bp",
+        ]
+    )
     assert exit_code == 1

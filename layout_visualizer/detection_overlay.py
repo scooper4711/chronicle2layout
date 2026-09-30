@@ -18,7 +18,6 @@ from pathlib import Path
 from blueprint2layout.detection import detect_structures
 from blueprint2layout.models import DetectionResult, GreyBox, HorizontalLine, VerticalLine
 from blueprint2layout.pdf_preparation import prepare_page
-
 from layout_visualizer.coordinate_resolver import (
     assign_colors,
     resolve_canvas_pixels,
@@ -190,7 +189,10 @@ def collect_overlay_rects(
     if requested_detection:
         detection = _run_detection(pdf_path)
         detection_rects = _detection_rects(
-            detection, show, page_width, page_height,
+            detection,
+            show,
+            page_width,
+            page_height,
         )
         for name, rect in detection_rects.items():
             category = name.split("[", 1)[0]
@@ -200,10 +202,13 @@ def collect_overlay_rects(
     named_rects: list[PixelRect] = []
     if "fields" in show:
         fields, field_canvases, _chain = load_content_fields(
-            layout_path, layout_index,
+            layout_path,
+            layout_index,
         )
         canvas_pixels = resolve_canvas_pixels(
-            field_canvases, page_width, page_height,
+            field_canvases,
+            page_width,
+            page_height,
         )
         if "canvases" in show:
             named_rects.extend(canvas_pixels.values())

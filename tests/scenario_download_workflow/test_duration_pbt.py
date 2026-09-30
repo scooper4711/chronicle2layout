@@ -26,9 +26,7 @@ _SUFFIX_TO_KWARG = {
     amount=st.integers(min_value=1, max_value=10_000),
     suffix=st.sampled_from(_VALID_SUFFIXES),
 )
-def test_valid_duration_produces_correct_timedelta(
-    amount: int, suffix: str
-) -> None:
+def test_valid_duration_produces_correct_timedelta(amount: int, suffix: str) -> None:
     """For any positive int and valid suffix, parse_duration returns
     the corresponding timedelta.
 
@@ -37,9 +35,7 @@ def test_valid_duration_produces_correct_timedelta(
     value = f"{amount}{suffix}"
     result = parse_duration(value)
     expected = timedelta(**{_SUFFIX_TO_KWARG[suffix]: amount})
-    assert result == expected, (
-        f"parse_duration({value!r}) = {result}, expected {expected}"
-    )
+    assert result == expected, f"parse_duration({value!r}) = {result}, expected {expected}"
 
 
 # Feature: scenario-download-workflow, Property 1: Duration parsing round-trip
@@ -63,6 +59,7 @@ def test_invalid_duration_raises_value_error(value: str) -> None:
 def _is_valid_duration(value: str) -> bool:
     """Check if a string matches the valid duration pattern."""
     import re
+
     match = re.match(r"^(\d+)([mhd])$", value)
     if not match:
         return False

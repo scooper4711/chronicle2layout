@@ -5,10 +5,7 @@ and is_scenario_pdf predicates.
 """
 
 import os
-from pathlib import Path
 from unittest.mock import MagicMock
-
-import pytest
 
 from chronicle_extractor.filters import is_map_pdf, is_pdf_file, is_scenario_pdf
 

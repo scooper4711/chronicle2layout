@@ -6,8 +6,7 @@ build_scenario_filename, sanitize_image_suffix, and build_image_filename.
 Requirements: scenario-renamer 5.1, 5.2, 5.3, 5.4, 6.1, 6.2, 6.3, 14.1, 14.2, 14.3
 """
 
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
-
+from chronicle_extractor.parser import _BOUNTY_SEASON, ScenarioInfo
 from scenario_renamer.filename import (
     build_image_filename,
     build_scenario_filename,
@@ -40,15 +39,11 @@ class TestBuildScenarioFilename:
         assert build_scenario_filename(info) == "1-01-TheAbsalomInitiation.pdf"
 
     def test_quest_14(self) -> None:
-        info = ScenarioInfo(
-            season=0, scenario="14", name="The Swordlord\u2019s Challenge"
-        )
+        info = ScenarioInfo(season=0, scenario="14", name="The Swordlord\u2019s Challenge")
         assert build_scenario_filename(info) == "Q14-TheSwordlordsChallenge.pdf"
 
     def test_bounty_1(self) -> None:
-        info = ScenarioInfo(
-            season=_BOUNTY_SEASON, scenario="1", name="The Whitefang Wyrm"
-        )
+        info = ScenarioInfo(season=_BOUNTY_SEASON, scenario="1", name="The Whitefang Wyrm")
         assert build_scenario_filename(info) == "B1-TheWhitefangWyrm.pdf"
 
 
@@ -76,15 +71,11 @@ class TestBuildImageFilename:
         assert result == "1-07-FloodedKingsCourtMaps.pdf"
 
     def test_perilous_experiment_ambush(self) -> None:
-        result = build_image_filename(
-            4, "09", "PerilousExperiment", "A-NighttimeAmbush", "jpg"
-        )
+        result = build_image_filename(4, "09", "PerilousExperiment", "A-NighttimeAmbush", "jpg")
         assert result == "4-09-PerilousExperimentA-NighttimeAmbush.jpg"
 
     def test_catastrophes_spark_map(self) -> None:
-        result = build_image_filename(
-            2, "03", "CatastrophesSpark", "Map-1", "jpg"
-        )
+        result = build_image_filename(2, "03", "CatastrophesSpark", "Map-1", "jpg")
         assert result == "2-03-CatastrophesSparkMap-1.jpg"
 
 
@@ -103,15 +94,11 @@ class TestBuildScenarioFilenameIntro:
     def test_intro_1(self) -> None:
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        info = ScenarioInfo(
-            season=_INTRO_SEASON, scenario="1", name="The Second Confirmation"
-        )
+        info = ScenarioInfo(season=_INTRO_SEASON, scenario="1", name="The Second Confirmation")
         assert build_scenario_filename(info) == "I1-TheSecondConfirmation.pdf"
 
     def test_intro_2(self) -> None:
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        info = ScenarioInfo(
-            season=_INTRO_SEASON, scenario="2", name="United in Purpose"
-        )
+        info = ScenarioInfo(season=_INTRO_SEASON, scenario="2", name="United in Purpose")
         assert build_scenario_filename(info) == "I2-UnitedinPurpose.pdf"

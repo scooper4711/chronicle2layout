@@ -11,7 +11,6 @@ from __future__ import annotations
 
 from layout_generator.item_segmenter import clean_text, segment_items
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

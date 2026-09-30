@@ -84,6 +84,7 @@ class MetadataRule:
         description: Optional template for the layout description.
         default_chronicle_location: Optional template for defaultChronicleLocation.
     """
+
     pattern: str
     id: str
     parent: str
@@ -99,6 +100,7 @@ class MetadataConfig:
         layouts_dir: Optional global layouts directory path from the TOML.
         rules: Ordered list of MetadataRule entries.
     """
+
     layouts_dir: str | None
     rules: list[MetadataRule]
 
@@ -116,6 +118,7 @@ class MatchedMetadata:
         description: Resolved description, or None.
         default_chronicle_location: Resolved defaultChronicleLocation, or None.
     """
+
     id: str
     parent: str
     description: str | None = None
@@ -249,7 +252,7 @@ def segment_items(lines: list[dict]) -> list[dict]:
 ```python
 import fitz
 
-CHECKBOX_CHARS: list[str] = ['□', '☐', '☑', '☒']
+CHECKBOX_CHARS: list[str] = ["□", "☐", "☑", "☒"]
 """Unicode characters recognized as checkboxes."""
 
 

@@ -10,8 +10,6 @@ Validates: Requirements 12.1–12.8, 14.1, 14.2, 14.3
 
 import json
 
-import pytest
-
 from blueprint2layout.models import Blueprint, CanvasEntry, ResolvedCanvas
 from blueprint2layout.output import assemble_layout, write_layout
 
@@ -89,9 +87,7 @@ def test_assemble_layout_canvas_coordinates():
         ],
     )
     page = ResolvedCanvas(name="page", left=0.0, right=100.0, top=0.0, bottom=100.0)
-    inner = ResolvedCanvas(
-        name="inner", left=25.0, right=75.0, top=10.0, bottom=50.0, parent="page"
-    )
+    inner = ResolvedCanvas(name="inner", left=25.0, right=75.0, top=10.0, bottom=50.0, parent="page")
     resolved = {"page": page, "inner": inner}
 
     layout = assemble_layout(blueprint, resolved, resolved)
@@ -162,9 +158,7 @@ def test_round_trip(tmp_path):
         ],
     )
     page = ResolvedCanvas(name="page", left=5.0, right=95.0, top=3.0, bottom=97.0)
-    main = ResolvedCanvas(
-        name="main", left=10.0, right=90.0, top=15.0, bottom=85.0, parent="page"
-    )
+    main = ResolvedCanvas(name="main", left=10.0, right=90.0, top=15.0, bottom=85.0, parent="page")
     resolved = {"page": page, "main": main}
 
     layout = assemble_layout(blueprint, resolved, resolved)
@@ -173,6 +167,7 @@ def test_round_trip(tmp_path):
 
     reloaded = json.loads(output_file.read_text())
     assert reloaded == layout
+
 
 def test_assemble_layout_passthrough_description():
     """Layout includes 'description' when Blueprint has one."""

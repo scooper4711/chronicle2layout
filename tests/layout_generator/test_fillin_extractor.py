@@ -57,16 +57,10 @@ class TestDeriveFillinName:
 
     def test_forward_stops_at_closer(self) -> None:
         # Closer alone yields nothing forward; backward decides.
-        assert (
-            derive_fillin_name(["and", "note", "it", "here", "("], [")", "You"])
-            == "note it here"
-        )
+        assert derive_fillin_name(["and", "note", "it", "here", "("], [")", "You"]) == "note it here"
 
     def test_backward_skips_opener(self) -> None:
-        assert (
-            derive_fillin_name(["and", "□", "adopted", "a", "pet", "("], [")", "or"])
-            == "adopted a pet"
-        )
+        assert derive_fillin_name(["and", "□", "adopted", "a", "pet", "("], [")", "or"]) == "adopted a pet"
 
     def test_empty_both_sides_returns_none(self) -> None:
         assert derive_fillin_name([], []) is None

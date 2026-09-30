@@ -9,7 +9,7 @@ subdirectories, quest routing (season=0), bounty routing
 from dataclasses import dataclass
 from pathlib import Path
 
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON, _INTRO_SEASON
+from chronicle_extractor.parser import _BOUNTY_SEASON, _INTRO_SEASON, ScenarioInfo
 from scenario_download_workflow.detection import GameSystem, system_prefix
 
 _CHRONICLES_RELATIVE = Path("modules/pfs-chronicle-generator/assets/chronicles")

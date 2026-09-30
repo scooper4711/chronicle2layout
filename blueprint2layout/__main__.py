@@ -17,7 +17,6 @@ from blueprint2layout.blueprint import build_blueprint_index
 from blueprint2layout.output import write_layout
 from shared.layout_index import collect_inheritance_chain
 
-
 _RED = "\033[91m"
 _RESET = "\033[0m"
 
@@ -50,18 +49,14 @@ def match_blueprint_ids(
     """
     has_wildcard = any(ch in pattern for ch in ("*", "?", "["))
     if has_wildcard:
-        matched = sorted(
-            bid for bid in blueprint_index if fnmatch.fnmatch(bid, pattern)
-        )
+        matched = sorted(bid for bid in blueprint_index if fnmatch.fnmatch(bid, pattern))
     else:
         if pattern not in blueprint_index:
             raise ValueError(f"Blueprint id '{pattern}' not found")
         matched = [pattern]
 
     if not matched:
-        raise ValueError(
-            f"No blueprint ids match pattern '{pattern}'"
-        )
+        raise ValueError(f"No blueprint ids match pattern '{pattern}'")
     return matched
 
 
@@ -117,16 +112,10 @@ def resolve_chronicle_pdf(
     blueprint_path = blueprint_index[blueprint_id]
     location = resolve_default_chronicle_location(blueprint_path, blueprint_index)
     if location is None:
-        raise ValueError(
-            f"Blueprint '{blueprint_id}' has no defaultChronicleLocation "
-            f"in its inheritance chain"
-        )
+        raise ValueError(f"Blueprint '{blueprint_id}' has no defaultChronicleLocation in its inheritance chain")
     pdf_path = Path(location)
     if not pdf_path.exists():
-        raise FileNotFoundError(
-            f"Chronicle PDF not found: {pdf_path} "
-            f"(from blueprint '{blueprint_id}')"
-        )
+        raise FileNotFoundError(f"Chronicle PDF not found: {pdf_path} (from blueprint '{blueprint_id}')")
     return pdf_path
 
 
@@ -156,7 +145,7 @@ def derive_output_path(
     Requirements: blueprint-batch-watch 4.1, 4.2, 4.3
     """
     dot_index = blueprint_id.find(".")
-    filename = (blueprint_id[dot_index + 1:] if dot_index >= 0 else blueprint_id) + ".json"
+    filename = (blueprint_id[dot_index + 1 :] if dot_index >= 0 else blueprint_id) + ".json"
     relative_subdir = blueprint_path.parent.relative_to(blueprints_dir)
     return output_dir / relative_subdir / filename
 
@@ -271,7 +260,7 @@ def watch_and_regenerate(
 
     Requirements: blueprint-batch-watch 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7
     """
-    target_map = {bid: out for bid, out in targets}
+    target_map = dict(targets)
 
     for blueprint_id, output_path in targets:
         try:
@@ -281,7 +270,8 @@ def watch_and_regenerate(
 
     try:
         dep_map = _build_dependency_map(
-            blueprints_dir, list(target_map),
+            blueprints_dir,
+            list(target_map),
         )
     except Exception as exc:  # noqa: BLE001 — report and continue
         _print_error(f"Error collecting watch paths: {exc}")
@@ -300,23 +290,24 @@ def watch_and_regenerate(
             for path in changed:
                 affected_ids.update(dep_map.get(path, set()))
 
-            affected_targets = [
-                (bid, target_map[bid]) for bid in sorted(affected_ids)
-            ]
+            affected_targets = [(bid, target_map[bid]) for bid in sorted(affected_ids)]
             names = ", ".join(bid for bid, _ in affected_targets)
             print(f"Regenerating {names}...")
 
             for blueprint_id, output_path in affected_targets:
                 try:
                     run_single_layout(
-                        blueprints_dir, blueprint_id, output_path,
+                        blueprints_dir,
+                        blueprint_id,
+                        output_path,
                     )
                 except Exception as exc:  # noqa: BLE001 — report and continue
                     _print_error(f"Error ({blueprint_id}): {exc}")
 
             try:
                 dep_map = _build_dependency_map(
-                    blueprints_dir, list(target_map),
+                    blueprints_dir,
+                    list(target_map),
                 )
             except Exception as exc:  # noqa: BLE001 — keep previous map
                 _print_error(f"Error collecting watch paths: {exc}")
@@ -365,10 +356,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--output-dir",
         type=Path,
         default=Path("modules/pfs-chronicle-generator/assets/layouts"),
-        help=(
-            "Directory for output layout JSON files "
-            "(default: modules/pfs-chronicle-generator/assets/layouts)."
-        ),
+        help=("Directory for output layout JSON files (default: modules/pfs-chronicle-generator/assets/layouts)."),
     )
     parser.add_argument(
         "--watch",
@@ -397,9 +385,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
 
     if not args.blueprints_dir.is_dir():
-        _print_error(
-            f"Error: Blueprints directory is not a directory: {args.blueprints_dir}"
-        )
+        _print_error(f"Error: Blueprints directory is not a directory: {args.blueprints_dir}")
         return 1
 
     try:
@@ -414,8 +400,10 @@ def main(argv: list[str] | None = None) -> int:
         for blueprint_id in matched_ids:
             blueprint_path = blueprint_index[blueprint_id]
             output_path = derive_output_path(
-                blueprint_id, blueprint_path,
-                args.blueprints_dir, args.output_dir,
+                blueprint_id,
+                blueprint_path,
+                args.blueprints_dir,
+                args.output_dir,
             )
             targets.append((blueprint_id, output_path))
 
@@ -426,7 +414,9 @@ def main(argv: list[str] | None = None) -> int:
         for blueprint_id, output_path in targets:
             try:
                 run_single_layout(
-                    args.blueprints_dir, blueprint_id, output_path,
+                    args.blueprints_dir,
+                    blueprint_id,
+                    output_path,
                 )
             except (ValueError, FileNotFoundError, OSError) as exc:
                 _print_error(f"Error in {blueprint_id}: {exc}")

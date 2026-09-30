@@ -12,7 +12,7 @@ Key public functions:
 """
 
 from chronicle_extractor.filename import UNSAFE_CHARACTERS, sanitize_name
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON, _INTRO_SEASON
+from chronicle_extractor.parser import _BOUNTY_SEASON, _INTRO_SEASON, ScenarioInfo
 
 
 def subdirectory_for_season(season: int) -> str:
@@ -79,9 +79,7 @@ def sanitize_image_suffix(suffix: str) -> str:
 
     Requirements: scenario-renamer 14.2
     """
-    return "".join(
-        ch for ch in suffix if ch != " " and ch not in UNSAFE_CHARACTERS
-    )
+    return "".join(ch for ch in suffix if ch != " " and ch not in UNSAFE_CHARACTERS)
 
 
 def build_image_filename(

@@ -191,9 +191,9 @@ class TestDetectCheckboxesRegionFiltering:
     def test_mixed_inside_outside_region(self, tmp_path: Path) -> None:
         """Only checkboxes inside the region are returned."""
         entries = [
-            (200.0, 400.0, "☐"),   # Inside 25%-75% region
-            (10.0, 50.0, "☐"),     # Outside (far left, near top)
-            (300.0, 500.0, "☐"),   # Inside
+            (200.0, 400.0, "☐"),  # Inside 25%-75% region
+            (10.0, 50.0, "☐"),  # Outside (far left, near top)
+            (300.0, 500.0, "☐"),  # Inside
         ]
         pdf_path = create_pdf_with_checkboxes(tmp_path, entries)
 
@@ -227,10 +227,10 @@ class TestDetectCheckboxesCharacterVariants:
         """All four checkbox Unicode variants are detected."""
         y_pos = 200.0
         entries = [
-            (200.0, y_pos, "□"),             # U+25A1
-            (200.0, y_pos + 40, "☐"),        # U+2610
-            (200.0, y_pos + 80, "☑"),        # U+2611
-            (200.0, y_pos + 120, "☒"),       # U+2612
+            (200.0, y_pos, "□"),  # U+25A1
+            (200.0, y_pos + 40, "☐"),  # U+2610
+            (200.0, y_pos + 80, "☑"),  # U+2611
+            (200.0, y_pos + 120, "☒"),  # U+2612
         ]
         pdf_path = create_pdf_with_checkboxes(tmp_path, entries)
 

@@ -99,8 +99,7 @@ def _group_words_by_line(
     for word_data in words:
         x0, y0, x1, y1, text = word_data[0], word_data[1], word_data[2], word_data[3], word_data[4]
 
-        if not (x0 >= region_x0 and x1 <= region_x1
-                and y0 >= region_y0 and y1 <= region_y1):
+        if not (x0 >= region_x0 and x1 <= region_x1 and y0 >= region_y0 and y1 <= region_y1):
             continue
 
         matching_y = _find_matching_line_y(y0, lines)
@@ -171,16 +170,18 @@ def _build_line_results(
         x1 = max(w["x1"] for w in words)
         y1 = max(w["y1"] for w in words)
 
-        results.append({
-            "text": text,
-            "top_left_pct": [
-                round(((x0 - region_x0) / region_width) * 100.0, 3),
-                round(((y0 - region_y0) / region_height) * 100.0, 3),
-            ],
-            "bottom_right_pct": [
-                round(((x1 - region_x0) / region_width) * 100.0, 3),
-                round(((y1 - region_y0) / region_height) * 100.0, 3),
-            ],
-        })
+        results.append(
+            {
+                "text": text,
+                "top_left_pct": [
+                    round(((x0 - region_x0) / region_width) * 100.0, 3),
+                    round(((y0 - region_y0) / region_height) * 100.0, 3),
+                ],
+                "bottom_right_pct": [
+                    round(((x1 - region_x0) / region_width) * 100.0, 3),
+                    round(((y1 - region_y0) / region_height) * 100.0, 3),
+                ],
+            }
+        )
 
     return results

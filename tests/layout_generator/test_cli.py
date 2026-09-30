@@ -104,11 +104,15 @@ class TestMissingMetadataFile:
         pdf_dir = tmp_path / "pdfs"
         pdf_dir.mkdir()
 
-        exit_code = main([
-            str(pdf_dir),
-            "--metadata-file", str(tmp_path / "nonexistent.toml"),
-            "--layouts-dir", str(tmp_path),
-        ])
+        exit_code = main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(tmp_path / "nonexistent.toml"),
+                "--layouts-dir",
+                str(tmp_path),
+            ]
+        )
 
         assert exit_code == 1
         captured = capsys.readouterr()
@@ -136,11 +140,15 @@ class TestMissingLayoutsDirectory:
         pdf_dir = tmp_path / "pdfs"
         pdf_dir.mkdir()
 
-        exit_code = main([
-            str(pdf_dir),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(tmp_path / "no_such_dir"),
-        ])
+        exit_code = main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(tmp_path / "no_such_dir"),
+            ]
+        )
 
         assert exit_code == 1
         captured = capsys.readouterr()
@@ -168,10 +176,13 @@ class TestLayoutsDirNotProvided:
         pdf_dir = tmp_path / "pdfs"
         pdf_dir.mkdir()
 
-        exit_code = main([
-            str(pdf_dir),
-            "--metadata-file", str(toml_path),
-        ])
+        exit_code = main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(toml_path),
+            ]
+        )
 
         assert exit_code == 1
         captured = capsys.readouterr()
@@ -205,11 +216,15 @@ class TestNoMatchingRules:
         pdf_dir.mkdir()
         (pdf_dir / "test.pdf").write_bytes(b"%PDF-1.4 dummy")
 
-        exit_code = main([
-            str(pdf_dir),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-        ])
+        exit_code = main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+            ]
+        )
 
         assert exit_code == 1
         captured = capsys.readouterr()
@@ -242,20 +257,20 @@ class TestOutputDirectoryCreation:
         output_dir = tmp_path / "output" / "nested"
         assert not output_dir.exists()
 
-        toml_content = (
-            "[[rules]]\n"
-            "pattern = '.*\\.pdf'\n"
-            "id = 'test-leaf'\n"
-            "parent = 'test-parent'\n"
-        )
+        toml_content = "[[rules]]\npattern = '.*\\.pdf'\nid = 'test-leaf'\nparent = 'test-parent'\n"
         toml_path = write_toml(tmp_path / "meta.toml", toml_content)
 
-        exit_code = main([
-            str(REAL_PDF),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-            "--output-dir", str(output_dir),
-        ])
+        exit_code = main(
+            [
+                str(REAL_PDF),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+                "--output-dir",
+                str(output_dir),
+            ]
+        )
 
         assert exit_code == 0
         assert output_dir.exists()
@@ -288,11 +303,15 @@ class TestSummaryOutput:
         pdf_dir.mkdir()
         (pdf_dir / "a.pdf").write_bytes(b"%PDF-1.4 dummy")
 
-        main([
-            str(pdf_dir),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-        ])
+        main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+            ]
+        )
 
         captured = capsys.readouterr()
         assert "0 generated" in captured.err.lower()
@@ -312,20 +331,20 @@ class TestSummaryOutput:
         layouts_dir.mkdir()
         create_parent_layout(layouts_dir, "test-parent")
 
-        toml_content = (
-            "[[rules]]\n"
-            "pattern = '.*\\.pdf'\n"
-            "id = 'test-leaf'\n"
-            "parent = 'test-parent'\n"
-        )
+        toml_content = "[[rules]]\npattern = '.*\\.pdf'\nid = 'test-leaf'\nparent = 'test-parent'\n"
         toml_path = write_toml(tmp_path / "meta.toml", toml_content)
 
-        main([
-            str(REAL_PDF),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-            "--output-dir", str(tmp_path / "out"),
-        ])
+        main(
+            [
+                str(REAL_PDF),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+                "--output-dir",
+                str(tmp_path / "out"),
+            ]
+        )
 
         captured = capsys.readouterr()
         assert "1 generated" in captured.err.lower()
@@ -364,12 +383,17 @@ class TestSingleFileMode:
         )
         toml_path = write_toml(tmp_path / "meta.toml", toml_content)
 
-        exit_code = main([
-            str(REAL_PDF),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-            "--output-dir", str(output_dir),
-        ])
+        exit_code = main(
+            [
+                str(REAL_PDF),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+                "--output-dir",
+                str(output_dir),
+            ]
+        )
 
         assert exit_code == 0
 
@@ -395,7 +419,9 @@ class TestMixedPathModes:
     """Single-file mode tolerates absolute PDFs against relative bases."""
 
     def test_matching_absolute_pdf_relative_base(
-        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         monkeypatch.chdir(tmp_path)
         pdf = (tmp_path / "chronicles" / "pfs2" / "season8" / "8-02-XChronicle.pdf").absolute()
@@ -404,12 +430,16 @@ class TestMixedPathModes:
 
     def test_matching_outside_base_falls_back_to_filename(self) -> None:
         result = _relative_path_for_matching(
-            Path("/elsewhere/YChronicle.pdf"), Path("x.pdf"), Path("chronicles"),
+            Path("/elsewhere/YChronicle.pdf"),
+            Path("x.pdf"),
+            Path("chronicles"),
         )
         assert result == "YChronicle.pdf"
 
     def test_derive_output_mirrors_subdirectory(
-        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         from layout_generator.__main__ import MatchedMetadata
 
@@ -422,7 +452,11 @@ class TestMixedPathModes:
             default_chronicle_location="modules/chronicles/pfs2/season8/8-02-TheFeyReclamationChronicle.pdf",
         )
         out = _derive_output_file(
-            pdf, Path("x.pdf"), metadata, tmp_path / "out", Path("chronicles"),
+            pdf,
+            Path("x.pdf"),
+            metadata,
+            tmp_path / "out",
+            Path("chronicles"),
         )
         assert out == tmp_path / "out" / "pfs2" / "season8" / "pfs2.s8-02-TheFeyReclamationChronicle.json"
 
@@ -451,13 +485,19 @@ class TestMixedPathModes:
         )
         toml_path = write_toml(tmp_path / "meta.toml", toml_content)
 
-        exit_code = main([
-            str(REAL_PDF.absolute()),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-            "--output-dir", str(output_dir),
-            "--base-dir", str(Path("modules/pfs-chronicle-generator/assets/chronicles").absolute()),
-        ])
+        exit_code = main(
+            [
+                str(REAL_PDF.absolute()),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+                "--output-dir",
+                str(output_dir),
+                "--base-dir",
+                str(Path("modules/pfs-chronicle-generator/assets/chronicles").absolute()),
+            ]
+        )
 
         assert exit_code == 0
         assert (output_dir / "pfs2" / "season1" / "pfs2.s1-00.json").exists()
@@ -493,6 +533,7 @@ class TestDirectoryMode:
         sub_dir.mkdir(parents=True)
 
         import shutil
+
         shutil.copy2(str(REAL_PDF), str(sub_dir / "s1-00.pdf"))
 
         toml_content = (
@@ -504,12 +545,17 @@ class TestDirectoryMode:
         )
         toml_path = write_toml(tmp_path / "meta.toml", toml_content)
 
-        exit_code = main([
-            str(pdf_dir),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-            "--output-dir", str(output_dir),
-        ])
+        exit_code = main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+                "--output-dir",
+                str(output_dir),
+            ]
+        )
 
         assert exit_code == 0
 
@@ -543,24 +589,25 @@ class TestDirectoryMode:
         pdf_dir.mkdir()
 
         import shutil
+
         shutil.copy2(str(REAL_PDF), str(pdf_dir / "matched.pdf"))
         # Create a dummy PDF that won't match the rule
         (pdf_dir / "unmatched.pdf").write_bytes(b"%PDF-1.4 dummy")
 
-        toml_content = (
-            "[[rules]]\n"
-            "pattern = '^matched\\.pdf$'\n"
-            "id = 'test-matched'\n"
-            "parent = 'test-parent'\n"
-        )
+        toml_content = "[[rules]]\npattern = '^matched\\.pdf$'\nid = 'test-matched'\nparent = 'test-parent'\n"
         toml_path = write_toml(tmp_path / "meta.toml", toml_content)
 
-        exit_code = main([
-            str(pdf_dir),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(layouts_dir),
-            "--output-dir", str(output_dir),
-        ])
+        exit_code = main(
+            [
+                str(pdf_dir),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(layouts_dir),
+                "--output-dir",
+                str(output_dir),
+            ]
+        )
 
         assert exit_code == 0
 
@@ -588,11 +635,15 @@ class TestNonExistentPdfPath:
             '[[rules]]\npattern = ".*"\nid = "x"\nparent = "y"\n',
         )
 
-        exit_code = main([
-            str(tmp_path / "no_such_path"),
-            "--metadata-file", str(toml_path),
-            "--layouts-dir", str(tmp_path),
-        ])
+        exit_code = main(
+            [
+                str(tmp_path / "no_such_path"),
+                "--metadata-file",
+                str(toml_path),
+                "--layouts-dir",
+                str(tmp_path),
+            ]
+        )
 
         assert exit_code == 1
         captured = capsys.readouterr()

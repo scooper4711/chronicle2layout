@@ -27,10 +27,7 @@ def topological_sort_canvases(
     """
     for canvas in canvases.values():
         if canvas.parent is not None and canvas.parent not in canvases:
-            raise ValueError(
-                f"Canvas '{canvas.name}' references parent "
-                f"'{canvas.parent}' which does not exist"
-            )
+            raise ValueError(f"Canvas '{canvas.name}' references parent '{canvas.parent}' which does not exist")
 
     roots: list[str] = []
     children_of: dict[str, list[str]] = {name: [] for name in canvases}
@@ -112,7 +109,11 @@ def resolve_canvas_pixels(
         canvas = canvases[name]
         if canvas.parent is None:
             resolved[name] = _resolve_single_canvas(
-                canvas, 0, 0, page_width, page_height,
+                canvas,
+                0,
+                0,
+                page_width,
+                page_height,
             )
         else:
             parent_rect = resolved[canvas.parent]
@@ -143,10 +144,7 @@ def assign_colors(
 
     Requirements: layout-visualizer 5.1, 5.3
     """
-    return {
-        name: PALETTE[i % len(PALETTE)]
-        for i, name in enumerate(canvas_names)
-    }
+    return {name: PALETTE[i % len(PALETTE)] for i, name in enumerate(canvas_names)}
 
 
 def resolve_field_pixels(
@@ -175,10 +173,7 @@ def resolve_field_pixels(
 
     for field in fields:
         if field.parent not in canvas_pixels:
-            raise ValueError(
-                f"Field '{field.name}' references canvas '{field.parent}' "
-                f"which does not exist"
-            )
+            raise ValueError(f"Field '{field.name}' references canvas '{field.parent}' which does not exist")
 
         parent = canvas_pixels[field.parent]
         parent_width = parent.x2 - parent.x

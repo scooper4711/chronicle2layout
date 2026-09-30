@@ -14,15 +14,17 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from blueprint2layout.models import Blueprint, CanvasEntry, ResolvedCanvas, ResolvedField
-from blueprint2layout.output import assemble_layout, _generate_content_element
-
+from blueprint2layout.output import _generate_content_element, assemble_layout
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies
 # ---------------------------------------------------------------------------
 
 _percentage = st.floats(
-    min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False,
+    min_value=0.0,
+    max_value=100.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 
 _canvas_name = st.sampled_from(["page", "main", "sidebar"])
@@ -32,7 +34,10 @@ _field_type = st.sampled_from(["text", "multiline", "line", "rectangle"])
 _font_name = st.sampled_from(["Helvetica", "Arial", "Courier", "Times"])
 
 _fontsize = st.floats(
-    min_value=6.0, max_value=72.0, allow_nan=False, allow_infinity=False,
+    min_value=6.0,
+    max_value=72.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 
 _fontweight = st.sampled_from(["bold", "normal"])
@@ -42,11 +47,17 @@ _align = st.sampled_from(["CM", "LB", "LM", "RB", "RT", "CB"])
 _color = st.sampled_from(["black", "red", "#333333"])
 
 _linewidth = st.floats(
-    min_value=0.1, max_value=5.0, allow_nan=False, allow_infinity=False,
+    min_value=0.1,
+    max_value=5.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 
 _size = st.floats(
-    min_value=1.0, max_value=50.0, allow_nan=False, allow_infinity=False,
+    min_value=1.0,
+    max_value=50.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 
 _lines_count = st.integers(min_value=1, max_value=10)
@@ -164,8 +175,7 @@ _parameters_dict = st.dictionaries(
     max_size=3,
 )
 
-_STYLING_KEYS = ("font", "fontsize", "fontweight", "align",
-                 "color", "linewidth", "size", "lines")
+_STYLING_KEYS = ("font", "fontsize", "fontweight", "align", "color", "linewidth", "size", "lines")
 
 
 def _make_blueprint(**overrides) -> Blueprint:
@@ -184,7 +194,11 @@ def _make_resolved_page() -> dict[str, ResolvedCanvas]:
     """Return a single-page resolved canvas dict."""
     return {
         "page": ResolvedCanvas(
-            name="page", left=0.0, right=100.0, top=0.0, bottom=100.0,
+            name="page",
+            left=0.0,
+            right=100.0,
+            top=0.0,
+            bottom=100.0,
         ),
     }
 
@@ -243,7 +257,8 @@ class TestContentElementPreservesFieldProperties:
     @given(field=resolved_field_any())
     @settings(max_examples=100)
     def test_non_none_styling_properties_included(
-        self, field: ResolvedField,
+        self,
+        field: ResolvedField,
     ) -> None:
         """All non-None styling properties appear in the content element."""
         element = _generate_content_element(field)
@@ -259,14 +274,18 @@ class TestContentElementPreservesFieldProperties:
     @given(fields=st.lists(resolved_field_any(), min_size=1, max_size=5))
     @settings(max_examples=100)
     def test_content_array_length_and_order(
-        self, fields: list[ResolvedField],
+        self,
+        fields: list[ResolvedField],
     ) -> None:
         """assemble_layout content array matches field list length and order."""
         blueprint = _make_blueprint()
         resolved = _make_resolved_page()
 
         layout = assemble_layout(
-            blueprint, resolved, resolved, resolved_fields=fields,
+            blueprint,
+            resolved,
+            resolved,
+            resolved_fields=fields,
         )
 
         assert len(layout["content"]) == len(fields)
@@ -302,7 +321,8 @@ class TestTriggerFieldsProduceWrapperElements:
     @given(field=resolved_field_with_trigger())
     @settings(max_examples=100)
     def test_trigger_inner_element_preserves_properties(
-        self, field: ResolvedField,
+        self,
+        field: ResolvedField,
     ) -> None:
         """Inner element inside trigger wrapper has correct field properties."""
         element = _generate_content_element(field)
@@ -333,14 +353,18 @@ class TestOutputContainsOnlyChildFields:
     @given(fields=st.lists(resolved_field_any(), min_size=0, max_size=5))
     @settings(max_examples=100)
     def test_content_length_matches_input_fields(
-        self, fields: list[ResolvedField],
+        self,
+        fields: list[ResolvedField],
     ) -> None:
         """Content section length equals the resolved_fields list length."""
         blueprint = _make_blueprint()
         resolved = _make_resolved_page()
 
         layout = assemble_layout(
-            blueprint, resolved, resolved, resolved_fields=fields,
+            blueprint,
+            resolved,
+            resolved,
+            resolved_fields=fields,
         )
 
         if len(fields) == 0:
@@ -365,7 +389,8 @@ class TestCanvasOnlyBackwardCompatibility:
     @given(
         bp_id=st.text(
             alphabet=st.characters(
-                whitelist_categories=("L", "N"), whitelist_characters="._",
+                whitelist_categories=("L", "N"),
+                whitelist_characters="._",
             ),
             min_size=1,
             max_size=20,
@@ -388,7 +413,8 @@ class TestCanvasOnlyBackwardCompatibility:
     @given(
         bp_id=st.text(
             alphabet=st.characters(
-                whitelist_categories=("L", "N"), whitelist_characters="._",
+                whitelist_categories=("L", "N"),
+                whitelist_characters="._",
             ),
             min_size=1,
             max_size=20,
@@ -424,15 +450,20 @@ class TestOutputJsonRoundTripStability:
     )
     @settings(max_examples=100)
     def test_json_round_trip_with_params_and_content(
-        self, fields: list[ResolvedField], params: dict,
+        self,
+        fields: list[ResolvedField],
+        params: dict,
     ) -> None:
         """Full layout with parameters and content survives JSON round-trip."""
         blueprint = _make_blueprint()
         resolved = _make_resolved_page()
 
         layout = assemble_layout(
-            blueprint, resolved, resolved,
-            resolved_fields=fields, merged_parameters=params,
+            blueprint,
+            resolved,
+            resolved,
+            resolved_fields=fields,
+            merged_parameters=params,
         )
 
         serialized = json.dumps(layout)
@@ -443,14 +474,18 @@ class TestOutputJsonRoundTripStability:
     @given(fields=st.lists(resolved_field_any(), min_size=1, max_size=3))
     @settings(max_examples=100)
     def test_json_round_trip_content_only(
-        self, fields: list[ResolvedField],
+        self,
+        fields: list[ResolvedField],
     ) -> None:
         """Layout with content only survives JSON round-trip."""
         blueprint = _make_blueprint()
         resolved = _make_resolved_page()
 
         layout = assemble_layout(
-            blueprint, resolved, resolved, resolved_fields=fields,
+            blueprint,
+            resolved,
+            resolved,
+            resolved_fields=fields,
         )
 
         serialized = json.dumps(layout)
@@ -464,15 +499,20 @@ class TestOutputJsonRoundTripStability:
     )
     @settings(max_examples=100)
     def test_all_values_are_builtin_types(
-        self, fields: list[ResolvedField], params: dict,
+        self,
+        fields: list[ResolvedField],
+        params: dict,
     ) -> None:
         """All values in the output dict tree are Python built-in types."""
         blueprint = _make_blueprint()
         resolved = _make_resolved_page()
 
         layout = assemble_layout(
-            blueprint, resolved, resolved,
-            resolved_fields=fields, merged_parameters=params,
+            blueprint,
+            resolved,
+            resolved,
+            resolved_fields=fields,
+            merged_parameters=params,
         )
 
         _assert_builtin_types(layout)
@@ -497,8 +537,15 @@ def _assert_builtin_types(value: object) -> None:
 
 
 _EXPECTED_KEY_ORDER = [
-    "id", "parent", "description", "flags", "aspectratio",
-    "defaultChronicleLocation", "parameters", "canvas", "content",
+    "id",
+    "parent",
+    "description",
+    "flags",
+    "aspectratio",
+    "defaultChronicleLocation",
+    "parameters",
+    "canvas",
+    "content",
 ]
 
 
@@ -539,8 +586,11 @@ class TestOutputSectionOrdering:
         resolved = _make_resolved_page()
 
         layout = assemble_layout(
-            blueprint, resolved, resolved,
-            resolved_fields=fields, merged_parameters=params,
+            blueprint,
+            resolved,
+            resolved,
+            resolved_fields=fields,
+            merged_parameters=params,
         )
 
         actual_keys = list(layout.keys())

@@ -9,9 +9,19 @@ Requirements: 6.3, 6.4, 6.5, 6.6, 6.7, 6.9
 
 import pytest
 
-from blueprint2layout.field_resolver import resolve_field_styles
-from blueprint2layout.models import FieldEntry
-
+from blueprint2layout.field_resolver import (
+    compute_top_default,
+    resolve_field_edge,
+    resolve_field_styles,
+    resolve_fields,
+)
+from blueprint2layout.models import (
+    DetectionResult,
+    FieldEntry,
+    HorizontalLine,
+    ResolvedCanvas,
+    VerticalLine,
+)
 
 # ---------------------------------------------------------------------------
 # Single style resolution
@@ -300,19 +310,6 @@ class TestNonStylePropertiesIgnored:
 # resolve_field_edge tests
 # ---------------------------------------------------------------------------
 
-from blueprint2layout.field_resolver import (
-    compute_top_default,
-    resolve_field_edge,
-    resolve_fields,
-)
-from blueprint2layout.models import (
-    DetectionResult,
-    HorizontalLine,
-    ResolvedCanvas,
-    ResolvedField,
-    VerticalLine,
-)
-
 
 def _make_detection(**kwargs) -> DetectionResult:
     """Create a DetectionResult with specified line arrays."""
@@ -323,10 +320,18 @@ def _make_canvases() -> dict[str, ResolvedCanvas]:
     """Create a minimal set of resolved canvases for testing."""
     return {
         "page": ResolvedCanvas(
-            name="page", left=0.0, right=100.0, top=0.0, bottom=100.0,
+            name="page",
+            left=0.0,
+            right=100.0,
+            top=0.0,
+            bottom=100.0,
         ),
         "main": ResolvedCanvas(
-            name="main", left=10.0, right=90.0, top=5.0, bottom=95.0,
+            name="main",
+            left=10.0,
+            right=90.0,
+            top=5.0,
+            bottom=95.0,
             parent="page",
         ),
     }
@@ -337,15 +342,23 @@ class TestResolveFieldEdgeNumeric:
 
     def test_integer_value(self):
         result = resolve_field_edge(
-            42, "left", None, "603:783",
-            _make_detection(), _make_canvases(),
+            42,
+            "left",
+            None,
+            "603:783",
+            _make_detection(),
+            _make_canvases(),
         )
         assert result == 42.0
 
     def test_float_value(self):
         result = resolve_field_edge(
-            12.5, "top", None, "603:783",
-            _make_detection(), _make_canvases(),
+            12.5,
+            "top",
+            None,
+            "603:783",
+            _make_detection(),
+            _make_canvases(),
         )
         assert result == 12.5
 
@@ -358,15 +371,23 @@ class TestResolveFieldEdgeLineReference:
             h_thin=[HorizontalLine(y=25.0, x=5.0, x2=95.0, thickness_px=2)],
         )
         result = resolve_field_edge(
-            "h_thin[0]", "bottom", None, "603:783",
-            detection, _make_canvases(),
+            "h_thin[0]",
+            "bottom",
+            None,
+            "603:783",
+            detection,
+            _make_canvases(),
         )
         assert result == 25.0
 
     def test_canvas_reference(self):
         result = resolve_field_edge(
-            "main.left", "left", None, "603:783",
-            _make_detection(), _make_canvases(),
+            "main.left",
+            "left",
+            None,
+            "603:783",
+            _make_detection(),
+            _make_canvases(),
         )
         assert result == 10.0
 
@@ -381,8 +402,12 @@ class TestResolveFieldEdgeEmOffset:
             h_thin=[HorizontalLine(y=25.0, x=5.0, x2=95.0, thickness_px=2)],
         )
         result = resolve_field_edge(
-            "h_thin[0] - 1em", "top", 14.0, "603:783",
-            detection, _make_canvases(),
+            "h_thin[0] - 1em",
+            "top",
+            14.0,
+            "603:783",
+            detection,
+            _make_canvases(),
         )
         expected = 25.0 - (14.0 / 783.0 * 100)
         assert abs(result - expected) < 1e-10
@@ -392,8 +417,12 @@ class TestResolveFieldEdgeEmOffset:
             h_thin=[HorizontalLine(y=25.0, x=5.0, x2=95.0, thickness_px=2)],
         )
         result = resolve_field_edge(
-            "h_thin[0] + 2em", "bottom", 10.0, "603:783",
-            detection, _make_canvases(),
+            "h_thin[0] + 2em",
+            "bottom",
+            10.0,
+            "603:783",
+            detection,
+            _make_canvases(),
         )
         expected = 25.0 + (2.0 * 10.0 / 783.0 * 100)
         assert abs(result - expected) < 1e-10
@@ -404,16 +433,24 @@ class TestResolveFieldEdgeEmOffset:
             v_thin=[VerticalLine(x=30.0, y=0.0, y2=100.0, thickness_px=2)],
         )
         result = resolve_field_edge(
-            "v_thin[0] - 1.5em", "left", 12.0, "603:783",
-            detection, _make_canvases(),
+            "v_thin[0] - 1.5em",
+            "left",
+            12.0,
+            "603:783",
+            detection,
+            _make_canvases(),
         )
         expected = 30.0 - (1.5 * 12.0 / 603.0 * 100)
         assert abs(result - expected) < 1e-10
 
     def test_em_offset_with_canvas_reference_base(self):
         result = resolve_field_edge(
-            "main.right + 1em", "right", 10.0, "603:783",
-            _make_detection(), _make_canvases(),
+            "main.right + 1em",
+            "right",
+            10.0,
+            "603:783",
+            _make_detection(),
+            _make_canvases(),
         )
         expected = 90.0 + (1.0 * 10.0 / 603.0 * 100)
         assert abs(result - expected) < 1e-10
@@ -423,8 +460,12 @@ class TestResolveFieldEdgeEmOffset:
             h_thin=[HorizontalLine(y=50.0, x=0.0, x2=100.0, thickness_px=2)],
         )
         result = resolve_field_edge(
-            "h_thin[0] - 0.5em", "top", 14.0, "603:783",
-            detection, _make_canvases(),
+            "h_thin[0] - 0.5em",
+            "top",
+            14.0,
+            "603:783",
+            detection,
+            _make_canvases(),
         )
         expected = 50.0 - (0.5 * 14.0 / 783.0 * 100)
         assert abs(result - expected) < 1e-10
@@ -435,8 +476,12 @@ class TestResolveFieldEdgeEmOffset:
         )
         with pytest.raises(ValueError, match="requires a fontsize"):
             resolve_field_edge(
-                "h_thin[0] - 1em", "top", None, "603:783",
-                detection, _make_canvases(),
+                "h_thin[0] - 1em",
+                "top",
+                None,
+                "603:783",
+                detection,
+                _make_canvases(),
             )
 
 
@@ -481,8 +526,13 @@ class TestResolveFieldsValidation:
     def test_invalid_type_raises(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="checkbox",
-                left=10, right=90, top=5, bottom=95,
+                name="f1",
+                canvas="main",
+                type="checkbox",
+                left=10,
+                right=90,
+                top=5,
+                bottom=95,
             ),
         ]
         with pytest.raises(ValueError, match="invalid type 'checkbox'"):
@@ -491,8 +541,13 @@ class TestResolveFieldsValidation:
     def test_undefined_canvas_raises(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="nonexistent", type="text",
-                left=10, right=90, top=5, bottom=95,
+                name="f1",
+                canvas="nonexistent",
+                type="text",
+                left=10,
+                right=90,
+                top=5,
+                bottom=95,
             ),
         ]
         with pytest.raises(ValueError, match="undefined canvas 'nonexistent'"):
@@ -501,8 +556,12 @@ class TestResolveFieldsValidation:
     def test_missing_top_without_bottom_raises(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                fontsize=14, left=10, right=90,
+                name="f1",
+                canvas="main",
+                type="text",
+                fontsize=14,
+                left=10,
+                right=90,
             ),
         ]
         with pytest.raises(ValueError, match="omits 'top' but lacks 'bottom'"):
@@ -511,8 +570,12 @@ class TestResolveFieldsValidation:
     def test_missing_top_without_fontsize_raises(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=10, right=90, bottom=50,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=10,
+                right=90,
+                bottom=50,
             ),
         ]
         with pytest.raises(ValueError, match="omits 'top' but lacks 'bottom' or 'fontsize'"):
@@ -525,13 +588,25 @@ class TestResolveFieldsCoordinateConversion:
     def test_basic_field_resolution(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text", param="char",
-                font="Helvetica", fontsize=14, align="CM",
-                left=20.0, right=80.0, top=10.0, bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                param="char",
+                font="Helvetica",
+                fontsize=14,
+                align="CM",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom=50.0,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
 
         assert len(result) == 1
@@ -553,12 +628,22 @@ class TestResolveFieldsCoordinateConversion:
         # Field omits top, has bottom=50 and fontsize=14
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text", param="char",
-                fontsize=14, left=20.0, right=80.0, bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                param="char",
+                fontsize=14,
+                left=20.0,
+                right=80.0,
+                bottom=50.0,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
 
         assert len(result) == 1
@@ -572,20 +657,39 @@ class TestResolveFieldsCoordinateConversion:
     def test_preserves_field_order(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=10, right=90, top=5, bottom=20,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=10,
+                right=90,
+                top=5,
+                bottom=20,
             ),
             FieldEntry(
-                name="f2", canvas="main", type="line",
-                left=10, right=90, top=20, bottom=20,
+                name="f2",
+                canvas="main",
+                type="line",
+                left=10,
+                right=90,
+                top=20,
+                bottom=20,
             ),
             FieldEntry(
-                name="f3", canvas="main", type="rectangle",
-                left=10, right=90, top=20, bottom=50,
+                name="f3",
+                canvas="main",
+                type="rectangle",
+                left=10,
+                right=90,
+                top=20,
+                bottom=50,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
 
         assert [rf.name for rf in result] == ["f1", "f2", "f3"]
@@ -596,12 +700,21 @@ class TestResolveFieldsCoordinateConversion:
         }
         fields = [
             FieldEntry(
-                name="f1", styles=["base"], param="char",
-                left=20.0, right=80.0, top=10.0, bottom=50.0,
+                name="f1",
+                styles=["base"],
+                param="char",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom=50.0,
             ),
         ]
         result = resolve_fields(
-            fields, styles, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            styles,
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
 
         assert len(result) == 1
@@ -614,13 +727,23 @@ class TestResolveFieldsCoordinateConversion:
     def test_trigger_preserved(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                trigger="societyid", param="player",
-                left=10, right=90, top=5, bottom=50,
+                name="f1",
+                canvas="main",
+                type="text",
+                trigger="societyid",
+                param="player",
+                left=10,
+                right=90,
+                top=5,
+                bottom=50,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
 
         assert result[0].trigger == "societyid"
@@ -628,13 +751,22 @@ class TestResolveFieldsCoordinateConversion:
     def test_value_field_preserved(self):
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
+                name="f1",
+                canvas="main",
+                type="text",
                 value="static text",
-                left=10, right=90, top=5, bottom=50,
+                left=10,
+                right=90,
+                top=5,
+                bottom=50,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
 
         assert result[0].value == "static text"
@@ -645,8 +777,6 @@ class TestResolveFieldsCoordinateConversion:
 # Field bounds validation tests
 # ---------------------------------------------------------------------------
 
-from blueprint2layout.field_resolver import _validate_field_within_canvas
-
 
 class TestFieldBoundsValidation:
     """Tests that fields outside their canvas bounds raise errors."""
@@ -655,8 +785,13 @@ class TestFieldBoundsValidation:
         """Field left edge before canvas left raises ValueError."""
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=5.0, right=50.0, top=10.0, bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=5.0,
+                right=50.0,
+                top=10.0,
+                bottom=50.0,
             ),
         ]
         with pytest.raises(ValueError, match="edge 'left'.*left of.*'main'"):
@@ -666,8 +801,13 @@ class TestFieldBoundsValidation:
         """Field right edge past canvas right raises ValueError."""
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=95.0, top=10.0, bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=95.0,
+                top=10.0,
+                bottom=50.0,
             ),
         ]
         with pytest.raises(ValueError, match="edge 'right'.*right of.*'main'"):
@@ -677,8 +817,13 @@ class TestFieldBoundsValidation:
         """Field top edge above canvas top raises ValueError."""
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top=2.0, bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top=2.0,
+                bottom=50.0,
             ),
         ]
         with pytest.raises(ValueError, match="edge 'top'.*above.*'main'"):
@@ -688,8 +833,13 @@ class TestFieldBoundsValidation:
         """Field bottom edge below canvas bottom raises ValueError."""
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top=10.0, bottom=98.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom=98.0,
             ),
         ]
         with pytest.raises(ValueError, match="edge 'bottom'.*below.*'main'"):
@@ -700,12 +850,21 @@ class TestFieldBoundsValidation:
         # main canvas: left=10, right=90, top=5, bottom=95
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=10.0, right=90.0, top=5.0, bottom=95.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=10.0,
+                right=90.0,
+                top=5.0,
+                bottom=95.0,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
         assert len(result) == 1
 
@@ -713,12 +872,21 @@ class TestFieldBoundsValidation:
         """Field fully inside canvas bounds should pass."""
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top=10.0, bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom=50.0,
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), _make_detection(), "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            _make_detection(),
+            "603:783",
         )
         assert len(result) == 1
 
@@ -735,8 +903,13 @@ class TestFieldBoundsValidation:
         # Field references h_rule[0] (y=2.0) which is above main (top=5.0)
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top="h_rule[0]", bottom=50.0,
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top="h_rule[0]",
+                bottom=50.0,
             ),
         ]
         with pytest.raises(ValueError, match=r"h_rule\[1\]: y=50\.0%") as exc_info:
@@ -766,12 +939,21 @@ class TestCanvasScopedReferences:
         )
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top=10.0, bottom="@h_rule[0]",
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom="@h_rule[0]",
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), detection, "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            detection,
+            "603:783",
         )
         # h_rule[1] (y=50) is @h_rule[0] within main
         # parent-relative bottom: (50-5)/(95-5)*100 = 50.0
@@ -787,13 +969,21 @@ class TestCanvasScopedReferences:
         )
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left="@h_rule[0].left", right="@h_rule[0].right",
-                top=10.0, bottom="@h_rule[0]",
+                name="f1",
+                canvas="main",
+                type="text",
+                left="@h_rule[0].left",
+                right="@h_rule[0].right",
+                top=10.0,
+                bottom="@h_rule[0]",
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), detection, "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            detection,
+            "603:783",
         )
         # @h_rule[0] within main is h_rule[1] (y=50, x=15, x2=85)
         # parent-relative left: (15-10)/(90-10)*100 = 6.2
@@ -808,13 +998,22 @@ class TestCanvasScopedReferences:
         )
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top=10.0, bottom="@h_rule[99]",
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom="@h_rule[99]",
             ),
         ]
         with pytest.raises(ValueError, match="Index 99 out of bounds"):
             resolve_fields(
-                fields, {}, _make_canvases(), detection, "603:783",
+                fields,
+                {},
+                _make_canvases(),
+                detection,
+                "603:783",
             )
 
     def test_global_reference_still_works(self):
@@ -827,12 +1026,21 @@ class TestCanvasScopedReferences:
         )
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text",
-                left=20.0, right=80.0, top=10.0, bottom="h_rule[1]",
+                name="f1",
+                canvas="main",
+                type="text",
+                left=20.0,
+                right=80.0,
+                top=10.0,
+                bottom="h_rule[1]",
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), detection, "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            detection,
+            "603:783",
         )
         # h_rule[1] globally is y=50
         assert result[0].y2 == 50.0
@@ -847,13 +1055,22 @@ class TestCanvasScopedReferences:
         )
         fields = [
             FieldEntry(
-                name="f1", canvas="main", type="text", fontsize=14.0,
-                left=20.0, right=80.0, bottom="@h_rule[0]",
+                name="f1",
+                canvas="main",
+                type="text",
+                fontsize=14.0,
+                left=20.0,
+                right=80.0,
+                bottom="@h_rule[0]",
                 top="@h_rule[0] - 1em",
             ),
         ]
         result = resolve_fields(
-            fields, {}, _make_canvases(), detection, "603:783",
+            fields,
+            {},
+            _make_canvases(),
+            detection,
+            "603:783",
         )
         # @h_rule[0] within main is h_rule[1] (y=50)
         expected_top = 50.0 - (14.0 / 783.0 * 100)

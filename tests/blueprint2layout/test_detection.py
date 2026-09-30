@@ -7,11 +7,11 @@ import numpy as np
 import pytest
 
 from blueprint2layout.detection import (
-    detect_horizontal_black_lines,
-    detect_vertical_black_lines,
-    detect_grey_rules,
     detect_grey_boxes,
+    detect_grey_rules,
+    detect_horizontal_black_lines,
     detect_structures,
+    detect_vertical_black_lines,
 )
 
 
@@ -80,7 +80,7 @@ class TestDetectMixedThinAndBar:
     def test_detect_mixed_thin_and_bar(self) -> None:
         """Validates: Requirements 2.4, 2.5"""
         image = _white_image(200, 200)
-        image[30:33, :] = 0   # 3px thin line
+        image[30:33, :] = 0  # 3px thin line
         image[100:110, :] = 0  # 10px bar
 
         h_thin, h_bar = detect_horizontal_black_lines(image)
@@ -210,7 +210,7 @@ class TestDetectMultipleVerticalLinesSortedByX:
         """Validates: Requirements 3.2, 3.5"""
         image = _white_grayscale(100, 200)
         image[:, 150:153] = 0  # 3px line at col 150 (rightward)
-        image[:, 30:33] = 0   # 3px line at col 30 (leftward)
+        image[:, 30:33] = 0  # 3px line at col 30 (leftward)
 
         v_thin, v_bar = detect_vertical_black_lines(image)
 

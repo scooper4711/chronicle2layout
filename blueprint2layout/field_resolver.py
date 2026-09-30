@@ -26,13 +26,30 @@ CANVAS_SCOPED_PREFIX = "@"
 _HORIZONTAL_CATEGORIES = {"h_thin", "h_bar", "h_rule"}
 _VERTICAL_CATEGORIES = {"v_thin", "v_bar"}
 _ALL_DETECTION_CATEGORIES = (
-    "h_thin", "h_bar", "h_rule", "v_thin", "v_bar", "grey_box",
+    "h_thin",
+    "h_bar",
+    "h_rule",
+    "v_thin",
+    "v_bar",
+    "grey_box",
 )
 
 # Properties that can be inherited from field styles
 STYLE_PROPERTIES = (
-    "canvas", "type", "font", "fontsize", "fontweight", "align",
-    "color", "linewidth", "size", "lines", "left", "right", "top", "bottom",
+    "canvas",
+    "type",
+    "font",
+    "fontsize",
+    "fontweight",
+    "align",
+    "color",
+    "linewidth",
+    "size",
+    "lines",
+    "left",
+    "right",
+    "top",
+    "bottom",
 )
 
 VALID_FIELD_TYPES = {"text", "multiline", "line", "rectangle"}
@@ -57,17 +74,15 @@ def _build_scoped_detection(
         A new DetectionResult with only in-canvas elements, preserving
         the original sort order within each category.
     """
+
     def h_in_bounds(line):
-        return (canvas.top <= line.y <= canvas.bottom
-                and line.x2 >= canvas.left and line.x <= canvas.right)
+        return canvas.top <= line.y <= canvas.bottom and line.x2 >= canvas.left and line.x <= canvas.right
 
     def v_in_bounds(line):
-        return (canvas.left <= line.x <= canvas.right
-                and line.y2 >= canvas.top and line.y <= canvas.bottom)
+        return canvas.left <= line.x <= canvas.right and line.y2 >= canvas.top and line.y <= canvas.bottom
 
     def box_in_bounds(box):
-        return (canvas.left <= box.x <= canvas.right
-                and canvas.top <= box.y <= canvas.bottom)
+        return canvas.left <= box.x <= canvas.right and canvas.top <= box.y <= canvas.bottom
 
     return DetectionResult(
         h_thin=[e for e in detection.h_thin if h_in_bounds(e)],
@@ -103,14 +118,10 @@ def _resolve_style_chain(
         ValueError: If the style is undefined or circular.
     """
     if style_name not in field_styles:
-        raise ValueError(
-            f"Field '{field_name}' references undefined style '{style_name}'"
-        )
+        raise ValueError(f"Field '{field_name}' references undefined style '{style_name}'")
 
     if style_name in visited:
-        raise ValueError(
-            f"Circular style reference detected: '{style_name}' already visited"
-        )
+        raise ValueError(f"Circular style reference detected: '{style_name}' already visited")
 
     visited.add(style_name)
     style_def = field_styles[style_name]
@@ -158,7 +169,10 @@ def resolve_field_styles(
     for style_name in field_entry.styles:
         visited: set[str] = set()
         style_props = _resolve_style_chain(
-            style_name, field_styles, visited, field_entry.name,
+            style_name,
+            field_styles,
+            visited,
+            field_entry.name,
         )
         effective.update(style_props)
 
@@ -226,12 +240,9 @@ def resolve_field_edge(
     # Handle @ prefix for canvas-scoped references
     is_scoped = edge_value.startswith(CANVAS_SCOPED_PREFIX)
     if is_scoped:
-        edge_value = edge_value[len(CANVAS_SCOPED_PREFIX):]
+        edge_value = edge_value[len(CANVAS_SCOPED_PREFIX) :]
         if scoped_detection is None:
-            raise ValueError(
-                f"Canvas-scoped reference '@{edge_value}' used but "
-                f"no scoped detection available"
-            )
+            raise ValueError(f"Canvas-scoped reference '@{edge_value}' used but no scoped detection available")
 
     active_detection = scoped_detection if is_scoped else detection
 
@@ -242,10 +253,7 @@ def resolve_field_edge(
         em_count = float(em_match.group(3))
 
         if fontsize is None:
-            raise ValueError(
-                f"Em offset expression '{edge_value}' requires a fontsize, "
-                f"but no fontsize is available"
-            )
+            raise ValueError(f"Em offset expression '{edge_value}' requires a fontsize, but no fontsize is available")
 
         base_value = resolve_edge_value(base_ref, active_detection, resolved_canvases, context)
         width, height = _parse_aspectratio(aspectratio)
@@ -333,7 +341,11 @@ def resolve_fields(
         effective = resolve_field_styles(field_entry, field_styles)
         try:
             resolved_field = _resolve_single_field(
-                field_entry, effective, resolved_canvases, detection, aspectratio,
+                field_entry,
+                effective,
+                resolved_canvases,
+                detection,
+                aspectratio,
             )
         except ValueError as exc:
             raise ValueError(
@@ -358,23 +370,34 @@ def _resolve_single_field(
     _validate_field_properties(field_entry.name, canvas_name, field_type, resolved_canvases)
 
     scoped_detection = _build_scoped_detection(
-        detection, resolved_canvases[canvas_name],
+        detection,
+        resolved_canvases[canvas_name],
     )
 
     fontsize = effective.get("fontsize")
     edges = _resolve_field_edges(
-        field_entry.name, effective, fontsize, aspectratio,
-        detection, resolved_canvases, scoped_detection,
+        field_entry.name,
+        effective,
+        fontsize,
+        aspectratio,
+        detection,
+        resolved_canvases,
+        scoped_detection,
     )
 
     _validate_field_within_canvas(
-        field_entry.name, edges, resolved_canvases[canvas_name],
+        field_entry.name,
+        edges,
+        resolved_canvases[canvas_name],
         {k: effective.get(k) for k in ("left", "right", "top", "bottom")},
         detection,
     )
 
     coords = _convert_field_to_parent_relative(
-        field_entry.name, canvas_name, edges, resolved_canvases,
+        field_entry.name,
+        canvas_name,
+        edges,
+        resolved_canvases,
     )
 
     return ResolvedField(
@@ -407,22 +430,15 @@ def _validate_field_properties(
 ) -> None:
     """Validate required field properties after style resolution."""
     if canvas_name is None:
-        raise ValueError(
-            f"Field '{field_name}' has no effective 'canvas' after style resolution"
-        )
+        raise ValueError(f"Field '{field_name}' has no effective 'canvas' after style resolution")
     if field_type is None:
-        raise ValueError(
-            f"Field '{field_name}' has no effective 'type' after style resolution"
-        )
+        raise ValueError(f"Field '{field_name}' has no effective 'type' after style resolution")
     if field_type not in VALID_FIELD_TYPES:
         raise ValueError(
-            f"Field '{field_name}' has invalid type '{field_type}'; "
-            f"valid types are {sorted(VALID_FIELD_TYPES)}"
+            f"Field '{field_name}' has invalid type '{field_type}'; valid types are {sorted(VALID_FIELD_TYPES)}"
         )
     if canvas_name not in resolved_canvases:
-        raise ValueError(
-            f"Field '{field_name}' references undefined canvas '{canvas_name}'"
-        )
+        raise ValueError(f"Field '{field_name}' references undefined canvas '{canvas_name}'")
 
 
 def _resolve_field_edges(
@@ -441,24 +457,31 @@ def _resolve_field_edges(
         raw = effective.get(edge_name)
         if raw is not None:
             edges[edge_name] = resolve_field_edge(
-                raw, edge_name, fontsize, aspectratio,
-                detection, resolved_canvases, scoped_detection,
+                raw,
+                edge_name,
+                fontsize,
+                aspectratio,
+                detection,
+                resolved_canvases,
+                scoped_detection,
                 context=f"field '{field_name}', edge '{edge_name}'",
             )
 
     raw_top = effective.get("top")
     if raw_top is not None:
         edges["top"] = resolve_field_edge(
-            raw_top, "top", fontsize, aspectratio,
-            detection, resolved_canvases, scoped_detection,
+            raw_top,
+            "top",
+            fontsize,
+            aspectratio,
+            detection,
+            resolved_canvases,
+            scoped_detection,
             context=f"field '{field_name}', edge 'top'",
         )
     else:
         if "bottom" not in edges or fontsize is None:
-            raise ValueError(
-                f"Field '{field_name}' omits 'top' but lacks "
-                f"'bottom' or 'fontsize'"
-            )
+            raise ValueError(f"Field '{field_name}' omits 'top' but lacks 'bottom' or 'fontsize'")
         edges["top"] = compute_top_default(edges["bottom"], fontsize, aspectratio)
 
     return edges
@@ -480,26 +503,16 @@ def _find_elements_within_canvas(
 
     for i, elem in enumerate(elements):
         if category in horizontal_categories:
-            if (canvas.top <= elem.y <= canvas.bottom
-                    and elem.x2 >= canvas.left and elem.x <= canvas.right):
-                results.append(
-                    f"  {category}[{i}]: y={elem.y:.1f}%, "
-                    f"x={elem.x:.1f}%..x2={elem.x2:.1f}%"
-                )
+            if canvas.top <= elem.y <= canvas.bottom and elem.x2 >= canvas.left and elem.x <= canvas.right:
+                results.append(f"  {category}[{i}]: y={elem.y:.1f}%, x={elem.x:.1f}%..x2={elem.x2:.1f}%")
         elif category == "grey_box":
-            if (canvas.left <= elem.x <= canvas.right
-                    and canvas.top <= elem.y <= canvas.bottom):
+            if canvas.left <= elem.x <= canvas.right and canvas.top <= elem.y <= canvas.bottom:
                 results.append(
-                    f"  {category}[{i}]: x={elem.x:.1f}%..x2={elem.x2:.1f}%, "
-                    f"y={elem.y:.1f}%..y2={elem.y2:.1f}%"
+                    f"  {category}[{i}]: x={elem.x:.1f}%..x2={elem.x2:.1f}%, y={elem.y:.1f}%..y2={elem.y2:.1f}%"
                 )
         else:
-            if (canvas.left <= elem.x <= canvas.right
-                    and elem.y2 >= canvas.top and elem.y <= canvas.bottom):
-                results.append(
-                    f"  {category}[{i}]: x={elem.x:.1f}%, "
-                    f"y={elem.y:.1f}%..y2={elem.y2:.1f}%"
-                )
+            if canvas.left <= elem.x <= canvas.right and elem.y2 >= canvas.top and elem.y <= canvas.bottom:
+                results.append(f"  {category}[{i}]: x={elem.x:.1f}%, y={elem.y:.1f}%..y2={elem.y2:.1f}%")
 
     return results
 
@@ -519,7 +532,8 @@ def _extract_reference_category(raw_edge: int | float | str | None) -> str | Non
         edge_str = em_match.group(1).strip()
     # Match line/secondary axis reference
     line_match = re.match(
-        r"^(h_thin|h_bar|h_rule|v_thin|v_bar|grey_box)\[", edge_str,
+        r"^(h_thin|h_bar|h_rule|v_thin|v_bar|grey_box)\[",
+        edge_str,
     )
     if line_match:
         return line_match.group(1)
@@ -581,14 +595,10 @@ def _validate_field_within_canvas(
                 if within:
                     msg += (
                         f"\n{category} elements within '{canvas.name}' "
-                        f"(y={canvas.top:.1f}%..{canvas.bottom:.1f}%):\n"
-                        + "\n".join(within)
+                        f"(y={canvas.top:.1f}%..{canvas.bottom:.1f}%):\n" + "\n".join(within)
                     )
                 else:
-                    msg += (
-                        f"\nNo {category} elements found within "
-                        f"'{canvas.name}' bounds"
-                    )
+                    msg += f"\nNo {category} elements found within '{canvas.name}' bounds"
             raise ValueError(msg)
 
 

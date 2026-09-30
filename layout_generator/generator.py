@@ -131,9 +131,7 @@ def _build_checkboxes_section(
     Returns:
         Tuple of (params, presets, content_entry).
     """
-    valid_labels = [
-        item["label"] for item in checkbox_labels if item["label"]
-    ]
+    valid_labels = [item["label"] for item in checkbox_labels if item["label"]]
     presets: dict = {
         "checkbox": {
             "canvas": canvas_name,
@@ -162,10 +160,7 @@ def _build_checkboxes_section(
         "Checkboxes": {
             "summary_checkbox": {
                 "type": "choice",
-                "description": (
-                    "Checkboxes in the adventure summary "
-                    "that should be selected"
-                ),
+                "description": ("Checkboxes in the adventure summary that should be selected"),
                 "choices": valid_labels,
                 "example": valid_labels[0] if valid_labels else "",
             },
@@ -265,7 +260,10 @@ def generate_layout_json(
         raise FileNotFoundError(f"Chronicle PDF not found: {pdf_path}")
 
     layout = _build_metadata(
-        scenario_id, parent, description, default_chronicle_location,
+        scenario_id,
+        parent,
+        description,
+        default_chronicle_location,
     )
 
     items: list[dict] = []
@@ -278,11 +276,11 @@ def generate_layout_json(
         boxes = detect_checkboxes(pdf_path, checkbox_region_pct)
         if boxes:
             checkbox_labels = extract_checkbox_labels(
-                pdf_path, boxes, checkbox_region_pct,
+                pdf_path,
+                boxes,
+                checkbox_region_pct,
             )
-            checkbox_labels = [
-                cb for cb in checkbox_labels if cb["label"]
-            ]
+            checkbox_labels = [cb for cb in checkbox_labels if cb["label"]]
 
     if not items and not checkbox_labels and not fillins:
         return layout
@@ -293,16 +291,15 @@ def generate_layout_json(
 
     item_line_presets: dict | None = None
     if items:
-        item_params, item_base, item_line_presets, item_content = (
-            _build_items_section(items, item_canvas_name)
-        )
+        item_params, item_base, item_line_presets, item_content = _build_items_section(items, item_canvas_name)
         layout["parameters"].update(item_params)
         layout["presets"].update(item_base)
         layout["content"].append(item_content)
 
     if checkbox_labels:
         cb_params, cb_presets, cb_content = _build_checkboxes_section(
-            checkbox_labels, checkbox_canvas_name,
+            checkbox_labels,
+            checkbox_canvas_name,
         )
         layout["parameters"].update(cb_params)
         layout["presets"].update(cb_presets)

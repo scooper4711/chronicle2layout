@@ -88,9 +88,7 @@ def collect_inheritance_chain(
         if parent_id is None:
             break
         if parent_id not in index:
-            raise ValueError(
-                f"Parent id '{parent_id}' not found in index"
-            )
+            raise ValueError(f"Parent id '{parent_id}' not found in index")
         current_path = index[parent_id]
 
     chain.reverse()

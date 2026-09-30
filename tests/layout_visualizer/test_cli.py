@@ -14,8 +14,8 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from layout_visualizer.__main__ import (
-    _build_output_filename,
     _build_dependency_map,
+    _build_output_filename,
     main,
     match_layout_ids,
     parse_args,
@@ -24,8 +24,7 @@ from layout_visualizer.__main__ import (
 LAYOUT_ROOT = Path("modules/pfs-chronicle-generator/assets/layouts")
 LAYOUT_ID = "pfs2.b13"
 REAL_CHRONICLE_PDF = Path(
-    "modules/pfs-chronicle-generator/assets/chronicles"
-    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+    "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
 )
 
 _skip_no_pdf = pytest.mark.skipif(
@@ -40,8 +39,10 @@ def _base_args(
 ) -> list[str]:
     """Build a base argument list with the required flags."""
     return [
-        "--layout-root", layout_root,
-        "--layout-id", layout_id,
+        "--layout-root",
+        layout_root,
+        "--layout-id",
+        layout_id,
     ]
 
 
@@ -182,35 +183,50 @@ class TestParseArgs:
     """Argument parsing produces expected namespace values."""
 
     def test_default_output_dir_is_cwd(self):
-        args = parse_args([
-            "--layout-root", "dir",
-            "--layout-id", "pfs.b13",
-        ])
+        args = parse_args(
+            [
+                "--layout-root",
+                "dir",
+                "--layout-id",
+                "pfs.b13",
+            ]
+        )
         assert args.output_dir == Path(".")
 
     def test_explicit_output_dir(self):
-        args = parse_args([
-            "--layout-root", "dir",
-            "--layout-id", "pfs.b13",
-            "--output-dir", "/tmp/out",
-        ])
+        args = parse_args(
+            [
+                "--layout-root",
+                "dir",
+                "--layout-id",
+                "pfs.b13",
+                "--output-dir",
+                "/tmp/out",
+            ]
+        )
         assert args.output_dir == Path("/tmp/out")
 
     def test_watch_flag_defaults_false(self):
-        args = parse_args([
-            "--layout-root", "dir",
-            "--layout-id", "pfs.b13",
-        ])
+        args = parse_args(
+            [
+                "--layout-root",
+                "dir",
+                "--layout-id",
+                "pfs.b13",
+            ]
+        )
         assert args.watch is False
 
     def test_mode_defaults_to_canvases(self):
-        args = parse_args([
-            "--layout-root", "dir",
-            "--layout-id", "pfs.b13",
-        ])
+        args = parse_args(
+            [
+                "--layout-root",
+                "dir",
+                "--layout-id",
+                "pfs.b13",
+            ]
+        )
         assert args.mode == "canvases"
-
-
 
 
 # ---------------------------------------------------------------------------
@@ -231,7 +247,8 @@ class TestBuildDependencyMap:
         map_b13 = _build_dependency_map(LAYOUT_ROOT, ["pfs2.b13"])
         map_q14 = _build_dependency_map(LAYOUT_ROOT, ["pfs2.q14"])
         map_both = _build_dependency_map(
-            LAYOUT_ROOT, ["pfs2.b13", "pfs2.q14"],
+            LAYOUT_ROOT,
+            ["pfs2.b13", "pfs2.q14"],
         )
         # The union should contain all paths from both individual maps
         assert set(map_b13) <= set(map_both)
@@ -241,7 +258,8 @@ class TestBuildDependencyMap:
         # Both pfs2.b1 and pfs2.b2 share pfs2 in their chain.
         # The shared parent should map to both ids.
         dep_map = _build_dependency_map(
-            LAYOUT_ROOT, ["pfs2.b1", "pfs2.b2"],
+            LAYOUT_ROOT,
+            ["pfs2.b1", "pfs2.b2"],
         )
         # Find the shared parent (pfs2 root layout)
         shared = [p for p, ids in dep_map.items() if len(ids) > 1]
@@ -270,7 +288,8 @@ class TestSuccessfulRun:
     @_skip_no_pdf
     def test_wildcard_produces_multiple_pngs(self, tmp_path):
         args = _base_args(layout_id="pfs2.b?") + [
-            "--output-dir", str(tmp_path),
+            "--output-dir",
+            str(tmp_path),
         ]
         code = main(args)
 

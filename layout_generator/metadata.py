@@ -13,9 +13,10 @@ from __future__ import annotations
 
 import re
 import sys
-import tomllib
 from dataclasses import dataclass
 from pathlib import Path
+
+import tomllib
 
 from shared.path_validation import user_path
 
@@ -105,9 +106,7 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
     Requirements: layout-generator 2.1, 2.2, 2.3, 2.4, 2.5, 2.6
     """
     if not metadata_path.exists():
-        raise FileNotFoundError(
-            f"Metadata file not found: {metadata_path}"
-        )
+        raise FileNotFoundError(f"Metadata file not found: {metadata_path}")
 
     validated_path = user_path(metadata_path)
 
@@ -115,9 +114,7 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
         raw = validated_path.read_bytes()
         data = tomllib.loads(raw.decode())
     except tomllib.TOMLDecodeError as exc:
-        raise ValueError(
-            f"Malformed TOML in {metadata_path}: {exc}"
-        ) from exc
+        raise ValueError(f"Malformed TOML in {metadata_path}: {exc}") from exc
 
     layouts_dir = data.get("layouts_dir")
     chronicles_dir = data.get("chronicles_dir")
@@ -127,38 +124,25 @@ def load_metadata(metadata_path: Path) -> MetadataConfig:
     for index, entry in enumerate(raw_rules):
         for field in ("pattern", "id", "parent"):
             if field not in entry:
-                raise ValueError(
-                    f"Rule {index} in {metadata_path} missing "
-                    f"required field '{field}'"
-                )
+                raise ValueError(f"Rule {index} in {metadata_path} missing required field '{field}'")
         rules.append(
             MetadataRule(
                 pattern=entry["pattern"],
                 id=entry["id"],
                 parent=entry["parent"],
                 description=entry.get("description"),
-                default_chronicle_location=entry.get(
-                    "default_chronicle_location"
-                ),
+                default_chronicle_location=entry.get("default_chronicle_location"),
             )
         )
 
     fillin_label_rules: list[FillinLabelRule] = []
     for index, entry in enumerate(data.get("fillin_labels", [])):
         if "pattern" not in entry:
-            raise ValueError(
-                f"Fill-in label rule {index} in {metadata_path} "
-                f"missing required field 'pattern'"
-            )
+            raise ValueError(f"Fill-in label rule {index} in {metadata_path} missing required field 'pattern'")
         labels = entry.get("labels", {})
         if not isinstance(labels, dict):
-            raise ValueError(
-                f"Fill-in label rule {index} in {metadata_path} "
-                f"has non-mapping 'labels'"
-            )
-        fillin_label_rules.append(
-            FillinLabelRule(pattern=entry["pattern"], labels=dict(labels))
-        )
+            raise ValueError(f"Fill-in label rule {index} in {metadata_path} has non-mapping 'labels'")
+        fillin_label_rules.append(FillinLabelRule(pattern=entry["pattern"], labels=dict(labels)))
 
     return MetadataConfig(
         layouts_dir=layouts_dir,
@@ -175,9 +159,7 @@ _CONNECTORS = ("of", "at", "the", "to", "and", "for")
 # splitting words ending in "-ion" (e.g. Initiation, Revolution).
 _CONNECTOR_ALTS = "|".join(_CONNECTORS) + r"|(?<!i)on"
 
-_CONNECTOR_PATTERN = re.compile(
-    r"\b([A-Z][a-z]+)(" + _CONNECTOR_ALTS + r")\b"
-)
+_CONNECTOR_PATTERN = re.compile(r"\b([A-Z][a-z]+)(" + _CONNECTOR_ALTS + r")\b")
 
 
 def _split_connectors(text: str) -> str:
@@ -243,8 +225,7 @@ def apply_substitutions(template: str, match: re.Match) -> str:
         if index <= num_groups:
             return split_camel_case(match.group(index))
         print(
-            f"Warning: template references non-existent "
-            f"capture group ${{~{index}}}",
+            f"Warning: template references non-existent capture group ${{~{index}}}",
             file=sys.stderr,
         )
         return ref.group(0)
@@ -256,8 +237,7 @@ def apply_substitutions(template: str, match: re.Match) -> str:
         if index <= num_groups:
             return match.group(index)
         print(
-            f"Warning: template references non-existent "
-            f"capture group ${index}",
+            f"Warning: template references non-existent capture group ${index}",
             file=sys.stderr,
         )
         return ref.group(0)
@@ -293,11 +273,7 @@ def match_rule(
 
         resolved_id = apply_substitutions(rule.id, m)
         resolved_parent = apply_substitutions(rule.parent, m)
-        resolved_description = (
-            apply_substitutions(rule.description, m)
-            if rule.description is not None
-            else None
-        )
+        resolved_description = apply_substitutions(rule.description, m) if rule.description is not None else None
         resolved_location = (
             apply_substitutions(rule.default_chronicle_location, m)
             if rule.default_chronicle_location is not None

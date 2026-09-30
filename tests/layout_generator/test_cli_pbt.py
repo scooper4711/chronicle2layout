@@ -11,7 +11,6 @@ from hypothesis import strategies as st
 
 from layout_generator.__main__ import _compose_absolute_coordinates
 
-
 # ---------------------------------------------------------------------------
 # Strategies
 # ---------------------------------------------------------------------------
@@ -20,12 +19,14 @@ from layout_generator.__main__ import _compose_absolute_coordinates
 _coord = st.floats(min_value=0.0, max_value=100.0, allow_nan=False)
 
 # A single canvas entry with x, y, x2, y2 coordinates.
-_canvas_coords = st.fixed_dictionaries({
-    "x": _coord,
-    "y": _coord,
-    "x2": _coord,
-    "y2": _coord,
-})
+_canvas_coords = st.fixed_dictionaries(
+    {
+        "x": _coord,
+        "y": _coord,
+        "x2": _coord,
+        "y2": _coord,
+    }
+)
 
 
 @st.composite
@@ -116,6 +117,5 @@ def test_canvas_coordinate_resolution(
     assert len(actual) == 4
     for i in range(4):
         assert abs(actual[i] - expected[i]) < 1e-9, (
-            f"Coordinate {i} mismatch: expected {expected[i]}, "
-            f"got {actual[i]} for canvases={canvases}, target={target}"
+            f"Coordinate {i} mismatch: expected {expected[i]}, got {actual[i]} for canvases={canvases}, target={target}"
         )

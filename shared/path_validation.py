@@ -42,10 +42,7 @@ def reject_control_chars(value: str, label: str = "path") -> None:
     for char in value:
         code = ord(char)
         if code <= 0x1F or code == 0x7F:
-            raise ValueError(
-                f"Invalid {label}: contains control character "
-                f"U+{code:04X} — possible injection attempt"
-            )
+            raise ValueError(f"Invalid {label}: contains control character U+{code:04X} — possible injection attempt")
 
 
 def user_path(raw: Path) -> Path:

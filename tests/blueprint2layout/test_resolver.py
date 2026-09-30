@@ -18,10 +18,10 @@ from blueprint2layout.models import (
 )
 from blueprint2layout.resolver import resolve_canvases, resolve_edge_value
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
+
 
 @pytest.fixture()
 def empty_detection() -> DetectionResult:
@@ -78,6 +78,7 @@ def page_canvas() -> ResolvedCanvas:
 # ---------------------------------------------------------------------------
 # resolve_edge_value tests
 # ---------------------------------------------------------------------------
+
 
 class TestResolveEdgeValueNumeric:
     """Tests for numeric literal edge values (Requirement 9.1)."""
@@ -139,6 +140,7 @@ class TestResolveEdgeValueErrors:
 # resolve_canvases tests
 # ---------------------------------------------------------------------------
 
+
 class TestResolveCanvasesNumericEdges:
     """Tests for resolve_canvases with all-numeric edges (Requirement 10.1, 10.4)."""
 
@@ -151,10 +153,19 @@ class TestResolveCanvasesNumericEdges:
 
         assert len(result) == 2
         assert result["page"] == ResolvedCanvas(
-            name="page", left=0.0, right=100.0, top=0.0, bottom=100.0,
+            name="page",
+            left=0.0,
+            right=100.0,
+            top=0.0,
+            bottom=100.0,
         )
         assert result["main"] == ResolvedCanvas(
-            name="main", left=5.0, right=95.0, top=10.0, bottom=90.0, parent="page",
+            name="main",
+            left=5.0,
+            right=95.0,
+            top=10.0,
+            bottom=90.0,
+            parent="page",
         )
 
 

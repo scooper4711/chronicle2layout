@@ -17,7 +17,6 @@ from blueprint2layout.models import (
 )
 from blueprint2layout.resolver import resolve_edge_value
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -55,31 +54,36 @@ class TestHorizontalSecondaryAxis:
     """Tests for .left and .right on horizontal lines (Req 4.1)."""
 
     def test_h_thin_left_resolves_to_x(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_thin[0].left", detection_with_all, {})
         assert result == 5.0
 
     def test_h_thin_right_resolves_to_x2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_thin[0].right", detection_with_all, {})
         assert result == 80.0
 
     def test_h_bar_left_resolves_to_x(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_bar[0].left", detection_with_all, {})
         assert result == 1.0
 
     def test_h_bar_right_resolves_to_x2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_bar[0].right", detection_with_all, {})
         assert result == 99.0
 
     def test_h_thin_second_element(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_thin[1].left", detection_with_all, {})
         assert result == 3.0
@@ -94,25 +98,29 @@ class TestVerticalSecondaryAxis:
     """Tests for .top and .bottom on vertical lines (Req 4.2)."""
 
     def test_v_thin_top_resolves_to_y(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_thin[0].top", detection_with_all, {})
         assert result == 4.0
 
     def test_v_thin_bottom_resolves_to_y2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_thin[0].bottom", detection_with_all, {})
         assert result == 90.0
 
     def test_v_bar_top_resolves_to_y(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_bar[0].top", detection_with_all, {})
         assert result == 6.0
 
     def test_v_bar_bottom_resolves_to_y2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_bar[0].bottom", detection_with_all, {})
         assert result == 94.0
@@ -127,25 +135,29 @@ class TestGreyBoxEdgeReferences:
     """Tests for all four edges on grey_box (Req 4.5, 12.3)."""
 
     def test_grey_box_left_resolves_to_x(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("grey_box[0].left", detection_with_all, {})
         assert result == 10.0
 
     def test_grey_box_right_resolves_to_x2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("grey_box[0].right", detection_with_all, {})
         assert result == 60.0
 
     def test_grey_box_top_resolves_to_y(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("grey_box[0].top", detection_with_all, {})
         assert result == 20.0
 
     def test_grey_box_bottom_resolves_to_y2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("grey_box[0].bottom", detection_with_all, {})
         assert result == 70.0
@@ -160,19 +172,22 @@ class TestPlainLineReferencesUnchanged:
     """Tests that plain line references still resolve to primary axis (Req 4.3, 12.4)."""
 
     def test_plain_h_bar_resolves_to_y(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_bar[0]", detection_with_all, {})
         assert result == 20.0
 
     def test_plain_v_thin_resolves_to_x(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_thin[0]", detection_with_all, {})
         assert result == 15.0
 
     def test_plain_h_thin_resolves_to_y(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_thin[0]", detection_with_all, {})
         assert result == 10.0
@@ -187,24 +202,29 @@ class TestInvalidSecondaryEdge:
     """Tests that invalid secondary edges raise descriptive errors (Req 4.4)."""
 
     def test_h_thin_top_returns_y(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_thin[0].top", detection_with_all, {})
         assert result == 10.0
 
     def test_h_thin_bottom_returns_y2(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("h_thin[0].bottom", detection_with_all, {})
         assert result == detection_with_all.h_thin[0].y2
+
     def test_v_thin_left_resolves(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_thin[0].left", detection_with_all, {})
         assert result == detection_with_all.v_thin[0].x
 
     def test_v_thin_right_resolves(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         result = resolve_edge_value("v_thin[0].right", detection_with_all, {})
         assert result == detection_with_all.v_thin[0].x2
@@ -219,13 +239,15 @@ class TestUnrecognizedEdgeValue:
     """Tests that unrecognized patterns raise descriptive errors (Req 12.5)."""
 
     def test_totally_invalid_string_raises_error(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         with pytest.raises(ValueError, match="not a recognized pattern"):
             resolve_edge_value("totally_invalid_string", detection_with_all, {})
 
     def test_plain_grey_box_reference_raises_error(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         """Plain grey_box[0] without a secondary edge is not valid."""
         with pytest.raises(ValueError, match="not a recognized pattern"):
@@ -241,19 +263,22 @@ class TestSecondaryAxisOutOfBounds:
     """Tests that out-of-bounds indices raise errors on secondary refs."""
 
     def test_h_thin_out_of_bounds_raises_error(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         with pytest.raises(ValueError, match="Index 99 out of bounds.*h_thin"):
             resolve_edge_value("h_thin[99].left", detection_with_all, {})
 
     def test_v_bar_out_of_bounds_raises_error(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         with pytest.raises(ValueError, match="Index 5 out of bounds.*v_bar"):
             resolve_edge_value("v_bar[5].top", detection_with_all, {})
 
     def test_grey_box_out_of_bounds_raises_error(
-        self, detection_with_all: DetectionResult,
+        self,
+        detection_with_all: DetectionResult,
     ):
         with pytest.raises(ValueError, match="Index 3 out of bounds.*grey_box"):
             resolve_edge_value("grey_box[3].left", detection_with_all, {})
