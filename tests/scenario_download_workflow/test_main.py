@@ -20,7 +20,6 @@ from scenario_download_workflow.__main__ import (
     parse_args,
 )
 
-
 # ---------------------------------------------------------------------------
 # classify_response
 # ---------------------------------------------------------------------------
@@ -336,7 +335,6 @@ class TestMainNonInteractive:
         mock_doc.close = MagicMock()
 
         from chronicle_extractor.parser import ScenarioInfo
-        from scenario_download_workflow.detection import GameSystem
 
         mock_result = MagicMock(success=True)
 

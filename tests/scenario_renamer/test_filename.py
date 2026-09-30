@@ -6,8 +6,7 @@ build_scenario_filename, sanitize_image_suffix, and build_image_filename.
 Requirements: scenario-renamer 5.1, 5.2, 5.3, 5.4, 6.1, 6.2, 6.3, 14.1, 14.2, 14.3
 """
 
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
-
+from chronicle_extractor.parser import _BOUNTY_SEASON, ScenarioInfo
 from scenario_renamer.filename import (
     build_image_filename,
     build_scenario_filename,

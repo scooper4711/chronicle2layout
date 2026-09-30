@@ -292,7 +292,7 @@ def extract_scenario_name(
         return None
 
     common: list[str] = []
-    for la, lb in zip(lines_a, lines_b):
+    for la, lb in zip(lines_a, lines_b, strict=False):
         if la == lb:
             common.append(la)
         else:

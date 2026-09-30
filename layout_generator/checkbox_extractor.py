@@ -260,9 +260,8 @@ def extract_checkbox_labels(
     checkbox_positions: list[int] = []
     for idx, word_data in enumerate(words_on_page):
         x0, y0, x1, y1, text = word_data[0], word_data[1], word_data[2], word_data[3], word_data[4]
-        if _contains_checkbox_char(text):
-            if _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
-                checkbox_positions.append(idx)
+        if _contains_checkbox_char(text) and _is_in_region(x0, y0, x1, y1, region_x0, region_y0, region_x2, region_y2):
+            checkbox_positions.append(idx)
 
     results: list[dict] = []
     for i, cb_idx in enumerate(checkbox_positions):

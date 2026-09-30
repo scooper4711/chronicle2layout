@@ -9,9 +9,19 @@ Requirements: 6.3, 6.4, 6.5, 6.6, 6.7, 6.9
 
 import pytest
 
-from blueprint2layout.field_resolver import resolve_field_styles
-from blueprint2layout.models import FieldEntry
-
+from blueprint2layout.field_resolver import (
+    compute_top_default,
+    resolve_field_edge,
+    resolve_field_styles,
+    resolve_fields,
+)
+from blueprint2layout.models import (
+    DetectionResult,
+    FieldEntry,
+    HorizontalLine,
+    ResolvedCanvas,
+    VerticalLine,
+)
 
 # ---------------------------------------------------------------------------
 # Single style resolution
@@ -299,19 +309,6 @@ class TestNonStylePropertiesIgnored:
 # ---------------------------------------------------------------------------
 # resolve_field_edge tests
 # ---------------------------------------------------------------------------
-
-from blueprint2layout.field_resolver import (
-    compute_top_default,
-    resolve_field_edge,
-    resolve_fields,
-)
-from blueprint2layout.models import (
-    DetectionResult,
-    HorizontalLine,
-    ResolvedCanvas,
-    ResolvedField,
-    VerticalLine,
-)
 
 
 def _make_detection(**kwargs) -> DetectionResult:
@@ -779,8 +776,6 @@ class TestResolveFieldsCoordinateConversion:
 # ---------------------------------------------------------------------------
 # Field bounds validation tests
 # ---------------------------------------------------------------------------
-
-from blueprint2layout.field_resolver import _validate_field_within_canvas
 
 
 class TestFieldBoundsValidation:

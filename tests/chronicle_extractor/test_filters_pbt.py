@@ -5,7 +5,6 @@ predicates across randomly generated inputs.
 """
 
 import os
-from pathlib import Path
 from unittest.mock import MagicMock
 
 from hypothesis import given

@@ -8,7 +8,7 @@ from pathlib import Path
 
 from chronicle_extractor.parser import ScenarioInfo
 from scenario_download_workflow.detection import GameSystem
-from scenario_download_workflow.routing import RoutingPaths, compute_routing_paths
+from scenario_download_workflow.routing import compute_routing_paths
 
 _ROOT = Path("/project")
 _CHRONICLES_BASE = _ROOT / "modules/pfs-chronicle-generator/assets/chronicles"

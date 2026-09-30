@@ -6,9 +6,9 @@ rules, vertical thin lines, vertical thick bars, and grey filled boxes.
 Each category is sorted by its primary axis and uses zero-based indexing.
 """
 
-import numpy as np
-
 from collections import deque
+
+import numpy as np
 
 from blueprint2layout.models import DetectionResult, GreyBox, HorizontalLine, VerticalLine
 
@@ -901,7 +901,7 @@ def extract_vector_h_rules(
                 all_existing.append(line)
 
     doc.close()
-    candidates.sort(key=lambda l: (l.y, l.x))
+    candidates.sort(key=lambda line: (line.y, line.x))
     return candidates
 
 

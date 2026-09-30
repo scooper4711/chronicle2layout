@@ -17,7 +17,7 @@ from blueprint2layout.blueprint import (
     load_blueprint_with_inheritance,
     parse_blueprint,
 )
-from blueprint2layout.models import Blueprint, CanvasEntry, FieldEntry
+from blueprint2layout.models import FieldEntry
 
 
 def _write_blueprint(path: Path, data: dict) -> None:

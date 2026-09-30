@@ -20,8 +20,7 @@ from pathlib import Path
 import fitz
 
 from chronicle_extractor.filename import sanitize_name
-from chronicle_extractor.parser import ScenarioInfo, extract_scenario_info
-
+from chronicle_extractor.parser import extract_scenario_info
 from scenario_renamer.classifier import classify_file
 from scenario_renamer.filename import (
     build_image_filename,

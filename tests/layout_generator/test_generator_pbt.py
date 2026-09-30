@@ -13,17 +13,16 @@ from pathlib import Path
 from unittest.mock import patch
 
 import fitz
-from hypothesis import given, settings, assume
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
 from layout_generator.generator import (
+    _SAFE_LABEL_MAX_LENGTH,
     STRIKEOUT_X_END,
     STRIKEOUT_X_START,
-    _SAFE_LABEL_MAX_LENGTH,
     generate_layout_json,
     make_safe_label,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helpers

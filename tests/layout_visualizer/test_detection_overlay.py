@@ -182,7 +182,7 @@ class TestCollectOverlayRects:
         )
         assert set(rects) == set(colors)
         assert any(name.startswith("h_thin[") for name in rects)
-        assert any(not "[" in name for name in rects)
+        assert any("[" not in name for name in rects)
 
 
 class TestShowCli:

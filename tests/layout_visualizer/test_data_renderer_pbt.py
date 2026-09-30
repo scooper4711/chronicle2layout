@@ -13,7 +13,6 @@ from hypothesis import strategies as st
 from layout_visualizer.data_renderer import compute_text_position
 from layout_visualizer.models import PixelRect
 
-
 # ---------------------------------------------------------------------------
 # Shared strategies
 # ---------------------------------------------------------------------------
@@ -144,7 +143,7 @@ class TestMultilineSlotDivision:
 
         Feature: layout-data-mode, Property 5: Multiline line slot division
         """
-        bbox_y2 = box_y + box_height
+        box_y + box_height
         slot_height = box_height / lines
 
         # Verify slot height formula

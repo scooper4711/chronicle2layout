@@ -9,7 +9,6 @@ from hypothesis import strategies as st
 
 from chronicle_extractor.parser import extract_scenario_name, extract_scenario_number
 
-
 _season = st.integers(min_value=1, max_value=99)
 _scenario_number = st.integers(min_value=0, max_value=99).map(lambda n: f"{n:02d}")
 

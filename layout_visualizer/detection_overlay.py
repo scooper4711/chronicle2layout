@@ -18,7 +18,6 @@ from pathlib import Path
 from blueprint2layout.detection import detect_structures
 from blueprint2layout.models import DetectionResult, GreyBox, HorizontalLine, VerticalLine
 from blueprint2layout.pdf_preparation import prepare_page
-
 from layout_visualizer.coordinate_resolver import (
     assign_colors,
     resolve_canvas_pixels,

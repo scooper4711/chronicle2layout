@@ -18,7 +18,6 @@ from layout_visualizer.layout_loader import (
 )
 from layout_visualizer.models import CanvasRegion
 
-
 # ---------------------------------------------------------------------------
 # Strategies
 # ---------------------------------------------------------------------------

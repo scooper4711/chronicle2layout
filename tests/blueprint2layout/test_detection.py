@@ -7,11 +7,11 @@ import numpy as np
 import pytest
 
 from blueprint2layout.detection import (
-    detect_horizontal_black_lines,
-    detect_vertical_black_lines,
-    detect_grey_rules,
     detect_grey_boxes,
+    detect_grey_rules,
+    detect_horizontal_black_lines,
     detect_structures,
+    detect_vertical_black_lines,
 )
 
 

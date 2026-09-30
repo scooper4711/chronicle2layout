@@ -6,7 +6,6 @@ Requirements: 4.1, 4.2, 4.3, 4.4, 5.1, 5.3
 """
 
 import pytest
-
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
@@ -17,7 +16,6 @@ from layout_visualizer.coordinate_resolver import (
     topological_sort_canvases,
 )
 from layout_visualizer.models import CanvasRegion
-
 
 # ---------------------------------------------------------------------------
 # Strategies

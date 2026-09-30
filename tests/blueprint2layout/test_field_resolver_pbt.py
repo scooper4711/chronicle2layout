@@ -9,7 +9,7 @@ Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.8, 5.9, 6.4, 6.5,
 """
 
 import pytest
-from hypothesis import given, settings, assume
+from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from blueprint2layout.field_resolver import (
@@ -26,7 +26,6 @@ from blueprint2layout.models import (
     ResolvedCanvas,
     VerticalLine,
 )
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies
@@ -164,10 +163,7 @@ class TestEmOffsetComputationProperty:
         )
 
         offset = em_count * fontsize / page_dimension * 100
-        if operator == "+":
-            expected = base_value + offset
-        else:
-            expected = base_value - offset
+        expected = base_value + offset if operator == "+" else base_value - offset
 
         assert abs(result - expected) < 1e-9
 

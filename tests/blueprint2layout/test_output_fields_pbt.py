@@ -14,8 +14,7 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from blueprint2layout.models import Blueprint, CanvasEntry, ResolvedCanvas, ResolvedField
-from blueprint2layout.output import assemble_layout, _generate_content_element
-
+from blueprint2layout.output import _generate_content_element, assemble_layout
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies

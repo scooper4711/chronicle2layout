@@ -12,12 +12,33 @@ generate PNGs for multiple layouts in one invocation.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import difflib
 import fnmatch
 import os
 import sys
 import time
 from pathlib import Path
+
+from layout_visualizer.coordinate_resolver import (
+    assign_colors,
+    resolve_canvas_pixels,
+    resolve_field_pixels,
+)
+from layout_visualizer.data_renderer import draw_data_text
+from layout_visualizer.detection_overlay import (
+    collect_overlay_rects,
+    parse_show_value,
+)
+from layout_visualizer.layout_loader import (
+    build_layout_index,
+    load_content_fields,
+    load_data_content,
+    load_layout_with_inheritance,
+    resolve_default_chronicle_location,
+)
+from layout_visualizer.overlay_renderer import draw_overlays
+from layout_visualizer.pdf_renderer import render_pdf_page
 
 _RED = "\033[91m"
 _RESET = "\033[0m"
@@ -43,27 +64,6 @@ def _suggest_layout_ids(unknown_id: str, layout_index: dict[str, Path]) -> str:
             parts.append(f"  - {match}")
     parts.append(f"Run with '--layout-id \"*\"' to list all {len(available)} known layout ids.")
     return "\n".join(parts)
-
-
-from layout_visualizer.coordinate_resolver import (
-    assign_colors,
-    resolve_canvas_pixels,
-    resolve_field_pixels,
-)
-from layout_visualizer.data_renderer import draw_data_text
-from layout_visualizer.detection_overlay import (
-    collect_overlay_rects,
-    parse_show_value,
-)
-from layout_visualizer.layout_loader import (
-    build_layout_index,
-    load_content_fields,
-    load_data_content,
-    load_layout_with_inheritance,
-    resolve_default_chronicle_location,
-)
-from layout_visualizer.overlay_renderer import draw_overlays
-from layout_visualizer.pdf_renderer import render_pdf_page
 
 
 def _build_output_filename(layout_id: str, chronicle_path: Path) -> str:
@@ -374,7 +374,7 @@ def watch_and_regenerate(
 
     Requirements: layout-visualizer 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7
     """
-    target_map = {lid: out for lid, out in targets}
+    target_map = dict(targets)
 
     for layout_id, output_path in targets:
         run_visualizer(layout_root, layout_id, output_path, mode, show)
@@ -419,10 +419,8 @@ def watch_and_regenerate(
             watched_paths = list(dep_map)
             for new_path in watched_paths:
                 if new_path not in mtimes:
-                    try:
+                    with contextlib.suppress(OSError):
                         mtimes[new_path] = os.path.getmtime(new_path)
-                    except OSError:
-                        pass
     except KeyboardInterrupt:
         print("Stopped.")
 

@@ -7,8 +7,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-import pytest
-
 from scenario_download_workflow.discovery import discover_recent_pdfs
 
 

@@ -6,16 +6,15 @@ randomly generated inputs.
 Validates: Requirements 1.2, 1.4, 2.1, 2.2, 2.3, 2.4, 3.2, 3.4, 6.8
 """
 
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
-import pytest
 
 from blueprint2layout.blueprint import (
     _merge_field_styles,
     _merge_parameters,
     parse_blueprint,
 )
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies

@@ -215,7 +215,7 @@ def extract_fillins(
 
     names = _unique_names([entry["name"] for entry in raw])
     fillins: list[dict] = []
-    for entry, name in zip(raw, names):
+    for entry, name in zip(raw, names, strict=True):
         x0, y0, x1, y1 = entry["bbox"]
         cx = (x0 + x1) / 2 / page_width * 100
         cy = (y0 + y1) / 2 / page_height * 100

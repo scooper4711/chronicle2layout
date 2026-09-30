@@ -15,16 +15,14 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
-from chronicle_extractor.filename import sanitize_name
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
-from scenario_download_workflow.detection import GameSystem
-from scenario_download_workflow.routing import RoutingPaths
-
 import blueprint2layout.__main__ as blueprint2layout_cli
 import chronicle_extractor.__main__ as chronicle_extractor_cli
 import layout_generator.__main__ as layout_generator_cli
 import layout_visualizer.__main__ as layout_visualizer_cli
 import scenario_renamer.__main__ as scenario_renamer_cli
+from chronicle_extractor.parser import ScenarioInfo
+from scenario_download_workflow.detection import GameSystem
+from scenario_download_workflow.routing import RoutingPaths
 
 
 @dataclass
@@ -58,8 +56,8 @@ def _capture_stdout(func, *args):
     Returns:
         Tuple of (return_value, captured_lines).
     """
-    import io
     import contextlib
+    import io
 
     buffer = io.StringIO()
     with contextlib.redirect_stdout(buffer):

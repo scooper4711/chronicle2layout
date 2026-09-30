@@ -8,17 +8,15 @@ from __future__ import annotations
 
 import re
 
-from hypothesis import given, assume
+from hypothesis import given
 from hypothesis import strategies as st
 
 from layout_generator.metadata import (
-    MatchedMetadata,
     MetadataConfig,
     MetadataRule,
     apply_substitutions,
     match_rule,
 )
-
 
 # ---------------------------------------------------------------------------
 # Strategies
@@ -108,7 +106,7 @@ def test_first_match_rule_semantics(
     rules.append(first_matching_rule)
 
     # Suffix rules that also match (catch-all) — should be ignored
-    for segment, rule_id, rule_parent in suffix_rules:
+    for _segment, rule_id, rule_parent in suffix_rules:
         rules.append(
             MetadataRule(
                 pattern=".*",

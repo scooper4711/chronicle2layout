@@ -8,20 +8,26 @@ Validates: Requirements 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3, 3.4
 
 from __future__ import annotations
 
+import fnmatch as _fnmatch_mod
 import json
 from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-from hypothesis import given, settings, assume
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
 from blueprint2layout.__main__ import (
+    _build_dependency_map,
+    _find_changed_paths,
+    _record_mtimes,
+    derive_output_path,
+    main,
     match_blueprint_ids,
+    parse_args,
     resolve_chronicle_pdf,
     resolve_default_chronicle_location,
 )
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies
@@ -51,9 +57,6 @@ _blueprint_index = st.dictionaries(
 # Feature: blueprint-batch-watch, Property 1: Wildcard matching returns
 # the correct sorted set
 # ---------------------------------------------------------------------------
-
-
-import fnmatch as _fnmatch_mod
 
 
 class TestMatchBlueprintIdsProperty:
@@ -293,8 +296,6 @@ class TestResolveChroniclePdfUnit:
 # Import derive_output_path for Task 2 tests
 # ---------------------------------------------------------------------------
 
-from blueprint2layout.__main__ import derive_output_path
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies for derive_output_path
@@ -446,12 +447,6 @@ class TestDeriveOutputPathUnit:
 # Import watch mode helpers for Task 4 tests
 # ---------------------------------------------------------------------------
 
-from blueprint2layout.__main__ import (
-    _build_dependency_map,
-    _record_mtimes,
-    _find_changed_paths,
-)
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies for _build_dependency_map
@@ -598,8 +593,6 @@ class TestFindChangedPathsUnit:
 # ---------------------------------------------------------------------------
 # Import parse_args and main for Task 5 tests
 # ---------------------------------------------------------------------------
-
-from blueprint2layout.__main__ import parse_args, main
 
 
 # ---------------------------------------------------------------------------

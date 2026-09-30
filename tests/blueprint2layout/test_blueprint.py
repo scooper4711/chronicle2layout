@@ -1,8 +1,11 @@
 """Unit tests for blueprint parsing."""
 
+import json
+from pathlib import Path
+
 import pytest
 
-from blueprint2layout.blueprint import parse_blueprint
+from blueprint2layout.blueprint import build_blueprint_index, load_blueprint_with_inheritance, parse_blueprint
 from blueprint2layout.models import Blueprint, CanvasEntry
 
 
@@ -200,13 +203,6 @@ class TestParseBlueprint:
         }
         with pytest.raises(ValueError, match="must be int, float, or str"):
             parse_blueprint(data)
-
-
-import json
-from pathlib import Path
-
-from blueprint2layout.blueprint import build_blueprint_index, load_blueprint_with_inheritance
-from blueprint2layout.models import CanvasEntry
 
 
 def _write_blueprint_json(path: Path, data: dict) -> None:

@@ -7,11 +7,8 @@ graceful blueprint skip behaviour.
 
 from __future__ import annotations
 
-import shutil
 from pathlib import Path
 from unittest.mock import MagicMock, patch
-
-import pytest
 
 from chronicle_extractor.parser import ScenarioInfo
 from scenario_download_workflow.detection import GameSystem
@@ -21,7 +18,6 @@ from scenario_download_workflow.pipeline import (
     process_single_pdf,
 )
 from scenario_download_workflow.routing import RoutingPaths, compute_routing_paths
-
 
 # ---------------------------------------------------------------------------
 # Helpers

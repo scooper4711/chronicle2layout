@@ -12,7 +12,7 @@ Key public functions:
 """
 
 from chronicle_extractor.filename import UNSAFE_CHARACTERS, sanitize_name
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON, _INTRO_SEASON
+from chronicle_extractor.parser import _BOUNTY_SEASON, _INTRO_SEASON, ScenarioInfo
 
 
 def subdirectory_for_season(season: int) -> str:

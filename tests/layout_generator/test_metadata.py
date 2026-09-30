@@ -15,14 +15,12 @@ from pathlib import Path
 import pytest
 
 from layout_generator.metadata import (
-    MatchedMetadata,
     MetadataConfig,
     MetadataRule,
     apply_substitutions,
     load_metadata,
     match_rule,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helpers

@@ -50,10 +50,7 @@ def generate_layout(
     if not pdf_path.exists():
         raise FileNotFoundError(f"PDF file not found: {pdf_path}")
 
-    if blueprints_dir is None:
-        blueprints_dir = blueprint_path.parent
-    else:
-        blueprints_dir = Path(blueprints_dir)
+    blueprints_dir = blueprint_path.parent if blueprints_dir is None else Path(blueprints_dir)
 
     grayscale, rgb = prepare_page(str(pdf_path))
     detection = detect_structures(grayscale, rgb, str(pdf_path))

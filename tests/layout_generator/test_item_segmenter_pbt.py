@@ -8,11 +8,10 @@ from __future__ import annotations
 
 import re
 
-from hypothesis import given, settings, assume
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
 from layout_generator.item_segmenter import clean_text, segment_items
-
 
 # ---------------------------------------------------------------------------
 # Helpers

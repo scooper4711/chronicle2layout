@@ -11,7 +11,6 @@ from hypothesis import strategies as st
 
 from layout_generator.__main__ import _compose_absolute_coordinates
 
-
 # ---------------------------------------------------------------------------
 # Strategies
 # ---------------------------------------------------------------------------

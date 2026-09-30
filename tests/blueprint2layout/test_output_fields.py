@@ -12,8 +12,7 @@ Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.7, 9.8, 9.9, 11.1, 11.4
 import pytest
 
 from blueprint2layout.models import Blueprint, CanvasEntry, ResolvedCanvas, ResolvedField
-from blueprint2layout.output import assemble_layout, _generate_content_element
-
+from blueprint2layout.output import _generate_content_element, assemble_layout
 
 # ---------------------------------------------------------------------------
 # Shared helpers

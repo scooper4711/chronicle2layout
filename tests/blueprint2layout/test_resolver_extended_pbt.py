@@ -8,7 +8,7 @@ Validates: Requirements 4.1, 4.2, 4.4, 4.5, 12.1, 12.3, 12.5
 """
 
 import pytest
-from hypothesis import given, settings, assume
+from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from blueprint2layout.models import (
@@ -18,7 +18,6 @@ from blueprint2layout.models import (
     VerticalLine,
 )
 from blueprint2layout.resolver import resolve_edge_value
-
 
 # ---------------------------------------------------------------------------
 # Hypothesis strategies

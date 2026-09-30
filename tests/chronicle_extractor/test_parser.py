@@ -5,8 +5,8 @@ extract_scenario_number, extract_scenario_name, and extract_scenario_info.
 """
 
 from chronicle_extractor.parser import (
-    ScenarioInfo,
     _BOUNTY_SEASON,
+    ScenarioInfo,
     extract_from_chronicle,
     extract_scenario_info,
     extract_scenario_name,

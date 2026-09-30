@@ -7,7 +7,7 @@ build_output_path functions.
 from pathlib import Path
 
 from chronicle_extractor.filename import build_output_path, sanitize_name
-from chronicle_extractor.parser import ScenarioInfo, _BOUNTY_SEASON
+from chronicle_extractor.parser import _BOUNTY_SEASON, ScenarioInfo
 
 
 class TestSanitizeName:

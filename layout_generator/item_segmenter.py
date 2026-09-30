@@ -55,9 +55,7 @@ def _is_header_line(raw_text: str) -> bool:
         return True
     if stripped.isupper():
         return True
-    if _SUBTIER_PATTERN.match(stripped):
-        return True
-    return False
+    return bool(_SUBTIER_PATTERN.match(stripped))
 
 
 def _finalize_tokens(

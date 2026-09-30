@@ -14,8 +14,8 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from layout_visualizer.__main__ import (
-    _build_output_filename,
     _build_dependency_map,
+    _build_output_filename,
     main,
     match_layout_ids,
     parse_args,

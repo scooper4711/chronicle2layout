@@ -1,7 +1,6 @@
 """Unit tests for overlay rendering."""
 
 import fitz
-import pytest
 
 from layout_visualizer.models import PixelRect
 from layout_visualizer.overlay_renderer import draw_overlays

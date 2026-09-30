@@ -4,7 +4,6 @@ Uses hypothesis to verify universal properties of directory routing
 across randomly generated game systems and scenario metadata.
 """
 
-import re
 from pathlib import Path
 
 from hypothesis import given, settings
@@ -40,7 +39,8 @@ def game_system_and_scenario_info(draw: st.DrawFn) -> tuple[GameSystem, Scenario
     return system, ScenarioInfo(season=season, scenario=scenario, name=name)
 
 
-# Feature: scenario-download-workflow, Property 5: Directory routing uses correct system prefixes and season subdirectories
+# Feature: scenario-download-workflow, Property 5: Directory routing uses correct
+# system prefixes and season subdirectories
 @given(data=game_system_and_scenario_info())
 @settings(max_examples=200)
 def test_routing_uses_correct_prefixes_and_subdirectories(

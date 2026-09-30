@@ -10,8 +10,6 @@ Validates: Requirements 12.1–12.8, 14.1, 14.2, 14.3
 
 import json
 
-import pytest
-
 from blueprint2layout.models import Blueprint, CanvasEntry, ResolvedCanvas
 from blueprint2layout.output import assemble_layout, write_layout
 

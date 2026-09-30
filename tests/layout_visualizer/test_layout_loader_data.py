@@ -11,8 +11,6 @@ import json
 import logging
 from pathlib import Path
 
-import pytest
-
 from layout_visualizer.layout_loader import (
     build_layout_index,
     load_data_content,
@@ -20,8 +18,6 @@ from layout_visualizer.layout_loader import (
     merge_presets,
     resolve_entry_presets,
 )
-from layout_visualizer.models import DataContentEntry
-
 
 # ---------------------------------------------------------------------------
 # Helpers

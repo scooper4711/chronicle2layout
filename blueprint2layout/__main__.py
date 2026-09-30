@@ -17,7 +17,6 @@ from blueprint2layout.blueprint import build_blueprint_index
 from blueprint2layout.output import write_layout
 from shared.layout_index import collect_inheritance_chain
 
-
 _RED = "\033[91m"
 _RESET = "\033[0m"
 
@@ -261,7 +260,7 @@ def watch_and_regenerate(
 
     Requirements: blueprint-batch-watch 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7
     """
-    target_map = {bid: out for bid, out in targets}
+    target_map = dict(targets)
 
     for blueprint_id, output_path in targets:
         try:

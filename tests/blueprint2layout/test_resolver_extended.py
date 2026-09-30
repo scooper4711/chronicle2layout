@@ -17,7 +17,6 @@ from blueprint2layout.models import (
 )
 from blueprint2layout.resolver import resolve_edge_value
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------

@@ -10,11 +10,10 @@ import tempfile
 from pathlib import Path
 
 import fitz
-from hypothesis import given, settings, assume
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
 from layout_generator.checkbox_extractor import (
-    CHECKBOX_CHARS,
     _clean_label,
     detect_checkboxes,
 )
