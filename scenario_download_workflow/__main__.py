@@ -138,8 +138,7 @@ def _print_extraction_diagnostics(
 
     diagnostic = "; ".join(details)
     print(
-        f"Warning: cannot extract scenario info from {pdf_path.name}, skipping "
-        f"({diagnostic})",
+        f"Warning: cannot extract scenario info from {pdf_path.name}, skipping ({diagnostic})",
         file=sys.stderr,
     )
 
@@ -191,7 +190,9 @@ def _process_pdf(
         )
         if info is None:
             _print_extraction_diagnostics(
-                pdf_path, first_page_text, last_page_text,
+                pdf_path,
+                first_page_text,
+                last_page_text,
             )
             return "skip"
 
@@ -274,20 +275,16 @@ def main(argv: list[str] | None = None) -> int:
     pdfs = discover_recent_pdfs(args.downloads_dir, args.recent)
 
     if not pdfs:
-        print(
-            f"No recent PDFs found in {args.downloads_dir} "
-            f"(window: {args.recent})"
-        )
+        print(f"No recent PDFs found in {args.downloads_dir} (window: {args.recent})")
         return 0
 
     success_count, skip_count, fail_count = _process_all_pdfs(
-        pdfs, args.project_dir, args.non_interactive,
+        pdfs,
+        args.project_dir,
+        args.non_interactive,
     )
 
-    print(
-        f"Summary: {success_count} processed, "
-        f"{skip_count} skipped, {fail_count} failed"
-    )
+    print(f"Summary: {success_count} processed, {skip_count} skipped, {fail_count} failed")
 
     return compute_exit_code(success_count, fail_count)
 

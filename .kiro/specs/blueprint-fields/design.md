@@ -157,6 +157,7 @@ class FieldEntry:
         styles: List of field style names to inherit from.
         trigger: Optional trigger parameter for conditional rendering.
     """
+
     name: str
     canvas: str | None = None
     type: str | None = None
@@ -207,6 +208,7 @@ class ResolvedField:
         lines: Line count (or None).
         trigger: Trigger parameter (or None).
     """
+
     name: str
     canvas: str
     type: str
@@ -246,6 +248,7 @@ class Blueprint:
         field_styles: Optional dict of style name to style properties.
         fields: Optional ordered list of field entries.
     """
+
     id: str
     canvases: list[CanvasEntry]
     parent: str | None = None
@@ -391,8 +394,20 @@ VALID_FIELD_TYPES = {"text", "multiline", "line", "rectangle"}
 
 # Properties that can be inherited from field styles
 STYLE_PROPERTIES = (
-    "canvas", "type", "font", "fontsize", "fontweight", "align",
-    "color", "linewidth", "size", "lines", "left", "right", "top", "bottom",
+    "canvas",
+    "type",
+    "font",
+    "fontsize",
+    "fontweight",
+    "align",
+    "color",
+    "linewidth",
+    "size",
+    "lines",
+    "left",
+    "right",
+    "top",
+    "bottom",
 )
 
 
@@ -764,7 +779,7 @@ Each resolved field produces a content element dict:
     "font": "Helvetica",
     "fontsize": 14,
     "fontweight": "bold",
-    "align": "LB"
+    "align": "LB",
 }
 ```
 

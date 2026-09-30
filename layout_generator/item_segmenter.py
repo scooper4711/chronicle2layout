@@ -92,10 +92,7 @@ class _ItemAccumulator:
                 self.open_count -= 1
                 self.groups_completed += 1
         self.tokens.append(token)
-        return (
-            self.groups_completed >= MAX_PAREN_GROUPS_PER_ITEM
-            and self.open_count == 0
-        )
+        return self.groups_completed >= MAX_PAREN_GROUPS_PER_ITEM and self.open_count == 0
 
     def is_balanced(self) -> bool:
         """Return True when parens are balanced and tokens exist."""
@@ -104,7 +101,10 @@ class _ItemAccumulator:
     def flush(self, items: list[dict]) -> None:
         """Finalize the current item and reset token/paren state."""
         _finalize_tokens(
-            self.tokens, items, self.y_start or 0, self.y_end or 0,
+            self.tokens,
+            items,
+            self.y_start or 0,
+            self.y_end or 0,
         )
         self.tokens = []
         self.open_count = 0

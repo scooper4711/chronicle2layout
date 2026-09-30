@@ -13,14 +13,10 @@ import re
 from dataclasses import dataclass
 
 # Matches PZOPFS prefix: PZOPFS followed by 4+ digits, optional edition letter
-PZOPFS_PATTERN: re.Pattern[str] = re.compile(
-    r"PZOPFS(\d{2})(\d{2})\w?", re.IGNORECASE
-)
+PZOPFS_PATTERN: re.Pattern[str] = re.compile(r"PZOPFS(\d{2})(\d{2})\w?", re.IGNORECASE)
 
 # Matches season-number pattern: X-YY anywhere in the stem
-SEASON_NUMBER_PATTERN: re.Pattern[str] = re.compile(
-    r"(?:PFS\s*)?(\d+)-(\d{2,})"
-)
+SEASON_NUMBER_PATTERN: re.Pattern[str] = re.compile(r"(?:PFS\s*)?(\d+)-(\d{2,})")
 
 
 @dataclass(frozen=True)

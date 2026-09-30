@@ -14,8 +14,14 @@ from blueprint2layout.models import Blueprint, ResolvedCanvas, ResolvedField
 
 # Styling properties to inline on content elements when non-None.
 _STYLING_KEYS = (
-    "font", "fontsize", "fontweight", "align",
-    "color", "linewidth", "size", "lines",
+    "font",
+    "fontsize",
+    "fontweight",
+    "align",
+    "color",
+    "linewidth",
+    "size",
+    "lines",
 )
 
 
@@ -110,15 +116,11 @@ def assemble_layout(
     canvas_section: dict = {}
     for canvas_entry in blueprint.canvases:
         resolved = resolved_canvases[canvas_entry.name]
-        canvas_section[canvas_entry.name] = convert_to_parent_relative(
-            resolved, all_canvases
-        )
+        canvas_section[canvas_entry.name] = convert_to_parent_relative(resolved, all_canvases)
     layout["canvas"] = canvas_section
 
     if resolved_fields is not None and len(resolved_fields) > 0:
-        layout["content"] = [
-            _generate_content_element(field) for field in resolved_fields
-        ]
+        layout["content"] = [_generate_content_element(field) for field in resolved_fields]
 
     return layout
 

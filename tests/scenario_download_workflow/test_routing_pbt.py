@@ -29,9 +29,7 @@ def game_system_and_scenario_info(draw: st.DrawFn) -> tuple[GameSystem, Scenario
     """
     system = draw(st.sampled_from(list(GameSystem)))
     season = draw(st.sampled_from([-2, -1, 0]) | st.integers(min_value=1, max_value=20))
-    scenario = draw(
-        st.from_regex(r"[0-9]{1,3}", fullmatch=True).filter(lambda s: len(s) > 0)
-    )
+    scenario = draw(st.from_regex(r"[0-9]{1,3}", fullmatch=True).filter(lambda s: len(s) > 0))
     name = draw(
         st.text(
             st.characters(min_codepoint=65, max_codepoint=122),
@@ -66,9 +64,7 @@ def test_routing_uses_correct_prefixes_and_subdirectories(
 
     # Scenarios dir contains the display name
     scenarios_parts = routes.scenarios_dir.parts
-    assert display in scenarios_parts, (
-        f"Expected '{display}' in scenarios_dir parts: {scenarios_parts}"
-    )
+    assert display in scenarios_parts, f"Expected '{display}' in scenarios_dir parts: {scenarios_parts}"
 
     # Chronicles dir contains the system prefix
     assert prefix in routes.chronicles_dir.parts, (

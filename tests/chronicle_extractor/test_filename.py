@@ -96,17 +96,13 @@ class TestBuildOutputPath:
         assert result == expected
 
     def test_bounty_output_path(self) -> None:
-        info = ScenarioInfo(
-            season=_BOUNTY_SEASON, scenario="2", name="Blood of the Beautiful"
-        )
+        info = ScenarioInfo(season=_BOUNTY_SEASON, scenario="2", name="Blood of the Beautiful")
         result = build_output_path(Path("/output"), info)
         expected = Path("/output/bounties/B2-BloodoftheBeautifulChronicle.pdf")
         assert result == expected
 
     def test_bounty_double_digit(self) -> None:
-        info = ScenarioInfo(
-            season=_BOUNTY_SEASON, scenario="15", name="Treasure Off The Coast"
-        )
+        info = ScenarioInfo(season=_BOUNTY_SEASON, scenario="15", name="Treasure Off The Coast")
         result = build_output_path(Path("/output"), info)
         expected = Path("/output/bounties/B15-TreasureOffTheCoastChronicle.pdf")
         assert result == expected
@@ -118,9 +114,7 @@ class TestBuildOutputPathIntro:
     def test_intro_output_path(self) -> None:
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        info = ScenarioInfo(
-            season=_INTRO_SEASON, scenario="1", name="The Second Confirmation"
-        )
+        info = ScenarioInfo(season=_INTRO_SEASON, scenario="1", name="The Second Confirmation")
         result = build_output_path(Path("/output"), info)
         expected = Path("/output/intros/I1-TheSecondConfirmationChronicle.pdf")
         assert result == expected
@@ -128,9 +122,7 @@ class TestBuildOutputPathIntro:
     def test_intro_double_digit(self) -> None:
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        info = ScenarioInfo(
-            season=_INTRO_SEASON, scenario="12", name="United in Purpose"
-        )
+        info = ScenarioInfo(season=_INTRO_SEASON, scenario="12", name="United in Purpose")
         result = build_output_path(Path("/output"), info)
         expected = Path("/output/intros/I12-UnitedinPurposeChronicle.pdf")
         assert result == expected

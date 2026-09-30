@@ -22,8 +22,7 @@ from layout_visualizer.detection_overlay import (
 LAYOUT_ROOT = Path("modules/pfs-chronicle-generator/assets/layouts")
 LAYOUT_ID = "pfs2.b13"
 REAL_CHRONICLE_PDF = Path(
-    "modules/pfs-chronicle-generator/assets/chronicles"
-    "/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
+    "modules/pfs-chronicle-generator/assets/chronicles/pfs2/bounties/B13-TheBlackwoodAbundanceChronicle.pdf"
 )
 
 _skip_no_pdf = pytest.mark.skipif(
@@ -43,9 +42,7 @@ class TestParseShowValue:
         assert result == frozenset({"h_thin", "canvases", "fields"})
 
     def test_whitespace_tolerated(self):
-        assert parse_show_value(" h_thin , v_bar ") == frozenset(
-            {"h_thin", "v_bar"}
-        )
+        assert parse_show_value(" h_thin , v_bar ") == frozenset({"h_thin", "v_bar"})
 
     def test_empty_string_yields_empty_set(self):
         assert parse_show_value("") == frozenset()
@@ -79,7 +76,10 @@ class TestDetectionRects:
     def test_names_use_blueprint_reference_form(self):
         result = self._detection_result()
         rects = _detection_rects(
-            result, frozenset(OVERLAY_CATEGORIES), 1000, 2000,
+            result,
+            frozenset(OVERLAY_CATEGORIES),
+            1000,
+            2000,
         )
         assert "h_thin[0]" in rects
         assert "h_bar[0]" in rects
@@ -137,7 +137,11 @@ class TestCollectOverlayRects:
         index = build_layout_index(LAYOUT_ROOT)
         layout_path = index[LAYOUT_ID]
         rects, colors = collect_overlay_rects(
-            layout_path, index, REAL_CHRONICLE_PDF, 1275, 1650,
+            layout_path,
+            index,
+            REAL_CHRONICLE_PDF,
+            1275,
+            1650,
             frozenset({"canvases"}),
         )
         assert rects
@@ -151,7 +155,11 @@ class TestCollectOverlayRects:
         index = build_layout_index(LAYOUT_ROOT)
         layout_path = index[LAYOUT_ID]
         rects, colors = collect_overlay_rects(
-            layout_path, index, REAL_CHRONICLE_PDF, 1275, 1650,
+            layout_path,
+            index,
+            REAL_CHRONICLE_PDF,
+            1275,
+            1650,
             frozenset({"h_thin"}),
         )
         assert rects
@@ -165,7 +173,11 @@ class TestCollectOverlayRects:
         index = build_layout_index(LAYOUT_ROOT)
         layout_path = index[LAYOUT_ID]
         rects, colors = collect_overlay_rects(
-            layout_path, index, REAL_CHRONICLE_PDF, 1275, 1650,
+            layout_path,
+            index,
+            REAL_CHRONICLE_PDF,
+            1275,
+            1650,
             frozenset({"h_thin", "canvases"}),
         )
         assert set(rects) == set(colors)
@@ -177,37 +189,57 @@ class TestShowCli:
     """CLI accepts --show and end-to-end produces a PNG."""
 
     def test_parse_args_defaults_show_to_none(self):
-        args = parse_args([
-            "--layout-root", "dir",
-            "--layout-id", "pfs.b13",
-        ])
+        args = parse_args(
+            [
+                "--layout-root",
+                "dir",
+                "--layout-id",
+                "pfs.b13",
+            ]
+        )
         assert args.show is None
 
     def test_parse_args_reads_show(self):
-        args = parse_args([
-            "--layout-root", "dir",
-            "--layout-id", "pfs.b13",
-            "--show", "h_thin,canvases",
-        ])
+        args = parse_args(
+            [
+                "--layout-root",
+                "dir",
+                "--layout-id",
+                "pfs.b13",
+                "--show",
+                "h_thin,canvases",
+            ]
+        )
         assert args.show == frozenset({"h_thin", "canvases"})
 
     def test_unknown_show_category_exits_two(self):
         with pytest.raises(SystemExit) as exc_info:
-            parse_args([
-                "--layout-root", "dir",
-                "--layout-id", "pfs.b13",
-                "--show", "bogus",
-            ])
+            parse_args(
+                [
+                    "--layout-root",
+                    "dir",
+                    "--layout-id",
+                    "pfs.b13",
+                    "--show",
+                    "bogus",
+                ]
+            )
         assert exc_info.value.code == 2
 
     @_skip_no_pdf
     def test_show_end_to_end_writes_png(self, tmp_path):
-        code = main([
-            "--layout-root", str(LAYOUT_ROOT),
-            "--layout-id", LAYOUT_ID,
-            "--output-dir", str(tmp_path),
-            "--show", "h_thin,canvases",
-        ])
+        code = main(
+            [
+                "--layout-root",
+                str(LAYOUT_ROOT),
+                "--layout-id",
+                LAYOUT_ID,
+                "--output-dir",
+                str(tmp_path),
+                "--show",
+                "h_thin,canvases",
+            ]
+        )
         assert code == 0
         pngs = list(tmp_path.rglob("*.png"))
         assert len(pngs) == 1
@@ -215,11 +247,17 @@ class TestShowCli:
 
     @_skip_no_pdf
     def test_show_empty_set_still_writes_png(self, tmp_path):
-        code = main([
-            "--layout-root", str(LAYOUT_ROOT),
-            "--layout-id", LAYOUT_ID,
-            "--output-dir", str(tmp_path),
-            "--show", "",
-        ])
+        code = main(
+            [
+                "--layout-root",
+                str(LAYOUT_ROOT),
+                "--layout-id",
+                LAYOUT_ID,
+                "--output-dir",
+                str(tmp_path),
+                "--show",
+                "",
+            ]
+        )
         assert code == 0
         assert list(tmp_path.rglob("*.png"))

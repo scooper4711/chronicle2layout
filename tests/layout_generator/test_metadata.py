@@ -303,11 +303,11 @@ class TestFillinLabelRules:
     def test_loads_fillin_label_sections(self, tmp_path: Path) -> None:
         toml_path = write_toml(
             tmp_path,
-            '[[rules]]\n'
+            "[[rules]]\n"
             'pattern = ".*"\n'
             'id = "x"\n'
             'parent = "y"\n'
-            '[[fillin_labels]]\n'
+            "[[fillin_labels]]\n"
             "pattern = '1-07-'\n"
             'labels = { "%" = "% of data erased" }\n',
             "meta.toml",

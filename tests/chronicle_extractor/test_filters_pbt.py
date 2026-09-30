@@ -31,9 +31,7 @@ def test_pdf_extension_filtering(name: str) -> None:
     """
     entry = _make_dir_entry(name, is_file=True)
     expected = name.lower().endswith(".pdf")
-    assert is_pdf_file(entry) is expected, (
-        f"is_pdf_file({name!r}) returned {not expected}, expected {expected}"
-    )
+    assert is_pdf_file(entry) is expected, f"is_pdf_file({name!r}) returned {not expected}, expected {expected}"
 
     # Non-file entries should always return False regardless of name
     non_file = _make_dir_entry(name, is_file=False)
@@ -49,6 +47,4 @@ def test_map_pdf_detection(stem: str) -> None:
     """
     lower = stem.lower()
     expected = lower.endswith("map") or lower.endswith("maps")
-    assert is_map_pdf(stem) is expected, (
-        f"is_map_pdf({stem!r}) returned {not expected}, expected {expected}"
-    )
+    assert is_map_pdf(stem) is expected, f"is_map_pdf({stem!r}) returned {not expected}, expected {expected}"

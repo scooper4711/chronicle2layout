@@ -139,7 +139,11 @@ def _extract_fields_from_content(
                 for key, key_content in choices.items():
                     if isinstance(key_content, list):
                         _extract_fields_from_content(
-                            key_content, fields, counter, presets, label=key,
+                            key_content,
+                            fields,
+                            counter,
+                            presets,
+                            label=key,
                         )
             continue
 
@@ -470,25 +474,29 @@ def _extract_checkbox_entries(
             if entry_type == "checkbox":
                 color_name = resolved.get("color", "black")
                 color = _NAMED_COLORS.get(color_name, (0.0, 0.0, 0.0))
-                checkboxes.append(CheckboxEntry(
-                    canvas=canvas_name,
-                    x=float(resolved.get("x", 0)),
-                    y=float(resolved.get("y", 0)),
-                    x2=float(resolved.get("x2", 0)),
-                    y2=float(resolved.get("y2", 0)),
-                    color=color,
-                ))
+                checkboxes.append(
+                    CheckboxEntry(
+                        canvas=canvas_name,
+                        x=float(resolved.get("x", 0)),
+                        y=float(resolved.get("y", 0)),
+                        x2=float(resolved.get("x2", 0)),
+                        y2=float(resolved.get("y2", 0)),
+                        color=color,
+                    )
+                )
             elif entry_type == "strikeout":
                 color_name = resolved.get("color", "black")
                 color = _NAMED_COLORS.get(color_name, (0.0, 0.0, 0.0))
-                strikeouts.append(StrikeoutEntry(
-                    canvas=canvas_name,
-                    x=float(resolved.get("x", 0)),
-                    y=float(resolved.get("y", 0)),
-                    x2=float(resolved.get("x2", 0)),
-                    y2=float(resolved.get("y2", 0)),
-                    color=color,
-                ))
+                strikeouts.append(
+                    StrikeoutEntry(
+                        canvas=canvas_name,
+                        x=float(resolved.get("x", 0)),
+                        y=float(resolved.get("y", 0)),
+                        x2=float(resolved.get("x2", 0)),
+                        y2=float(resolved.get("y2", 0)),
+                        color=color,
+                    )
+                )
 
 
 def _lookup_example_value(
@@ -567,19 +575,34 @@ def _extract_data_entries(
         if entry_type == "trigger":
             nested = raw_entry.get("content", [])
             _extract_data_entries(
-                nested, presets, parameters, canvases,
-                entries, rectangles, checkboxes, strikeouts,
+                nested,
+                presets,
+                parameters,
+                canvases,
+                entries,
+                rectangles,
+                checkboxes,
+                strikeouts,
             )
             continue
 
         if entry_type == "choice":
             nested = _collect_choice_nested_content(raw_entry)
             _extract_data_entries(
-                nested, presets, parameters, canvases, entries, rectangles,
+                nested,
+                presets,
+                parameters,
+                canvases,
+                entries,
+                rectangles,
             )
             _extract_checkbox_entries(
-                raw_entry, presets, parameters, canvases,
-                checkboxes, strikeouts,
+                raw_entry,
+                presets,
+                parameters,
+                canvases,
+                checkboxes,
+                strikeouts,
             )
             continue
 
@@ -594,9 +617,16 @@ def _extract_data_entries(
             y = float(resolved.get("y", 0))
             x2 = float(resolved.get("x2", 100))
             y2 = float(resolved.get("y2", 100))
-            rectangles.append(RectangleEntry(
-                canvas=canvas_name, x=x, y=y, x2=x2, y2=y2, color=color,
-            ))
+            rectangles.append(
+                RectangleEntry(
+                    canvas=canvas_name,
+                    x=x,
+                    y=y,
+                    x2=x2,
+                    y2=y2,
+                    color=color,
+                )
+            )
             continue
 
         if entry_type not in _TEXT_TYPES:
@@ -624,7 +654,14 @@ def _extract_data_entries(
 def load_data_content(
     layout_path: Path,
     layout_index: dict[str, Path],
-) -> tuple[list[DataContentEntry], list[RectangleEntry], list[CheckboxEntry], list[StrikeoutEntry], dict[str, CanvasRegion], list[Path]]:
+) -> tuple[
+    list[DataContentEntry],
+    list[RectangleEntry],
+    list[CheckboxEntry],
+    list[StrikeoutEntry],
+    dict[str, CanvasRegion],
+    list[Path],
+]:
     """Load content entries for data mode rendering.
 
     Walks the inheritance chain, merges canvases, parameters,
@@ -666,8 +703,14 @@ def load_data_content(
     checkboxes: list[CheckboxEntry] = []
     strikeouts: list[StrikeoutEntry] = []
     _extract_data_entries(
-        merged_content, presets, parameters, merged_canvases,
-        entries, rectangles, checkboxes, strikeouts,
+        merged_content,
+        presets,
+        parameters,
+        merged_canvases,
+        entries,
+        rectangles,
+        checkboxes,
+        strikeouts,
     )
 
     return entries, rectangles, checkboxes, strikeouts, merged_canvases, file_paths

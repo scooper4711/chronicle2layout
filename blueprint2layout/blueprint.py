@@ -29,10 +29,7 @@ def _validate_edge_value(name: str, edge: str, value: object) -> int | float | s
         ValueError: If the value is not int, float, or str.
     """
     if isinstance(value, bool) or not isinstance(value, (int, float, str)):
-        raise ValueError(
-            f"Canvas '{name}' edge '{edge}' must be int, float, or str, "
-            f"got {type(value).__name__}"
-        )
+        raise ValueError(f"Canvas '{name}' edge '{edge}' must be int, float, or str, got {type(value).__name__}")
     return value
 
 
@@ -56,9 +53,7 @@ def _parse_canvas_entry(entry: dict) -> CanvasEntry:
 
     name = entry["name"]
     if not isinstance(name, str):
-        raise ValueError(
-            f"Canvas entry 'name' must be a string, got {type(name).__name__}"
-        )
+        raise ValueError(f"Canvas entry 'name' must be a string, got {type(name).__name__}")
 
     for edge in EDGE_NAMES:
         if edge not in entry:
@@ -68,10 +63,7 @@ def _parse_canvas_entry(entry: dict) -> CanvasEntry:
 
     parent = entry.get("parent")
     if parent is not None and not isinstance(parent, str):
-        raise ValueError(
-            f"Canvas '{name}' parent must be a string or null, "
-            f"got {type(parent).__name__}"
-        )
+        raise ValueError(f"Canvas '{name}' parent must be a string or null, got {type(parent).__name__}")
 
     return CanvasEntry(name=name, parent=parent, **edges)
 
@@ -91,10 +83,7 @@ def _validate_parameters(parameters: object) -> dict:
     Requirements: blueprint-fields 1.4
     """
     if not isinstance(parameters, dict):
-        raise ValueError(
-            f"Blueprint 'parameters' must be a dict of dicts, "
-            f"got {type(parameters).__name__}"
-        )
+        raise ValueError(f"Blueprint 'parameters' must be a dict of dicts, got {type(parameters).__name__}")
     for group_name, group_value in parameters.items():
         if not isinstance(group_value, dict):
             raise ValueError(
@@ -147,18 +136,14 @@ def _parse_field_entry(entry: dict) -> FieldEntry:
     Requirements: blueprint-fields 7.2, 7.5, 7.6, 7.7, 7.8, 13.4, 13.5
     """
     if not isinstance(entry, dict):
-        raise ValueError(
-            f"Field entry must be a dict, got {type(entry).__name__}"
-        )
+        raise ValueError(f"Field entry must be a dict, got {type(entry).__name__}")
 
     if "name" not in entry:
         raise ValueError("Field entry missing required field 'name'")
 
     name = entry["name"]
     if not isinstance(name, str):
-        raise ValueError(
-            f"Field entry 'name' must be a string, got {type(name).__name__}"
-        )
+        raise ValueError(f"Field entry 'name' must be a string, got {type(name).__name__}")
 
     kwargs: dict = {"name": name}
 
@@ -179,12 +164,8 @@ def _parse_field_entry(entry: dict) -> FieldEntry:
     # Handle styles array
     if "styles" in entry:
         styles = entry["styles"]
-        if not isinstance(styles, list) or not all(
-            isinstance(s, str) for s in styles
-        ):
-            raise ValueError(
-                f"Field '{name}' property 'styles' must be a list of strings"
-            )
+        if not isinstance(styles, list) or not all(isinstance(s, str) for s in styles):
+            raise ValueError(f"Field '{name}' property 'styles' must be a list of strings")
         kwargs["styles"] = styles
 
     return FieldEntry(**kwargs)
@@ -220,9 +201,7 @@ def _merge_parameters(
     # Ordered (never set-union): parent groups first, then child-only
     # groups. Set iteration order varies per process, which used to
     # reshuffle group order on every otherwise-identical run.
-    ordered_groups = list(parent_params) + [
-        group for group in child_params if group not in parent_params
-    ]
+    ordered_groups = list(parent_params) + [group for group in child_params if group not in parent_params]
     for group in ordered_groups:
         parent_group = parent_params.get(group, {})
         child_group = child_params.get(group, {})
@@ -285,34 +264,24 @@ def parse_blueprint(data: dict) -> Blueprint:
 
     blueprint_id = data["id"]
     if not isinstance(blueprint_id, str):
-        raise ValueError(
-            f"Blueprint 'id' must be a string, got {type(blueprint_id).__name__}"
-        )
+        raise ValueError(f"Blueprint 'id' must be a string, got {type(blueprint_id).__name__}")
 
     if "canvases" not in data:
         raise ValueError("Blueprint missing required field 'canvases'")
 
     canvases_raw = data["canvases"]
     if not isinstance(canvases_raw, list):
-        raise ValueError(
-            f"Blueprint 'canvases' must be a list, got {type(canvases_raw).__name__}"
-        )
+        raise ValueError(f"Blueprint 'canvases' must be a list, got {type(canvases_raw).__name__}")
 
     canvas_entries = [_parse_canvas_entry(entry) for entry in canvases_raw]
 
     parent = data.get("parent")
     if parent is not None and not isinstance(parent, str):
-        raise ValueError(
-            f"Blueprint 'parent' must be a string or null, "
-            f"got {type(parent).__name__}"
-        )
+        raise ValueError(f"Blueprint 'parent' must be a string or null, got {type(parent).__name__}")
 
     description = data.get("description")
     if description is not None and not isinstance(description, str):
-        raise ValueError(
-            f"Blueprint 'description' must be a string or null, "
-            f"got {type(description).__name__}"
-        )
+        raise ValueError(f"Blueprint 'description' must be a string or null, got {type(description).__name__}")
 
     flags = data.get("flags", [])
     if not isinstance(flags, list) or not all(isinstance(f, str) for f in flags):
@@ -320,10 +289,7 @@ def parse_blueprint(data: dict) -> Blueprint:
 
     aspectratio = data.get("aspectratio")
     if aspectratio is not None and not isinstance(aspectratio, str):
-        raise ValueError(
-            f"Blueprint 'aspectratio' must be a string or null, "
-            f"got {type(aspectratio).__name__}"
-        )
+        raise ValueError(f"Blueprint 'aspectratio' must be a string or null, got {type(aspectratio).__name__}")
 
     # Parse optional parameters (validated as dict-of-dicts)
     parameters = None
@@ -332,12 +298,9 @@ def parse_blueprint(data: dict) -> Blueprint:
 
     # Parse optional defaultChronicleLocation (validated as string)
     default_chronicle_location = data.get("defaultChronicleLocation")
-    if default_chronicle_location is not None and not isinstance(
-        default_chronicle_location, str
-    ):
+    if default_chronicle_location is not None and not isinstance(default_chronicle_location, str):
         raise ValueError(
-            f"Blueprint 'defaultChronicleLocation' must be a string, "
-            f"got {type(default_chronicle_location).__name__}"
+            f"Blueprint 'defaultChronicleLocation' must be a string, got {type(default_chronicle_location).__name__}"
         )
 
     # Parse optional field_styles (validated as dict)
@@ -345,10 +308,7 @@ def parse_blueprint(data: dict) -> Blueprint:
     if "field_styles" in data:
         raw_styles = data["field_styles"]
         if not isinstance(raw_styles, dict):
-            raise ValueError(
-                f"Blueprint 'field_styles' must be a dict, "
-                f"got {type(raw_styles).__name__}"
-            )
+            raise ValueError(f"Blueprint 'field_styles' must be a dict, got {type(raw_styles).__name__}")
         field_styles = raw_styles
 
     # Parse optional fields (validated as list, each entry parsed)
@@ -356,10 +316,7 @@ def parse_blueprint(data: dict) -> Blueprint:
     if "fields" in data:
         raw_fields = data["fields"]
         if not isinstance(raw_fields, list):
-            raise ValueError(
-                f"Blueprint 'fields' must be a list, "
-                f"got {type(raw_fields).__name__}"
-            )
+            raise ValueError(f"Blueprint 'fields' must be a list, got {type(raw_fields).__name__}")
         fields = [_parse_field_entry(entry) for entry in raw_fields]
 
     return Blueprint(
@@ -407,9 +364,7 @@ def _validate_unique_canvas_names(
     seen: set[str] = set()
     for canvas in canvases:
         if canvas.name in seen:
-            raise ValueError(
-                f"Duplicate canvas name '{canvas.name}'{context}"
-            )
+            raise ValueError(f"Duplicate canvas name '{canvas.name}'{context}")
         seen.add(canvas.name)
 
 
@@ -439,10 +394,7 @@ def _validate_unique_field_names(
 
     for field_entry in target_fields:
         if field_entry.name in parent_field_names:
-            raise ValueError(
-                f"Duplicate field name '{field_entry.name}' — "
-                f"already defined in a parent Blueprint"
-            )
+            raise ValueError(f"Duplicate field name '{field_entry.name}' — already defined in a parent Blueprint")
 
 
 def load_blueprint_with_inheritance(
@@ -489,7 +441,10 @@ def load_blueprint_with_inheritance(
     if target.parent is None:
         _validate_unique_canvas_names(target.canvases)
         return (
-            target, [], target.parameters, target.field_styles,
+            target,
+            [],
+            target.parameters,
+            target.field_styles,
             target.aspectratio,
         )
 
@@ -500,14 +455,9 @@ def load_blueprint_with_inheritance(
 
     while current_parent_id is not None:
         if current_parent_id in visited:
-            raise ValueError(
-                f"Circular parent reference detected: "
-                f"'{current_parent_id}' already visited in chain"
-            )
+            raise ValueError(f"Circular parent reference detected: '{current_parent_id}' already visited in chain")
         if current_parent_id not in blueprint_index:
-            raise ValueError(
-                f"Unknown parent Blueprint id '{current_parent_id}'"
-            )
+            raise ValueError(f"Unknown parent Blueprint id '{current_parent_id}'")
         visited.add(current_parent_id)
         parent_path = blueprint_index[current_parent_id]
         with open(parent_path, encoding="utf-8") as f:
@@ -552,6 +502,9 @@ def load_blueprint_with_inheritance(
                 break
 
     return (
-        target, inherited_canvases, merged_parameters,
-        merged_field_styles, effective_aspectratio,
+        target,
+        inherited_canvases,
+        merged_parameters,
+        merged_field_styles,
+        effective_aspectratio,
     )

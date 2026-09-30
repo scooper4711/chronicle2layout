@@ -87,9 +87,16 @@ def test_assemble_layout_includes_content_from_resolved_fields():
     resolved = _make_resolved_page()
     fields = [
         ResolvedField(
-            name="char", canvas="page", type="text",
-            param="char", x=1.0, y=2.0, x2=50.0, y2=5.0,
-            font="Helvetica", fontsize=14,
+            name="char",
+            canvas="page",
+            type="text",
+            param="char",
+            x=1.0,
+            y=2.0,
+            x2=50.0,
+            y2=5.0,
+            font="Helvetica",
+            fontsize=14,
         ),
     ]
 
@@ -108,8 +115,14 @@ def test_assemble_layout_includes_content_from_resolved_fields():
 def test_generate_content_element_param_field():
     """Content element for a param field has value 'param:<name>'."""
     field = ResolvedField(
-        name="char", canvas="main", type="text",
-        param="char", x=1.0, y=2.0, x2=50.0, y2=5.0,
+        name="char",
+        canvas="main",
+        type="text",
+        param="char",
+        x=1.0,
+        y=2.0,
+        x2=50.0,
+        y2=5.0,
     )
 
     element = _generate_content_element(field)
@@ -127,8 +140,14 @@ def test_generate_content_element_param_field():
 def test_generate_content_element_static_value():
     """Content element for a value field has the static text as value."""
     field = ResolvedField(
-        name="label", canvas="page", type="text",
-        value="Hello World", x=0.0, y=0.0, x2=100.0, y2=10.0,
+        name="label",
+        canvas="page",
+        type="text",
+        value="Hello World",
+        x=0.0,
+        y=0.0,
+        x2=100.0,
+        y2=10.0,
     )
 
     element = _generate_content_element(field)
@@ -145,8 +164,14 @@ def test_generate_content_element_static_value():
 def test_generate_content_element_trigger_wrapping():
     """Field with trigger produces a trigger wrapper element."""
     field = ResolvedField(
-        name="society_id", canvas="main", type="text",
-        param="societyid", x=1.0, y=2.0, x2=50.0, y2=5.0,
+        name="society_id",
+        canvas="main",
+        type="text",
+        param="societyid",
+        x=1.0,
+        y=2.0,
+        x2=50.0,
+        y2=5.0,
         trigger="societyid",
     )
 
@@ -180,19 +205,35 @@ def test_output_key_ordering():
     params = {"Group": {"p1": {"type": "text"}}}
     fields = [
         ResolvedField(
-            name="f1", canvas="page", type="text",
-            param="p1", x=0.0, y=0.0, x2=100.0, y2=10.0,
+            name="f1",
+            canvas="page",
+            type="text",
+            param="p1",
+            x=0.0,
+            y=0.0,
+            x2=100.0,
+            y2=10.0,
         ),
     ]
 
     layout = assemble_layout(
-        blueprint, resolved, resolved,
-        resolved_fields=fields, merged_parameters=params,
+        blueprint,
+        resolved,
+        resolved,
+        resolved_fields=fields,
+        merged_parameters=params,
     )
 
     expected_order = [
-        "id", "parent", "description", "flags", "aspectratio",
-        "defaultChronicleLocation", "parameters", "canvas", "content",
+        "id",
+        "parent",
+        "description",
+        "flags",
+        "aspectratio",
+        "defaultChronicleLocation",
+        "parameters",
+        "canvas",
+        "content",
     ]
     actual_keys = list(layout.keys())
     assert actual_keys == expected_order
@@ -225,9 +266,16 @@ def test_backward_compatibility_canvas_only():
 def test_only_non_none_styling_properties_included():
     """Content element omits styling properties that are None."""
     field = ResolvedField(
-        name="char", canvas="page", type="text",
-        param="char", x=1.0, y=2.0, x2=50.0, y2=5.0,
-        font="Helvetica", fontsize=14,
+        name="char",
+        canvas="page",
+        type="text",
+        param="char",
+        x=1.0,
+        y=2.0,
+        x2=50.0,
+        y2=5.0,
+        font="Helvetica",
+        fontsize=14,
     )
 
     element = _generate_content_element(field)
@@ -250,8 +298,14 @@ def test_only_non_none_styling_properties_included():
 def test_content_element_includes_coordinates():
     """Content element includes x, y, x2, y2 from resolved field."""
     field = ResolvedField(
-        name="xp", canvas="page", type="text",
-        param="xp", x=10.5, y=20.3, x2=45.0, y2=25.7,
+        name="xp",
+        canvas="page",
+        type="text",
+        param="xp",
+        x=10.5,
+        y=20.3,
+        x2=45.0,
+        y2=25.7,
     )
 
     element = _generate_content_element(field)
@@ -273,16 +327,34 @@ def test_content_elements_in_field_declaration_order():
     resolved = _make_resolved_page()
     fields = [
         ResolvedField(
-            name="first", canvas="page", type="text",
-            param="a", x=0.0, y=0.0, x2=50.0, y2=10.0,
+            name="first",
+            canvas="page",
+            type="text",
+            param="a",
+            x=0.0,
+            y=0.0,
+            x2=50.0,
+            y2=10.0,
         ),
         ResolvedField(
-            name="second", canvas="page", type="text",
-            param="b", x=0.0, y=10.0, x2=50.0, y2=20.0,
+            name="second",
+            canvas="page",
+            type="text",
+            param="b",
+            x=0.0,
+            y=10.0,
+            x2=50.0,
+            y2=20.0,
         ),
         ResolvedField(
-            name="third", canvas="page", type="text",
-            param="c", x=0.0, y=20.0, x2=50.0, y2=30.0,
+            name="third",
+            canvas="page",
+            type="text",
+            param="c",
+            x=0.0,
+            y=20.0,
+            x2=50.0,
+            y2=30.0,
         ),
     ]
 

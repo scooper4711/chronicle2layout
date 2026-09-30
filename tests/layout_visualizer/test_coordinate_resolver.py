@@ -30,7 +30,12 @@ class TestTopologicalSortCanvases:
     def test_parent_appears_before_child(self):
         canvases = {
             "child": CanvasRegion(
-                name="child", x=10, y=10, x2=90, y2=90, parent="page",
+                name="child",
+                x=10,
+                y=10,
+                x2=90,
+                y2=90,
+                parent="page",
             ),
             "page": CanvasRegion(name="page", x=0, y=0, x2=100, y2=100),
         }
@@ -42,11 +47,21 @@ class TestTopologicalSortCanvases:
     def test_three_level_nesting(self):
         canvases = {
             "inner": CanvasRegion(
-                name="inner", x=5, y=5, x2=95, y2=95, parent="main",
+                name="inner",
+                x=5,
+                y=5,
+                x2=95,
+                y2=95,
+                parent="main",
             ),
             "page": CanvasRegion(name="page", x=0, y=0, x2=100, y2=100),
             "main": CanvasRegion(
-                name="main", x=10, y=10, x2=90, y2=90, parent="page",
+                name="main",
+                x=10,
+                y=10,
+                x2=90,
+                y2=90,
+                parent="page",
             ),
         }
 
@@ -60,10 +75,20 @@ class TestTopologicalSortCanvases:
             "header": CanvasRegion(name="header", x=0, y=0, x2=100, y2=10),
             "body": CanvasRegion(name="body", x=0, y=10, x2=100, y2=100),
             "title": CanvasRegion(
-                name="title", x=5, y=5, x2=95, y2=95, parent="header",
+                name="title",
+                x=5,
+                y=5,
+                x2=95,
+                y2=95,
+                parent="header",
             ),
             "content": CanvasRegion(
-                name="content", x=5, y=5, x2=95, y2=95, parent="body",
+                name="content",
+                x=5,
+                y=5,
+                x2=95,
+                y2=95,
+                parent="body",
             ),
         }
 
@@ -76,10 +101,20 @@ class TestTopologicalSortCanvases:
         canvases = {
             "a": CanvasRegion(name="a", x=0, y=0, x2=100, y2=100),
             "b": CanvasRegion(
-                name="b", x=10, y=10, x2=90, y2=90, parent="a",
+                name="b",
+                x=10,
+                y=10,
+                x2=90,
+                y2=90,
+                parent="a",
             ),
             "c": CanvasRegion(
-                name="c", x=20, y=20, x2=80, y2=80, parent="a",
+                name="c",
+                x=20,
+                y=20,
+                x2=80,
+                y2=80,
+                parent="a",
             ),
         }
 
@@ -90,7 +125,12 @@ class TestTopologicalSortCanvases:
     def test_orphaned_canvas_raises_value_error(self):
         canvases = {
             "child": CanvasRegion(
-                name="child", x=10, y=10, x2=90, y2=90, parent="missing",
+                name="child",
+                x=10,
+                y=10,
+                x2=90,
+                y2=90,
+                parent="missing",
             ),
         }
 
@@ -104,7 +144,11 @@ class TestResolveCanvasPixels:
     def test_root_canvas_full_page(self):
         canvases = {
             "page": CanvasRegion(
-                name="page", x=0, y=0, x2=100, y2=100,
+                name="page",
+                x=0,
+                y=0,
+                x2=100,
+                y2=100,
             ),
         }
 
@@ -112,13 +156,21 @@ class TestResolveCanvasPixels:
 
         rect = result["page"]
         assert rect == PixelRect(
-            name="page", x=0, y=0, x2=1000, y2=800,
+            name="page",
+            x=0,
+            y=0,
+            x2=1000,
+            y2=800,
         )
 
     def test_root_canvas_partial_page(self):
         canvases = {
             "main": CanvasRegion(
-                name="main", x=10, y=20, x2=90, y2=80,
+                name="main",
+                x=10,
+                y=20,
+                x2=90,
+                y2=80,
             ),
         }
 
@@ -133,10 +185,19 @@ class TestResolveCanvasPixels:
     def test_child_relative_to_parent(self):
         canvases = {
             "page": CanvasRegion(
-                name="page", x=0, y=0, x2=100, y2=100,
+                name="page",
+                x=0,
+                y=0,
+                x2=100,
+                y2=100,
             ),
             "main": CanvasRegion(
-                name="main", x=10, y=10, x2=60, y2=60, parent="page",
+                name="main",
+                x=10,
+                y=10,
+                x2=60,
+                y2=60,
+                parent="page",
             ),
         }
 
@@ -154,13 +215,27 @@ class TestResolveCanvasPixels:
         """A grandchild's pixels are relative to its parent, not the page."""
         canvases = {
             "page": CanvasRegion(
-                name="page", x=0, y=0, x2=100, y2=100,
+                name="page",
+                x=0,
+                y=0,
+                x2=100,
+                y2=100,
             ),
             "main": CanvasRegion(
-                name="main", x=10, y=10, x2=60, y2=60, parent="page",
+                name="main",
+                x=10,
+                y=10,
+                x2=60,
+                y2=60,
+                parent="page",
             ),
             "inner": CanvasRegion(
-                name="inner", x=0, y=0, x2=50, y2=50, parent="main",
+                name="inner",
+                x=0,
+                y=0,
+                x2=50,
+                y2=50,
+                parent="main",
             ),
         }
 
@@ -177,10 +252,19 @@ class TestResolveCanvasPixels:
     def test_preserves_parent_field(self):
         canvases = {
             "page": CanvasRegion(
-                name="page", x=0, y=0, x2=100, y2=100,
+                name="page",
+                x=0,
+                y=0,
+                x2=100,
+                y2=100,
             ),
             "child": CanvasRegion(
-                name="child", x=0, y=0, x2=100, y2=100, parent="page",
+                name="child",
+                x=0,
+                y=0,
+                x2=100,
+                y2=100,
+                parent="page",
             ),
         }
 
@@ -192,7 +276,12 @@ class TestResolveCanvasPixels:
     def test_orphaned_canvas_raises_value_error(self):
         canvases = {
             "orphan": CanvasRegion(
-                name="orphan", x=0, y=0, x2=100, y2=100, parent="ghost",
+                name="orphan",
+                x=0,
+                y=0,
+                x2=100,
+                y2=100,
+                parent="ghost",
             ),
         }
 
@@ -203,10 +292,20 @@ class TestResolveCanvasPixels:
         canvases = {
             "a": CanvasRegion(name="a", x=0, y=0, x2=100, y2=100),
             "b": CanvasRegion(
-                name="b", x=10, y=10, x2=90, y2=90, parent="a",
+                name="b",
+                x=10,
+                y=10,
+                x2=90,
+                y2=90,
+                parent="a",
             ),
             "c": CanvasRegion(
-                name="c", x=20, y=20, x2=80, y2=80, parent="a",
+                name="c",
+                x=20,
+                y=20,
+                x2=80,
+                y2=80,
+                parent="a",
             ),
         }
 

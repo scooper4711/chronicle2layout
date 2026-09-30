@@ -77,7 +77,11 @@ class TestDrawOverlays:
         bg = _make_white_pixmap(100, 100)
         rects = {
             "red_box": PixelRect(
-                name="red_box", x=20, y=20, x2=80, y2=80,
+                name="red_box",
+                x=20,
+                y=20,
+                x2=80,
+                y2=80,
             ),
         }
         colors = {"red_box": (255, 0, 0)}
@@ -86,6 +90,4 @@ class TestDrawOverlays:
 
         # A pixel inside the overlay should no longer be pure white
         inner_pixel = result.pixel(50, 50)
-        assert inner_pixel != (255, 255, 255), (
-            "Pixel inside overlay should differ from white background"
-        )
+        assert inner_pixel != (255, 255, 255), "Pixel inside overlay should differ from white background"

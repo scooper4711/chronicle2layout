@@ -35,9 +35,7 @@ def extract_last_page(input_path: Path, output_path: Path) -> None:
     try:
         source = fitz.open(input_path)
     except Exception as exc:
-        raise RuntimeError(
-            f"Failed to open PDF: {input_path}"
-        ) from exc
+        raise RuntimeError(f"Failed to open PDF: {input_path}") from exc
 
     try:
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -48,11 +46,10 @@ def extract_last_page(input_path: Path, output_path: Path) -> None:
     except RuntimeError:
         raise
     except Exception as exc:
-        raise RuntimeError(
-            f"Failed to write chronicle PDF: {output_path}"
-        ) from exc
+        raise RuntimeError(f"Failed to write chronicle PDF: {output_path}") from exc
     finally:
         source.close()
+
 
 def _get_page_text(doc: fitz.Document, page_index: int) -> str | None:
     """Get text from a page by index, or None if the page doesn't exist."""
@@ -130,4 +127,3 @@ def process_directory(input_dir: Path, output_dir: Path) -> None:
                     f"Error processing {entry.name}: {exc}",
                     file=sys.stderr,
                 )
-

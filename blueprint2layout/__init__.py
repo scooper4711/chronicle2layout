@@ -64,7 +64,10 @@ def generate_layout(
     )
 
     resolved = resolve_canvases(
-        inherited_canvases, blueprint.canvases, detection, effective_aspectratio,
+        inherited_canvases,
+        blueprint.canvases,
+        detection,
+        effective_aspectratio,
     )
 
     resolved_fields = None
@@ -78,7 +81,9 @@ def generate_layout(
         )
 
     return assemble_layout(
-        blueprint, resolved, resolved,
+        blueprint,
+        resolved,
+        resolved,
         resolved_fields=resolved_fields,
         merged_parameters=merged_parameters,
     )

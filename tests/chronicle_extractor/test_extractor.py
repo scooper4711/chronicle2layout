@@ -33,9 +33,7 @@ def multi_page_pdf(tmp_path: Path) -> Path:
 class TestExtractLastPage:
     """Tests for extract_last_page function."""
 
-    def test_output_has_one_page(
-        self, multi_page_pdf: Path, tmp_path: Path
-    ) -> None:
+    def test_output_has_one_page(self, multi_page_pdf: Path, tmp_path: Path) -> None:
         output = tmp_path / "output.pdf"
         extract_last_page(multi_page_pdf, output)
 
@@ -43,9 +41,7 @@ class TestExtractLastPage:
         assert len(doc) == 1
         doc.close()
 
-    def test_output_contains_last_page_content(
-        self, multi_page_pdf: Path, tmp_path: Path
-    ) -> None:
+    def test_output_contains_last_page_content(self, multi_page_pdf: Path, tmp_path: Path) -> None:
         output = tmp_path / "output.pdf"
         extract_last_page(multi_page_pdf, output)
 
@@ -54,9 +50,7 @@ class TestExtractLastPage:
         assert "Page 3 content" in text
         doc.close()
 
-    def test_output_does_not_contain_earlier_pages(
-        self, multi_page_pdf: Path, tmp_path: Path
-    ) -> None:
+    def test_output_does_not_contain_earlier_pages(self, multi_page_pdf: Path, tmp_path: Path) -> None:
         output = tmp_path / "output.pdf"
         extract_last_page(multi_page_pdf, output)
 
@@ -66,9 +60,7 @@ class TestExtractLastPage:
         assert "Page 2 content" not in text
         doc.close()
 
-    def test_creates_parent_directories(
-        self, multi_page_pdf: Path, tmp_path: Path
-    ) -> None:
+    def test_creates_parent_directories(self, multi_page_pdf: Path, tmp_path: Path) -> None:
         output = tmp_path / "nested" / "dirs" / "output.pdf"
         extract_last_page(multi_page_pdf, output)
 
@@ -110,7 +102,10 @@ class TestExtractLastPage:
 
 
 def _create_scenario_pdf(
-    path: Path, scenario_tag: str, name: str, pages: int = 6,
+    path: Path,
+    scenario_tag: str,
+    name: str,
+    pages: int = 6,
 ) -> None:
     """Create a multi-page PDF with scenario number on page 1 and running headers.
 
@@ -178,9 +173,7 @@ def mixed_input_dir(tmp_path: Path) -> Path:
 class TestProcessDirectory:
     """Tests for process_directory function."""
 
-    def test_processes_valid_scenario_pdfs(
-        self, mixed_input_dir: Path, tmp_path: Path
-    ) -> None:
+    def test_processes_valid_scenario_pdfs(self, mixed_input_dir: Path, tmp_path: Path) -> None:
         output_dir = tmp_path / "output"
         process_directory(mixed_input_dir, output_dir)
 
@@ -235,9 +228,7 @@ class TestProcessDirectory:
         assert "season2" in stdout
         assert "Chronicle.pdf" in stdout
 
-    def test_output_pdfs_have_one_page(
-        self, mixed_input_dir: Path, tmp_path: Path
-    ) -> None:
+    def test_output_pdfs_have_one_page(self, mixed_input_dir: Path, tmp_path: Path) -> None:
         output_dir = tmp_path / "output"
         process_directory(mixed_input_dir, output_dir)
 
@@ -246,9 +237,7 @@ class TestProcessDirectory:
             assert len(doc) == 1
             doc.close()
 
-    def test_continues_on_per_file_error(
-        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
-    ) -> None:
+    def test_continues_on_per_file_error(self, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
         input_dir = tmp_path / "input"
         input_dir.mkdir()
 
@@ -272,9 +261,7 @@ class TestProcessDirectory:
         # The valid file should still be processed
         assert "Chronicle.pdf" in captured.out
 
-    def test_does_not_recurse_into_subdirectories(
-        self, tmp_path: Path
-    ) -> None:
+    def test_does_not_recurse_into_subdirectories(self, tmp_path: Path) -> None:
         input_dir = tmp_path / "input"
         input_dir.mkdir()
         sub = input_dir / "subdir"

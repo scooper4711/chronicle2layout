@@ -37,7 +37,10 @@ def _make_entry(
         example_value=example_value,
         entry_type=entry_type,
         canvas=canvas,
-        x=10, y=10, x2=90, y2=30,
+        x=10,
+        y=10,
+        x2=90,
+        y2=30,
         font="Helvetica",
         fontsize=12,
         fontweight=fontweight,
@@ -49,6 +52,7 @@ def _make_entry(
 # ---------------------------------------------------------------------------
 # compute_text_position — all 9 alignment combinations
 # ---------------------------------------------------------------------------
+
 
 class TestComputeTextPosition:
     """Tests for compute_text_position across all alignment codes."""
@@ -130,6 +134,7 @@ class TestComputeTextPosition:
 # Multiline slot height computation
 # ---------------------------------------------------------------------------
 
+
 class TestMultilineSlotHeight:
     """Test that multiline entries divide bounding box height correctly."""
 
@@ -154,6 +159,7 @@ class TestMultilineSlotHeight:
 # ---------------------------------------------------------------------------
 # draw_data_text
 # ---------------------------------------------------------------------------
+
 
 class TestDrawDataText:
     """Tests for draw_data_text."""

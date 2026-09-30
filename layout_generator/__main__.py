@@ -114,7 +114,6 @@ def _compose_absolute_coordinates(
     return [abs_x0, abs_y0, abs_x2, abs_y2]
 
 
-
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse command-line arguments.
 
@@ -128,10 +127,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """
     parser = argparse.ArgumentParser(
         prog="layout_generator",
-        description=(
-            "Generate leaf layout JSON files from chronicle PDFs "
-            "and a TOML metadata file."
-        ),
+        description=("Generate leaf layout JSON files from chronicle PDFs and a TOML metadata file."),
     )
     parser.add_argument(
         "pdf_path",
@@ -140,26 +136,17 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--metadata-file",
         default="chronicle_properties.toml",
-        help=(
-            "Path to the TOML metadata file "
-            "(default: chronicle_properties.toml)."
-        ),
+        help=("Path to the TOML metadata file (default: chronicle_properties.toml)."),
     )
     parser.add_argument(
         "--layouts-dir",
         default=None,
-        help=(
-            "Root directory containing parent layout files. "
-            "Falls back to layouts_dir in the TOML metadata file."
-        ),
+        help=("Root directory containing parent layout files. Falls back to layouts_dir in the TOML metadata file."),
     )
     parser.add_argument(
         "--output-dir",
         default=None,
-        help=(
-            "Directory for generated layout JSON files "
-            "(default: resolved --layouts-dir)."
-        ),
+        help=("Directory for generated layout JSON files (default: resolved --layouts-dir)."),
     )
     parser.add_argument(
         "--item-canvas",
@@ -340,22 +327,24 @@ def _process_single_pdf(
     Returns the output path on success, or None on failure.
     """
     item_region = resolve_canvas_region(
-        item_canvas, metadata.parent, layout_index,
+        item_canvas,
+        metadata.parent,
+        layout_index,
     )
     if item_region is None:
         print(
-            f"Warning: Canvas '{item_canvas}' not found for "
-            f"layout '{metadata.id}'; skipping item extraction.",
+            f"Warning: Canvas '{item_canvas}' not found for layout '{metadata.id}'; skipping item extraction.",
             file=sys.stderr,
         )
 
     checkbox_region = resolve_canvas_region(
-        checkbox_canvas, metadata.parent, layout_index,
+        checkbox_canvas,
+        metadata.parent,
+        layout_index,
     )
     if checkbox_region is None:
         print(
-            f"Warning: Canvas '{checkbox_canvas}' not found for "
-            f"layout '{metadata.id}'; skipping checkbox detection.",
+            f"Warning: Canvas '{checkbox_canvas}' not found for layout '{metadata.id}'; skipping checkbox detection.",
             file=sys.stderr,
         )
 
@@ -422,8 +411,7 @@ def main(argv: list[str] | None = None) -> int:
     layouts_dir = _resolve_layouts_dir(args, config.layouts_dir)
     if layouts_dir is None:
         print(
-            "Error: No layouts directory specified. Provide "
-            "--layouts-dir or set layouts_dir in the metadata file.",
+            "Error: No layouts directory specified. Provide --layouts-dir or set layouts_dir in the metadata file.",
             file=sys.stderr,
         )
         return 1
@@ -466,8 +454,7 @@ def main(argv: list[str] | None = None) -> int:
 
         if metadata.parent not in layout_index:
             print(
-                f"Error: Parent layout '{metadata.parent}' not found "
-                f"in layout index for '{metadata.id}'; skipping.",
+                f"Error: Parent layout '{metadata.parent}' not found in layout index for '{metadata.id}'; skipping.",
                 file=sys.stderr,
             )
             skipped_count += 1
@@ -490,15 +477,13 @@ def main(argv: list[str] | None = None) -> int:
                 generated_count += 1
         except Exception as exc:
             print(
-                f"Error processing '{pdf_file}' "
-                f"(layout '{metadata.id}'): {exc}",
+                f"Error processing '{pdf_file}' (layout '{metadata.id}'): {exc}",
                 file=sys.stderr,
             )
             skipped_count += 1
 
     print(
-        f"Summary: {generated_count} generated, "
-        f"{skipped_count} skipped.",
+        f"Summary: {generated_count} generated, {skipped_count} skipped.",
         file=sys.stderr,
     )
 

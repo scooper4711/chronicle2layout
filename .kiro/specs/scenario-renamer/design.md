@@ -102,6 +102,7 @@ def has_scenario_pattern(stem: str) -> bool:
     Requirements: scenario-renamer 13.1, 13.3, 13.5
     """
 
+
 def classify_file(
     path: Path,
     input_dir: Path,
@@ -134,14 +135,10 @@ import re
 from dataclasses import dataclass
 
 # Matches PZOPFS prefix: PZOPFS followed by 4+ digits, optional edition letter
-PZOPFS_PATTERN: re.Pattern[str] = re.compile(
-    r"PZOPFS(\d{2})(\d{2})\w?", re.IGNORECASE
-)
+PZOPFS_PATTERN: re.Pattern[str] = re.compile(r"PZOPFS(\d{2})(\d{2})\w?", re.IGNORECASE)
 
 # Matches season-number pattern: X-YY anywhere in the stem
-SEASON_NUMBER_PATTERN: re.Pattern[str] = re.compile(
-    r"(?:PFS\s*)?(\d+)-(\d{2,})"
-)
+SEASON_NUMBER_PATTERN: re.Pattern[str] = re.compile(r"(?:PFS\s*)?(\d+)-(\d{2,})")
 
 
 @dataclass(frozen=True)
@@ -155,6 +152,7 @@ class ImageScenarioId:
                 (e.g., "Maps", "A-Nighttime Ambush", "Map-1").
                 Empty string if no suffix.
     """
+
     season: int
     scenario: str
     suffix: str
@@ -205,6 +203,7 @@ def subdirectory_for_season(season: int) -> str:
     Requirements: scenario-renamer 6.1, 6.2, 6.3
     """
 
+
 def build_scenario_filename(info: ScenarioInfo) -> str:
     """Construct the output filename for a scenario PDF (no Chronicle suffix).
 
@@ -222,6 +221,7 @@ def build_scenario_filename(info: ScenarioInfo) -> str:
     Requirements: scenario-renamer 5.1, 5.2, 5.3, 5.4
     """
 
+
 def sanitize_image_suffix(suffix: str) -> str:
     """Sanitize the image suffix for use in filenames.
 
@@ -236,6 +236,7 @@ def sanitize_image_suffix(suffix: str) -> str:
 
     Requirements: scenario-renamer 14.2
     """
+
 
 def build_image_filename(
     season: int,
@@ -308,6 +309,7 @@ def scan_and_classify(
     Requirements: scenario-renamer 7.1, 7.2, 15.2
     """
 
+
 def process_scenario_pdf(
     pdf_path: Path,
     input_dir: Path,
@@ -330,6 +332,7 @@ def process_scenario_pdf(
 
     Requirements: scenario-renamer 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 12.2, 12.3
     """
+
 
 def process_scenario_image(
     image_path: Path,
@@ -355,6 +358,7 @@ def process_scenario_image(
     Requirements: scenario-renamer 13.8, 14.1, 14.4, 14.5
     """
 
+
 def copy_as_is(
     file_path: Path,
     input_dir: Path,
@@ -372,6 +376,7 @@ def copy_as_is(
 
     Requirements: scenario-renamer 16.1, 16.2, 16.3, 16.4, 16.5
     """
+
 
 def process_directory(input_dir: Path, output_dir: Path) -> None:
     """Process all files in the input directory tree.
@@ -411,6 +416,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
     Requirements: scenario-renamer 1.1, 1.2
     """
+
 
 def main(argv: list[str] | None = None) -> int:
     """Entry point for the scenario renamer CLI.

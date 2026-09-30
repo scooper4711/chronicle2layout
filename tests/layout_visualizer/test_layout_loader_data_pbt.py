@@ -28,14 +28,16 @@ _identifier = st.text(
     max_size=12,
 )
 
-_param_def = st.fixed_dictionaries({
-    "type": st.just("text"),
-    "example": st.one_of(
-        st.text(min_size=1, max_size=20),
-        st.integers(min_value=-1000, max_value=1000),
-        st.floats(min_value=-1000, max_value=1000, allow_nan=False, allow_infinity=False),
-    ),
-})
+_param_def = st.fixed_dictionaries(
+    {
+        "type": st.just("text"),
+        "example": st.one_of(
+            st.text(min_size=1, max_size=20),
+            st.integers(min_value=-1000, max_value=1000),
+            st.floats(min_value=-1000, max_value=1000, allow_nan=False, allow_infinity=False),
+        ),
+    }
+)
 
 _preset_props = st.dictionaries(
     keys=st.sampled_from(["font", "fontsize", "fontweight", "align", "canvas", "x", "y"]),
@@ -58,10 +60,12 @@ def _chain_strategy(min_depth: int = 1, max_depth: int = 5):
     param_section = st.dictionaries(keys=_identifier, values=param_group, min_size=1, max_size=3)
     preset_section = st.dictionaries(keys=_identifier, values=_preset_props, min_size=1, max_size=3)
 
-    layout = st.fixed_dictionaries({
-        "parameters": param_section,
-        "presets": preset_section,
-    })
+    layout = st.fixed_dictionaries(
+        {
+            "parameters": param_section,
+            "presets": preset_section,
+        }
+    )
 
     return st.lists(layout, min_size=min_depth, max_size=max_depth)
 
@@ -75,6 +79,7 @@ def _make_chain(layouts: list[dict]) -> list[tuple[Path, dict]]:
 # Property 1: Inheritance merge with child override
 # Feature: layout-data-mode, Property 1: Inheritance merge with child override
 # ---------------------------------------------------------------------------
+
 
 class TestInheritanceMergeWithChildOverride:
     """**Validates: Requirements 2.1, 2.2, 3.3**
@@ -147,6 +152,7 @@ class TestInheritanceMergeWithChildOverride:
 # Property 2: Preset resolution with inline override
 # Feature: layout-data-mode, Property 2: Preset resolution with inline override
 # ---------------------------------------------------------------------------
+
 
 def _preset_chain_strategy():
     """Generate a preset dict with nested references up to depth 3.
@@ -260,13 +266,20 @@ class TestExampleValueStringification:
             "id": "test",
             "canvas": {"page": {"x": 0, "y": 0, "x2": 100, "y2": 100}},
             "parameters": {"G": {"p": {"type": "text", "example": example}}},
-            "content": [{
-                "value": "param:p",
-                "type": "text",
-                "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            "content": [
+                {
+                    "value": "param:p",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         }
         layout_path = tmp_dir / "layout.json"
         layout_path.write_text(json.dumps(layout_data), encoding="utf-8")
@@ -289,14 +302,21 @@ _skip_entry_type = st.sampled_from(["checkbox", "strikeout", "line", "rectangle"
 
 def _content_entry_strategy(entry_type_st, param_name: str = "p"):
     """Generate a content entry dict with the given type strategy."""
-    return entry_type_st.map(lambda t: {
-        "value": f"param:{param_name}",
-        "type": t,
-        "canvas": "page",
-        "x": 0, "y": 0, "x2": 50, "y2": 10,
-        "font": "Helvetica", "fontsize": 12, "align": "LB",
-        **({"lines": 2} if t == "multiline" else {}),
-    })
+    return entry_type_st.map(
+        lambda t: {
+            "value": f"param:{param_name}",
+            "type": t,
+            "canvas": "page",
+            "x": 0,
+            "y": 0,
+            "x2": 50,
+            "y2": 10,
+            "font": "Helvetica",
+            "fontsize": 12,
+            "align": "LB",
+            **({"lines": 2} if t == "multiline" else {}),
+        }
+    )
 
 
 def _mixed_content_strategy():
@@ -306,11 +326,13 @@ def _mixed_content_strategy():
     """
     text_entries = st.lists(
         _content_entry_strategy(_text_entry_type),
-        min_size=1, max_size=5,
+        min_size=1,
+        max_size=5,
     )
     skip_entries = st.lists(
         _content_entry_strategy(_skip_entry_type),
-        min_size=1, max_size=5,
+        min_size=1,
+        max_size=5,
     )
     return st.tuples(text_entries, skip_entries)
 
@@ -365,14 +387,20 @@ class TestNonTextTypeFiltering:
 # Feature: layout-data-mode, Property 7: Nested content extraction from trigger and choice
 # ---------------------------------------------------------------------------
 
+
 def _make_text_entry(param_name: str) -> dict:
     """Create a minimal text content entry referencing a parameter."""
     return {
         "value": f"param:{param_name}",
         "type": "text",
         "canvas": "page",
-        "x": 0, "y": 0, "x2": 50, "y2": 10,
-        "font": "Helvetica", "fontsize": 12, "align": "LB",
+        "x": 0,
+        "y": 0,
+        "x2": 50,
+        "y2": 10,
+        "font": "Helvetica",
+        "fontsize": 12,
+        "align": "LB",
     }
 
 
@@ -388,7 +416,8 @@ def _nested_content_strategy():
     # Number of choice branches, each with 0-2 text entries
     choice_branch_counts = st.lists(
         st.integers(min_value=0, max_value=2),
-        min_size=0, max_size=3,
+        min_size=0,
+        max_size=3,
     )
 
     return st.tuples(top_count, trigger_count, choice_branch_counts)
@@ -437,11 +466,13 @@ class TestNestedContentExtraction:
         # Trigger with nested text entries
         if trigger_count > 0:
             trigger_content = [_make_text_entry(next_param()) for _ in range(trigger_count)]
-            content.append({
-                "type": "trigger",
-                "trigger": "some_param",
-                "content": trigger_content,
-            })
+            content.append(
+                {
+                    "type": "trigger",
+                    "trigger": "some_param",
+                    "content": trigger_content,
+                }
+            )
 
         # Choice with branches
         if choice_branch_counts:
@@ -449,11 +480,13 @@ class TestNestedContentExtraction:
             for i, branch_count in enumerate(choice_branch_counts):
                 branch = [_make_text_entry(next_param()) for _ in range(branch_count)]
                 choice_content[f"option_{i}"] = branch
-            content.append({
-                "type": "choice",
-                "choices": "some_param",
-                "content": choice_content,
-            })
+            content.append(
+                {
+                    "type": "choice",
+                    "choices": "some_param",
+                    "content": choice_content,
+                }
+            )
 
         # Build parameters for all referenced names
         params = {name: {"type": "text", "example": f"val_{name}"} for name in all_param_names}

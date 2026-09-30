@@ -113,9 +113,11 @@ def invalid_secondary_axis_reference(draw):
     All standard categories now support left/right/top/bottom, so
     the only invalid edges are non-standard names like 'center'.
     """
-    category = draw(st.sampled_from(
-        list(_HORIZONTAL_CATEGORIES) + list(_VERTICAL_CATEGORIES) + ["grey_box"],
-    ))
+    category = draw(
+        st.sampled_from(
+            list(_HORIZONTAL_CATEGORIES) + list(_VERTICAL_CATEGORIES) + ["grey_box"],
+        )
+    )
     edge = draw(st.sampled_from(["center", "middle", "start", "end"]))
     index = draw(st.integers(min_value=0, max_value=4))
     return f"{category}[{index}].{edge}"
@@ -166,7 +168,9 @@ class TestSecondaryAxisResolutionProperty:
     @given(data=st.data(), detection=detection_with_elements())
     @settings(max_examples=100)
     def test_resolved_value_matches_element_attribute(
-        self, data: st.DataObject, detection: DetectionResult,
+        self,
+        data: st.DataObject,
+        detection: DetectionResult,
     ) -> None:
         """Resolved secondary axis value equals the element's attribute."""
         ref_string, expected = data.draw(
@@ -199,7 +203,9 @@ class TestInvalidSecondaryEdgeProperty:
     )
     @settings(max_examples=100)
     def test_invalid_edge_raises_value_error(
-        self, ref_string: str, detection: DetectionResult,
+        self,
+        ref_string: str,
+        detection: DetectionResult,
     ) -> None:
         """Bogus secondary edge name raises ValueError."""
         with pytest.raises(ValueError, match="not a recognized pattern"):
@@ -222,7 +228,8 @@ class TestUnrecognizedEdgeValueProperty:
     @given(bad_value=_unrecognized_edge_value)
     @settings(max_examples=100)
     def test_unrecognized_string_raises_value_error(
-        self, bad_value: str,
+        self,
+        bad_value: str,
     ) -> None:
         """Unrecognized edge value string raises ValueError."""
         empty_detection = DetectionResult()

@@ -22,7 +22,10 @@ from blueprint2layout.models import (
 # ---------------------------------------------------------------------------
 
 _percentage = st.floats(
-    min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False,
+    min_value=0.0,
+    max_value=100.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 _thickness = st.integers(min_value=1, max_value=20)
 
@@ -198,9 +201,11 @@ def em_offset_expressions(draw):
     The base reference is a line reference drawn from a known set of
     categories and a small index range.
     """
-    category = draw(st.sampled_from(
-        ["h_thin", "h_bar", "h_rule", "v_thin", "v_bar"],
-    ))
+    category = draw(
+        st.sampled_from(
+            ["h_thin", "h_bar", "h_rule", "v_thin", "v_bar"],
+        )
+    )
     index = draw(st.integers(min_value=0, max_value=4))
     operator = draw(st.sampled_from(["+", "-"]))
     em_count = draw(

@@ -33,7 +33,10 @@ from blueprint2layout.models import (
 # ---------------------------------------------------------------------------
 
 _percentage = st.floats(
-    min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False,
+    min_value=0.0,
+    max_value=100.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 _thickness = st.integers(min_value=1, max_value=20)
 _fontsize = st.floats(min_value=6.0, max_value=72.0, allow_nan=False, allow_infinity=False)
@@ -89,10 +92,18 @@ def _make_canvases() -> dict[str, ResolvedCanvas]:
     """Create a minimal set of resolved canvases for testing."""
     return {
         "page": ResolvedCanvas(
-            name="page", left=0.0, right=100.0, top=0.0, bottom=100.0,
+            name="page",
+            left=0.0,
+            right=100.0,
+            top=0.0,
+            bottom=100.0,
         ),
         "main": ResolvedCanvas(
-            name="main", left=10.0, right=90.0, top=5.0, bottom=95.0,
+            name="main",
+            left=10.0,
+            right=90.0,
+            top=5.0,
+            bottom=95.0,
             parent="page",
         ),
     }
@@ -144,7 +155,12 @@ class TestEmOffsetComputationProperty:
 
         expression = f"h_thin[0] {operator} {em_count}em"
         result = resolve_field_edge(
-            expression, edge_name, fontsize, aspectratio, detection, canvases,
+            expression,
+            edge_name,
+            fontsize,
+            aspectratio,
+            detection,
+            canvases,
         )
 
         offset = em_count * fontsize / page_dimension * 100
@@ -172,11 +188,19 @@ class TestEmOffsetComputationProperty:
         """Em offset works with canvas reference as base."""
         canvases = {
             "page": ResolvedCanvas(
-                name="page", left=0.0, right=100.0, top=0.0, bottom=100.0,
+                name="page",
+                left=0.0,
+                right=100.0,
+                top=0.0,
+                bottom=100.0,
             ),
             "test_canvas": ResolvedCanvas(
-                name="test_canvas", left=base_value, right=100.0,
-                top=0.0, bottom=100.0, parent="page",
+                name="test_canvas",
+                left=base_value,
+                right=100.0,
+                top=0.0,
+                bottom=100.0,
+                parent="page",
             ),
         }
         detection = DetectionResult()
@@ -187,7 +211,12 @@ class TestEmOffsetComputationProperty:
 
         expression = f"test_canvas.left + {em_count}em"
         result = resolve_field_edge(
-            expression, "left", fontsize, aspectratio, detection, canvases,
+            expression,
+            "left",
+            fontsize,
+            aspectratio,
+            detection,
+            canvases,
         )
 
         expected = base_value + (em_count * fontsize / page_dimension * 100)
@@ -249,7 +278,8 @@ class TestStyleOverrideOrderingProperty:
     @given(data=st.data())
     @settings(max_examples=100)
     def test_direct_property_overrides_all_styles(
-        self, data: st.DataObject,
+        self,
+        data: st.DataObject,
     ) -> None:
         """Direct field properties override all style-inherited values."""
         prop = data.draw(st.sampled_from(list(_STYLE_PROPS)))
@@ -267,7 +297,8 @@ class TestStyleOverrideOrderingProperty:
     @given(data=st.data())
     @settings(max_examples=100)
     def test_chained_style_base_overridden_by_child(
-        self, data: st.DataObject,
+        self,
+        data: st.DataObject,
     ) -> None:
         """In a style chain, the child style overrides the base style."""
         prop = data.draw(st.sampled_from(list(_STYLE_PROPS)))
@@ -342,13 +373,19 @@ class TestMissingRequiredFieldPropertiesProperty:
         field = FieldEntry(
             name="test_field",
             type=field_type,
-            left=10, right=90, top=5, bottom=50,
+            left=10,
+            right=90,
+            top=5,
+            bottom=50,
         )
 
         with pytest.raises(ValueError, match="no effective 'canvas'"):
             resolve_fields(
-                [field], {}, _make_canvases(),
-                DetectionResult(), "603:783",
+                [field],
+                {},
+                _make_canvases(),
+                DetectionResult(),
+                "603:783",
             )
 
     @given(
@@ -360,13 +397,19 @@ class TestMissingRequiredFieldPropertiesProperty:
         field = FieldEntry(
             name="test_field",
             canvas=canvas_name,
-            left=10, right=90, top=5, bottom=50,
+            left=10,
+            right=90,
+            top=5,
+            bottom=50,
         )
 
         with pytest.raises(ValueError, match="no effective 'type'"):
             resolve_fields(
-                [field], {}, _make_canvases(),
-                DetectionResult(), "603:783",
+                [field],
+                {},
+                _make_canvases(),
+                DetectionResult(),
+                "603:783",
             )
 
     @given(
@@ -374,7 +417,8 @@ class TestMissingRequiredFieldPropertiesProperty:
     )
     @settings(max_examples=100)
     def test_missing_top_without_bottom_raises_value_error(
-        self, fontsize: float,
+        self,
+        fontsize: float,
     ) -> None:
         """Field omitting top without bottom raises ValueError."""
         field = FieldEntry(
@@ -382,13 +426,17 @@ class TestMissingRequiredFieldPropertiesProperty:
             canvas="main",
             type="text",
             fontsize=fontsize,
-            left=10, right=90,
+            left=10,
+            right=90,
         )
 
         with pytest.raises(ValueError, match="omits 'top' but lacks"):
             resolve_fields(
-                [field], {}, _make_canvases(),
-                DetectionResult(), "603:783",
+                [field],
+                {},
+                _make_canvases(),
+                DetectionResult(),
+                "603:783",
             )
 
     @given(
@@ -396,19 +444,24 @@ class TestMissingRequiredFieldPropertiesProperty:
     )
     @settings(max_examples=100)
     def test_missing_top_without_fontsize_raises_value_error(
-        self, bottom_value: float,
+        self,
+        bottom_value: float,
     ) -> None:
         """Field omitting top without fontsize raises ValueError."""
         field = FieldEntry(
             name="test_field",
             canvas="main",
             type="text",
-            left=10, right=90,
+            left=10,
+            right=90,
             bottom=bottom_value,
         )
 
         with pytest.raises(ValueError, match="omits 'top' but lacks"):
             resolve_fields(
-                [field], {}, _make_canvases(),
-                DetectionResult(), "603:783",
+                [field],
+                {},
+                _make_canvases(),
+                DetectionResult(),
+                "603:783",
             )

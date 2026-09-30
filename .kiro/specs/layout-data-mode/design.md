@@ -104,6 +104,7 @@ class DataContentEntry:
         align: Two-character alignment code (e.g. "LB", "CM").
         lines: Number of lines (for multiline entries).
     """
+
     param_name: str
     example_value: str
     entry_type: str

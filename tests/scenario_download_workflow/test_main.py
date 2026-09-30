@@ -157,20 +157,28 @@ class TestMainNoPdfs:
 
     def test_no_pdfs_returns_zero(self, tmp_path: Path) -> None:
         with patch(_DISCOVER, return_value=[]):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         assert exit_code == 0
 
     def test_no_pdfs_prints_message(self, tmp_path: Path, capsys) -> None:
         with patch(_DISCOVER, return_value=[]):
-            main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         captured = capsys.readouterr()
         assert "No recent PDFs found" in captured.out
 
@@ -196,10 +204,14 @@ class TestMainInteractive:
             patch(_PROCESS, return_value=mock_result),
             patch("builtins.input", return_value="y"),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                ]
+            )
         assert exit_code == 0
 
     def test_skip_skips_pdf(self, tmp_path: Path, capsys) -> None:
@@ -210,10 +222,14 @@ class TestMainInteractive:
             patch(_DISCOVER, return_value=[pdf]),
             patch("builtins.input", return_value="n"),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                ]
+            )
         captured = capsys.readouterr()
         assert "1 skipped" in captured.out
         assert exit_code == 1
@@ -228,10 +244,14 @@ class TestMainInteractive:
             patch(_DISCOVER, return_value=[pdf1, pdf2]),
             patch("builtins.input", return_value="q"),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                ]
+            )
         captured = capsys.readouterr()
         assert "2 skipped" in captured.out
         assert exit_code == 1
@@ -257,11 +277,15 @@ class TestMainNonInteractive:
             patch(_COMPUTE_ROUTES, return_value=MagicMock()),
             patch(_PROCESS, return_value=mock_result),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         assert exit_code == 0
 
     def test_detection_failure_skips_pdf(self, tmp_path: Path) -> None:
@@ -274,11 +298,15 @@ class TestMainNonInteractive:
             patch(_FITZ + ".open", return_value=mock_doc),
             patch(_DETECT, return_value=None),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         assert exit_code == 1
 
     def test_detection_falls_back_to_page_two(self, tmp_path: Path) -> None:
@@ -319,11 +347,15 @@ class TestMainNonInteractive:
             patch(_COMPUTE_ROUTES, return_value=MagicMock()),
             patch(_PROCESS, return_value=mock_result),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         assert exit_code == 0
 
     def test_extraction_failure_skips_pdf(self, tmp_path: Path) -> None:
@@ -339,11 +371,15 @@ class TestMainNonInteractive:
             patch(_DETECT, return_value=GameSystem.PFS),
             patch(_EXTRACT, return_value=None),
         ):
-            exit_code = main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            exit_code = main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         assert exit_code == 1
 
 
@@ -367,11 +403,15 @@ class TestMainSummary:
             patch(_COMPUTE_ROUTES, return_value=MagicMock()),
             patch(_PROCESS, return_value=mock_result),
         ):
-            main([
-                "--downloads-dir", str(tmp_path),
-                "--project-dir", str(tmp_path),
-                "--non-interactive",
-            ])
+            main(
+                [
+                    "--downloads-dir",
+                    str(tmp_path),
+                    "--project-dir",
+                    str(tmp_path),
+                    "--non-interactive",
+                ]
+            )
         captured = capsys.readouterr()
         assert "Summary:" in captured.out
         assert "1 processed" in captured.out

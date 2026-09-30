@@ -26,6 +26,7 @@ from layout_visualizer.models import CanvasRegion
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def write_layout(path: Path, data: dict) -> Path:
     """Write a layout dict as JSON to the given path."""
     path.write_text(json.dumps(data), encoding="utf-8")
@@ -35,6 +36,7 @@ def write_layout(path: Path, data: dict) -> Path:
 # ---------------------------------------------------------------------------
 # build_layout_index
 # ---------------------------------------------------------------------------
+
 
 class TestBuildLayoutIndex:
     """Tests for build_layout_index."""
@@ -57,7 +59,6 @@ class TestBuildLayoutIndex:
         assert len(index) == 2
         assert index["alpha"] == tmp_path / "a.json"
         assert index["beta"] == tmp_path / "b.json"
-
 
     def test_indexes_nested_subdirectories(self, tmp_path: Path) -> None:
         """Layouts in subdirectories are discovered recursively."""
@@ -104,17 +105,21 @@ class TestBuildLayoutIndex:
 # load_layout_with_inheritance — single layout (no parent)
 # ---------------------------------------------------------------------------
 
+
 class TestLoadLayoutSingleLayout:
     """Tests for loading a single layout with no parent."""
 
     def test_extracts_canvas_regions(self, tmp_path: Path) -> None:
         """Canvas entries are parsed into CanvasRegion instances."""
-        layout_path = write_layout(tmp_path / "leaf.json", {
-            "id": "leaf",
-            "canvas": {
-                "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+        layout_path = write_layout(
+            tmp_path / "leaf.json",
+            {
+                "id": "leaf",
+                "canvas": {
+                    "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+                },
             },
-        })
+        )
         index = build_layout_index(tmp_path)
 
         canvases, _paths = load_layout_with_inheritance(layout_path, index)
@@ -125,10 +130,13 @@ class TestLoadLayoutSingleLayout:
 
     def test_returns_single_path(self, tmp_path: Path) -> None:
         """The file paths list contains only the loaded layout."""
-        layout_path = write_layout(tmp_path / "leaf.json", {
-            "id": "leaf",
-            "canvas": {"page": {"x": 0, "y": 0, "x2": 100, "y2": 100}},
-        })
+        layout_path = write_layout(
+            tmp_path / "leaf.json",
+            {
+                "id": "leaf",
+                "canvas": {"page": {"x": 0, "y": 0, "x2": 100, "y2": 100}},
+            },
+        )
         index = build_layout_index(tmp_path)
 
         _, paths = load_layout_with_inheritance(layout_path, index)
@@ -137,13 +145,16 @@ class TestLoadLayoutSingleLayout:
 
     def test_canvas_with_parent_field(self, tmp_path: Path) -> None:
         """A canvas entry with a 'parent' field preserves it."""
-        layout_path = write_layout(tmp_path / "leaf.json", {
-            "id": "leaf",
-            "canvas": {
-                "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
-                "main": {"parent": "page", "x": 5, "y": 10, "x2": 95, "y2": 90},
+        layout_path = write_layout(
+            tmp_path / "leaf.json",
+            {
+                "id": "leaf",
+                "canvas": {
+                    "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+                    "main": {"parent": "page", "x": 5, "y": 10, "x2": 95, "y2": 90},
+                },
             },
-        })
+        )
         index = build_layout_index(tmp_path)
 
         canvases, _paths = load_layout_with_inheritance(layout_path, index)
@@ -152,10 +163,13 @@ class TestLoadLayoutSingleLayout:
 
     def test_empty_canvas_object(self, tmp_path: Path) -> None:
         """A layout with an empty canvas object produces no regions."""
-        layout_path = write_layout(tmp_path / "empty.json", {
-            "id": "empty",
-            "canvas": {},
-        })
+        layout_path = write_layout(
+            tmp_path / "empty.json",
+            {
+                "id": "empty",
+                "canvas": {},
+            },
+        )
         index = build_layout_index(tmp_path)
 
         canvases, _paths = load_layout_with_inheritance(layout_path, index)
@@ -164,9 +178,12 @@ class TestLoadLayoutSingleLayout:
 
     def test_missing_canvas_key(self, tmp_path: Path) -> None:
         """A layout with no 'canvas' key produces no regions."""
-        layout_path = write_layout(tmp_path / "no_canvas.json", {
-            "id": "no_canvas",
-        })
+        layout_path = write_layout(
+            tmp_path / "no_canvas.json",
+            {
+                "id": "no_canvas",
+            },
+        )
         index = build_layout_index(tmp_path)
 
         canvases, _paths = load_layout_with_inheritance(layout_path, index)
@@ -178,24 +195,31 @@ class TestLoadLayoutSingleLayout:
 # load_layout_with_inheritance — parent-child chain
 # ---------------------------------------------------------------------------
 
+
 class TestLoadLayoutInheritanceChain:
     """Tests for resolving parent-child inheritance chains."""
 
     def test_two_level_chain(self, tmp_path: Path) -> None:
         """A child layout inherits canvases from its parent."""
-        write_layout(tmp_path / "parent.json", {
-            "id": "root",
-            "canvas": {
-                "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+        write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "root",
+                "canvas": {
+                    "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+                },
             },
-        })
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "root",
-            "canvas": {
-                "main": {"parent": "page", "x": 5, "y": 10, "x2": 95, "y2": 90},
+        )
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "root",
+                "canvas": {
+                    "main": {"parent": "page", "x": 5, "y": 10, "x2": 95, "y2": 90},
+                },
             },
-        })
+        )
         index = build_layout_index(tmp_path)
 
         canvases, paths = load_layout_with_inheritance(child_path, index)
@@ -206,20 +230,29 @@ class TestLoadLayoutInheritanceChain:
 
     def test_three_level_chain(self, tmp_path: Path) -> None:
         """A grandchild inherits from both parent and grandparent."""
-        write_layout(tmp_path / "grandparent.json", {
-            "id": "gp",
-            "canvas": {"a": {"x": 0, "y": 0, "x2": 100, "y2": 100}},
-        })
-        write_layout(tmp_path / "parent.json", {
-            "id": "p",
-            "parent": "gp",
-            "canvas": {"b": {"x": 10, "y": 10, "x2": 90, "y2": 90}},
-        })
-        grandchild_path = write_layout(tmp_path / "grandchild.json", {
-            "id": "gc",
-            "parent": "p",
-            "canvas": {"c": {"x": 20, "y": 20, "x2": 80, "y2": 80}},
-        })
+        write_layout(
+            tmp_path / "grandparent.json",
+            {
+                "id": "gp",
+                "canvas": {"a": {"x": 0, "y": 0, "x2": 100, "y2": 100}},
+            },
+        )
+        write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "p",
+                "parent": "gp",
+                "canvas": {"b": {"x": 10, "y": 10, "x2": 90, "y2": 90}},
+            },
+        )
+        grandchild_path = write_layout(
+            tmp_path / "grandchild.json",
+            {
+                "id": "gc",
+                "parent": "p",
+                "canvas": {"c": {"x": 20, "y": 20, "x2": 80, "y2": 80}},
+            },
+        )
         index = build_layout_index(tmp_path)
 
         canvases, paths = load_layout_with_inheritance(grandchild_path, index)
@@ -229,15 +262,21 @@ class TestLoadLayoutInheritanceChain:
 
     def test_chain_paths_ordered_root_first(self, tmp_path: Path) -> None:
         """The returned paths list is ordered root-first, leaf-last."""
-        parent_path = write_layout(tmp_path / "parent.json", {
-            "id": "root",
-            "canvas": {},
-        })
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "root",
-            "canvas": {},
-        })
+        parent_path = write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "root",
+                "canvas": {},
+            },
+        )
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "root",
+                "canvas": {},
+            },
+        )
         index = build_layout_index(tmp_path)
 
         _, paths = load_layout_with_inheritance(child_path, index)
@@ -250,24 +289,31 @@ class TestLoadLayoutInheritanceChain:
 # Canvas merging — child overrides parent
 # ---------------------------------------------------------------------------
 
+
 class TestCanvasMerging:
     """Tests for canvas merging during inheritance resolution."""
 
     def test_child_overrides_same_named_canvas(self, tmp_path: Path) -> None:
         """When parent and child define the same canvas, child wins."""
-        write_layout(tmp_path / "parent.json", {
-            "id": "root",
-            "canvas": {
-                "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+        write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "root",
+                "canvas": {
+                    "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+                },
             },
-        })
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "root",
-            "canvas": {
-                "page": {"x": 5, "y": 5, "x2": 95, "y2": 95},
+        )
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "root",
+                "canvas": {
+                    "page": {"x": 5, "y": 5, "x2": 95, "y2": 95},
+                },
             },
-        })
+        )
         index = build_layout_index(tmp_path)
 
         canvases, _ = load_layout_with_inheritance(child_path, index)
@@ -279,19 +325,25 @@ class TestCanvasMerging:
 
     def test_parent_only_canvases_preserved(self, tmp_path: Path) -> None:
         """Canvases defined only in the parent are kept in the merge."""
-        write_layout(tmp_path / "parent.json", {
-            "id": "root",
-            "canvas": {
-                "header": {"x": 0, "y": 0, "x2": 100, "y2": 10},
+        write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "root",
+                "canvas": {
+                    "header": {"x": 0, "y": 0, "x2": 100, "y2": 10},
+                },
             },
-        })
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "root",
-            "canvas": {
-                "footer": {"x": 0, "y": 90, "x2": 100, "y2": 100},
+        )
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "root",
+                "canvas": {
+                    "footer": {"x": 0, "y": 90, "x2": 100, "y2": 100},
+                },
             },
-        })
+        )
         index = build_layout_index(tmp_path)
 
         canvases, _ = load_layout_with_inheritance(child_path, index)
@@ -303,6 +355,7 @@ class TestCanvasMerging:
 # ---------------------------------------------------------------------------
 # Error cases
 # ---------------------------------------------------------------------------
+
 
 class TestLoadLayoutErrors:
     """Tests for error conditions in layout loading."""
@@ -316,11 +369,14 @@ class TestLoadLayoutErrors:
 
     def test_missing_parent_id_raises(self, tmp_path: Path) -> None:
         """A parent id not in the index raises ValueError."""
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "missing_parent",
-            "canvas": {},
-        })
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "missing_parent",
+                "canvas": {},
+            },
+        )
         index = build_layout_index(tmp_path)
 
         with pytest.raises(ValueError, match="missing_parent"):
@@ -339,6 +395,7 @@ class TestLoadLayoutErrors:
 # Preset merging in load_content_fields
 # ---------------------------------------------------------------------------
 
+
 class TestPresetMergingInContentFields:
     """Tests for preset merging during content field extraction.
 
@@ -350,19 +407,25 @@ class TestPresetMergingInContentFields:
     def test_merge_presets_parent_presets_available(self) -> None:
         """Parent preset definitions are present in the merged result."""
         chain: list[tuple[Path, dict]] = [
-            (Path("parent.json"), {
-                "id": "parent",
-                "presets": {
-                    "strikeout_item": {"canvas": "items", "x": 0.5, "x2": 95},
+            (
+                Path("parent.json"),
+                {
+                    "id": "parent",
+                    "presets": {
+                        "strikeout_item": {"canvas": "items", "x": 0.5, "x2": 95},
+                    },
                 },
-            }),
-            (Path("child.json"), {
-                "id": "child",
-                "parent": "parent",
-                "presets": {
-                    "item.line.potion": {"y": 55.4, "y2": 58.9},
+            ),
+            (
+                Path("child.json"),
+                {
+                    "id": "child",
+                    "parent": "parent",
+                    "presets": {
+                        "item.line.potion": {"y": 55.4, "y2": 58.9},
+                    },
                 },
-            }),
+            ),
         ]
 
         merged = merge_presets(chain)
@@ -374,19 +437,25 @@ class TestPresetMergingInContentFields:
     def test_merge_presets_child_overrides_parent(self) -> None:
         """Child preset definition overrides parent for the same name."""
         chain: list[tuple[Path, dict]] = [
-            (Path("parent.json"), {
-                "id": "parent",
-                "presets": {
-                    "strikeout_item": {"canvas": "items", "x": 0.5, "x2": 95},
+            (
+                Path("parent.json"),
+                {
+                    "id": "parent",
+                    "presets": {
+                        "strikeout_item": {"canvas": "items", "x": 0.5, "x2": 95},
+                    },
                 },
-            }),
-            (Path("child.json"), {
-                "id": "child",
-                "parent": "parent",
-                "presets": {
-                    "strikeout_item": {"canvas": "items_v2", "x": 1.0, "x2": 90},
+            ),
+            (
+                Path("child.json"),
+                {
+                    "id": "child",
+                    "parent": "parent",
+                    "presets": {
+                        "strikeout_item": {"canvas": "items_v2", "x": 1.0, "x2": 90},
+                    },
                 },
-            }),
+            ),
         ]
 
         merged = merge_presets(chain)
@@ -413,29 +482,35 @@ class TestPresetMergingInContentFields:
 
     def test_load_content_fields_with_parent_presets(self, tmp_path: Path) -> None:
         """load_content_fields succeeds on a chain where parent defines presets."""
-        write_layout(tmp_path / "parent.json", {
-            "id": "root",
-            "canvas": {
-                "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
-                "items": {"parent": "page", "x": 5, "y": 10, "x2": 95, "y2": 90},
-            },
-            "presets": {
-                "strikeout_item": {"canvas": "items", "x": 0.5, "x2": 95},
-            },
-        })
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "root",
-            "presets": {
-                "item.line.potion": {"y": 55.4, "y2": 58.9},
-            },
-            "content": [
-                {
-                    "type": "strikeout",
-                    "presets": ["strikeout_item", "item.line.potion"],
+        write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "root",
+                "canvas": {
+                    "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
+                    "items": {"parent": "page", "x": 5, "y": 10, "x2": 95, "y2": 90},
                 },
-            ],
-        })
+                "presets": {
+                    "strikeout_item": {"canvas": "items", "x": 0.5, "x2": 95},
+                },
+            },
+        )
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "root",
+                "presets": {
+                    "item.line.potion": {"y": 55.4, "y2": 58.9},
+                },
+                "content": [
+                    {
+                        "type": "strikeout",
+                        "presets": ["strikeout_item", "item.line.potion"],
+                    },
+                ],
+            },
+        )
         index = build_layout_index(tmp_path)
 
         _fields, canvases, paths = load_content_fields(child_path, index)
@@ -446,34 +521,40 @@ class TestPresetMergingInContentFields:
 
     def test_load_content_fields_child_preset_override(self, tmp_path: Path) -> None:
         """Child preset override is used when parent and child define the same name."""
-        write_layout(tmp_path / "parent.json", {
-            "id": "root",
-            "canvas": {
-                "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
-            },
-            "presets": {
-                "shared_preset": {"canvas": "page", "x": 10, "x2": 90},
-            },
-            "content": [],
-        })
-        child_path = write_layout(tmp_path / "child.json", {
-            "id": "child",
-            "parent": "root",
-            "presets": {
-                "shared_preset": {"canvas": "page", "x": 20, "x2": 80},
-            },
-            "content": [
-                {
-                    "type": "text",
-                    "canvas": "page",
-                    "x": 0,
-                    "y": 0,
-                    "x2": 100,
-                    "y2": 100,
-                    "value": "visible_field",
+        write_layout(
+            tmp_path / "parent.json",
+            {
+                "id": "root",
+                "canvas": {
+                    "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
                 },
-            ],
-        })
+                "presets": {
+                    "shared_preset": {"canvas": "page", "x": 10, "x2": 90},
+                },
+                "content": [],
+            },
+        )
+        child_path = write_layout(
+            tmp_path / "child.json",
+            {
+                "id": "child",
+                "parent": "root",
+                "presets": {
+                    "shared_preset": {"canvas": "page", "x": 20, "x2": 80},
+                },
+                "content": [
+                    {
+                        "type": "text",
+                        "canvas": "page",
+                        "x": 0,
+                        "y": 0,
+                        "x2": 100,
+                        "y2": 100,
+                        "value": "visible_field",
+                    },
+                ],
+            },
+        )
         index = build_layout_index(tmp_path)
 
         fields, _canvases, paths = load_content_fields(child_path, index)
@@ -487,6 +568,7 @@ class TestPresetMergingInContentFields:
 # ---------------------------------------------------------------------------
 # Strikeout entry extraction
 # ---------------------------------------------------------------------------
+
 
 class TestStrikeoutEntryExtraction:
     """Tests for strikeout entry extraction via preset resolution.
@@ -580,6 +662,7 @@ class TestStrikeoutEntryExtraction:
 # Checkbox entry extraction
 # ---------------------------------------------------------------------------
 
+
 class TestCheckboxEntryExtraction:
     """Tests for checkbox entry extraction via preset resolution.
 
@@ -591,7 +674,10 @@ class TestCheckboxEntryExtraction:
         presets = {
             "checkbox": {"canvas": "summary"},
             "checkbox.killed": {
-                "x": 69.71, "y": 46.228, "x2": 71.41, "y2": 59.449,
+                "x": 69.71,
+                "y": 46.228,
+                "x2": 71.41,
+                "y2": 59.449,
             },
         }
         content = [
@@ -623,7 +709,10 @@ class TestCheckboxEntryExtraction:
         presets = {
             "checkbox": {"canvas": "summary"},
             "checkbox.recruited": {
-                "x": 10.0, "y": 20.0, "x2": 15.0, "y2": 25.0,
+                "x": 10.0,
+                "y": 20.0,
+                "x2": 15.0,
+                "y2": 25.0,
             },
         }
         content = [
@@ -651,10 +740,16 @@ class TestCheckboxEntryExtraction:
         presets = {
             "checkbox": {"canvas": "summary"},
             "checkbox.killed": {
-                "x": 69.71, "y": 46.228, "x2": 71.41, "y2": 59.449,
+                "x": 69.71,
+                "y": 46.228,
+                "x2": 71.41,
+                "y2": 59.449,
             },
             "checkbox.recruited": {
-                "x": 10.0, "y": 20.0, "x2": 15.0, "y2": 25.0,
+                "x": 10.0,
+                "y": 20.0,
+                "x2": 15.0,
+                "y2": 25.0,
             },
         }
         content = [
@@ -688,6 +783,7 @@ class TestCheckboxEntryExtraction:
 # ---------------------------------------------------------------------------
 # Choice content traversal
 # ---------------------------------------------------------------------------
+
 
 class TestChoiceContentTraversal:
     """Tests for choice content map traversal during field extraction.
@@ -759,7 +855,10 @@ class TestChoiceContentTraversal:
         presets = {
             "checkbox": {"canvas": "summary"},
             "checkbox.killed": {
-                "x": 69.71, "y": 46.228, "x2": 71.41, "y2": 59.449,
+                "x": 69.71,
+                "y": 46.228,
+                "x2": 71.41,
+                "y2": 59.449,
             },
         }
         content = [
@@ -786,6 +885,7 @@ class TestChoiceContentTraversal:
 # ---------------------------------------------------------------------------
 # Graceful error handling
 # ---------------------------------------------------------------------------
+
 
 class TestGracefulErrorHandling:
     """Tests for graceful skipping of unresolvable entries.

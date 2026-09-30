@@ -41,10 +41,7 @@ def _suggest_layout_ids(unknown_id: str, layout_index: dict[str, Path]) -> str:
         parts.append("Did you mean one of these?")
         for match in close:
             parts.append(f"  - {match}")
-    parts.append(
-        f"Run with '--layout-id \"*\"' to list all "
-        f"{len(available)} known layout ids."
-    )
+    parts.append(f"Run with '--layout-id \"*\"' to list all {len(available)} known layout ids.")
     return "\n".join(parts)
 
 
@@ -106,21 +103,15 @@ def match_layout_ids(
     """
     has_wildcard = any(ch in pattern for ch in ("*", "?", "["))
     if has_wildcard:
-        matched = sorted(
-            lid for lid in layout_index if fnmatch.fnmatch(lid, pattern)
-        )
+        matched = sorted(lid for lid in layout_index if fnmatch.fnmatch(lid, pattern))
     else:
         if pattern not in layout_index:
             hint = _suggest_layout_ids(pattern, layout_index)
-            raise ValueError(
-                f"--layout-id '{pattern}' not found\n{hint}"
-            )
+            raise ValueError(f"--layout-id '{pattern}' not found\n{hint}")
         matched = [pattern]
 
     if not matched:
-        raise ValueError(
-            f"No layout ids match pattern '{pattern}'"
-        )
+        raise ValueError(f"No layout ids match pattern '{pattern}'")
     return matched
 
 
@@ -218,16 +209,10 @@ def resolve_chronicle_pdf(
     layout_path = layout_index[layout_id]
     location = resolve_default_chronicle_location(layout_path, layout_index)
     if location is None:
-        raise ValueError(
-            f"Layout '{layout_id}' has no defaultChronicleLocation "
-            f"in its inheritance chain"
-        )
+        raise ValueError(f"Layout '{layout_id}' has no defaultChronicleLocation in its inheritance chain")
     pdf_path = Path(location)
     if not pdf_path.exists():
-        raise FileNotFoundError(
-            f"Chronicle PDF not found: {pdf_path} "
-            f"(from layout '{layout_id}')"
-        )
+        raise FileNotFoundError(f"Chronicle PDF not found: {pdf_path} (from layout '{layout_id}')")
     return pdf_path
 
 
@@ -264,9 +249,7 @@ def run_visualizer(
 
     if layout_id not in layout_index:
         hint = _suggest_layout_ids(layout_id, layout_index)
-        raise ValueError(
-            f"--layout-id '{layout_id}' not found in {layout_root}\n{hint}"
-        )
+        raise ValueError(f"--layout-id '{layout_id}' not found in {layout_root}\n{hint}")
 
     layout_path = layout_index[layout_id]
     pdf_path = resolve_chronicle_pdf(layout_id, layout_index)
@@ -328,7 +311,8 @@ def _build_dependency_map(
     for layout_id in layout_ids:
         layout_path = layout_index[layout_id]
         _canvases, chain_paths = load_layout_with_inheritance(
-            layout_path, layout_index,
+            layout_path,
+            layout_index,
         )
         for path in chain_paths:
             dep_map.setdefault(path, set()).add(layout_id)
@@ -410,9 +394,7 @@ def watch_and_regenerate(
             for path in changed:
                 affected_ids.update(dep_map.get(path, set()))
 
-            affected_targets = [
-                (lid, target_map[lid]) for lid in sorted(affected_ids)
-            ]
+            affected_targets = [(lid, target_map[lid]) for lid in sorted(affected_ids)]
             names = ", ".join(lid for lid, _ in affected_targets)
             print(f"Regenerating {names}...")
 
@@ -421,10 +403,15 @@ def watch_and_regenerate(
             try:
                 for layout_id, output_path in affected_targets:
                     run_visualizer(
-                        layout_root, layout_id, output_path, mode, show,
+                        layout_root,
+                        layout_id,
+                        output_path,
+                        mode,
+                        show,
                     )
                 dep_map = _build_dependency_map(
-                    layout_root, list(target_map),
+                    layout_root,
+                    list(target_map),
                 )
             except Exception as exc:  # noqa: BLE001 — continue watching on any error
                 _print_error(f"Error: Regeneration failed: {exc}")
@@ -483,14 +470,20 @@ def main(argv: list[str] | None = None) -> int:
 
         if args.watch:
             watch_and_regenerate(
-                args.layout_root, targets, args.mode, args.show,
+                args.layout_root,
+                targets,
+                args.mode,
+                args.show,
             )
             return 0
 
         for layout_id, output_path in targets:
             run_visualizer(
-                args.layout_root, layout_id,
-                output_path, args.mode, args.show,
+                args.layout_root,
+                layout_id,
+                output_path,
+                args.mode,
+                args.show,
             )
     except FileNotFoundError as exc:
         _print_error(f"Error: {exc}")

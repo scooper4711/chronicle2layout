@@ -20,7 +20,8 @@ RENDER_DPI = 150
 
 
 def resolve_absolute_coords(
-    canvas: dict, all_canvases: dict,
+    canvas: dict,
+    all_canvases: dict,
 ) -> tuple[float, float, float, float]:
     """Resolve a canvas's parent-relative coords to absolute page coords."""
     x, y, x2, y2 = canvas["x"], canvas["y"], canvas["x2"], canvas["y2"]
@@ -97,7 +98,9 @@ def clip_canvases(layout_path: str, pdf_path: str, output_dir: str | None = None
     page = doc[-1]
     pix = page.get_pixmap(dpi=RENDER_DPI)
     img_array = np.frombuffer(pix.samples, dtype=np.uint8).reshape(
-        pix.height, pix.width, pix.n,
+        pix.height,
+        pix.width,
+        pix.n,
     )
     if pix.n == 4:
         img_array = img_array[:, :, :3]

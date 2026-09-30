@@ -27,6 +27,7 @@ from layout_visualizer.models import DataContentEntry
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def write_layout(path: Path, data: dict) -> Path:
     """Write a layout dict as JSON to the given path."""
     path.write_text(json.dumps(data), encoding="utf-8")
@@ -42,17 +43,22 @@ def _make_chain(layouts: list[dict]) -> list[tuple[Path, dict]]:
 # merge_parameters
 # ---------------------------------------------------------------------------
 
+
 class TestMergeParameters:
     """Tests for merge_parameters."""
 
     def test_single_layout_flattens_groups(self) -> None:
         """Parameters from different groups are flattened into one dict."""
-        chain = _make_chain([{
-            "parameters": {
-                "Group A": {"p1": {"type": "text", "example": "a"}},
-                "Group B": {"p2": {"type": "text", "example": "b"}},
-            },
-        }])
+        chain = _make_chain(
+            [
+                {
+                    "parameters": {
+                        "Group A": {"p1": {"type": "text", "example": "a"}},
+                        "Group B": {"p2": {"type": "text", "example": "b"}},
+                    },
+                }
+            ]
+        )
 
         result = merge_parameters(chain)
 
@@ -62,10 +68,12 @@ class TestMergeParameters:
 
     def test_two_layout_chain_child_overrides(self) -> None:
         """Child definition overrides parent for the same parameter name."""
-        chain = _make_chain([
-            {"parameters": {"G": {"p1": {"type": "text", "example": "parent"}}}},
-            {"parameters": {"G": {"p1": {"type": "text", "example": "child"}}}},
-        ])
+        chain = _make_chain(
+            [
+                {"parameters": {"G": {"p1": {"type": "text", "example": "parent"}}}},
+                {"parameters": {"G": {"p1": {"type": "text", "example": "child"}}}},
+            ]
+        )
 
         result = merge_parameters(chain)
 
@@ -73,10 +81,12 @@ class TestMergeParameters:
 
     def test_parameter_in_different_groups(self) -> None:
         """A child can override a parameter even if it's in a different group."""
-        chain = _make_chain([
-            {"parameters": {"Group A": {"p1": {"type": "text", "example": "old"}}}},
-            {"parameters": {"Group Z": {"p1": {"type": "text", "example": "new"}}}},
-        ])
+        chain = _make_chain(
+            [
+                {"parameters": {"Group A": {"p1": {"type": "text", "example": "old"}}}},
+                {"parameters": {"Group Z": {"p1": {"type": "text", "example": "new"}}}},
+            ]
+        )
 
         result = merge_parameters(chain)
 
@@ -95,14 +105,19 @@ class TestMergeParameters:
 # merge_presets
 # ---------------------------------------------------------------------------
 
+
 class TestMergePresets:
     """Tests for merge_presets."""
 
     def test_single_layout(self) -> None:
         """Presets from a single layout are returned as-is."""
-        chain = _make_chain([{
-            "presets": {"defaultfont": {"font": "Helvetica", "fontsize": 14}},
-        }])
+        chain = _make_chain(
+            [
+                {
+                    "presets": {"defaultfont": {"font": "Helvetica", "fontsize": 14}},
+                }
+            ]
+        )
 
         result = merge_presets(chain)
 
@@ -110,10 +125,12 @@ class TestMergePresets:
 
     def test_chain_with_override(self) -> None:
         """Child preset overrides parent preset with the same name."""
-        chain = _make_chain([
-            {"presets": {"style": {"font": "Courier", "fontsize": 10}}},
-            {"presets": {"style": {"font": "Arial", "fontsize": 12}}},
-        ])
+        chain = _make_chain(
+            [
+                {"presets": {"style": {"font": "Courier", "fontsize": 10}}},
+                {"presets": {"style": {"font": "Arial", "fontsize": 12}}},
+            ]
+        )
 
         result = merge_presets(chain)
 
@@ -122,10 +139,12 @@ class TestMergePresets:
 
     def test_parent_only_presets_preserved(self) -> None:
         """Presets defined only in the parent survive the merge."""
-        chain = _make_chain([
-            {"presets": {"base": {"font": "Helvetica"}}},
-            {"presets": {"extra": {"fontsize": 8}}},
-        ])
+        chain = _make_chain(
+            [
+                {"presets": {"base": {"font": "Helvetica"}}},
+                {"presets": {"extra": {"fontsize": 8}}},
+            ]
+        )
 
         result = merge_presets(chain)
 
@@ -136,6 +155,7 @@ class TestMergePresets:
 # ---------------------------------------------------------------------------
 # resolve_entry_presets
 # ---------------------------------------------------------------------------
+
 
 class TestResolveEntryPresets:
     """Tests for resolve_entry_presets."""
@@ -202,6 +222,7 @@ class TestResolveEntryPresets:
 # load_data_content
 # ---------------------------------------------------------------------------
 
+
 class TestLoadDataContent:
     """Tests for load_data_content with real layout files on disk."""
 
@@ -217,7 +238,8 @@ class TestLoadDataContent:
         """Write a single layout file and return (path, index)."""
         data: dict = {
             "id": "test_layout",
-            "canvas": canvas or {
+            "canvas": canvas
+            or {
                 "page": {"x": 0, "y": 0, "x2": 100, "y2": 100},
             },
         }
@@ -237,14 +259,20 @@ class TestLoadDataContent:
         path, index = self._write_single_layout(
             tmp_path,
             parameters={"G": {"name": {"type": "text", "example": "Alice"}}},
-            content=[{
-                "value": "param:name",
-                "type": "text",
-                "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 14,
-                "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:name",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 14,
+                    "align": "LB",
+                }
+            ],
         )
 
         entries, _, _, _, canvases, paths = load_data_content(path, index)
@@ -259,17 +287,30 @@ class TestLoadDataContent:
         """A multiline entry preserves the lines count."""
         path, index = self._write_single_layout(
             tmp_path,
-            parameters={"G": {"notes": {
-                "type": "multiline", "example": "Note text", "lines": 4,
-            }}},
-            content=[{
-                "value": "param:notes",
-                "type": "multiline",
-                "canvas": "page",
-                "x": 0, "y": 0, "x2": 100, "y2": 50,
-                "font": "Helvetica", "fontsize": 11,
-                "align": "LB", "lines": 4,
-            }],
+            parameters={
+                "G": {
+                    "notes": {
+                        "type": "multiline",
+                        "example": "Note text",
+                        "lines": 4,
+                    }
+                }
+            },
+            content=[
+                {
+                    "value": "param:notes",
+                    "type": "multiline",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 100,
+                    "y2": 50,
+                    "font": "Helvetica",
+                    "fontsize": 11,
+                    "align": "LB",
+                    "lines": 4,
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -328,17 +369,26 @@ class TestLoadDataContent:
         path, index = self._write_single_layout(
             tmp_path,
             parameters={"G": {"val": {"type": "text", "example": "triggered"}}},
-            content=[{
-                "type": "trigger",
-                "trigger": "some_param",
-                "content": [{
-                    "value": "param:val",
-                    "type": "text",
-                    "canvas": "page",
-                    "x": 0, "y": 0, "x2": 50, "y2": 10,
-                    "font": "Helvetica", "fontsize": 12, "align": "LB",
-                }],
-            }],
+            content=[
+                {
+                    "type": "trigger",
+                    "trigger": "some_param",
+                    "content": [
+                        {
+                            "value": "param:val",
+                            "type": "text",
+                            "canvas": "page",
+                            "x": 0,
+                            "y": 0,
+                            "x2": 50,
+                            "y2": 10,
+                            "font": "Helvetica",
+                            "fontsize": 12,
+                            "align": "LB",
+                        }
+                    ],
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -351,19 +401,28 @@ class TestLoadDataContent:
         path, index = self._write_single_layout(
             tmp_path,
             parameters={"G": {"item": {"type": "text", "example": "sword"}}},
-            content=[{
-                "type": "choice",
-                "choices": "some_param",
-                "content": {
-                    "option_a": [{
-                        "value": "param:item",
-                        "type": "text",
-                        "canvas": "page",
-                        "x": 0, "y": 0, "x2": 50, "y2": 10,
-                        "font": "Helvetica", "fontsize": 12, "align": "LB",
-                    }],
-                },
-            }],
+            content=[
+                {
+                    "type": "choice",
+                    "choices": "some_param",
+                    "content": {
+                        "option_a": [
+                            {
+                                "value": "param:item",
+                                "type": "text",
+                                "canvas": "page",
+                                "x": 0,
+                                "y": 0,
+                                "x2": 50,
+                                "y2": 10,
+                                "font": "Helvetica",
+                                "fontsize": 12,
+                                "align": "LB",
+                            }
+                        ],
+                    },
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -376,6 +435,7 @@ class TestLoadDataContent:
 # Example value loading
 # ---------------------------------------------------------------------------
 
+
 class TestExampleValueLoading:
     """Tests for example value stringification and warning paths."""
 
@@ -384,11 +444,20 @@ class TestExampleValueLoading:
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
             parameters={"G": {"name": {"type": "text", "example": "Alice"}}},
-            content=[{
-                "value": "param:name", "type": "text", "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:name",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -400,11 +469,20 @@ class TestExampleValueLoading:
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
             parameters={"G": {"xp": {"type": "text", "example": 42}}},
-            content=[{
-                "value": "param:xp", "type": "text", "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:xp",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -416,11 +494,20 @@ class TestExampleValueLoading:
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
             parameters={"G": {"gp": {"type": "text", "example": 1.8}}},
-            content=[{
-                "value": "param:gp", "type": "text", "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:gp",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -432,11 +519,20 @@ class TestExampleValueLoading:
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
             parameters={"G": {}},
-            content=[{
-                "value": "param:missing", "type": "text", "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:missing",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         with caplog.at_level(logging.WARNING):
@@ -450,11 +546,20 @@ class TestExampleValueLoading:
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
             parameters={"G": {"name": {"type": "text", "description": "No example"}}},
-            content=[{
-                "value": "param:name", "type": "text", "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:name",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         with caplog.at_level(logging.WARNING):
@@ -467,6 +572,7 @@ class TestExampleValueLoading:
 # ---------------------------------------------------------------------------
 # Edge cases
 # ---------------------------------------------------------------------------
+
 
 class TestEdgeCases:
     """Tests for edge cases in load_data_content."""
@@ -487,11 +593,20 @@ class TestEdgeCases:
         """No parameters section produces no entries (all refs fail)."""
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
-            content=[{
-                "value": "param:anything", "type": "text", "canvas": "page",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:anything",
+                    "type": "text",
+                    "canvas": "page",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)
@@ -503,11 +618,20 @@ class TestEdgeCases:
         path, index = TestLoadDataContent()._write_single_layout(
             tmp_path,
             parameters={"G": {"p": {"type": "text", "example": "val"}}},
-            content=[{
-                "value": "param:p", "type": "text", "canvas": "nonexistent",
-                "x": 0, "y": 0, "x2": 50, "y2": 10,
-                "font": "Helvetica", "fontsize": 12, "align": "LB",
-            }],
+            content=[
+                {
+                    "value": "param:p",
+                    "type": "text",
+                    "canvas": "nonexistent",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 50,
+                    "y2": 10,
+                    "font": "Helvetica",
+                    "fontsize": 12,
+                    "align": "LB",
+                }
+            ],
         )
 
         entries, _, _, _, _, _ = load_data_content(path, index)

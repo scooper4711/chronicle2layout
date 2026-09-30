@@ -163,8 +163,8 @@ class TestRegionFiltering:
         # Place one word inside and one outside a region
         # Region will be 25%-75% of page (153-459 pts on 612-wide page)
         words = [
-            (200.0, 400.0, "inside"),   # x=200, within 153-459
-            (10.0, 400.0, "outside"),    # x=10, outside 153-459
+            (200.0, 400.0, "inside"),  # x=200, within 153-459
+            (10.0, 400.0, "outside"),  # x=10, outside 153-459
         ]
         pdf_path = create_pdf_with_words(tmp_path, words)
 
@@ -308,9 +308,7 @@ class TestSortOrder:
         lines = extract_text_lines(str(pdf_path), region)
 
         y_values = [line["top_left_pct"][1] for line in lines]
-        assert y_values == sorted(y_values), (
-            f"Lines not sorted top-to-bottom: {y_values}"
-        )
+        assert y_values == sorted(y_values), f"Lines not sorted top-to-bottom: {y_values}"
 
     def test_consecutive_lines_ascending_y(self, tmp_path: Path) -> None:
         """For consecutive lines, line[i].y <= line[i+1].y."""

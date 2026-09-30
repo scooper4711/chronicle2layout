@@ -52,7 +52,7 @@ class TestMakeSafeLabel:
 
     def test_quotes_stripped(self) -> None:
         """Single and double quotes are removed."""
-        assert make_safe_label("it's a \"test\"") == "its_a_test"
+        assert make_safe_label('it\'s a "test"') == "its_a_test"
 
     def test_truncation_to_50_chars(self) -> None:
         """Output is truncated to 50 characters."""
@@ -86,7 +86,6 @@ class TestMakeSafeLabel:
     def test_multiple_spaces(self) -> None:
         """Multiple consecutive spaces become multiple underscores."""
         assert make_safe_label("a  b") == "a__b"
-
 
 
 # ---------------------------------------------------------------------------
@@ -213,7 +212,6 @@ class TestGenerateLayoutFileNotFound:
             generate_layout_json(pdf_path=bad_path)
 
 
-
 # ---------------------------------------------------------------------------
 # Item section assembly (mocked extraction)
 # ---------------------------------------------------------------------------
@@ -327,7 +325,6 @@ class TestItemSectionAssembly:
         assert "strikeout_item" in sword_entry[0]["presets"]
 
 
-
 # ---------------------------------------------------------------------------
 # Checkbox section assembly (mocked extraction)
 # ---------------------------------------------------------------------------
@@ -383,7 +380,8 @@ class TestCheckboxSectionAssembly:
             )
 
     def test_checkbox_parameter_choices(
-        self, layout_with_checkboxes: dict,
+        self,
+        layout_with_checkboxes: dict,
     ) -> None:
         """Checkboxes parameter group has correct choice list."""
         params = layout_with_checkboxes["parameters"]["Checkboxes"]
@@ -391,14 +389,16 @@ class TestCheckboxSectionAssembly:
         assert choices == ["Primary Mission", "Secondary Objective"]
 
     def test_checkbox_parameter_type(
-        self, layout_with_checkboxes: dict,
+        self,
+        layout_with_checkboxes: dict,
     ) -> None:
         """Checkboxes parameter is a choice type."""
         params = layout_with_checkboxes["parameters"]["Checkboxes"]
         assert params["summary_checkbox"]["type"] == "choice"
 
     def test_base_checkbox_preset(
-        self, layout_with_checkboxes: dict,
+        self,
+        layout_with_checkboxes: dict,
     ) -> None:
         """Base checkbox preset has correct canvas, color, and size."""
         presets = layout_with_checkboxes["presets"]
@@ -409,7 +409,8 @@ class TestCheckboxSectionAssembly:
         assert base["size"] == 1
 
     def test_checkbox_presets_present(
-        self, layout_with_checkboxes: dict,
+        self,
+        layout_with_checkboxes: dict,
     ) -> None:
         """Each checkbox has a checkbox.<safe_label> preset with coordinates."""
         presets = layout_with_checkboxes["presets"]
@@ -427,7 +428,8 @@ class TestCheckboxSectionAssembly:
         assert presets[secondary_preset]["y"] == pytest.approx(20.0)
 
     def test_content_entry_structure(
-        self, layout_with_checkboxes: dict,
+        self,
+        layout_with_checkboxes: dict,
     ) -> None:
         """Content has a choice entry mapping labels to checkbox elements."""
         content = layout_with_checkboxes["content"]
@@ -443,7 +445,6 @@ class TestCheckboxSectionAssembly:
         assert len(primary_entry) == 1
         assert primary_entry[0]["type"] == "checkbox"
         assert "checkbox" in primary_entry[0]["presets"]
-
 
 
 # ---------------------------------------------------------------------------
@@ -499,7 +500,8 @@ class TestSectionOrdering:
             )
 
     def test_content_order_items_then_checkboxes(
-        self, layout_with_both: dict,
+        self,
+        layout_with_both: dict,
     ) -> None:
         """Content array has item choice first, checkbox choice second."""
         content = layout_with_both["content"]
@@ -508,7 +510,8 @@ class TestSectionOrdering:
         assert content[1]["choices"] == "param:summary_checkbox"
 
     def test_parameters_contain_both_groups(
-        self, layout_with_both: dict,
+        self,
+        layout_with_both: dict,
     ) -> None:
         """Parameters contain both Items and Checkboxes groups."""
         params = layout_with_both["parameters"]
@@ -516,7 +519,8 @@ class TestSectionOrdering:
         assert "Checkboxes" in params
 
     def test_presets_order_base_then_checkbox_then_line(
-        self, layout_with_both: dict,
+        self,
+        layout_with_both: dict,
     ) -> None:
         """Presets contain base item preset, checkbox presets, then line presets.
 
@@ -541,12 +545,12 @@ class TestSectionOrdering:
         last_checkbox_idx = max(preset_keys.index(k) for k in checkbox_keys)
         first_line_idx = min(preset_keys.index(k) for k in line_keys)
         assert last_checkbox_idx < first_line_idx, (
-            f"Checkbox presets should come before item line presets: "
-            f"{preset_keys}"
+            f"Checkbox presets should come before item line presets: {preset_keys}"
         )
 
     def test_base_item_preset_before_checkboxes(
-        self, layout_with_both: dict,
+        self,
+        layout_with_both: dict,
     ) -> None:
         """The strikeout_item base preset appears before checkbox presets."""
         preset_keys = list(layout_with_both["presets"].keys())

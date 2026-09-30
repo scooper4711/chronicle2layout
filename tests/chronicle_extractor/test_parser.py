@@ -100,18 +100,12 @@ class TestExtractScenarioName:
     def test_strips_full_title_prefix(self) -> None:
         """Season 8+ headers repeat 'Pathfinder Society 8-01: Name'."""
         page_a = (
-            "3\nPathfinder Society Scenario\n"
-            "Pathfinder Society 8-01: Intro to the Year\n"
-            "of Clockwork Mystery\nBody A\n"
+            "3\nPathfinder Society Scenario\nPathfinder Society 8-01: Intro to the Year\nof Clockwork Mystery\nBody A\n"
         )
         page_b = (
-            "4\nPathfinder Society Scenario\n"
-            "Pathfinder Society 8-01: Intro to the Year\n"
-            "of Clockwork Mystery\nBody B\n"
+            "4\nPathfinder Society Scenario\nPathfinder Society 8-01: Intro to the Year\nof Clockwork Mystery\nBody B\n"
         )
-        assert extract_scenario_name(page_a, page_b) == (
-            "Intro to the Year of Clockwork Mystery"
-        )
+        assert extract_scenario_name(page_a, page_b) == ("Intro to the Year of Clockwork Mystery")
 
     def test_strips_scenario_hash_prefix(self) -> None:
         page_a = "3\nPathfinder Society Scenario\nPathfinder Society Scenario #8-02: The Fey Reclamation\nA\n"
@@ -158,9 +152,7 @@ class TestExtractFromChronicle:
     def test_bounty_older_format(self) -> None:
         """Older bounties: number before 'Adventure Summary'."""
         text = (
-            "Chronicle Code\nCharacter Chronicle #\n"
-            "Bounty #2:\nBlood of the Beautiful\n"
-            "Adventure Summary\nPurchases\n"
+            "Chronicle Code\nCharacter Chronicle #\nBounty #2:\nBlood of the Beautiful\nAdventure Summary\nPurchases\n"
         )
         result = extract_from_chronicle(text)
         assert result is not None
@@ -203,11 +195,7 @@ class TestExtractFromChronicle:
 
     def test_bounty_name_on_same_line(self) -> None:
         """Bounty number and name on the same line."""
-        text = (
-            "Chronicle Code: XXXX\n"
-            "Bounty #5: Witch's Winter Holiday\n"
-            "Adventure Summary\n"
-        )
+        text = "Chronicle Code: XXXX\nBounty #5: Witch's Winter Holiday\nAdventure Summary\n"
         result = extract_from_chronicle(text)
         assert result is not None
         assert result.scenario == "5"
@@ -231,12 +219,7 @@ class TestExtractFromChronicle:
 
     def test_stops_at_paizo_inc_text(self) -> None:
         """Name collection stops at 'Paizo Inc' even without copyright symbol."""
-        text = (
-            "Chronicle Code: AB12\n"
-            "#8-01:\n"
-            "Enough is Enough\n"
-            "Paizo Inc. All Rights Reserved.\n"
-        )
+        text = "Chronicle Code: AB12\n#8-01:\nEnough is Enough\nPaizo Inc. All Rights Reserved.\n"
         result = extract_from_chronicle(text)
         assert result is not None
         assert result.season == 8
@@ -245,12 +228,7 @@ class TestExtractFromChronicle:
 
     def test_stops_at_reserved_material(self) -> None:
         """Name collection stops at 'Reserved Material' boilerplate."""
-        text = (
-            "Chronicle Code: CD34\n"
-            "#8-05:\n"
-            "Some Adventure Name\n"
-            "Reserved Material elements in this product...\n"
-        )
+        text = "Chronicle Code: CD34\n#8-05:\nSome Adventure Name\nReserved Material elements in this product...\n"
         result = extract_from_chronicle(text)
         assert result is not None
         assert result.name == "Some Adventure Name"
@@ -270,10 +248,7 @@ class TestExtractFromChronicle:
 
     def test_inline_name_only_boilerplate_yields_none(self) -> None:
         """A remainder of pure boilerplate does not become the name."""
-        text = (
-            "Pathfinder Society Scenario #8-02: \u00a92026 Paizo Inc.\n"
-            "Adventure Summary\n"
-        )
+        text = "Pathfinder Society Scenario #8-02: \u00a92026 Paizo Inc.\nAdventure Summary\n"
         assert extract_from_chronicle(text) is None
 
 
@@ -283,10 +258,7 @@ class TestExtractScenarioInfoBounty:
     def test_bounty_via_chronicle(self) -> None:
         """Bounty extracted from chronicle sheet (primary path)."""
         p1 = "Bounty: 2\nLevel: 1\n"
-        last = (
-            "Chronicle Code\nBounty #2:\n"
-            "Blood of the Beautiful\nAdventure Summary\n"
-        )
+        last = "Chronicle Code\nBounty #2:\nBlood of the Beautiful\nAdventure Summary\n"
         result = extract_scenario_info(p1, last_page_text=last)
         assert result is not None
         assert result.season == _BOUNTY_SEASON
@@ -317,7 +289,9 @@ class TestExtractScenarioNumberIntro:
         """Intro PDFs have 'Intro #N\\t' on the first page."""
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        result = extract_scenario_number("By Thurston Hillman\nThe Second \nConfirmation\nIntro #1\t\nLevels 1\u20132\n")
+        result = extract_scenario_number(
+            "By Thurston Hillman\nThe Second \nConfirmation\nIntro #1\t\nLevels 1\u20132\n"
+        )
         assert result == (_INTRO_SEASON, "1")
 
     def test_intro_double_digit(self) -> None:
@@ -340,13 +314,7 @@ class TestExtractFromChronicleIntro:
         """Intro chronicle: 'Intro #N:\\nName\\nAdventure Summary'."""
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        text = (
-            "Chronicle Code: N3WV\n"
-            "Intro #1:\n"
-            "The Second Confirmation\n"
-            "Adventure Summary\n"
-            "Boons\n"
-        )
+        text = "Chronicle Code: N3WV\nIntro #1:\nThe Second Confirmation\nAdventure Summary\nBoons\n"
         result = extract_from_chronicle(text)
         assert result is not None
         assert result.season == _INTRO_SEASON
@@ -357,13 +325,7 @@ class TestExtractFromChronicleIntro:
         """Second Intro module chronicle."""
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        text = (
-            "Chronicle Code: A4CK\n"
-            "Intro #2:\n"
-            "United in Purpose\n"
-            "Adventure Summary\n"
-            "Boons\n"
-        )
+        text = "Chronicle Code: A4CK\nIntro #2:\nUnited in Purpose\nAdventure Summary\nBoons\n"
         result = extract_from_chronicle(text)
         assert result is not None
         assert result.season == _INTRO_SEASON
@@ -374,11 +336,7 @@ class TestExtractFromChronicleIntro:
         """Intro number and name on the same line."""
         from chronicle_extractor.parser import _INTRO_SEASON
 
-        text = (
-            "Chronicle Code: XXXX\n"
-            "Intro #3: Some Adventure\n"
-            "Adventure Summary\n"
-        )
+        text = "Chronicle Code: XXXX\nIntro #3: Some Adventure\nAdventure Summary\n"
         result = extract_from_chronicle(text)
         assert result is not None
         assert result.season == _INTRO_SEASON
@@ -394,12 +352,7 @@ class TestExtractScenarioInfoIntro:
         from chronicle_extractor.parser import _INTRO_SEASON
 
         p1 = "By Thurston Hillman\nThe Second \nConfirmation\nIntro #1\t\nLevels 1\u20132\n"
-        last = (
-            "Chronicle Code: N3WV\n"
-            "Intro #1:\n"
-            "The Second Confirmation\n"
-            "Adventure Summary\nBoons\nRewards\n"
-        )
+        last = "Chronicle Code: N3WV\nIntro #1:\nThe Second Confirmation\nAdventure Summary\nBoons\nRewards\n"
         result = extract_scenario_info(p1, last_page_text=last)
         assert result is not None
         assert result.season == _INTRO_SEASON

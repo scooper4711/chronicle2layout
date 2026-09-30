@@ -166,12 +166,13 @@ def draw_data_text(
     doc = fitz.open()
     page = doc.new_page(width=page_width_pt, height=page_height_pt)
     page.insert_image(
-        fitz.Rect(0, 0, page_width_pt, page_height_pt), pixmap=pixmap,
+        fitz.Rect(0, 0, page_width_pt, page_height_pt),
+        pixmap=pixmap,
     )
 
     shape = page.new_shape()
 
-    for rect_entry in (rectangles or []):
+    for rect_entry in rectangles or []:
         if rect_entry.canvas not in canvas_pixels:
             continue
         canvas_rect = canvas_pixels[rect_entry.canvas]
@@ -188,7 +189,7 @@ def draw_data_text(
         shape.draw_rect(fitz.Rect(pt.x, pt.y, pt.x2, pt.y2))
         shape.finish(fill=rect_entry.color, color=rect_entry.color)
 
-    for cb in (checkboxes or []):
+    for cb in checkboxes or []:
         if cb.canvas not in canvas_pixels:
             continue
         canvas_rect = canvas_pixels[cb.canvas]
@@ -216,7 +217,7 @@ def draw_data_text(
         )
         shape.finish(color=cb.color, width=1.5)
 
-    for so in (strikeouts or []):
+    for so in strikeouts or []:
         if so.canvas not in canvas_pixels:
             continue
         canvas_rect = canvas_pixels[so.canvas]
@@ -252,7 +253,7 @@ def draw_data_text(
         if entry.entry_type == "multiline" and entry.lines > 1:
             slot_height = (pt_bbox.y2 - pt_bbox.y) / entry.lines
             lines = entry.example_value.split("\n")
-            for line_idx, line_text in enumerate(lines[:entry.lines]):
+            for line_idx, line_text in enumerate(lines[: entry.lines]):
                 slot = PixelRect(
                     name=pt_bbox.name,
                     x=pt_bbox.x,
@@ -261,8 +262,12 @@ def draw_data_text(
                     y2=pt_bbox.y + slot_height * (line_idx + 1),
                 )
                 point = compute_text_position(
-                    line_text, entry.fontsize, entry.font,
-                    is_bold, entry.align, slot,
+                    line_text,
+                    entry.fontsize,
+                    entry.font,
+                    is_bold,
+                    entry.align,
+                    slot,
                 )
                 shape.insert_text(
                     point,
@@ -273,8 +278,12 @@ def draw_data_text(
                 )
         else:
             point = compute_text_position(
-                entry.example_value, entry.fontsize, entry.font,
-                is_bold, entry.align, pt_bbox,
+                entry.example_value,
+                entry.fontsize,
+                entry.font,
+                is_bold,
+                entry.align,
+                pt_bbox,
             )
             shape.insert_text(
                 point,

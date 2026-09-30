@@ -75,9 +75,7 @@ class TestCopyAsIs:
         """File in a nested subdirectory is copied to the same relative path."""
         input_dir = tmp_path / "input"
         output_dir = tmp_path / "output"
-        source = _create_file(
-            input_dir / "sub" / "deep" / "file.png", "content-abc"
-        )
+        source = _create_file(input_dir / "sub" / "deep" / "file.png", "content-abc")
 
         result = copy_as_is(source, input_dir, output_dir)
 
@@ -154,7 +152,9 @@ class TestProcessDirectory:
         # Scenario PDF with extractable chronicle info
         _create_scenario_pdf(
             input_dir / "scenario.pdf",
-            season=1, scenario="01", name="The Absalom Initiation",
+            season=1,
+            scenario="01",
+            name="The Absalom Initiation",
         )
 
         # Scenario image (PZOPFS pattern)

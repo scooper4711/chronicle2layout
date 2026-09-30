@@ -79,9 +79,7 @@ def sanitize_image_suffix(suffix: str) -> str:
 
     Requirements: scenario-renamer 14.2
     """
-    return "".join(
-        ch for ch in suffix if ch != " " and ch not in UNSAFE_CHARACTERS
-    )
+    return "".join(ch for ch in suffix if ch != " " and ch not in UNSAFE_CHARACTERS)
 
 
 def build_image_filename(

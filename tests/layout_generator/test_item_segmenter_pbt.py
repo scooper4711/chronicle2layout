@@ -82,10 +82,7 @@ def _text_lines_strategy() -> st.SearchStrategy[list[dict]]:
         min_size=1,
         max_size=8,
     ).map(
-        lambda texts: [
-            make_line(text, y_top=float(i * 10), y_bottom=float(i * 10 + 5))
-            for i, text in enumerate(texts)
-        ]
+        lambda texts: [make_line(text, y_top=float(i * 10), y_bottom=float(i * 10 + 5)) for i, text in enumerate(texts)]
     )
 
 
@@ -118,9 +115,7 @@ def test_segmentation_preserves_tokens(lines: list[dict]) -> None:
     output_tokens = collect_output_tokens(items)
 
     assert output_tokens == input_tokens, (
-        f"Token mismatch.\n"
-        f"  Input tokens:  {input_tokens}\n"
-        f"  Output tokens: {output_tokens}"
+        f"Token mismatch.\n  Input tokens:  {input_tokens}\n  Output tokens: {output_tokens}"
     )
 
 
@@ -138,9 +133,7 @@ _trailing_u_artifact = st.builds(
 # Build strings that mix normal text, hair spaces, and U-artifacts
 _artifact_text = st.one_of(
     st.text(
-        alphabet=st.sampled_from(
-            list("abcdefghijklmnopqrstuvwxyz \u200aABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-        ),
+        alphabet=st.sampled_from(list("abcdefghijklmnopqrstuvwxyz \u200aABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")),
         min_size=0,
         max_size=40,
     ),
@@ -188,19 +181,14 @@ def test_clean_text_removes_artifacts(text: str) -> None:
     result = clean_text(text)
 
     # (a) No hair-space characters
-    assert "\u200a" not in result, (
-        f"Hair space found in result: {result!r} (input: {text!r})"
-    )
+    assert "\u200a" not in result, f"Hair space found in result: {result!r} (input: {text!r})"
 
     # (b) No trailing-U artifacts: a lowercase letter followed by U at
     #     a word boundary should not appear.
     trailing_u_matches = re.findall(r"[a-z]U\b", result)
     assert not trailing_u_matches, (
-        f"Trailing-U artifact found: {trailing_u_matches} "
-        f"in result: {result!r} (input: {text!r})"
+        f"Trailing-U artifact found: {trailing_u_matches} in result: {result!r} (input: {text!r})"
     )
 
     # (c) No leading or trailing whitespace
-    assert result == result.strip(), (
-        f"Leading/trailing whitespace in result: {result!r} (input: {text!r})"
-    )
+    assert result == result.strip(), f"Leading/trailing whitespace in result: {result!r} (input: {text!r})"

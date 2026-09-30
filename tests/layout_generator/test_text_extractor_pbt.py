@@ -67,8 +67,8 @@ _MARGIN = 15.0  # percentage margin from page edges for region bounds
 # Region strategy: [x0, y0, x1, y1] as page percentages.
 # Ensure the region is large enough to contain at least one word.
 _region_pct = st.tuples(
-    st.floats(min_value=_MARGIN, max_value=40.0),       # x0
-    st.floats(min_value=_MARGIN, max_value=40.0),       # y0
+    st.floats(min_value=_MARGIN, max_value=40.0),  # x0
+    st.floats(min_value=_MARGIN, max_value=40.0),  # y0
     st.floats(min_value=60.0, max_value=100.0 - _MARGIN),  # x1
     st.floats(min_value=60.0, max_value=100.0 - _MARGIN),  # y1
 ).map(lambda t: [t[0], t[1], t[2], t[3]])
@@ -147,9 +147,7 @@ def test_region_relative_sorted_lines(data: st.DataObject) -> None:
     for line in lines:
         top_y = line["top_left_pct"][1]
         bottom_y = line["bottom_right_pct"][1]
-        assert 0 <= top_y <= bottom_y <= 100, (
-            f"Invalid y percentages: top_y={top_y}, bottom_y={bottom_y}"
-        )
+        assert 0 <= top_y <= bottom_y <= 100, f"Invalid y percentages: top_y={top_y}, bottom_y={bottom_y}"
 
         # Also verify x-coordinates are in range
         top_x = line["top_left_pct"][0]
@@ -161,9 +159,7 @@ def test_region_relative_sorted_lines(data: st.DataObject) -> None:
     for i in range(len(lines) - 1):
         current_y = lines[i]["top_left_pct"][1]
         next_y = lines[i + 1]["top_left_pct"][1]
-        assert current_y <= next_y, (
-            f"Lines not sorted: line {i} y={current_y} > line {i+1} y={next_y}"
-        )
+        assert current_y <= next_y, f"Lines not sorted: line {i} y={current_y} > line {i + 1} y={next_y}"
 
 
 # ---------------------------------------------------------------------------
@@ -244,28 +240,19 @@ def test_y_coordinate_grouping(data: st.DataObject) -> None:
 
     if within_tolerance:
         # Words within tolerance → grouped into a single line.
-        lines_with_both = [
-            line for line in lines
-            if "alpha" in line["text"] and "bravo" in line["text"]
-        ]
+        lines_with_both = [line for line in lines if "alpha" in line["text"] and "bravo" in line["text"]]
         assert len(lines_with_both) == 1, (
-            f"Expected 1 line with both words (delta={delta}), "
-            f"got {len(lines_with_both)}. Lines: {lines}"
+            f"Expected 1 line with both words (delta={delta}), got {len(lines_with_both)}. Lines: {lines}"
         )
     else:
         # Words beyond tolerance → on separate lines.
         alpha_lines = [line for line in lines if "alpha" in line["text"]]
         bravo_lines = [line for line in lines if "bravo" in line["text"]]
         assert len(alpha_lines) >= 1 and len(bravo_lines) >= 1, (
-            f"Expected both words on separate lines (delta={delta}). "
-            f"Lines: {lines}"
+            f"Expected both words on separate lines (delta={delta}). Lines: {lines}"
         )
         # They should NOT share a line.
-        lines_with_both = [
-            line for line in lines
-            if "alpha" in line["text"] and "bravo" in line["text"]
-        ]
+        lines_with_both = [line for line in lines if "alpha" in line["text"] and "bravo" in line["text"]]
         assert len(lines_with_both) == 0, (
-            f"Words should be on different lines (delta={delta}), "
-            f"but found shared line. Lines: {lines}"
+            f"Words should be on different lines (delta={delta}), but found shared line. Lines: {lines}"
         )

@@ -135,9 +135,7 @@ def process_scenario_pdf(
         page5_text = doc[4].get_text() if len(doc) > 4 else None
         last_page_text = doc[-1].get_text() if len(doc) > 1 else None
 
-        info = extract_scenario_info(
-            first_page_text, page3_text, page4_text, page5_text, last_page_text
-        )
+        info = extract_scenario_info(first_page_text, page3_text, page4_text, page5_text, last_page_text)
     except Exception as exc:
         print(f"Error reading {rel}: {exc}", file=sys.stderr)
         return
@@ -205,17 +203,14 @@ def process_scenario_image(
     if sanitized_name is None:
         as_is_path = copy_as_is(image_path, input_dir, output_dir)
         print(
-            f"Warning: unresolved scenario {result.season}-{result.scenario} "
-            f"for {rel}, copied as-is to {as_is_path}",
+            f"Warning: unresolved scenario {result.season}-{result.scenario} for {rel}, copied as-is to {as_is_path}",
             file=sys.stderr,
         )
         return
 
     sanitized_suffix = sanitize_image_suffix(result.suffix)
     extension = image_path.suffix.lstrip(".").lower()
-    filename = build_image_filename(
-        result.season, result.scenario, sanitized_name, sanitized_suffix, extension
-    )
+    filename = build_image_filename(result.season, result.scenario, sanitized_name, sanitized_suffix, extension)
     subdir = subdirectory_for_season(result.season)
     output_path = output_dir / subdir / filename
 

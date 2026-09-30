@@ -432,7 +432,8 @@ class TestBackwardCompatibility:
 
         index = build_blueprint_index(tmp_path)
         _, _, merged_params, merged_styles, _ = load_blueprint_with_inheritance(
-            tmp_path / "child.json", index,
+            tmp_path / "child.json",
+            index,
         )
 
         assert merged_params is None

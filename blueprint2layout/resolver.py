@@ -15,9 +15,7 @@ from blueprint2layout.models import (
 )
 
 LINE_REFERENCE_PATTERN = r"^(h_thin|h_bar|h_rule|v_thin|v_bar)\[(\d+)\]$"
-SECONDARY_AXIS_PATTERN = (
-    r"^(h_thin|h_bar|h_rule|v_thin|v_bar|grey_box)\[(\d+)\]\.(left|right|top|bottom)$"
-)
+SECONDARY_AXIS_PATTERN = r"^(h_thin|h_bar|h_rule|v_thin|v_bar|grey_box)\[(\d+)\]\.(left|right|top|bottom)$"
 CANVAS_REFERENCE_PATTERN = r"^(\w+)\.(left|right|top|bottom)$"
 PX_OFFSET_PATTERN = r"^(.+?)\s*([+-])\s*(\d+(?:\.\d+)?)px$"
 
@@ -90,8 +88,12 @@ def resolve_edge_value(
         operator = px_match.group(2)
         px_count = float(px_match.group(3))
         base_value = resolve_edge_value(
-            base_ref, detection, resolved_canvases, context,
-            edge_name, aspectratio,
+            base_ref,
+            detection,
+            resolved_canvases,
+            context,
+            edge_name,
+            aspectratio,
         )
         if aspectratio and edge_name:
             w_str, h_str = aspectratio.split(":")
@@ -104,9 +106,7 @@ def resolve_edge_value(
             return base_value + offset_pct
         return base_value - offset_pct
 
-    raise ValueError(
-        f"Edge value '{edge_value}' is not a recognized pattern{suffix}"
-    )
+    raise ValueError(f"Edge value '{edge_value}' is not a recognized pattern{suffix}")
 
 
 def _resolve_line_reference(match: re.Match, detection: DetectionResult, suffix: str) -> float:
@@ -155,8 +155,7 @@ def _resolve_secondary_axis_reference(
 
     if edge not in valid_edges:
         raise ValueError(
-            f"Invalid secondary edge '.{edge}' for '{category}'; "
-            f"valid edges are {sorted(valid_edges)}{suffix}"
+            f"Invalid secondary edge '.{edge}' for '{category}'; valid edges are {sorted(valid_edges)}{suffix}"
         )
 
     elements = getattr(detection, category)
@@ -221,20 +220,36 @@ def resolve_canvases(
     for canvas in all_canvases:
         ctx = f"canvas '{canvas.name}'"
         left = resolve_edge_value(
-            canvas.left, detection, resolved, f"{ctx}, edge 'left'",
-            "left", aspectratio,
+            canvas.left,
+            detection,
+            resolved,
+            f"{ctx}, edge 'left'",
+            "left",
+            aspectratio,
         )
         right = resolve_edge_value(
-            canvas.right, detection, resolved, f"{ctx}, edge 'right'",
-            "right", aspectratio,
+            canvas.right,
+            detection,
+            resolved,
+            f"{ctx}, edge 'right'",
+            "right",
+            aspectratio,
         )
         top = resolve_edge_value(
-            canvas.top, detection, resolved, f"{ctx}, edge 'top'",
-            "top", aspectratio,
+            canvas.top,
+            detection,
+            resolved,
+            f"{ctx}, edge 'top'",
+            "top",
+            aspectratio,
         )
         bottom = resolve_edge_value(
-            canvas.bottom, detection, resolved, f"{ctx}, edge 'bottom'",
-            "bottom", aspectratio,
+            canvas.bottom,
+            detection,
+            resolved,
+            f"{ctx}, edge 'bottom'",
+            "bottom",
+            aspectratio,
         )
 
         resolved[canvas.name] = ResolvedCanvas(

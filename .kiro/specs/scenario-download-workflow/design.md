@@ -94,12 +94,14 @@ class GameSystem(Enum):
     PFS = "pfs"
     SFS = "sfs"
 
+
 def detect_game_system(first_page_text: str) -> GameSystem | None:
     """Classify a PDF as Pathfinder or Starfinder from first page text.
 
     Returns None if neither 'Pathfinder Society' nor 'Starfinder Society'
     is found (case-insensitive).
     """
+
 
 def system_prefix(system: GameSystem) -> str:
     """Return 'pfs2' for PFS, 'sfs2' for SFS."""
@@ -113,14 +115,16 @@ Computes all output paths for a given scenario.
 @dataclass(frozen=True)
 class RoutingPaths:
     """All output directory paths for a single scenario."""
-    scenarios_dir: Path       # e.g. Scenarios/PFS/Season 7
-    chronicles_dir: Path      # e.g. modules/.../chronicles/pfs2/season7
-    layouts_dir: Path         # e.g. modules/.../layouts (root, not system-specific)
+
+    scenarios_dir: Path  # e.g. Scenarios/PFS/Season 7
+    chronicles_dir: Path  # e.g. modules/.../chronicles/pfs2/season7
+    layouts_dir: Path  # e.g. modules/.../layouts (root, not system-specific)
     layouts_system_dir: Path  # e.g. modules/.../layouts/pfs2
-    blueprints_dir: Path      # e.g. Blueprints
-    blueprint_id: str         # e.g. pfs2.s7-01
-    layout_id: str            # e.g. pfs2.s7-01
-    system_prefix: str        # e.g. pfs2
+    blueprints_dir: Path  # e.g. Blueprints
+    blueprint_id: str  # e.g. pfs2.s7-01
+    layout_id: str  # e.g. pfs2.s7-01
+    system_prefix: str  # e.g. pfs2
+
 
 def compute_routing_paths(
     project_root: Path,
@@ -142,9 +146,11 @@ Executes the five-step processing pipeline for a single PDF.
 @dataclass
 class PipelineResult:
     """Outcome of processing a single PDF."""
+
     success: bool
     steps_completed: int
     error_message: str | None = None
+
 
 def process_single_pdf(
     pdf_path: Path,
@@ -168,6 +174,7 @@ CLI entry point and top-level orchestration.
 ```python
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse CLI arguments: --downloads-dir, --project-dir, --recent, --non-interactive."""
+
 
 def main(argv: list[str] | None = None) -> int:
     """Entry point: discover PDFs, confirm, detect, extract info, run pipeline."""
@@ -205,9 +212,9 @@ Maps to scenario directory names: `PFS → "PFS"`, `SFS → "SFS"`.
 ```python
 @dataclass
 class ScenarioInfo:
-    season: int       # positive for seasons, 0 for quests, -1 for bounties
-    scenario: str     # zero-padded scenario number, e.g. "07"
-    name: str         # raw scenario name from PDF
+    season: int  # positive for seasons, 0 for quests, -1 for bounties
+    scenario: str  # zero-padded scenario number, e.g. "07"
+    name: str  # raw scenario name from PDF
 ```
 
 ### `RoutingPaths` (new dataclass)
@@ -215,14 +222,14 @@ class ScenarioInfo:
 ```python
 @dataclass(frozen=True)
 class RoutingPaths:
-    scenarios_dir: Path       # Full path to scenario output dir (with season subdir)
-    chronicles_dir: Path      # Full path to chronicle output dir (with season subdir)
-    layouts_dir: Path         # Root layouts directory (for --layout-root)
+    scenarios_dir: Path  # Full path to scenario output dir (with season subdir)
+    chronicles_dir: Path  # Full path to chronicle output dir (with season subdir)
+    layouts_dir: Path  # Root layouts directory (for --layout-root)
     layouts_system_dir: Path  # System-specific layouts dir (pfs2/ or sfs2/)
-    blueprints_dir: Path      # Root blueprints directory
-    blueprint_id: str         # e.g. "pfs2.s7-01", "pfs2.b13", "pfs2.q14"
-    layout_id: str            # Same as blueprint_id
-    system_prefix: str        # "pfs2" or "sfs2"
+    blueprints_dir: Path  # Root blueprints directory
+    blueprint_id: str  # e.g. "pfs2.s7-01", "pfs2.b13", "pfs2.q14"
+    layout_id: str  # Same as blueprint_id
+    system_prefix: str  # "pfs2" or "sfs2"
 ```
 
 ### `PipelineResult` (new dataclass)

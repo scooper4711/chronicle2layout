@@ -73,14 +73,8 @@ def test_detection_consistent_with_society_string_presence(
     result = detect_game_system(text)
 
     if has_pathfinder:
-        assert result == GameSystem.PFS, (
-            f"Expected PFS for text containing Pathfinder Society, got {result}"
-        )
+        assert result == GameSystem.PFS, f"Expected PFS for text containing Pathfinder Society, got {result}"
     elif has_starfinder:
-        assert result == GameSystem.SFS, (
-            f"Expected SFS for text containing only Starfinder Society, got {result}"
-        )
+        assert result == GameSystem.SFS, f"Expected SFS for text containing only Starfinder Society, got {result}"
     else:
-        assert result is None, (
-            f"Expected None for text without society strings, got {result}"
-        )
+        assert result is None, f"Expected None for text without society strings, got {result}"

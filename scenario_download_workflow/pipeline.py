@@ -204,11 +204,16 @@ def _run_step_3_blueprint(
     print(f"  Blueprint pattern: {pattern}")
 
     try:
-        exit_code = blueprint2layout_cli.main([
-            "--blueprints-dir", str(routes.blueprints_dir),
-            "--blueprint-id", pattern,
-            "--output-dir", str(routes.layouts_dir),
-        ])
+        exit_code = blueprint2layout_cli.main(
+            [
+                "--blueprints-dir",
+                str(routes.blueprints_dir),
+                "--blueprint-id",
+                pattern,
+                "--output-dir",
+                str(routes.layouts_dir),
+            ]
+        )
         if exit_code != 0:
             print(
                 f"  Warning: no matching blueprint found for "
@@ -219,9 +224,7 @@ def _run_step_3_blueprint(
             )
             return True
 
-        print(
-            f"  Scenario resolves to blueprint pattern {pattern}"
-        )
+        print(f"  Scenario resolves to blueprint pattern {pattern}")
         return True
     except Exception as exc:
         print(f"  Error in blueprint2layout: {exc}", file=sys.stderr)
@@ -250,12 +253,17 @@ def _run_step_4_layout(
     chronicles_root = routes.chronicles_dir.parent.parent
 
     try:
-        exit_code = layout_generator_cli.main([
-            str(chronicle_pdf),
-            "--metadata-file", str(metadata_file),
-            "--layouts-dir", str(routes.layouts_dir),
-            "--base-dir", str(chronicles_root),
-        ])
+        exit_code = layout_generator_cli.main(
+            [
+                str(chronicle_pdf),
+                "--metadata-file",
+                str(metadata_file),
+                "--layouts-dir",
+                str(routes.layouts_dir),
+                "--base-dir",
+                str(chronicles_root),
+            ]
+        )
         if exit_code != 0:
             print(
                 f"  Error: layout_generator exited with code {exit_code}",
@@ -286,12 +294,18 @@ def _run_step_5_visualize(
     viz_dir = project_root / "debug_clips" / "layout_visualizer"
 
     try:
-        exit_code = layout_visualizer_cli.main([
-            "--layout-root", str(routes.layouts_dir),
-            "--layout-id", routes.layout_id,
-            "--output-dir", str(viz_dir),
-            "--mode", "data",
-        ])
+        exit_code = layout_visualizer_cli.main(
+            [
+                "--layout-root",
+                str(routes.layouts_dir),
+                "--layout-id",
+                routes.layout_id,
+                "--output-dir",
+                str(viz_dir),
+                "--mode",
+                "data",
+            ]
+        )
         if exit_code != 0:
             print(
                 f"  Error: layout_visualizer exited with code {exit_code}",

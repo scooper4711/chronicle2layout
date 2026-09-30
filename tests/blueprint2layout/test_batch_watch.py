@@ -65,12 +65,12 @@ class TestMatchBlueprintIdsProperty:
     @given(index=_blueprint_index, pattern=_wildcard_pattern)
     @settings(max_examples=100)
     def test_wildcard_matches_equal_fnmatch_filtering(
-        self, index: dict[str, Path], pattern: str,
+        self,
+        index: dict[str, Path],
+        pattern: str,
     ):
         """Wildcard pattern returns sorted fnmatch-filtered ids or raises."""
-        expected = sorted(
-            bid for bid in index if _fnmatch_mod.fnmatch(bid, pattern)
-        )
+        expected = sorted(bid for bid in index if _fnmatch_mod.fnmatch(bid, pattern))
         if expected:
             result = match_blueprint_ids(pattern, index)
             assert result == expected
@@ -81,7 +81,8 @@ class TestMatchBlueprintIdsProperty:
     @given(index=_blueprint_index)
     @settings(max_examples=100)
     def test_literal_lookup_returns_single_id(
-        self, index: dict[str, Path],
+        self,
+        index: dict[str, Path],
     ):
         """Literal (non-wildcard) pattern returns the id if present."""
         assume(len(index) > 0)
@@ -93,7 +94,8 @@ class TestMatchBlueprintIdsProperty:
     @given(index=_blueprint_index)
     @settings(max_examples=100)
     def test_literal_not_found_raises(
-        self, index: dict[str, Path],
+        self,
+        index: dict[str, Path],
     ):
         """Literal id not in the index raises ValueError."""
         missing = "zzz-definitely-not-in-index"
@@ -138,7 +140,9 @@ class TestResolveDefaultChronicleLocationProperty:
     @given(chain_data=_chain_with_chronicle_locations())
     @settings(max_examples=100)
     def test_returns_leaf_most_chronicle_location(
-        self, chain_data: list[dict], tmp_path_factory,
+        self,
+        chain_data: list[dict],
+        tmp_path_factory,
     ):
         """Resolution returns the leaf-most defaultChronicleLocation."""
         # Write chain to temp files and build index
@@ -345,12 +349,15 @@ class TestDeriveOutputPathProperty:
         blueprint_path = blueprints_dir / subdir / "dummy.blueprint.json"
 
         result = derive_output_path(
-            blueprint_id, blueprint_path, blueprints_dir, output_dir,
+            blueprint_id,
+            blueprint_path,
+            blueprints_dir,
+            output_dir,
         )
 
         # Expected filename: strip prefix up to first dot, append .json
         dot_index = blueprint_id.index(".")
-        expected_filename = blueprint_id[dot_index + 1:] + ".json"
+        expected_filename = blueprint_id[dot_index + 1 :] + ".json"
 
         # Expected relative subdir
         expected_subdir = blueprint_path.parent.relative_to(blueprints_dir)
@@ -374,7 +381,10 @@ class TestDeriveOutputPathProperty:
         blueprint_path = blueprints_dir / "dummy.blueprint.json"
 
         result = derive_output_path(
-            blueprint_id, blueprint_path, blueprints_dir, output_dir,
+            blueprint_id,
+            blueprint_path,
+            blueprints_dir,
+            output_dir,
         )
 
         assert result.parent == output_dir
@@ -514,12 +524,8 @@ class TestBuildDependencyMapProperty:
             leaf_path = index[leaf_id]
             chain = collect_inheritance_chain(leaf_path, index)
             for path, _data in chain:
-                assert path in dep_map, (
-                    f"Path {path} from chain of {leaf_id} not in dependency map"
-                )
-                assert leaf_id in dep_map[path], (
-                    f"Leaf {leaf_id} not mapped for {path}"
-                )
+                assert path in dep_map, f"Path {path} from chain of {leaf_id} not in dependency map"
+                assert leaf_id in dep_map[path], f"Leaf {leaf_id} not mapped for {path}"
 
 
 # ---------------------------------------------------------------------------
@@ -567,6 +573,7 @@ class TestFindChangedPathsUnit:
 
         # Modify the file — force a different mtime
         import time as _time
+
         _time.sleep(0.05)
         file_a.write_text('{"changed": true}', encoding="utf-8")
 
@@ -608,45 +615,66 @@ class TestParseArgsUnit:
 
     def test_required_args(self):
         """Both --blueprints-dir and --blueprint-id are required."""
-        args = parse_args([
-            "--blueprints-dir", "/some/dir",
-            "--blueprint-id", "pfs2.bounty-layout-b13",
-        ])
+        args = parse_args(
+            [
+                "--blueprints-dir",
+                "/some/dir",
+                "--blueprint-id",
+                "pfs2.bounty-layout-b13",
+            ]
+        )
         assert args.blueprints_dir == Path("/some/dir")
         assert args.blueprint_id == "pfs2.bounty-layout-b13"
 
     def test_output_dir_default(self):
         """--output-dir defaults to the project layouts directory."""
-        args = parse_args([
-            "--blueprints-dir", "/dir",
-            "--blueprint-id", "x",
-        ])
+        args = parse_args(
+            [
+                "--blueprints-dir",
+                "/dir",
+                "--blueprint-id",
+                "x",
+            ]
+        )
         assert args.output_dir == Path("modules/pfs-chronicle-generator/assets/layouts")
 
     def test_output_dir_custom(self):
         """--output-dir accepts a custom path."""
-        args = parse_args([
-            "--blueprints-dir", "/dir",
-            "--blueprint-id", "x",
-            "--output-dir", "/custom/output",
-        ])
+        args = parse_args(
+            [
+                "--blueprints-dir",
+                "/dir",
+                "--blueprint-id",
+                "x",
+                "--output-dir",
+                "/custom/output",
+            ]
+        )
         assert args.output_dir == Path("/custom/output")
 
     def test_watch_flag_default(self):
         """--watch defaults to False."""
-        args = parse_args([
-            "--blueprints-dir", "/dir",
-            "--blueprint-id", "x",
-        ])
+        args = parse_args(
+            [
+                "--blueprints-dir",
+                "/dir",
+                "--blueprint-id",
+                "x",
+            ]
+        )
         assert args.watch is False
 
     def test_watch_flag_enabled(self):
         """--watch sets the flag to True."""
-        args = parse_args([
-            "--blueprints-dir", "/dir",
-            "--blueprint-id", "x",
-            "--watch",
-        ])
+        args = parse_args(
+            [
+                "--blueprints-dir",
+                "/dir",
+                "--blueprint-id",
+                "x",
+                "--watch",
+            ]
+        )
         assert args.watch is True
 
     def test_missing_blueprints_dir_exits(self):
@@ -674,10 +702,14 @@ class TestMainUnit:
     def test_invalid_blueprints_dir(self, tmp_path, capsys):
         """Returns 1 and prints error when --blueprints-dir is not a directory."""
         fake_path = tmp_path / "nonexistent"
-        result = main([
-            "--blueprints-dir", str(fake_path),
-            "--blueprint-id", "x",
-        ])
+        result = main(
+            [
+                "--blueprints-dir",
+                str(fake_path),
+                "--blueprint-id",
+                "x",
+            ]
+        )
         assert result == 1
         captured = capsys.readouterr()
         assert "not a directory" in captured.err
@@ -686,10 +718,14 @@ class TestMainUnit:
     def test_no_matching_ids(self, tmp_path, capsys):
         """Returns 1 when no blueprint ids match the pattern."""
         # Create an empty blueprints dir (no .blueprint.json files)
-        result = main([
-            "--blueprints-dir", str(tmp_path),
-            "--blueprint-id", "nonexistent",
-        ])
+        result = main(
+            [
+                "--blueprints-dir",
+                str(tmp_path),
+                "--blueprint-id",
+                "nonexistent",
+            ]
+        )
         assert result == 1
         assert "not found" in capsys.readouterr().err
 
@@ -711,15 +747,22 @@ class TestMainUnit:
         bp_path = blueprints_dir / "a.blueprint.json"
         bp_path.write_text(json.dumps(bp), encoding="utf-8")
 
-        with patch("blueprint2layout.__main__.generate_layout") as mock_gen, \
-             patch("blueprint2layout.__main__.write_layout") as mock_write:
+        with (
+            patch("blueprint2layout.__main__.generate_layout") as mock_gen,
+            patch("blueprint2layout.__main__.write_layout") as mock_write,
+        ):
             mock_gen.return_value = {"id": "test.layout-a", "canvases": []}
 
-            result = main([
-                "--blueprints-dir", str(blueprints_dir),
-                "--blueprint-id", "test.layout-a",
-                "--output-dir", str(output_dir),
-            ])
+            result = main(
+                [
+                    "--blueprints-dir",
+                    str(blueprints_dir),
+                    "--blueprint-id",
+                    "test.layout-a",
+                    "--output-dir",
+                    str(output_dir),
+                ]
+            )
 
         assert result == 0
         mock_gen.assert_called_once()
@@ -743,11 +786,15 @@ class TestMainUnit:
         bp_path.write_text(json.dumps(bp), encoding="utf-8")
 
         with patch("blueprint2layout.__main__.watch_and_regenerate") as mock_watch:
-            result = main([
-                "--blueprints-dir", str(blueprints_dir),
-                "--blueprint-id", "test.layout-w",
-                "--watch",
-            ])
+            result = main(
+                [
+                    "--blueprints-dir",
+                    str(blueprints_dir),
+                    "--blueprint-id",
+                    "test.layout-w",
+                    "--watch",
+                ]
+            )
 
         assert result == 0
         mock_watch.assert_called_once()
@@ -774,10 +821,14 @@ class TestMainUnit:
 
         with patch("blueprint2layout.__main__.generate_layout") as mock_gen:
             mock_gen.side_effect = ValueError("Pipeline broke")
-            result = main([
-                "--blueprints-dir", str(blueprints_dir),
-                "--blueprint-id", "test.layout-err",
-            ])
+            result = main(
+                [
+                    "--blueprints-dir",
+                    str(blueprints_dir),
+                    "--blueprint-id",
+                    "test.layout-err",
+                ]
+            )
 
         assert result == 1
         captured = capsys.readouterr()
@@ -786,10 +837,14 @@ class TestMainUnit:
     def test_error_messages_go_to_stderr(self, tmp_path, capsys):
         """All error messages are printed to stderr, not stdout."""
         fake_path = tmp_path / "nope"
-        main([
-            "--blueprints-dir", str(fake_path),
-            "--blueprint-id", "x",
-        ])
+        main(
+            [
+                "--blueprints-dir",
+                str(fake_path),
+                "--blueprint-id",
+                "x",
+            ]
+        )
         captured = capsys.readouterr()
         assert captured.err  # stderr has content
         assert "Error" in captured.err

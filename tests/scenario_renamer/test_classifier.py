@@ -96,9 +96,7 @@ class TestClassifyFileImage:
         assert rel == Path("2-03-Map-1.jpg")
 
     def test_jpg_with_pzopfs_pattern(self, tmp_path: Path) -> None:
-        file_path, input_dir = _create_file(
-            tmp_path, "PZOPFS0409 A-Nighttime Ambush.jpg"
-        )
+        file_path, input_dir = _create_file(tmp_path, "PZOPFS0409 A-Nighttime Ambush.jpg")
         classification, _ = classify_file(file_path, input_dir)
         assert classification == "scenario_image"
 

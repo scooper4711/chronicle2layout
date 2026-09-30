@@ -68,9 +68,7 @@ class TestPipelineResult:
         assert result.error_message is None
 
     def test_failure_result(self) -> None:
-        result = PipelineResult(
-            success=False, steps_completed=2, error_message="step 3 failed"
-        )
+        result = PipelineResult(success=False, steps_completed=2, error_message="step 3 failed")
         assert result.success is False
         assert result.steps_completed == 2
         assert result.error_message == "step 3 failed"
@@ -85,16 +83,10 @@ class TestBuildSeasonBlueprintPattern:
     """Verify season-level base blueprint ID pattern."""
 
     def test_pfs_season_7(self) -> None:
-        assert (
-            _build_season_blueprint_pattern("pfs2", 7)
-            == "pfs2.season7-layout-s7-00*"
-        )
+        assert _build_season_blueprint_pattern("pfs2", 7) == "pfs2.season7-layout-s7-00*"
 
     def test_sfs_season_1(self) -> None:
-        assert (
-            _build_season_blueprint_pattern("sfs2", 1)
-            == "sfs2.season1-layout-s1-00*"
-        )
+        assert _build_season_blueprint_pattern("sfs2", 1) == "sfs2.season1-layout-s1-00*"
 
 
 # ---------------------------------------------------------------------------
@@ -112,12 +104,14 @@ def _mock_renamer_success(routes: RoutingPaths, info: ScenarioInfo):
     """Return a side_effect that creates a renamed PDF, prints its path,
     and returns 0 — mimicking the real scenario_renamer.
     """
+
     def side_effect(argv):
         routes.scenarios_dir.mkdir(parents=True, exist_ok=True)
         out_file = routes.scenarios_dir / f"{info.season}-{info.scenario}-Test.pdf"
         out_file.write_bytes(b"%PDF renamed")
         print(out_file)
         return 0
+
     return side_effect
 
 
@@ -125,12 +119,14 @@ def _mock_chronicle_success(routes: RoutingPaths, info: ScenarioInfo):
     """Return a side_effect that creates a chronicle PDF, prints its path,
     and returns 0 — mimicking the real chronicle_extractor.
     """
+
     def side_effect(argv):
         routes.chronicles_dir.mkdir(parents=True, exist_ok=True)
         out_file = routes.chronicles_dir / f"{info.season}-{info.scenario}-TestChronicle.pdf"
         out_file.write_bytes(b"%PDF chronicle")
         print(out_file)
         return 0
+
     return side_effect
 
 
@@ -206,9 +202,7 @@ class TestHappyPath:
         info = _default_info()
         routes = _make_routes(tmp_path, info=info)
         pdf = _create_pdf(tmp_path / "downloads")
-        chronicle_mock = MagicMock(
-            side_effect=_mock_chronicle_success(routes, info)
-        )
+        chronicle_mock = MagicMock(side_effect=_mock_chronicle_success(routes, info))
 
         with (
             patch(f"{_RENAMER}.main", side_effect=_mock_renamer_success(routes, info)),
@@ -241,9 +235,12 @@ class TestHappyPath:
 
         args = blueprint_mock.call_args[0][0]
         assert args == [
-            "--blueprints-dir", str(routes.blueprints_dir),
-            "--blueprint-id", "pfs2.season7-layout-s7-00*",
-            "--output-dir", str(routes.layouts_dir),
+            "--blueprints-dir",
+            str(routes.blueprints_dir),
+            "--blueprint-id",
+            "pfs2.season7-layout-s7-00*",
+            "--output-dir",
+            str(routes.layouts_dir),
         ]
 
     def test_layout_generator_receives_correct_args(self, tmp_path: Path) -> None:
@@ -287,10 +284,14 @@ class TestHappyPath:
 
         args = viz_mock.call_args[0][0]
         assert args == [
-            "--layout-root", str(routes.layouts_dir),
-            "--layout-id", routes.layout_id,
-            "--output-dir", str(tmp_path / "debug_clips" / "layout_visualizer"),
-            "--mode", "data",
+            "--layout-root",
+            str(routes.layouts_dir),
+            "--layout-id",
+            routes.layout_id,
+            "--output-dir",
+            str(tmp_path / "debug_clips" / "layout_visualizer"),
+            "--mode",
+            "data",
         ]
 
 

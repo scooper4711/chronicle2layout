@@ -24,7 +24,10 @@ from layout_visualizer.models import CanvasRegion
 # ---------------------------------------------------------------------------
 
 _coord = st.floats(
-    min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False,
+    min_value=0.0,
+    max_value=100.0,
+    allow_nan=False,
+    allow_infinity=False,
 )
 
 _page_dim = st.integers(min_value=100, max_value=5000)
@@ -40,7 +43,12 @@ def _root_canvas_region_strategy():
     """Generate a single root CanvasRegion (no parent) with random coords."""
     return st.builds(
         lambda name, x, y, x2, y2: CanvasRegion(
-            name=name, x=x, y=y, x2=x2, y2=y2, parent=None,
+            name=name,
+            x=x,
+            y=y,
+            x2=x2,
+            y2=y2,
+            parent=None,
         ),
         name=st.just("root"),
         x=_coord,
@@ -64,7 +72,10 @@ def _build_forest(size: int):
     """Build a forest of `size` canvases with valid parent references."""
     return st.lists(
         st.tuples(
-            _coord, _coord, _coord, _coord,
+            _coord,
+            _coord,
+            _coord,
+            _coord,
             st.booleans(),
         ),
         min_size=size,
@@ -86,7 +97,12 @@ def _entries_to_canvases(
             # Pick a parent from previously created canvases
             parent = names[i % len(names)]
         canvases[name] = CanvasRegion(
-            name=name, x=x, y=y, x2=x2, y2=y2, parent=parent,
+            name=name,
+            x=x,
+            y=y,
+            x2=x2,
+            y2=y2,
+            parent=parent,
         )
         names.append(name)
 
@@ -97,6 +113,7 @@ def _entries_to_canvases(
 # Property 4: Percentage-to-pixel coordinate conversion
 # Feature: layout-visualizer, Property 4: Percentage-to-pixel coordinate conversion
 # ---------------------------------------------------------------------------
+
 
 class TestPercentageToPixelConversion:
     """Validates: Requirements 4.1, 4.2, 4.3"""
@@ -133,6 +150,7 @@ class TestPercentageToPixelConversion:
 # Feature: layout-visualizer, Property 5: Topological ordering preserves parent-before-child
 # ---------------------------------------------------------------------------
 
+
 class TestTopologicalOrdering:
     """Validates: Requirements 4.4"""
 
@@ -166,6 +184,7 @@ class TestTopologicalOrdering:
 # Property 6: Color assignment with palette cycling
 # Feature: layout-visualizer, Property 6: Color assignment with palette cycling
 # ---------------------------------------------------------------------------
+
 
 class TestColorAssignmentPaletteCycling:
     """Validates: Requirements 5.1, 5.3"""

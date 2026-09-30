@@ -31,9 +31,7 @@ GREY_BOX_MIN_BLOCKS = 3
 GREY_BOX_MIN_AREA = 500
 
 
-def _find_all_grey_runs(
-    row: np.ndarray, min_value: int, max_value: int, min_length: int
-) -> list[tuple[int, int, int]]:
+def _find_all_grey_runs(row: np.ndarray, min_value: int, max_value: int, min_length: int) -> list[tuple[int, int, int]]:
     """Find all runs of consecutive grey pixels in a row exceeding min_length.
 
     Args:
@@ -70,9 +68,7 @@ def _find_all_grey_runs(
     return runs
 
 
-def _find_longest_grey_run(
-    row: np.ndarray, min_value: int, max_value: int
-) -> tuple[int, int, int]:
+def _find_longest_grey_run(row: np.ndarray, min_value: int, max_value: int) -> tuple[int, int, int]:
     """Find the longest run of consecutive grey pixels in a row.
 
     Args:
@@ -175,9 +171,7 @@ def detect_horizontal_black_lines(
     return _classify_line_groups(groups, height, width)
 
 
-def _scan_qualifying_rows(
-    grayscale: np.ndarray, min_run_length: int
-) -> list[tuple[int, int, int]]:
+def _scan_qualifying_rows(grayscale: np.ndarray, min_run_length: int) -> list[tuple[int, int, int]]:
     """Scan all rows and return those with a black run exceeding the minimum.
 
     Args:
@@ -192,9 +186,7 @@ def _scan_qualifying_rows(
     qualifying = []
 
     for row_idx in range(height):
-        run_length, left, right = _find_longest_black_run(
-            grayscale[row_idx], BLACK_PIXEL_THRESHOLD
-        )
+        run_length, left, right = _find_longest_black_run(grayscale[row_idx], BLACK_PIXEL_THRESHOLD)
         if run_length > min_run_length:
             qualifying.append((row_idx, left, right))
 
@@ -274,9 +266,7 @@ def _classify_line_groups(
     return (h_thin, h_bar)
 
 
-def _find_longest_black_run_column(
-    column: np.ndarray, threshold: int
-) -> tuple[int, int, int]:
+def _find_longest_black_run_column(column: np.ndarray, threshold: int) -> tuple[int, int, int]:
     """Find the longest run of consecutive black pixels in a column.
 
     Args:
@@ -314,9 +304,7 @@ def _find_longest_black_run_column(
     return (best_length, best_start, best_start + best_length - 1)
 
 
-def _scan_qualifying_columns(
-    grayscale: np.ndarray, min_run_length: int
-) -> list[tuple[int, int, int]]:
+def _scan_qualifying_columns(grayscale: np.ndarray, min_run_length: int) -> list[tuple[int, int, int]]:
     """Scan all columns and return those with a black run exceeding the minimum.
 
     Args:
@@ -331,9 +319,7 @@ def _scan_qualifying_columns(
     qualifying = []
 
     for col_idx in range(width):
-        run_length, top, bottom = _find_longest_black_run_column(
-            grayscale[:, col_idx], BLACK_PIXEL_THRESHOLD
-        )
+        run_length, top, bottom = _find_longest_black_run_column(grayscale[:, col_idx], BLACK_PIXEL_THRESHOLD)
         if run_length > min_run_length:
             qualifying.append((col_idx, top, bottom))
 
@@ -439,9 +425,7 @@ def detect_vertical_black_lines(
     return _classify_vertical_line_groups(groups, height, width)
 
 
-def _scan_qualifying_grey_rows(
-    grayscale: np.ndarray, min_run_length: int
-) -> list[tuple[int, int, int]]:
+def _scan_qualifying_grey_rows(grayscale: np.ndarray, min_run_length: int) -> list[tuple[int, int, int]]:
     """Scan all rows and return all grey runs exceeding the minimum.
 
     Returns multiple entries per row when a row contains several
@@ -460,8 +444,10 @@ def _scan_qualifying_grey_rows(
 
     for row_idx in range(height):
         runs = _find_all_grey_runs(
-            grayscale[row_idx], GREY_RULE_MIN_VALUE,
-            GREY_RULE_MAX_VALUE, min_run_length,
+            grayscale[row_idx],
+            GREY_RULE_MIN_VALUE,
+            GREY_RULE_MAX_VALUE,
+            min_run_length,
         )
         for _length, left, right in runs:
             qualifying.append((row_idx, left, right))
@@ -544,13 +530,15 @@ def _build_horizontal_lines_from_groups(
         rightmost = max(entry[2] for entry in group)
         thickness = bottom_row - top_row + 1
 
-        lines.append(HorizontalLine(
-            y=round(top_row / height * 100, 1),
-            x=round(leftmost / width * 100, 1),
-            x2=round(rightmost / width * 100, 1),
-            thickness_px=thickness,
-            y2=round((bottom_row + 1) / height * 100, 1),
-        ))
+        lines.append(
+            HorizontalLine(
+                y=round(top_row / height * 100, 1),
+                x=round(leftmost / width * 100, 1),
+                x2=round(rightmost / width * 100, 1),
+                thickness_px=thickness,
+                y2=round((bottom_row + 1) / height * 100, 1),
+            )
+        )
 
     return lines
 
@@ -599,15 +587,12 @@ def detect_grey_rules(
     min_run_length = int(width * HORIZONTAL_MIN_WIDTH_RATIO)
 
     qualifying_rows = _scan_qualifying_grey_rows(grayscale, min_run_length)
-    groups = _group_rows_with_tolerance(
-        qualifying_rows, GREY_RULE_GROUPING_TOLERANCE
-    )
+    groups = _group_rows_with_tolerance(qualifying_rows, GREY_RULE_GROUPING_TOLERANCE)
     candidates = _build_horizontal_lines_from_groups(groups, height, width)
 
     all_black_lines = list(h_thin) + list(h_bar)
     deduplicated = [
-        line for line in candidates
-        if not _is_near_black_line(line.y, all_black_lines, GREY_RULE_DEDUP_TOLERANCE)
+        line for line in candidates if not _is_near_black_line(line.y, all_black_lines, GREY_RULE_DEDUP_TOLERANCE)
     ]
 
     deduplicated.sort(key=lambda line: line.y)
@@ -628,16 +613,12 @@ def _build_structural_grey_mask(rgb: np.ndarray) -> np.ndarray:
     """
     channel_min = rgb.min(axis=2)
     channel_max = rgb.max(axis=2)
-    in_range = (channel_min >= GREY_BOX_MIN_CHANNEL) & (
-        channel_max <= GREY_BOX_MAX_CHANNEL
-    )
+    in_range = (channel_min >= GREY_BOX_MIN_CHANNEL) & (channel_max <= GREY_BOX_MAX_CHANNEL)
     low_diff = (channel_max - channel_min) < GREY_BOX_CHANNEL_DIFF_LIMIT
     return in_range & low_diff
 
 
-def _build_grey_block_grid(
-    mask: np.ndarray, block_size: int, fill_threshold: float
-) -> np.ndarray:
+def _build_grey_block_grid(mask: np.ndarray, block_size: int, fill_threshold: float) -> np.ndarray:
     """Divide the mask into blocks and classify each as grey or not.
 
     Args:
@@ -730,9 +711,7 @@ def _flood_fill_components(
                 current_row, current_col = queue.popleft()
                 component.append((current_row, current_col))
 
-                for neighbor in _find_valid_neighbors(
-                    current_row, current_col, grid, visited
-                ):
+                for neighbor in _find_valid_neighbors(current_row, current_col, grid, visited):
                     visited[neighbor[0], neighbor[1]] = True
                     queue.append(neighbor)
 
@@ -824,12 +803,14 @@ def detect_grey_boxes(rgb: np.ndarray) -> list[GreyBox]:
         if area < GREY_BOX_MIN_AREA:
             continue
 
-        boxes.append(GreyBox(
-            x=round(x1 / width * 100, 1),
-            y=round(y1 / height * 100, 1),
-            x2=round(x2 / width * 100, 1),
-            y2=round(y2 / height * 100, 1),
-        ))
+        boxes.append(
+            GreyBox(
+                x=round(x1 / width * 100, 1),
+                y=round(y1 / height * 100, 1),
+                x2=round(x2 / width * 100, 1),
+                y2=round(y2 / height * 100, 1),
+            )
+        )
 
     boxes.sort(key=lambda box: (box.y, box.x))
     return boxes
@@ -902,7 +883,11 @@ def extract_vector_h_rules(
             x2_pct = round(x_right / page_width * 100, 1)
 
             line = HorizontalLine(
-                y=y_pct, x=x_pct, x2=x2_pct, thickness_px=1, y2=y_pct,
+                y=y_pct,
+                x=x_pct,
+                x2=x2_pct,
+                thickness_px=1,
+                y2=y_pct,
             )
 
             is_duplicate = any(

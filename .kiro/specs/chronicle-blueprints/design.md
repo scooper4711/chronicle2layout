@@ -138,6 +138,7 @@ class HorizontalLine:
         x2: Right-edge x position as absolute page percentage.
         thickness_px: Thickness in pixels at 150 DPI.
     """
+
     y: float
     x: float
     x2: float
@@ -154,6 +155,7 @@ class VerticalLine:
         y2: Bottom-edge y position as absolute page percentage.
         thickness_px: Thickness in pixels at 150 DPI.
     """
+
     x: float
     y: float
     y2: float
@@ -170,6 +172,7 @@ class GreyBox:
         x2: Right-edge x position as absolute page percentage.
         y2: Bottom-edge y position as absolute page percentage.
     """
+
     x: float
     y: float
     x2: float
@@ -190,6 +193,7 @@ class DetectionResult:
         v_bar: Vertical thick bars (thickness > 5px), sorted by x.
         grey_box: Grey filled rectangles, sorted by y then x.
     """
+
     h_thin: list[HorizontalLine] = field(default_factory=list)
     h_bar: list[HorizontalLine] = field(default_factory=list)
     h_rule: list[HorizontalLine] = field(default_factory=list)
@@ -213,6 +217,7 @@ class CanvasEntry:
         bottom: Bottom edge value.
         parent: Optional parent canvas name for coordinate conversion.
     """
+
     name: str
     left: int | float | str
     right: int | float | str
@@ -233,6 +238,7 @@ class ResolvedCanvas:
         bottom: Bottom edge as absolute page percentage.
         parent: Optional parent canvas name.
     """
+
     name: str
     left: float
     right: float
@@ -250,6 +256,7 @@ class Blueprint:
         canvases: Ordered list of canvas entries.
         parent: Optional parent Blueprint id for inheritance.
     """
+
     id: str
     canvases: list[CanvasEntry]
     parent: str | None = None
@@ -318,21 +325,21 @@ def detect_horizontal_black_lines(
 ) -> tuple[list[HorizontalLine], list[HorizontalLine]]:
     """Detect horizontal black lines and classify as thin or bar.
 
-    Scans each row for runs of black pixels (grayscale < 50) spanning
-    more than 5% of pa
-and classify as thin or bar.
+        Scans each row for runs of black pixels (grayscale < 50) spanning
+        more than 5% of pa
+    and classify as thin or bar.
 
-    Scans each column for runs of black pixels spanning more than 3%
-    of page height. Groups consecutive qualifying columns within 5px
-    tolerance. Classifies by thickness: <= 5px is thin, > 5px is bar.
+        Scans each column for runs of black pixels spanning more than 3%
+        of page height. Groups consecutive qualifying columns within 5px
+        tolerance. Classifies by thickness: <= 5px is thin, > 5px is bar.
 
-    Args:
-        grayscale: Grayscale image array, shape (height, width).
+        Args:
+            grayscale: Grayscale image array, shape (height, width).
 
-    Returns:
-        A tuple of (v_thin, v_bar) lists, each sorted by x ascending.
+        Returns:
+            A tuple of (v_thin, v_bar) lists, each sorted by x ascending.
 
-    Requirements: chronicle-blueprints 3.1, 3.2, 3.3, 3.4, 3.5, 3.6
+        Requirements: chronicle-blueprints 3.1, 3.2, 3.3, 3.4, 3.5, 3.6
     """
 
 

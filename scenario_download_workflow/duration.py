@@ -36,17 +36,12 @@ def parse_duration(value: str) -> timedelta:
 
     match = _DURATION_PATTERN.match(value)
     if not match:
-        raise ValueError(
-            f"Invalid duration: {value!r}. "
-            "Expected format: <positive_int><m|h|d>"
-        )
+        raise ValueError(f"Invalid duration: {value!r}. Expected format: <positive_int><m|h|d>")
 
     amount = int(match.group(1))
     suffix = match.group(2)
 
     if amount <= 0:
-        raise ValueError(
-            f"Invalid duration: {value!r}. Amount must be positive, got {amount}"
-        )
+        raise ValueError(f"Invalid duration: {value!r}. Amount must be positive, got {amount}")
 
     return timedelta(**{_SUFFIX_TO_KWARG[suffix]: amount})

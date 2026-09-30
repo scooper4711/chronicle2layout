@@ -29,9 +29,7 @@ def test_sanitized_no_unsafe_chars(name: str) -> None:
     result = sanitize_name(name)
     for ch in result:
         assert ch != " ", f"Space found in sanitized name: {result!r}"
-        assert ch not in _UNSAFE_SET, (
-            f"Unsafe character {ch!r} found in sanitized name: {result!r}"
-        )
+        assert ch not in _UNSAFE_SET, f"Unsafe character {ch!r} found in sanitized name: {result!r}"
 
 
 # Feature: chronicle-extractor, Property 6: Sanitized name preserves letter casing
@@ -77,9 +75,7 @@ _scenario_name = st.text(
     scenario=_scenario_number,
     name=_scenario_name,
 )
-def test_output_filename_format(
-    output_dir: Path, season: int, scenario: str, name: str
-) -> None:
+def test_output_filename_format(output_dir: Path, season: int, scenario: str, name: str) -> None:
     """build_output_path produces a path matching the expected format.
 
     The path should be: output_dir/season{season}/{season}-{scenario}-{sanitized}Chronicle.pdf
@@ -93,12 +89,6 @@ def test_output_filename_format(
     expected_filename = f"{season}-{scenario}-{sanitized}Chronicle.pdf"
     expected_parent = f"season{season}"
 
-    assert result.name == expected_filename, (
-        f"Filename mismatch: {result.name!r} != {expected_filename!r}"
-    )
-    assert result.parent.name == expected_parent, (
-        f"Parent dir mismatch: {result.parent.name!r} != {expected_parent!r}"
-    )
-    assert result.parent.parent == output_dir, (
-        f"Output dir mismatch: {result.parent.parent!r} != {output_dir!r}"
-    )
+    assert result.name == expected_filename, f"Filename mismatch: {result.name!r} != {expected_filename!r}"
+    assert result.parent.name == expected_parent, f"Parent dir mismatch: {result.parent.name!r} != {expected_parent!r}"
+    assert result.parent.parent == output_dir, f"Output dir mismatch: {result.parent.parent!r} != {output_dir!r}"

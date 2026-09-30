@@ -30,10 +30,14 @@ class TestParseArgs:
 
     def test_valid_args_returns_paths(self, tmp_path: Path) -> None:
         """Both arguments provided returns namespace with Path objects."""
-        args = parse_args([
-            "--input-dir", str(tmp_path / "in"),
-            "--output-dir", str(tmp_path / "out"),
-        ])
+        args = parse_args(
+            [
+                "--input-dir",
+                str(tmp_path / "in"),
+                "--output-dir",
+                str(tmp_path / "out"),
+            ]
+        )
         assert isinstance(args.input_dir, Path)
         assert isinstance(args.output_dir, Path)
 
@@ -44,21 +48,27 @@ class TestMain:
     def test_nonexistent_input_dir_returns_one(self, tmp_path: Path) -> None:
         """Non-existent --input-dir causes exit code 1 and stderr message."""
         nonexistent = tmp_path / "does_not_exist"
-        code = main([
-            "--input-dir", str(nonexistent),
-            "--output-dir", str(tmp_path / "out"),
-        ])
+        code = main(
+            [
+                "--input-dir",
+                str(nonexistent),
+                "--output-dir",
+                str(tmp_path / "out"),
+            ]
+        )
         assert code == 1
 
-    def test_nonexistent_input_dir_prints_error(
-        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
-    ) -> None:
+    def test_nonexistent_input_dir_prints_error(self, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
         """Non-existent --input-dir prints descriptive error to stderr."""
         nonexistent = tmp_path / "does_not_exist"
-        main([
-            "--input-dir", str(nonexistent),
-            "--output-dir", str(tmp_path / "out"),
-        ])
+        main(
+            [
+                "--input-dir",
+                str(nonexistent),
+                "--output-dir",
+                str(tmp_path / "out"),
+            ]
+        )
         captured = capsys.readouterr()
         assert "does not exist" in captured.err
 
@@ -68,10 +78,14 @@ class TestMain:
         input_dir.mkdir()
         output_dir = tmp_path / "nested" / "deep" / "output"
 
-        code = main([
-            "--input-dir", str(input_dir),
-            "--output-dir", str(output_dir),
-        ])
+        code = main(
+            [
+                "--input-dir",
+                str(input_dir),
+                "--output-dir",
+                str(output_dir),
+            ]
+        )
 
         assert code == 0
         assert output_dir.is_dir()
@@ -82,10 +96,14 @@ class TestMain:
         input_dir.mkdir()
         output_dir = tmp_path / "output"
 
-        code = main([
-            "--input-dir", str(input_dir),
-            "--output-dir", str(output_dir),
-        ])
+        code = main(
+            [
+                "--input-dir",
+                str(input_dir),
+                "--output-dir",
+                str(output_dir),
+            ]
+        )
 
         assert code == 0
         assert output_dir.is_dir()

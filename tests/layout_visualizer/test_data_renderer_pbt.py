@@ -46,6 +46,7 @@ def _bbox_strategy(draw):
 # Feature: layout-data-mode, Property 4: Alignment position computation
 # ---------------------------------------------------------------------------
 
+
 class TestAlignmentPositionComputation:
     """**Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8**
 
@@ -105,7 +106,6 @@ class TestAlignmentPositionComputation:
         else:  # T
             expected_y = bbox.y + fontsize
             assert abs(point.y - expected_y) < 1e-6
-
 
 
 # ---------------------------------------------------------------------------
