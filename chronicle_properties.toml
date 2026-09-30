@@ -437,13 +437,13 @@ parent = "sfs2.season1-layout-s1-03"
 description = "1-$1 ${~2}"
 default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
 
-# 1-04 — unique BOONS/NOTES position
+# 1-04, 1-12 — shared BOONS/NOTES position
 [[rules]]
-pattern = 'sfs2/season1/1-04-(\S+)Chronicle\.pdf$'
-id = "sfs2.s1-04"
+pattern = 'sfs2/season1/1-(04|12)-(\S+)Chronicle\.pdf$'
+id = "sfs2.s1-$1"
 parent = "sfs2.season1-layout-s1-04"
-description = "1-04 ${~1}"
-default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-04-$1Chronicle.pdf"
+description = "1-$1 ${~2}"
+default_chronicle_location = "modules/pfs-chronicle-generator/assets/chronicles/sfs2/season1/1-$1-$2Chronicle.pdf"
 
 # 1-05, 1-07, 1-13 — shared BOONS/NOTES position
 [[rules]]
