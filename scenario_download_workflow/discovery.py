@@ -4,7 +4,7 @@ Scans the top level of a directory for PDF files modified within a
 given recency window. No recursive scanning into subdirectories.
 """
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 
@@ -24,7 +24,7 @@ def discover_recent_pdfs(
     Returns:
         List of Path objects for matching PDFs, sorted by filename.
     """
-    cutoff = datetime.now(tz=timezone.utc) - recency_window
+    cutoff = datetime.now(tz=UTC) - recency_window
     recent_pdfs: list[Path] = []
 
     for entry in downloads_dir.iterdir():
@@ -32,7 +32,7 @@ def discover_recent_pdfs(
             continue
         if entry.suffix.lower() != ".pdf":
             continue
-        mtime = datetime.fromtimestamp(entry.stat().st_mtime, tz=timezone.utc)
+        mtime = datetime.fromtimestamp(entry.stat().st_mtime, tz=UTC)
         if mtime >= cutoff:
             recent_pdfs.append(entry)
 
