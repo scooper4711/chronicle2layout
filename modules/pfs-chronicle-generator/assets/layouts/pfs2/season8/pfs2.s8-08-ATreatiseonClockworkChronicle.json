@@ -1,0 +1,103 @@
+{
+  "id": "pfs2.s8-08",
+  "parent": "pfs2.season8-layout-s8-00",
+  "description": "8-08 ATreatiseon Clockwork",
+  "defaultChronicleLocation": "modules/pfs-chronicle-generator/assets/chronicles/pfs2/season8/8-08-ATreatiseonClockworkChronicle.pdf",
+  "parameters": {
+    "Items": {
+      "strikeout_item_lines": {
+        "type": "choice",
+        "description": "Item line text to be struck out",
+        "choices": [
+          "lesser elixir of life (level 5, 30 gp; Pathfinder Player Core 2 288)",
+          "ghost oil (level 4, 18 gp; Pathfinder Knights of Lastwall 90)",
+          "phantom roll (level 4, 13 gp; Pathfinder Treasure Vault 50)",
+          "shadow rune (level 5, 55 gp; Pathfinder GM Core 227)",
+          "staff of the dead (level 6, 230 gp; Pathfinder GM Core 281)"
+        ],
+        "example": "lesser elixir of life (level 5, 30 gp; Pathfinder Player Core 2 288)"
+      }
+    }
+  },
+  "presets": {
+    "strikeout_item": {
+      "canvas": "items",
+      "color": "black",
+      "x": 0.5,
+      "x2": 95
+    },
+    "item.line.lesser_elixir_of_life_level_5_30_gp;_Pathfinder_Pl": {
+      "y": 7.8,
+      "y2": 18.0
+    },
+    "item.line.ghost_oil_level_4_18_gp;_Pathfinder_Knights_of_Las": {
+      "y": 19.0,
+      "y2": 29.2
+    },
+    "item.line.phantom_roll_level_4_13_gp;_Pathfinder_Treasure_Va": {
+      "y": 30.2,
+      "y2": 40.4
+    },
+    "item.line.shadow_rune_level_5_55_gp;_Pathfinder_GM_Core_227": {
+      "y": 41.4,
+      "y2": 46.0
+    },
+    "item.line.staff_of_the_dead_level_6_230_gp;_Pathfinder_GM_Co": {
+      "y": 47.0,
+      "y2": 57.2
+    }
+  },
+  "content": [
+    {
+      "type": "choice",
+      "choices": "param:strikeout_item_lines",
+      "content": {
+        "lesser elixir of life (level 5, 30 gp; Pathfinder Player Core 2 288)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.lesser_elixir_of_life_level_5_30_gp;_Pathfinder_Pl"
+            ]
+          }
+        ],
+        "ghost oil (level 4, 18 gp; Pathfinder Knights of Lastwall 90)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.ghost_oil_level_4_18_gp;_Pathfinder_Knights_of_Las"
+            ]
+          }
+        ],
+        "phantom roll (level 4, 13 gp; Pathfinder Treasure Vault 50)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.phantom_roll_level_4_13_gp;_Pathfinder_Treasure_Va"
+            ]
+          }
+        ],
+        "shadow rune (level 5, 55 gp; Pathfinder GM Core 227)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.shadow_rune_level_5_55_gp;_Pathfinder_GM_Core_227"
+            ]
+          }
+        ],
+        "staff of the dead (level 6, 230 gp; Pathfinder GM Core 281)": [
+          {
+            "type": "strikeout",
+            "presets": [
+              "strikeout_item",
+              "item.line.staff_of_the_dead_level_6_230_gp;_Pathfinder_GM_Co"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
