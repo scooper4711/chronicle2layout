@@ -2,4 +2,4 @@ PyMuPDF<1.25
 numpy
 pytest
 hypothesis
-ruff==0.17.1
+ruff==0.17.2
