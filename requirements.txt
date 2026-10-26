@@ -1,4 +1,4 @@
-PyMuPDF<1.25
+PyMuPDF<2.1
 numpy
 pytest
 hypothesis
